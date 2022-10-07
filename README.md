@@ -1,2 +1,2 @@
 # pixelimage
-pixelimage, image lib initially aimed at js
+pixelimage, image lib initially aimed at haxe js
