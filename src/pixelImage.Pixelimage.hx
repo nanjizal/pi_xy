@@ -46,6 +46,45 @@ class Pixelimage_ {
     this.image = image;
   }
 }
+abstract Pixel32( Int ){
+    inline public function new( v: Int ){
+        this = v;
+    }
+    inline public function toCanvas():Int{
+        var c = this;
+        var a = c >> 24 & 0xFF;
+        var r = c >> 16 & 0xFF;
+        var g = c >> 8 & 0xFF;
+        var b = c & 0xFF;
+        // abgr
+        return a << 24 | b << 16 | g << 8 | r;
+    }
+    inline public function fromCanvas():Int {
+        var c = this;
+        var a = c >> 24 & 0xFF;
+        var b = c >> 16 & 0xFF;
+        var g = c >> 8 & 0xFF;
+        var r = c & 0xFF;
+        // argb
+        return a << 24 | r << 16 | g << 8 | b;
+    }
+    inline public function rgbToCanvas():Int {
+        var rgb = this;
+        var r = rgb >> 16 & 0xFF;
+        var g = rgb >> 8 & 0xFF;
+        var b = rgb & 0xFF;
+        // abgr
+        return b << 16 | g << 8 | r; 
+    }
+    inline public function rgbFromCanvas():Int {
+        var c = this;
+        var b = c >> 16 & 0xFF;
+        var g = c >> 8 & 0xFF;
+        var r = c & 0xFF;
+        // rgb
+        return r << 16 | g << 8 | b << 0;
+    }
+}
 abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     public var width( get, never ): Int;
     inline function get_width(): Int {
@@ -68,34 +107,15 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     function position( x: Int, y: Int ){
        return Std.int( y * this.width + x );
     }
-    inline 
-    function canvasColor( c: Int ): Int {
-        var a = c >> 24 & 0xFF;
-        var r = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var b = c & 0xFF;
-        // abgr
-        return a << 24 | b << 16 | g << 8 | r;
-    }
-    
-    inline
-    function fromCanvasColor( c: Int ): Int {
-        var a = c >> 24 & 0xFF;
-        var b = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var r = c & 0xFF;
-        // argb
-        return a << 24 | r << 16 | g << 8 | b;
-    }
     
     inline
     public function setARGB( x: Int, y: Int, color: Int ){
-       this.image[ position( x, y ) ] = canvasColor( color );
+       this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
     }
     
     inline
     public function getARGB( x: Int, y: Int ): Int {
-       return fromCanvasColor( this.image[ position( x, y ) ] );
+       return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
     }
     
     inline
@@ -118,20 +138,14 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     inline
     public function setIrgb( x: Int, y: Int, rgb: Int ) {
         var a = getIalpha( x, y );
-        var r = rgb >> 16 & 0xFF;
-        var g = rgb >> 8 & 0xFF;
-        var b = rgb & 0xFF;
         // abgr
-        this.image[ position( x, y ) ] = a << 24 | b << 16 | g << 8 | r;   
+        this.image[ position( x, y ) ] = a << 24 | new Pixel32( rgb ).rgbToCanvas();   
     }
     inline
     public function getIrgb( x: Int, y: Int ): Int {
         var c = this.image[ position( x, y ) ];
-        var b = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var r = c & 0xFF;
         // rgb
-        return r << 16 | g << 8 | b << 0;
+        return new Pixel32(c).rgbFromCanvas();
     }
     inline
     public function stringHashARGB( col: Int ): String
@@ -166,4 +180,4 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         this.image = cast temp;
     }
     #end
-}     
+}         
