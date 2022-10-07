@@ -1,2 +1,2 @@
 # pixelimage
-pixelimage, image lib
+pixelimage, image lib initially aimed at js
