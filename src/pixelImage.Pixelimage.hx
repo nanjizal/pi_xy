@@ -74,7 +74,7 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
-        var d: js.Lib.UInt8Array = cast this.data;
+        var d: js.Lib.UInt8Array = cast view8();
         var data = new js.lib.Uint8ClampedArray( d.buffer );
         var imageData = new js.html.ImageData( data, this.width, this.height );
         ctx.putImageData( imageData, x, y);
@@ -83,7 +83,7 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
     public function drawFromContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int ){
         var imageData = ctx.getImageData( x, y, this.width, this.height);
         var data = imageData.data;
-        this.image = new haxe.io.UInt8Array( data.buffer );
+        this.image = new haxe.io.UInt32Array( data.buffer );
     }
     #end
 }     
