@@ -43,7 +43,7 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
        this.image[ position( x, y ) ] = alphaLast( color );
     }
     inline
-    public funcion getARGB( x: Int, y: Int ): Int {
+    public function getARGB( x: Int, y: Int ): Int {
        return alphaFirst( this.image[ position( x, y ) ] );
     }
     inline
