@@ -1,6 +1,6 @@
 package pixelimage;
 import haxe.io.UInt32Array;
-@:initStruct
+@:structInit
 class Pixelimage_ {
   public var width:  Int;
   public var height: Int;
