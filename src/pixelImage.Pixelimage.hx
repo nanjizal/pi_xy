@@ -71,4 +71,13 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
     public function getIrgb( x: Int, y: Int ): Int {
         return this.image[ position( x, y ) ] >> 8 & 0xFFFFFF;   
     }
+    #if js
+    inline
+    public function drawToContext( ctx: import js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
+        var d: js.Lib.UInt8Array = cast this.data;
+        var data = new js.lib.Uint8ClampedArray( d.buffer );
+        var imageData = new js.html.ImageData( data, this.width, this.height );
+        ctx.putImageData( imageData, x, y);
+    }
+    #end
 }     
