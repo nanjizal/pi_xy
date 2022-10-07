@@ -73,7 +73,7 @@ abstract Pixel32( Int ){
         var r = rgb >> 16 & 0xFF;
         var g = rgb >> 8 & 0xFF;
         var b = rgb & 0xFF;
-        // abgr
+        // bgr
         return b << 16 | g << 8 | r; 
     }
     inline public function rgbFromCanvas():Int {
