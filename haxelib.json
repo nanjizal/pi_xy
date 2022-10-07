@@ -1,7 +1,7 @@
 
 {
     "name"         : "pixelimage",
-    "url"          : "https://github.com/nanjizal/cpixelimage#pixelimage",
+    "url"          : "https://github.com/nanjizal/pixelimage#pixelimage",
     "license"      : "MIT",
     "tags"         : ["cross", "image","2d" ],
     "description"  : "pixelimage, image utility",
