@@ -71,6 +71,21 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
     public function getIrgb( x: Int, y: Int ): Int {
         return this.image[ position( x, y ) ] >> 8 & 0xFFFFFF;   
     }
+    inline
+    public function fillRect( x: Int, y: Int, w: Int, h: Int, color: Color ) {
+       var p = x;
+       var q = y;
+       var maxX = x + w;
+       var maxY = y + h;
+       while( true ){
+          setARGB( p++, q, color );
+          if( p > maxX ){
+            p = x;
+            q++;
+          } 
+          if( q > maxY ) break;
+		   }
+	  }
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
