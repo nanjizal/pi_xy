@@ -5,7 +5,7 @@ class Pixelimage_ {
   public var width:  Int;
   public var height: Int;
   public var image:  UInt32Array;
-  public function new Pixelimage_( x: Int, y: Int, image: UInt32Array ){
+  public function new( x: Int, y: Int, image: UInt32Array ){
     this.x = x;
     this.y = y;
     this.image = image;
