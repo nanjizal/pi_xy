@@ -22,7 +22,7 @@ abstract Pixelimage( Pixelimage ) from Pixelimage_ {
     }
     inline
     public function new( w: Int, h: Int ){
-       this = ( { width: w, height: h, image: UInt32Array( Std.int( w * h  ) ) }, Pixelimage_ );
+       this = ( { width: w, height: h, image: new haxe.ioUInt32Array( Std.int( w * h  ) ) }, Pixelimage_ );
     }
     inline 
     function getPosition( x: Int, y: Int ){
