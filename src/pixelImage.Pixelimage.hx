@@ -26,14 +26,17 @@ class Main {
         var g   = canvasSetup.surface;
         var p = new Pixelimage( 1024, 768 );
         p.fillRect( 100, 100, 300, 200, 0xff4211bc );
+        p.fillTri( 100, 100, 200, 120, 150, 300, 0xffF000c0 );
+        p.fillPoly( 300, 300, 90, 200, 0xFF00Ffcc );
         p.drawToContext( g.me, 0, 0 );
         p.drawFromContext( g.me, 0, 0 );
-        trace( p.stringHashARGB( p.getARGB( 101, 101) ) );
+        trace( p.getPixelString( 101, 101) );
    }
 }
 
 */
 
+import haxe.io.UInt32Array;
 import haxe.io.UInt32Array;
 @:structInit
 class Pixelimage_ {
@@ -73,7 +76,7 @@ abstract Pixel32( Int ){
         var r = rgb >> 16 & 0xFF;
         var g = rgb >> 8 & 0xFF;
         var b = rgb & 0xFF;
-        // bgr
+        // abgr
         return b << 16 | g << 8 | r; 
     }
     inline public function rgbFromCanvas():Int {
@@ -94,8 +97,8 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     inline function get_height(): Int {
         return this.height;
     }
-    inline
-    public function new( w: Int, h: Int ){
+    inline public
+    function new( w: Int, h: Int ){
        this = ( 
         { width:  w
         , height: h
@@ -107,17 +110,14 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     function position( x: Int, y: Int ){
        return Std.int( y * this.width + x );
     }
-    
-    inline
-    public function setARGB( x: Int, y: Int, color: Int ){
+    inline public
+    function setARGB( x: Int, y: Int, color: Int ){
        this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
     }
-    
-    inline
-    public function getARGB( x: Int, y: Int ): Int {
+    inline public
+    function getARGB( x: Int, y: Int ): Int {
        return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
     }
-    
     inline
     function pos4( x: Int, y: Int, ?off: Int = 0 ): Int {
         return Std.int( position( x, y ) * 4 ) + off;
@@ -127,44 +127,108 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }  
-    inline
-    public function setIalpha( x: Int, y: Int, alpha: Int ) {
+    inline public
+    function setIalpha( x: Int, y: Int, alpha: Int ) {
         view8()[ pos4( x, y, 0 ) ] = alpha;    
     }
-    inline
-    public function getIalpha( x: Int, y: Int ): Int {
+    inline public
+    function getIalpha( x: Int, y: Int ): Int {
         return view8()[ pos4( x, y, 0 )];   
     }
-    inline
-    public function setIrgb( x: Int, y: Int, rgb: Int ) {
+    inline public
+    function setIrgb( x: Int, y: Int, rgb: Int ) {
         var a = getIalpha( x, y );
         // abgr
         this.image[ position( x, y ) ] = a << 24 | new Pixel32( rgb ).rgbToCanvas();   
     }
-    inline
-    public function getIrgb( x: Int, y: Int ): Int {
+    inline public
+    function getIrgb( x: Int, y: Int ): Int {
         var c = this.image[ position( x, y ) ];
         // rgb
         return new Pixel32(c).rgbFromCanvas();
     }
-    inline
-    public function stringHashARGB( col: Int ): String
+    inline public
+    function stringHash8( col: Int ): String
         return '#' + StringTools.hex( col, 8 );
-    inline
-    public function fillRect( x: Int, y: Int, w: Int, h: Int, color: Int ) {
-       var p = x;
-       var q = y;
-       var maxX = x + w;
-       var maxY = y + h;
+    inline public
+    function stringHash6( col: Int ): String 
+        return '#' + StringTools.hex( col, 6 );
+    inline public
+    function getPixelString( x: Int, y: Int )
+        return stringHash8( getARGB( x, y ) );
+    inline public
+    function getRGBString( x: Int, y: Int )
+        return stringHash6( getIrgb( x, y ) );
+    inline public
+    function fillRect( x: Float, y: Float
+                     , w: Float, h: Float
+                     , color: Int ) {
+       var p = Std.int( x );
+       var xx = p;
+       var q = Std.int( y );
+       var maxX = Std.int( x + w );
+       var maxY = Std.int( y + h );
        while( true ){
-          setARGB( p++, q, color );
-          if( p > maxX ){
-            p = x;
-            q++;
-          } 
-          if( q > maxY ) break;
+            setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
 		}
 	}
+    inline public
+    function fillTri( ax: Float, ay: Float
+                    , bx: Float, by: Float
+                    , cx: Float, cy: Float
+                    , color: Int ){
+        var maxX = Std.int( Math.max( Math.max( ax, bx ), cx ) );
+        var minX = Std.int( Math.min( Math.min( ax, bx ), cx ) );
+        var maxY = Std.int( Math.max( Math.max( ay, by ), cy ) );
+        var minY = Std.int( Math.min( Math.min( ay, by ), cy ) );
+        var s0 = ay*cx - ax*cy;
+        var sx = cy - ay;
+        var sy = ax - cx;
+        var t0 = ax*by - ay*bx;
+        var tx = ay - by;
+        var ty = bx - ax;
+        var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy;
+        for( x in minX...maxX ){
+            for( y in minY...maxY ){
+                if( triCalc( x, y, s0, t0, sx, sy, tx, ty, A ) ) setARGB( x, y, color );
+            }
+        }
+    }
+    // currently only suitable for circle/ellipse
+    inline public
+    function fillPoly( cx: Float, cy: Float
+                     , rx: Float, ry: Float
+                     , color: Int, ?sides: Int = 36 ){
+        var theta = 2*Math.PI/36 +0.001; // slight offset to reduce overlap artifacts.
+        var lastX = cx + rx*Math.cos( sides*theta );
+        var lastY = cy + ry*Math.sin( sides*theta );
+        for( i in 0...sides+1 ){
+            var nextX = cx + rx*Math.cos( i*theta );
+            var nextY = cy + ry*Math.sin( i*theta );
+            fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+            lastX = nextX;
+            lastY = nextY;
+        }
+    }
+    inline
+    function triCalc( x:    Float,  y:    Float
+                    , s0:   Float,  t0:   Float
+                    , sx:   Float,  sy:   Float
+                    , tx:   Float,  ty:   Float
+                    , A:    Float      ): Bool {
+        var s = s0 + sx*x + sy*y;
+        var t = t0 + tx*x + ty*y;
+        return if (s <= 0 || t <= 0) {
+            false;
+        } else {
+            (s + t) < A;
+        }
+    }
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
@@ -180,4 +244,4 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         this.image = cast temp;
     }
     #end
-}         
+}            
