@@ -27,7 +27,7 @@ class Main {
         var p = new Pixelimage( 1024, 768 );
         p.fillRect( 100, 100, 300, 200, 0xff4211bc );
         p.fillTri( 100, 100, 200, 120, 150, 300, 0xffF000c0 );
-        p.fillPoly( 300, 300, 90, 200, 0xFF00Ffcc );
+        p.fillRegPoly( 300, 300, 90, 200, 0xFF00Ffcc );// circles and ellipses
         p.drawToContext( g.me, 0, 0 );
         p.drawFromContext( g.me, 0, 0 );
         trace( p.getPixelString( 101, 101) );
@@ -201,7 +201,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     }
     // currently only suitable for circle/ellipse
     inline public
-    function fillPoly( cx: Float, cy: Float
+    function fillRegPoly( cx: Float, cy: Float
                      , rx: Float, ry: Float
                      , color: Int, ?sides: Int = 36 ){
         var theta = 2*Math.PI/36 +0.001; // slight offset to reduce overlap artifacts.
