@@ -27,6 +27,9 @@ class Main {
         var p = new Pixelimage( 1024, 768 );
         p.fillRect( 100, 100, 300, 200, 0xff4211bc );
         p.fillTri( 100, 100, 200, 120, 150, 300, 0xffF000c0 );
+        p.fillGradTri( 100, 100, 0xFFFF0000
+                     , 500, 300, 0xFF1ECB24
+                     , 300, 500, 0xFFE9D604 );
         p.fillRegPoly( 300, 300, 90, 200, 0xFF00Ffcc );// circles and ellipses
         p.drawToContext( g.me, 0, 0 );
         p.drawFromContext( g.me, 0, 0 );
@@ -35,18 +38,23 @@ class Main {
 }
 
 */
-
 import haxe.io.UInt32Array;
-import haxe.io.UInt32Array;
+final isLittleEndian = (() -> {
+    final a8 = new js.lib.Uint8Array(4);
+    final a32 = (new js.lib.Uint32Array(a8.buffer)[0]=0xFFcc0011);
+    return !(a8[0]==0xff);
+})();
 @:structInit
 class Pixelimage_ {
   public var width:  Int;
   public var height: Int;
   public var image:  UInt32Array;
+  public var isLittle: Bool;
   public function new( width: Int, height: Int, image: UInt32Array ){
     this.width = width;
     this.height = height;
     this.image = image;
+    this.isLittle = isLittleEndian;
   }
 }
 abstract Pixel32( Int ){
@@ -55,21 +63,29 @@ abstract Pixel32( Int ){
     }
     inline public function toCanvas():Int{
         var c = this;
-        var a = c >> 24 & 0xFF;
-        var r = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var b = c & 0xFF;
         // abgr
-        return a << 24 | b << 16 | g << 8 | r;
+        return if( isLittleEndian ){
+            var a = c >> 24 & 0xFF;
+            var r = c >> 16 & 0xFF;
+            var g = c >> 8 & 0xFF;
+            var b = c & 0xFF;
+            a << 24 | b << 16 | g << 8 | r;
+        } else { 
+            c;
+        }
     }
     inline public function fromCanvas():Int {
         var c = this;
-        var a = c >> 24 & 0xFF;
-        var b = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var r = c & 0xFF;
-        // argb
-        return a << 24 | r << 16 | g << 8 | b;
+        return if( isLittleEndian ){
+            var a = c >> 24 & 0xFF;
+            var b = c >> 16 & 0xFF;
+            var g = c >> 8 & 0xFF;
+            var r = c & 0xFF;
+            // argb
+            a << 24 | r << 16 | g << 8 | b;
+        } else {
+            c;
+        }
     }
     inline public function rgbToCanvas():Int {
         var rgb = this;
@@ -97,8 +113,8 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     inline function get_height(): Int {
         return this.height;
     }
-    inline public
-    function new( w: Int, h: Int ){
+    inline
+    public function new( w: Int, h: Int ){
        this = ( 
         { width:  w
         , height: h
@@ -110,12 +126,12 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     function position( x: Int, y: Int ){
        return Std.int( y * this.width + x );
     }
-    inline public
-    function setARGB( x: Int, y: Int, color: Int ){
+    inline
+    public function setARGB( x: Int, y: Int, color: Int ){
        this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
     }
-    inline public
-    function getARGB( x: Int, y: Int ): Int {
+    inline
+    public function getARGB( x: Int, y: Int ): Int {
        return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
     }
     inline
@@ -127,22 +143,22 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }  
-    inline public
-    function setIalpha( x: Int, y: Int, alpha: Int ) {
+    inline
+    public function setIalpha( x: Int, y: Int, alpha: Int ) {
         view8()[ pos4( x, y, 0 ) ] = alpha;    
     }
-    inline public
-    function getIalpha( x: Int, y: Int ): Int {
+    inline
+    public function getIalpha( x: Int, y: Int ): Int {
         return view8()[ pos4( x, y, 0 )];   
     }
-    inline public
-    function setIrgb( x: Int, y: Int, rgb: Int ) {
+    inline
+    public function setIrgb( x: Int, y: Int, rgb: Int ) {
         var a = getIalpha( x, y );
         // abgr
         this.image[ position( x, y ) ] = a << 24 | new Pixel32( rgb ).rgbToCanvas();   
     }
-    inline public
-    function getIrgb( x: Int, y: Int ): Int {
+    inline
+    public function getIrgb( x: Int, y: Int ): Int {
         var c = this.image[ position( x, y ) ];
         // rgb
         return new Pixel32(c).rgbFromCanvas();
@@ -177,15 +193,31 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             if( q > maxY ) break;
 		}
 	}
+    /*
+        Used for bounding box iteration, calculates lo...hi iterator from 3 values. 
+    */
+    inline 
+    function boundIterator3( a: Float, b: Float, c: Float ): Iterator<Int> {
+        return if( a > b ){
+            if( a > c ){ // a,b a,c
+                (( b > c )? Std.int( c ): Std.int( b ))...Std.int( a );
+            } else { // c,a,b
+                Std.int( b )...Std.int( c );
+            }
+        } else {
+            if( b > c ){ // b,a, b,c 
+                (( a > c )? Std.int( c ): Std.int( a ))...Std.int( b );
+            } else { // c,b,a
+                Std.int( a )...Std.int( c );
+            }
+        }
+    }
     inline public
     function fillTri( ax: Float, ay: Float
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
                     , color: Int ){
-        var maxX = Std.int( Math.max( Math.max( ax, bx ), cx ) );
-        var minX = Std.int( Math.min( Math.min( ax, bx ), cx ) );
-        var maxY = Std.int( Math.max( Math.max( ay, by ), cy ) );
-        var minY = Std.int( Math.min( Math.min( ay, by ), cy ) );
+
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -193,18 +225,103 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         var tx = ay - by;
         var ty = bx - ax;
         var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy;
-        for( x in minX...maxX ){
-            for( y in minY...maxY ){
-                if( triCalc( x, y, s0, t0, sx, sy, tx, ty, A ) ) setARGB( x, y, color );
+        for( x in boundIterator3( ax, bx, cx ) ){
+            var sxx = sx*x;
+            var txx = tx*x;
+            for( y in boundIterator3( ay, by, cx ) ){
+                if( triCalc( x, y, s0, t0, sxx, sy, txx, ty, A ) ) setARGB( x, y, color );
             }
         }
     }
-    // currently only suitable for circle/ellipse
+    inline
+    function triCalc( x:    Float,  y:    Float
+                    , s0:   Float,  t0:   Float
+                    , sxx:  Float,  sy:   Float
+                    , txx:  Float,  ty:   Float
+                    , A:    Float      ): Bool {
+        var s = s0 + sxx + sy*y;
+        var t = t0 + txx + ty*y;
+        return ( s <= 0 || t <= 0 )? false: (s + t) < A;
+    }
     inline public
-    function fillRegPoly( cx: Float, cy: Float
+    function fillGradTri( ax: Float, ay: Float, colA: Int
+                        , bx: Float, by: Float, colB: Int
+                        , cx: Float, cy: Float, colC: Int ){
+        var aA = colA >> 24 & 0xFF;
+        var rA = colA >> 16 & 0xFF;
+        var gA = colA >> 8 & 0xFF;
+        var bA = colA & 0xFF;
+
+        var aB = colB >> 24 & 0xFF;
+        var rB = colB >> 16 & 0xFF;
+        var gB = colB >> 8 & 0xFF;
+        var bB = colB & 0xFF;
+    
+        var aC = colC >> 24 & 0xFF;
+        var rC = colC >> 16 & 0xFF;
+        var gC = colC >> 8 & 0xFF;
+        var bC = colC & 0xFF;
+
+        var v0x = bx - ax;                    
+        var v0y = by - ay;
+        var v1x = cx - ax;
+        var v1y = cy - ay;
+        var d00 = dot( v0x, v0y, v0x, v0y );
+        var d01 = dot( v0x, v0y, v1x, v1y );
+        var d11 = dot( v1x, v1y, v1x, v1y );
+        for( x in boundIterator3( ax, bx, cx ) ){
+            var v2x = x-ax;// does not change every y.
+            for( y in boundIterator3( ay, by, cy) ){
+                barycentricWeightColor( x, y
+                                      , ax, ay
+                                      , v0x, v0y, v1x, v1y, v2x, d00, d01, d11
+                                      , aA, rA, gA, bA
+                                      , aB, rB, gB, gB
+                                      , aC, rC, gC, gC );
+            }
+        }
+    }
+    inline
+    function barycentricWeightColor( x: Int, y: Int
+                              , ax: Float, ay: Float
+                              , v0x: Float, v0y: Float, v1x: Float, v1y: Float, v2x: Float, d00: Float, d01: Float, d11: Float
+                              , aA: Int, rA: Int, gA: Int, bA: Int
+                              , aB: Int, rB: Int, gB: Int, bB: Int
+                              , aC: Int, rC: Int, gC: Int, bC: Int ): Null<Int> {
+        var v2y = y-ay;
+        var d20 = dot( v2x, v2y, v0x, v0y );
+        var d21 = dot( v2x, v2y, v1x, v1y );
+        var invDenom = 1.0 / (d00 * d11 - d01 * d01);
+        var wa = (d11 * d20 - d01 * d21) * invDenom;
+        var wb = (d00 * d21 - d01 * d20) * invDenom;
+        var wc = 1.0 - wa - wb;                                      
+        return if( wa >= 0 && wb >= 0 && wc >= 0 ){
+            var a = boundChannel( aA*wa + aB*wb + aC*wc );
+            var r = boundChannel( rA*wa + rB*wb + rC*wc );
+            var g = boundChannel( gA*wa + gB*wb + gC*wc );
+            var b = boundChannel( bA*wa + bB*wb + bC*wc );
+            // output as canvas color, so order changed to abgr
+            var col: Int = a << 24 | b << 16 | g << 8 | r;
+            // direct set.. not ideal..
+            // set to red for now!
+            this.image[ position( x, y ) ] = col;
+            col;
+        } else {
+            null;
+        }
+    }
+    inline function boundChannel( f: Float ): Int {
+        var i = Std.int( f );
+        if( i > 0xFF ) i = 0xFF;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        if( i < 0 ) i = 0;
+        return i;
+    }
+    inline public
+    function fillPoly( cx: Float, cy: Float
                      , rx: Float, ry: Float
                      , color: Int, ?sides: Int = 36 ){
         var theta = 2*Math.PI/36 +0.001; // slight offset to reduce overlap artifacts.
+        // can be solved by including edges .. not implemented yet
         var lastX = cx + rx*Math.cos( sides*theta );
         var lastY = cy + ry*Math.sin( sides*theta );
         for( i in 0...sides+1 ){
@@ -215,20 +332,25 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             lastY = nextY;
         }
     }
-    inline
-    function triCalc( x:    Float,  y:    Float
-                    , s0:   Float,  t0:   Float
-                    , sx:   Float,  sy:   Float
-                    , tx:   Float,  ty:   Float
-                    , A:    Float      ): Bool {
-        var s = s0 + sx*x + sy*y;
-        var t = t0 + tx*x + ty*y;
-        return if (s <= 0 || t <= 0) {
-            false;
+    inline public
+    function distanceSquarePointToSegment( x:  Float, y: Float
+                                                , x1: Float, y1:Float
+                                                , x2: Float, y2:Float
+                                                ): Float
+    {
+        var p1_p2_squareLength = (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
+        var dotProduct = ((x - x1)*(x2 - x1) + (y - y1)*(y2 - y1)) / p1_p2_squareLength;
+        return if ( dotProduct < 0 ){
+            return (x - x1)*(x - x1) + (y - y1)*(y - y1);
+        } else if ( dotProduct <= 1 ){
+            var p_p1_squareLength = (x1 - x)*(x1 - x) + (y1 - y)*(y1 - y);
+            return p_p1_squareLength - dotProduct * dotProduct * p1_p2_squareLength;
         } else {
-            (s + t) < A;
+            return (x - x2)*(x - x2) + (y - y2)*(y - y2);
         }
     }
+    inline function dot( ax: Float, ay: Float, bx: Float, by: Float )
+        return ax * bx + ay * by;
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
@@ -244,4 +366,10 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         this.image = cast temp;
     }
     #end
-}            
+}
+// references
+// http://totologic.blogspot.com/2014/01/accurate-point-in-triangle-test.html
+// https://codeplea.com/triangular-interpolation *
+// https://gamedev.stackexchange.com/questions/23743/whats-the-most-efficient-way-to-find-barycentric-coordinates    
+// https://stackoverflow.com/questions/39213661/canvas-using-uint32array-wrong-colors-are-being-rendered
+          
