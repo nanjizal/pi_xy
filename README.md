@@ -1,5 +1,7 @@
 # pixelimage
 
+![demo showUsed > ](https://nanjizal.github.io/pixelimage/showUsed/index.html)
+
 Drawing to UIntArray and then put on Canvas.
 
 ![Screenshot from 2022-10-08 09-57-34](https://user-images.githubusercontent.com/20134338/194700314-0c1a6f2a-f0e3-4ace-ba09-114016a0cf89.png)
