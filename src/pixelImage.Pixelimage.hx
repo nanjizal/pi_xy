@@ -247,19 +247,19 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     function fillGradTri( ax: Float, ay: Float, colA: Int
                         , bx: Float, by: Float, colB: Int
                         , cx: Float, cy: Float, colC: Int ){
-        var aA = colA >> 24 & 0xFF;
-        var rA = colA >> 16 & 0xFF;
-        var gA = colA >> 8 & 0xFF;
+        var aA = ( colA >> 24 ) & 0xFF;
+        var rA = ( colA >> 16 ) & 0xFF;
+        var gA = ( colA >> 8 ) & 0xFF;
         var bA = colA & 0xFF;
 
-        var aB = colB >> 24 & 0xFF;
-        var rB = colB >> 16 & 0xFF;
-        var gB = colB >> 8 & 0xFF;
+        var aB = ( colB >> 24 ) & 0xFF;
+        var rB = ( colB >> 16 ) & 0xFF;
+        var gB = ( colB >> 8 ) & 0xFF;
         var bB = colB & 0xFF;
     
-        var aC = colC >> 24 & 0xFF;
-        var rC = colC >> 16 & 0xFF;
-        var gC = colC >> 8 & 0xFF;
+        var aC = ( colC >> 24 ) & 0xFF;
+        var rC = ( colC >> 16 ) & 0xFF;
+        var gC = ( colC >> 8 ) & 0xFF;
         var bC = colC & 0xFF;
 
         var v0x = bx - ax;                    
@@ -278,6 +278,59 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                                       , aA, rA, gA, bA
                                       , aB, rB, gB, gB
                                       , aC, rC, gC, gC );
+            }
+        }
+    }
+    // second attempt
+    public inline
+    function barycentricGradient( ax: Float, ay: Float, colA: Int
+                                , bx: Float, by: Float, colB: Int
+                                , cx: Float, cy: Float, colC: Int ){
+        var aA = ( colA >> 24 ) & 0xFF;
+        var rA = ( colA >> 16 ) & 0xFF;
+        var gA = ( colA >> 8 ) & 0xFF;
+        var bA = colA & 0xFF;
+
+        var aB = ( colB >> 24 ) & 0xFF;
+        var rB = ( colB >> 16 ) & 0xFF;
+        var gB = ( colB >> 8 ) & 0xFF;
+        var bB = colB & 0xFF;
+    
+        var aC = ( colC >> 24 ) & 0xFF;
+        var rC = ( colC >> 16 ) & 0xFF;
+        var gC = ( colC >> 8 ) & 0xFF;
+        var bC = colC & 0xFF;
+
+        // a = V1, b = V2, c = V3 
+        // before loop calculate
+        var bax = bx - ax; //sideVec1 = V2 - V1
+        var bay = by - ay;
+        var cax = cx - ax; //sideVec2 = V3 - V1  
+        var cay = cy - ay;
+ 
+        // before loop calculate
+        var dot11 = dotSame( bax, bay );
+        var dot12 = dot( bax, bay, cax, cay );
+        var dot22 = dotSame( cax, cay );
+        var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+
+        for( px in boundIterator3( ax, bx, cx ) ){
+            var pax = px - ax; //sideVec3 = P - V1;  can be done in x loop
+            for( py in boundIterator3( bx, by, cy ) ){
+                var pay = py - ay; // has to be done in y loop
+                var dot31 = dot( pax, pay, bax, bay );
+                var dot32 = dot( pax, pay, cax, cay );
+                var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+                var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+                var ratioC = 1.0 - ratioB - ratioA;
+                if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
+                    var a = boundChannel( aA*ratioA + aB*ratioB + aC*ratioC );
+                    var r = boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
+                    var g = boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );
+                    var b = boundChannel( bA*ratioA + bB*ratioB + bC*ratioC );
+                    // re-ordered for canvas abgr
+                    this.image[ position( px, py ) ] = a << 24 | b << 16 | g << 8 | r;
+                }
             }
         }
     }
@@ -349,8 +402,10 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             return (x - x2)*(x - x2) + (y - y2)*(y - y2);
         }
     }
-    inline function dot( ax: Float, ay: Float, bx: Float, by: Float )
+    inline function dot( ax: Float, ay: Float, bx: Float, by: Float ): Float
         return ax * bx + ay * by;
+    inline function dotSame( ax: Float, ay: Float ): Float
+        return dot( ax, ay, ax, ay );
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
@@ -372,4 +427,6 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
 // https://codeplea.com/triangular-interpolation *
 // https://gamedev.stackexchange.com/questions/23743/whats-the-most-efficient-way-to-find-barycentric-coordinates    
 // https://stackoverflow.com/questions/39213661/canvas-using-uint32array-wrong-colors-are-being-rendered
+// https://stackoverflow.com/questions/26513712/algorithm-for-coloring-a-triangle-by-vertex-color
+
           
