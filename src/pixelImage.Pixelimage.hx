@@ -38,7 +38,6 @@ class Main {
 }
 
 */
-package;
 import haxe.io.UInt32Array;
 final isLittleEndian = (() -> {
     final a8 = new js.lib.Uint8Array(4);
@@ -197,6 +196,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     /*
         Used for bounding box iteration, calculates lo...hi iterator from 3 values. 
     */
+    // TODO: swap floor and ceil and test
     inline 
     function boundIterator3( a: Float, b: Float, c: Float ): Iterator<Int> {
         return if( a > b ){
@@ -212,6 +212,27 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                 Std.int( a )...Std.int( c );
             }
         }
+    }
+    inline
+    function boundIterator4( a: Float, b: Float, c: Float, d: Float ): Iterator<Int> {
+        var min = Math.floor( a );
+        var max = Math.ceil( a );
+        if( b < min ){
+            min = Math.floor( b );
+        } else if( b > max ){
+            max = Math.ceil( b );
+        }
+        if( c < min ){
+            min = Math.floor( c );
+        } else if( c > max ){
+            max = Math.ceil( c );
+        }
+        if( d < min ){
+            min = Math.floor( d );
+        } else if( d > max ){
+            max = Math.ceil( d );
+        }
+        return min...max;
     }
     inline public
     function fillTri( ax: Float, ay: Float
@@ -230,10 +251,20 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             var sxx = sx*x;
             var txx = tx*x;
             for( y in boundIterator3( ay, by, cy ) ){
-                
                 if( triCalc( x, y, s0, t0, sxx, sy, txx, ty, A ) ) setARGB( x, y, color );
             }
         }
+    }
+    inline public
+    function fillQuad( ax: Float, ay: Float
+                     , bx: Float, by: Float
+                     , cx: Float, cy: Float
+                     , dx: Float, dy: Float 
+                     , color: Int ){
+        // tri e - a b d
+        // tri f - b c d
+        fillTri( ax, ay, bx, by, dx, dy, color );
+        fillTri( bx, by, cx, cy, dx, dy, color );
     }
     inline
     function triCalc( x:    Float,  y:    Float
@@ -290,6 +321,107 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             }
         }
     }
+    /*
+    // NOT WORKING YET!!
+    // inverse bilinear interpolation
+    public inline 
+    function fillGradQuad( ax: Float, ay: Float, colA: Int
+                         , bx: Float, by: Float, colB: Int
+                         , cx: Float, cy: Float, colC: Int
+                         , dx: Float, dy: Float, colD: Int 
+                         ){
+        var ex = bx - ax;
+        var ey = by - ay;
+        var fx = dx - ax;
+        var fy = dy - ay;
+        var gx = ax - bx + cx - dx;
+        var gy = ay - by + cy - dy;
+        var ratioX: Float = 0.;
+        var ratioY: Float = 0.;
+        for( px in boundIterator4( ax, bx, cx, dx ) ){
+            var hx = px - ax;
+            for( py in boundIterator4( ay, by, cy, dy ) ){
+                var hy = py - ay;
+                var k2 = cross2d( gx, gy, fx, fy );
+                var k1 = cross2d( ex, ey, fx, fy ) + cross2d( hx, hy, gx, gy );
+                var k0 = cross2d( hx, hy, ex, ey );
+                // if edges are parallel, this is a linear equation
+                if( Math.abs( k2 ) < 0.001 ){
+                    ratioX = ( hx * k1 + fx * k0 ) / ( ex * k1 - gx * k0 );
+                    ratioY = -k0 / k1;
+                } else {
+                    var w = k1*k1 - 4.0*k0*k2;
+                    if( w < 0.0 ){
+                        // unsure
+                        // return vec2(-1.0);  ??
+                    } else {
+                        w = Math.sqrt( w );
+                        var ik2 = 0.5/k2;
+                        var v = ( -k1 - w )*ik2;
+                        var u = ( hx - fx * v ) / ( ex + gx * v );
+                        if( u < 0.0 || u > 1.0 || v < 0.0 || v > 1.0 ){
+                            v = ( -k1 + w )*ik2;
+                            u = ( hx - fx * v )/( ex + gx * v );
+                        } 
+                        ratioX = u;
+                        ratioY = v;       
+                    }
+
+                }
+                var rgba = lerp4Colors( colA, colB, colC, colD, ratioX, ratioY );
+                setARGB( px, py, rgba );
+            }
+        }
+    }
+    */
+    // Ken Perlin smoothStep 
+    inline 
+    function smootherStep( t: Float ): Float {
+        return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+    }
+    inline 
+    function lerp( a: Float, b: Float, t: Float ): Float
+        return b + ( b - a ) * t;
+    public inline
+    function lerp4Colors( colorhiA, colorhiB
+                        , colorloC, colorloD
+                        , u: Float, v: Float
+                        , smooth: Bool = true ):Int {
+        var hiColor = lerp2Colors( colorhiA, colorhiB, u, smooth );
+        var loColor = lerp2Colors( colorloC, colorloD, u, smooth );
+        return lerp2Colors( hiColor, loColor, v, smooth );
+    }
+    // HSL better, but this for initial test.
+    public inline
+    function lerp2Colors( colA: Int, colB: Int, t: Float, smooth: Bool = true ): Int {
+        var aA = ( colB >> 24 ) & 0xFF;
+        var rA = ( colB >> 16 ) & 0xFF;
+        var gA = ( colB >> 8 ) & 0xFF;
+        var bA = colB & 0xFF;
+        var aB = ( colA >> 24 ) & 0xFF;
+        var rB = ( colA >> 16 ) & 0xFF;
+        var gB = ( colA >> 8 ) & 0xFF;
+        var bB = colA & 0xFF;
+        var v = ( smooth )? smootherStep( t ): t;
+        // check if values same.
+        var af = lerp( aA/255, aB/255, v );
+        var rf = lerp( rA/255, rB/255, v );
+        var gf = lerp( gA/255, gB/255, v );
+        var bf = lerp( bA/255, bB/255, v );
+        return from_argb( af, rf, gf, bf );
+    }
+    inline  
+    function from_argb( a: Float, r: Float, g: Float, b: Float ): Int
+        return ( toHexInt( a ) << 24 ) 
+             | ( toHexInt( r ) << 16 ) 
+             | ( toHexInt( g ) << 8 ) 
+             |   toHexInt( b );
+    inline
+    function toHexInt( c: Float ): Int
+        return Math.round( c * 255 );
+    inline
+    function cross2d( ax: Float, ay: Float, bx: Float, by: Float ): Float
+        return ax * by - ay * bx;
     inline function boundChannel( f: Float ): Int {
         var i = Std.int( f );
         if( i > 0xFF ) i = 0xFF;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
@@ -297,8 +429,8 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         return i;
     }
     inline public
-    function fillRegPoly( cx:    Float, cy: Float
-                     , rx:    Float, ry: Float
+    function fillRegPoly( cx: Float, cy: Float
+                     , rx: Float, ry: Float
                      , color: Int, ?sides: Int = 36 ){
         var theta = 2*Math.PI/36 +0.001; // slight offset to reduce overlap artifacts.
         // can be solved by including edges .. not implemented yet
@@ -314,9 +446,9 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     }
     inline public
     function distanceSquarePointToSegment( x:  Float, y: Float
-                                         , x1: Float, y1:Float
-                                         , x2: Float, y2:Float
-                                         ):    Float
+                                                , x1: Float, y1:Float
+                                                , x2: Float, y2:Float
+                                                ): Float
     {
         var p1_p2_squareLength = (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
         var dotProduct = ((x - x1)*(x2 - x1) + (y - y1)*(y2 - y1)) / p1_p2_squareLength;
@@ -355,4 +487,5 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
 // https://gamedev.stackexchange.com/questions/23743/whats-the-most-efficient-way-to-find-barycentric-coordinates    
 // https://stackoverflow.com/questions/39213661/canvas-using-uint32array-wrong-colors-are-being-rendered
 // https://stackoverflow.com/questions/26513712/algorithm-for-coloring-a-triangle-by-vertex-color
-          
+// https://iquilezles.org/articles/ibilinear/ - todo add MIT details if quad runs.
+// https://www.shadertoy.com/view/lsBSDm
