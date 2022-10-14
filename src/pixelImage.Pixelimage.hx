@@ -178,21 +178,28 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     inline public
     function fillRect( x: Float, y: Float
                      , w: Float, h: Float
-                     , color: Int ) {
-       var p = Std.int( x );
-       var xx = p;
-       var q = Std.int( y );
-       var maxX = Std.int( x + w );
-       var maxY = Std.int( y + h );
-       while( true ){
-            setARGB( p++, q, color );
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-		}
-	}
+                     , color: Int, ?phi: Float = 0. ) {
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        if( phi != 0. ){
+            // need to tweak to get accurate offset..
+            var cx = x + w/2;
+            var cy = y + h/2;
+            fillRegPoly( cx, cy, w/2, h/2, color, phi, 4, false );
+        } else {
+            var maxX = Std.int( x + w );
+            var maxY = Std.int( y + h );
+            while( true ){
+                setARGB( p++, q, color );
+                if( p > maxX ){
+                    p = xx;
+                    q++;
+                } 
+                if( q > maxY ) break;
+            }
+        }
+    }
     /*
         Used for bounding box iteration, calculates lo...hi iterator from 3 values. 
     */
