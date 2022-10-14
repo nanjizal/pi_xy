@@ -428,6 +428,28 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         if( i < 0 ) i = 0;
         return i;
     }
+    // equation from math.stackexchange from TeM
+    inline public
+    function circleError( radius: Float, ?targetE: Float = 1.05, ?minN: Int = 12, ?maxN: Int = 500 ): Int {
+        var result = Math.ceil( Math.PI/( Math.acos( 1 - targetE/radius ) ) );
+        return if( result < minN ){
+            minN;
+        } else if( result > maxN ){
+            maxN;
+        } else {
+            result;
+        }
+    }
+    // setup so large ellipses automatically use more sides.
+    inline public
+    function fillEllipseTri( cx: Float, cy: Float
+                       , rx: Float, ry: Float
+                       , color: Int, ?printSides: Bool = false, ?targetE: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetE );
+        if( printSides ) trace( noSides );
+        fillRegPoly( cx, cy, rx, ry, color, noSides );
+    }
     inline public
     function fillRegPoly( cx: Float, cy: Float
                      , rx: Float, ry: Float
@@ -489,3 +511,4 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
 // https://stackoverflow.com/questions/26513712/algorithm-for-coloring-a-triangle-by-vertex-color
 // https://iquilezles.org/articles/ibilinear/ - todo add MIT details if quad runs.
 // https://www.shadertoy.com/view/lsBSDm
+// https://math.stackexchange.com/questions/4132060/compute-number-of-regular-polgy-sides-to-approximate-circle-to-defined-precision
