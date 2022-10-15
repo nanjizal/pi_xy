@@ -24,7 +24,7 @@ abstract Pixelshape( Pixelimage ){
         var theta = Math.atan2( o, a );
         rotateLine( px, py, thick, h, theta, color, debugCorners );
     }
-    inline
+    public inline
     function rotateLine( px: Float, py: Float
                        , thick: Float, h: Float
                        , theta: Float, color: Int
@@ -69,6 +69,64 @@ abstract Pixelshape( Pixelimage ){
             fillSquare( dx, dy, 12, 0xFFF000F0 );
         }
         fillQuad( ax, ay, bx, by, cx, cy, dx, dy, color );
+    }
+    public inline 
+    function fillGradLine( px: Float, py: Float, qx: Float, qy: Float
+                         , thick: Float
+                         , colorA: Int, colorB: Int, colorC: Int, colorD: Int
+                         , ?debugCorners = false ){
+        var o = qy-py;
+        var a = qx-py;
+        var h = Math.pow( o*o + a*a, 0.5 );
+        var theta = Math.atan2( o, a );
+        rotateGradLine( px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
+    }
+    public inline
+    function rotateGradLine( px: Float, py: Float
+                           , thick: Float, h: Float
+                           , theta: Float
+                           , colorA: Int, colorB: Int, colorC: Int, colorD: Int
+                           , ?debugCorners: Bool = false ){
+        var sin = Math.sin( theta );
+        var cos = Math.cos( theta );
+        var radius = thick/2;
+        var dx = 0.1;
+        var dy = radius;
+        var cx = h;
+        var cy = radius;
+        var bx = h;
+        var by = -radius;
+        var ax = 0.1;
+        var ay = -radius;
+        var temp = 0.;
+        temp = px + rotX( ax, ay, sin, cos );
+        ay = py + rotY( ax, ay, sin, cos );
+        ax = temp;
+                   
+        temp = px + rotX( bx, by, sin, cos );
+        by = py + rotY( bx, by, sin, cos );
+        bx = temp;
+
+        temp = px + rotX( cx, cy, sin, cos );
+        cy = py + rotY( cx, cy, sin, cos );
+        cx = temp;
+
+        temp = px + rotX( dx, dy, sin, cos );
+        dy = py + rotY( dx, dy, sin, cos ); 
+        dx = temp;
+        /*
+        trace( ax + ' ' + ay );
+        trace( bx + ' ' + by );
+        trace( cx + ' ' + cy );
+        trace( dx + ' ' + dy );
+        */
+        if( debugCorners ){
+            fillSquare( ax, ay, 12, colorA );
+            fillSquare( bx, by, 12, colorB );
+            fillSquare( cx, cy, 12, colorC );
+            fillSquare( dx, dy, 12, colorD );
+        }
+        fillGradQuad( ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
     }
     /*
     // TODO: may remove.
@@ -125,6 +183,16 @@ abstract Pixelshape( Pixelimage ){
         // tri f - b c d
         this.fillTri( ax, ay, bx, by, dx, dy, color );
         this.fillTri( bx, by, cx, cy, dx, dy, color );
+    }
+    public inline
+    function fillGradQuad( ax: Float, ay: Float, colorA: Int
+                         , bx: Float, by: Float, colorB: Int
+                         , cx: Float, cy: Float, colorC: Int 
+                         , dx: Float, dy: Float, colorD: Int ){
+        // tri e - a b d
+        // tri f - b c d
+        this.fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
+        this.fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
     }
     @:access( pixelimage.Pixelimage.fillEllipseTri )
     public inline
