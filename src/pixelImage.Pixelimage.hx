@@ -57,6 +57,7 @@ class Pixelimage_ {
     this.isLittle = isLittleEndian;
   }
 }
+@:transient
 abstract Pixel32( Int ){
     inline public function new( v: Int ){
         this = v;
@@ -104,6 +105,7 @@ abstract Pixel32( Int ){
         return r << 16 | g << 8 | b << 0;
     }
 }
+@:transient
 abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     public var width( get, never ): Int;
     inline function get_width(): Int {
@@ -175,29 +177,22 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     inline public
     function getRGBString( x: Int, y: Int )
         return stringHash6( getIrgb( x, y ) );
-    inline public
-    function fillRect( x: Float, y: Float
-                     , w: Float, h: Float
-                     , color: Int, ?phi: Float = 0. ) {
+    inline public 
+    function simpleRect( x: Float, y: Float
+                       , w: Float, h: Float
+                       , color: Int ){
         var p = Std.int( x );
         var xx = p;
         var q = Std.int( y );
-        if( phi != 0. ){
-            // need to tweak to get accurate offset..
-            var cx = x + w/2;
-            var cy = y + h/2;
-            fillRegPoly( cx, cy, w/2, h/2, color, phi, 4, false );
-        } else {
-            var maxX = Std.int( x + w );
-            var maxY = Std.int( y + h );
-            while( true ){
-                setARGB( p++, q, color );
-                if( p > maxX ){
-                    p = xx;
-                    q++;
-                } 
-                if( q > maxY ) break;
-            }
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        while( true ){
+            setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
         }
     }
     /*
@@ -241,7 +236,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         }
         return min...max;
     }
-    inline public
+    public inline
     function fillTri( ax: Float, ay: Float
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
@@ -261,17 +256,6 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                 if( triCalc( x, y, s0, t0, sxx, sy, txx, ty, A ) ) setARGB( x, y, color );
             }
         }
-    }
-    inline public
-    function fillQuad( ax: Float, ay: Float
-                     , bx: Float, by: Float
-                     , cx: Float, cy: Float
-                     , dx: Float, dy: Float 
-                     , color: Int ){
-        // tri e - a b d
-        // tri f - b c d
-        fillTri( ax, ay, bx, by, dx, dy, color );
-        fillTri( bx, by, cx, cy, dx, dy, color );
     }
     inline
     function triCalc( x:    Float,  y:    Float
@@ -436,7 +420,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         return i;
     }
     // equation from math.stackexchange from TeM
-    inline public
+    inline
     function circleError( radius: Float, ?targetE: Float = 1.05, ?minN: Int = 12, ?maxN: Int = 500 ): Int {
         var result = Math.ceil( Math.PI/( Math.acos( 1 - targetE/radius ) ) );
         return if( result < minN ){
@@ -448,23 +432,23 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         }
     }
     // setup so large ellipses automatically use more sides.
-    inline public
+    inline
     function fillEllipseTri( cx: Float, cy: Float
-                       , rx: Float, ry: Float
-                       , color: Int, ?printSides: Bool = false, ?targetE: Float = 1.05 ){
+                           , rx: Float, ry: Float
+                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetE: Float = 1.05 ){
         var rSmall = ( rx > ry )? ry: rx;
         var noSides = circleError( rSmall, targetE );
         if( printSides ) trace( noSides );
-        fillRegPoly( cx, cy, rx, ry, color, noSides );
+        fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
     }
     // phi controls rotation
-    // cornerUp is to rotate the structure before phi, so top is flat.
+    // cornerUp is to rotate the structure before phi so top is flat.
     inline public
-    function fillRegPoly( cx: Float,  cy: Float
+    function fillPolyBuild( cx: Float,  cy: Float
                         , rx: Float,  ry: Float
                         , color: Int, ?phi: Float = 0.
                         , ?sides: Int = 36, cornerUp: Bool = true ){
-        var theta = 2*Math.PI/sides +0.001; // slight offset to reduce overlap artifacts!! very bad
+        var theta = 2*Math.PI/sides;
         var omega = if( cornerUp ){
              0.;
         } else {
@@ -472,7 +456,13 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             if( Std.int( sides/2) == sides/2 ){
                 Math.PI/sides;
             } else {
-                0.5*Math.PI/sides;
+                var v = (sides/2-0.5);
+                if( Std.int( v/2 ) == v/2 ){
+                    0.5*Math.PI/sides - Math.PI;
+                } else {
+                    0.5*Math.PI/sides;
+                }
+                
             }
         }
         // can be solved by including edges .. not implemented yet
@@ -488,7 +478,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
         if( phi != 0 ){
             var cphi = Math.cos( phi );
             var sphi = Math.sin( phi );
-            for( i in 0...sides+1 ){
+            for( i in 0...sides + 1 ){
                 var stheta = Math.sin( i*theta + omega );
                 var ctheta = Math.cos( i*theta + omega );
                 var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
@@ -498,7 +488,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                 lastY = nextY;
             }
         } else { 
-            for( i in 0...sides+1 ){
+            for( i in 0...sides + 1 ){
                 var nextX = cx + rx*Math.cos( i*theta + omega );
                 var nextY = cy + ry*Math.sin( i*theta + omega );
                 fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
