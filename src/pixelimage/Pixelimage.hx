@@ -25,7 +25,7 @@ class Main {
         trace( 'Pixelimage example on Canvas' );
         var g   = canvasSetup.surface;
         var p = new Pixelimage( 1024, 768 );
-        p.fillRect( 100, 100, 300, 200, 0xff4211bc );
+        p.simpleRect( 100, 100, 300, 200, 0xff4211bc );
         p.fillTri( 100, 100, 200, 120, 150, 300, 0xffF000c0 );
         p.fillGradTri( 100, 100, 0xffff0000
                      , 500, 300, 0xFF00ff00
