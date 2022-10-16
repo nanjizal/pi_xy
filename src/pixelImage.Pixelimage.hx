@@ -241,7 +241,24 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
                     , color: Int ){
-
+        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
+        if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
+            // swap b and c
+            // probably wrong way as y is down?
+            var bx_ = bx;
+            var by_ = by;
+            bx = cx;
+            by = cy;
+            cx = bx_;
+            cy = by_;
+        }
+        fillTriUnsafe( ax, ay, bx, by, cx, cy, color ); 
+    }
+    public inline 
+    function fillTriUnsafe( ax: Float, ay: Float
+                          , bx: Float, by: Float
+                          , cx: Float, cy: Float
+                          , color: Int ){
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
