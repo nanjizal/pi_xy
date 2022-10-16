@@ -38,7 +38,9 @@ class Main {
 }
 
 */
+
 import haxe.io.UInt32Array;
+import pixelimage.BoundIterator;
 final isLittleEndian = (() -> {
     final a8 = new js.lib.Uint8Array(4);
     final a32 = (new js.lib.Uint32Array(a8.buffer)[0]=0xFFcc0011);
@@ -49,12 +51,14 @@ class Pixelimage_ {
   public var width:  Int;
   public var height: Int;
   public var image:  UInt32Array;
+  public var transparent: Bool = false;
   public var isLittle: Bool;
   public function new( width: Int, height: Int, image: UInt32Array ){
-    this.width = width;
-    this.height = height;
-    this.image = image;
+    this.width    = width;
+    this.height   = height;
+    this.image    = image;
     this.isLittle = isLittleEndian;
+    this.transparent = false;
   }
 }
 @:transient
@@ -75,7 +79,8 @@ abstract Pixel32( Int ){
             c;
         }
     }
-    inline public function fromCanvas():Int {
+    inline public
+    function fromCanvas():Int {
         var c = this;
         return if( isLittleEndian ){
             var a = c >> 24 & 0xFF;
@@ -88,7 +93,8 @@ abstract Pixel32( Int ){
             c;
         }
     }
-    inline public function rgbToCanvas():Int {
+    inline public
+    function rgbToCanvas():Int {
         var rgb = this;
         var r = rgb >> 16 & 0xFF;
         var g = rgb >> 8 & 0xFF;
@@ -96,7 +102,8 @@ abstract Pixel32( Int ){
         // abgr
         return b << 16 | g << 8 | r; 
     }
-    inline public function rgbFromCanvas():Int {
+    inline public
+    function rgbFromCanvas():Int {
         var c = this;
         var b = c >> 16 & 0xFF;
         var g = c >> 8 & 0xFF;
@@ -106,7 +113,7 @@ abstract Pixel32( Int ){
     }
 }
 @:transient
-abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
+abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     public var width( get, never ): Int;
     inline function get_width(): Int {
        return this.width;
@@ -114,6 +121,14 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     public var height( get, never ): Int;
     inline function get_height(): Int {
         return this.height;
+    }
+    public var transparent( get, set ): Bool;
+    inline function get_transparent(): Bool {
+        return this.transparent;
+    }
+    inline function set_transparent( v: Bool ): Bool {
+        this.transparent = v;
+        return v;
     }
     inline
     public function new( w: Int, h: Int ){
@@ -130,11 +145,15 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     }
     inline
     public function setARGB( x: Int, y: Int, color: Int ){
-       this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
+        if( isColorTransparent( color ) && this.transparent ){
+            colorXpixel( color, position( x, y ) );
+        } else {
+            this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
+        }
     }
     inline
     public function getARGB( x: Int, y: Int ): Int {
-       return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
+        return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
     }
     inline
     function pos4( x: Int, y: Int, ?off: Int = 0 ): Int {
@@ -195,47 +214,6 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
             if( q > maxY ) break;
         }
     }
-    /*
-        Used for bounding box iteration, calculates lo...hi iterator from 3 values. 
-    */
-    // TODO: swap floor and ceil and test
-    inline 
-    function boundIterator3( a: Float, b: Float, c: Float ): Iterator<Int> {
-        return if( a > b ){
-            if( a > c ){ // a,b a,c
-                (( b > c )? Std.int( c ): Std.int( b ))...Std.int( a );
-            } else { // c,a,b
-                Std.int( b )...Std.int( c );
-            }
-        } else {
-            if( b > c ){ // b,a, b,c 
-                (( a > c )? Std.int( c ): Std.int( a ))...Std.int( b );
-            } else { // c,b,a
-                Std.int( a )...Std.int( c );
-            }
-        }
-    }
-    inline
-    function boundIterator4( a: Float, b: Float, c: Float, d: Float ): Iterator<Int> {
-        var min = Math.floor( a );
-        var max = Math.ceil( a );
-        if( b < min ){
-            min = Math.floor( b );
-        } else if( b > max ){
-            max = Math.ceil( b );
-        }
-        if( c < min ){
-            min = Math.floor( c );
-        } else if( c > max ){
-            max = Math.ceil( c );
-        }
-        if( d < min ){
-            min = Math.floor( d );
-        } else if( d > max ){
-            max = Math.ceil( d );
-        }
-        return min...max;
-    }
     public inline
     function fillTri( ax: Float, ay: Float
                     , bx: Float, by: Float
@@ -287,7 +265,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     public inline
     function fillGradTri( ax: Float, ay: Float, colA: Int
                         , bx: Float, by: Float, colB: Int
-                        ,  cx: Float, cy: Float, colC: Int ){
+                        , cx: Float, cy: Float, colC: Int ){
         var aA = ( colB >> 24 ) & 0xFF;
         var rA = ( colB >> 16 ) & 0xFF;
         var gA = ( colB >> 8 ) & 0xFF;
@@ -323,12 +301,74 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
                     var r = boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
                     var g = boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );
                     var b = boundChannel( bA*ratioA + bB*ratioB + bC*ratioC );
-                    // re-ordered for canvas abgr
-                    this.image[ position( px, py ) ] = ( this.isLittle )? a << 24 | b << 16 | g << 8 | r: a << 24 | r << 16 | g << 8 | b;
+                    set_argbPixel( a, r, g, b, position( px, py ) );
                 }
             }
         }
     }
+    public inline
+    function set_argbPixel( a: Int, r: Int, g: Int, b: Int, location: Int ){
+        ( this.transparent && a < 0xFE )? alphaAssociativeBlend( a, r, g, b, location ): 
+                                          argbToPixel( a, r, g, b, location );
+    }
+    public inline 
+    function argbToPixel( a: Int, r: Int, g: Int, b: Int, location: Int ){
+        this.image[ location ] = ( this.isLittle )? a << 24 | b << 16 | g << 8 | r: a << 24 | r << 16 | g << 8 | b;
+    }
+    public inline 
+    function isColorTransparent( color: Int ): Bool {
+        return ( ( color >> 24 ) & 0xFF ) < 0xFE;
+    }
+    public inline
+    function colorXpixel( color: Int, location: Int ){
+        var a = color >> 24 & 0xFF;
+        var r: Int;
+        var b: Int;
+        if( this.isLittle ){
+            r = color & 0xFF;
+            b = color >> 16 & 0xFF;
+        } else {
+            r = color >> 16 & 0xFF;
+            b = color & 0xFF;
+        }
+        var g = color >> 8 & 0xFF;
+        alphaAssociativeBlend( a, r, g, b, location );
+    }
+    public inline 
+    function alphaAssociativeBlend( a: Int, r: Int, g: Int, b: Int, location: Int ) {
+        var oldColor = this.image[ location ];
+        var aOld = oldColor >> 24 & 0xFF;
+        var rOld: Int;
+        var bOld: Int;
+        if( this.isLittle ){
+            rOld = oldColor & 0xFF;
+            bOld = oldColor >> 16 & 0xFF;
+        } else {
+            rOld = oldColor >> 16 & 0xFF;
+            bOld = oldColor & 0xFF;
+        }
+        var gOld = oldColor >> 8 & 0xFF;
+        var a1 = colIntToFloat( aOld );
+        var r1 = colIntToFloat( rOld );
+        var g1 = colIntToFloat( gOld );
+        var b1 = colIntToFloat( bOld );
+        var a2 = colIntToFloat( a );
+        var r2 = colIntToFloat( r );
+        var g2 = colIntToFloat( g );
+        var b2 = colIntToFloat( b );
+        var a3 = a1 * ( 1 - a2 );
+        r = colBlendFunc( r1, r2, a3, a2 );
+        g = colBlendFunc( g1, g2, a3, a2 );
+        b = colBlendFunc( b1, b2, a3, a2 );
+        a = alphaBlendFunc( a3, a2 );
+        argbToPixel( a, r, g, b, location );
+    }
+    inline function colIntToFloat( x: Int ): Float
+        return ( x == 0 )? 0.: x/255;
+    inline function colBlendFunc( x1: Float, x2: Float, a3: Float, a2: Float ): Int
+        return Std.int( 255 * ( x1 * a3 + x2 * a2 ) );
+    inline function alphaBlendFunc( a3: Float, a2: Float ): Int
+        return Std.int( 255 * ( a3 + a2 ) );
     /*
     // NOT WORKING YET!!
     // inverse bilinear interpolation
@@ -516,9 +556,9 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
     }
     inline public
     function distanceSquarePointToSegment( x:  Float, y: Float
-                                                , x1: Float, y1:Float
-                                                , x2: Float, y2:Float
-                                                ): Float
+                                         , x1: Float, y1:Float
+                                         , x2: Float, y2:Float
+                                         ): Float
     {
         var p1_p2_squareLength = (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
         var dotProduct = ((x - x1)*(x2 - x1) + (y - y1)*(y2 - y1)) / p1_p2_squareLength;
@@ -560,3 +600,4 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ {
 // https://iquilezles.org/articles/ibilinear/ - todo add MIT details if quad runs.
 // https://www.shadertoy.com/view/lsBSDm
 // https://math.stackexchange.com/questions/4132060/compute-number-of-regular-polgy-sides-to-approximate-circle-to-defined-precision
+// //http://paulbourke.net/miscellaneous/composite/
