@@ -488,16 +488,66 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
             result;
         }
     }
+    public inline
+    function getSidesDivisible4( rx: Float, ry: Float, targetError: Float = 1.05 ): Int {
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        return Math.ceil( noSides / 4 ) *4;
+    }
     // setup so large ellipses automatically use more sides.
-    inline
+    public inline
     function fillEllipseTri( cx: Float, cy: Float
                            , rx: Float, ry: Float
-                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetE: Float = 1.05 ){
+                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
         var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetE );
+        var noSides = circleError( rSmall, targetError );
         if( printSides ) trace( noSides );
         fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
     }
+    /**
+     * fillQuadrant draws a quarter arc.
+     * 
+     **/
+    inline public
+    function fillQuadrant( cx: Float, cy: Float
+                         , rx: Float, ry: Float
+                         , startAngle: Float 
+                         , color:  Int, ?phi:   Float, ?targetError: Float = 1.05 ){
+        var sides = getSidesDivisible4( rx, ry, targetError );
+        var theta = 2*Math.PI/sides;
+        var omega = startAngle;
+        var quarter = Std.int( sides/4 );
+        var lastX: Float = 0.;
+        var lastY: Float = 0.;
+        if( phi != 0 ){
+            lastX = rx * Math.cos( sides*theta + omega ) * Math.cos( phi ) - ry * Math.sin( sides*theta + omega ) * Math.sin( phi ) + cx;
+            lastY = rx * Math.cos( sides*theta + omega ) * Math.sin( phi ) + ry * Math.sin( sides*theta + omega ) * Math.cos( phi ) + cy;
+        } else {
+            lastX = cx + rx*Math.cos( sides*theta + omega );
+            lastY = cy + ry*Math.sin( sides*theta + omega );
+        }
+        if( phi != 0 ){
+            var cphi = Math.cos( phi );
+            var sphi = Math.sin( phi );
+            for( i in 0...quarter+1){
+                var stheta = Math.sin( i*theta+0.0001 + omega );
+                var ctheta = Math.cos( i*theta+0.0001 + omega );
+                var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
+                var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
+                fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                lastX = nextX;
+                lastY = nextY;
+            }
+        } else { 
+            for( i in 0...quarter+1 ){
+                var nextX = cx + rx*Math.cos( i*theta + 0.0001 + omega );
+                var nextY = cy + ry*Math.sin( i*theta + 0.0001 + omega );
+                fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                lastX = nextX;
+                lastY = nextY;
+            }
+        }
+     }
     // phi controls rotation
     // cornerUp is to rotate the structure before phi so top is flat.
     inline public
