@@ -2,7 +2,7 @@ package pixelImage;
 import pixelimage.Pixelimage;
 @:transient
 @:forward
-abstract Pixelshape( Pixelimage ){
+abstract Pixelshape( Pixelimage ) to Pixelimage {
     inline
     public function new( w: Int, h: Int ){
         this = new Pixelimage( w, h );
@@ -184,6 +184,97 @@ abstract Pixelshape( Pixelimage ){
         this.fillTri( ax, ay, bx, by, dx, dy, color );
         this.fillTri( bx, by, cx, cy, dx, dy, color );
     }
+    /**
+        x, y      - position
+        hi, wid   - the outside dimensions
+        dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
+        fat, tall - the inner dimensions of the 9-slice centre, optional
+    **/
+    public inline
+    function fillRoundRect( x:     Float,        y:     Float
+                          , hi:    Float,        wid:   Float
+                          , color: Int
+                          , ?dx:   Float = -1.,  ?dy: Float = -1.
+                          , ?fat:  Float = -1.,  ?tall:  Float = -1. 
+                          ){ // phi not implemented
+        // if no dx set
+        // use smallest dimension and assume three parts
+        // with the middle section the goldenRatio larger!
+        if( dx < 0. ){
+            var smallest = ( hi < wid )? hi: wid;
+            var goldenRatio = 1.61803398875;
+            dx = smallest / ( goldenRatio + 2 );
+        }
+        if( dy < 0. )   dy = dx;
+        if( fat < 0. )  fat = wid - 2*dx;
+        if( tall < 0. ) tall = hi - 2*dy;
+        var rightRadius  = wid - fat - dx;
+        var bottomRadius = hi - tall - dy;
+        var farX = x + dx + fat;
+        var lowerY = y + dy + tall;
+        // top row
+        fillQuadrantII( x + dx, y + dy, dx, dy, color );
+        this.simpleRect(  x + dx, y, fat, dy, color );
+        fillQuadrantI(  farX, y + dy, rightRadius, dy, color );
+        // middle row  ( will need more splitting with gradient )
+        this.simpleRect(  x, y + dy, wid, tall, color );
+        // bottom row
+        fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, color );
+        this.simpleRect(   x + dx, lowerY, fat, bottomRadius, color );
+        fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, color );
+    }
+    /**
+        x, y      - position
+        hi, wid   - the outside dimensions
+        dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
+        fat, tall - the inner dimensions of the 9-slice centre, optional
+    **/
+    public inline
+    function fillGrad4RoundRect( x:     Float,        y:     Float
+                          , hi:    Float,        wid:   Float
+                          , colorA: Int, colorB: Int, colorC: Int, colorD: Int
+                          , ?dx:   Float = -1.,  ?dy: Float = -1.
+                          , ?fat:  Float = -1.,  ?tall:  Float = -1. 
+                          ){ // phi not implemented
+        // if no dx set
+        // use smallest dimension and assume three parts
+        // with the middle section the goldenRatio larger!
+        if( dx < 0. ){
+            var smallest = ( hi < wid )? hi: wid;
+            var goldenRatio = 1.61803398875;
+            dx = smallest / ( goldenRatio + 2 );
+        }
+        if( dy < 0. )   dy = dx;
+        if( fat < 0. )  fat = wid - 2*dx;
+        if( tall < 0. ) tall = hi - 2*dy;
+        var rightRadius  = wid - fat - dx;
+        var bottomRadius = hi - tall - dy;
+        var farX = x + dx + fat;
+        var lowerY = y + dy + tall;
+        // top row
+        fillQuadrantII( x + dx, y + dy, dx, dy, colorA );
+        fillGradRect(  x + dx, y, fat, dy, colorA, colorB, colorB, colorA );
+        fillQuadrantI(  farX, y + dy, rightRadius, dy, colorB );
+        // middle row  ( will need more splitting with gradient )
+        fillGradRect(  x, y + dy, dx, tall, colorA, colorA, colorD, colorD );
+        fillGradRect(  x + dx, y + dy, fat, tall, colorA, colorB, colorC, colorD );
+        fillGradRect(  farX, y + dy, rightRadius, tall, colorB, colorB, colorC, colorC );
+        // bottom row
+        fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, colorD );
+        fillGradRect(   x + dx, lowerY, fat, bottomRadius, colorD, colorC, colorC, colorD );
+        fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, colorC );
+    }
+    public inline 
+    function fillGradRect( x:   Float, y: Float
+                         , wid: Float, hi: Float
+                         , colorA: Int, colorB: Int, colorC: Int, colorD: Int ){
+        var bx = x + wid;
+        var cy = y + hi;
+        fillGradQuad( x,  y,  colorA
+                    , bx, y,  colorB
+                    , bx, cy, colorC
+                    , x,  cy, colorD );
+    }
     public inline
     function fillGradQuad( ax: Float, ay: Float, colorA: Int
                          , bx: Float, by: Float, colorB: Int
@@ -193,6 +284,42 @@ abstract Pixelshape( Pixelimage ){
         // tri f - b c d
         this.fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
         this.fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
+    }
+    public inline
+    function testFillSimonSaysQuadrant( cx: Float, cy: Float, radius: Float ){
+        fillQuadrantI(   cx, cy, radius, radius, 0xffd8402f );
+        fillQuadrantII(  cx, cy, radius, radius, 0xff3bab5c );
+        fillQuadrantIII( cx, cy, radius, radius, 0xfff2ee64 );
+        fillQuadrantIV(  cx, cy, radius, radius, 0xff2d7fc2 );
+    }
+    public inline
+    function fillQuadrantI( cx:    Float, cy:   Float
+                          , rx:    Float, ry:   Float
+                          , color: Int,   ?phi: Float = 0.
+                          ){
+        // positive positive plane I  + + , simon says RED
+        this.fillQuadrant( cx, cy, rx, ry, 3*Math.PI/2, color, phi );
+    }
+    public inline 
+    function fillQuadrantII( cx:    Float, cy:   Float
+                           , rx:    Float, ry:   Float
+                           , color: Int,   ?phi: Float = 0. ){
+        // plane II  - + , simon says GREEN
+        this.fillQuadrant( cx, cy, rx, ry, Math.PI, color, phi );
+    }
+    public inline
+    function fillQuadrantIII( cx:    Float, cy:   Float
+                            , rx:    Float, ry:   Float
+                            , color: Int,   ?phi: Float = 0. ){
+        // negative negative plane III - - , simon says YELLOW
+        this.fillQuadrant( cx, cy, rx, ry, Math.PI/2, color, phi );
+    }
+    public inline
+    function fillQuadrantIV( cx:    Float, cy:   Float
+                           , rx:    Float, ry:   Float
+                           , color: Int,   ?phi: Float = 0. ){
+        // plane IV  + - , simon says BLUE
+        this.fillQuadrant( cx, cy, rx, ry, 0., color, phi );
     }
     @:access( pixelimage.Pixelimage.fillEllipseTri )
     public inline
