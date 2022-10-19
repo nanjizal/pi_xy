@@ -1,11 +1,11 @@
-package pixelimage;
+package;
 // module BoundIterator
 
     /*
         Used for bounding box iteration, calculates lo...hi iterator from 3 values. 
     */
     inline 
-    function boundIterator3( a: Float, b: Float, c: Float ): Iterator<Int> {
+    function boundIterator3( a: Float, b: Float, c: Float ): IntIterator {
         return if( a > b ){
             if( a > c ){ // a,b a,c
                 (( b > c )? Math.floor( c ): Math.floor( b ))...Math.ceil( a );
@@ -21,7 +21,7 @@ package pixelimage;
         }
     }
     inline
-    function boundIterator4( a: Float, b: Float, c: Float, d: Float ): Iterator<Int> {
+    function boundIterator4( a: Float, b: Float, c: Float, d: Float ): IntIterator {
         var min = Math.floor( a );
         var max = Math.ceil( a );
         if( b < min ){
