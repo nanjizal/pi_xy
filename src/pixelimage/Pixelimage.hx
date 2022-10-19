@@ -243,24 +243,35 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
         var t0 = ax*by - ay*bx;
         var tx = ay - by;
         var ty = bx - ax;
-        var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy;
+        var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var foundY = false;
+        var s = 0.;
+        var t = 0.;
+        var sxx = 0.;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+        var txx = 0.;
         for( x in boundIterator3( ax, bx, cx ) ){
-            var sxx = sx*x;
-            var txx = tx*x;
-            for( y in boundIterator3( ay, by, cy ) ){
-                if( triCalc( x, y, s0, t0, sxx, sy, txx, ty, A ) ) setARGB( x, y, color );
-            }
+            sxx = sx*x;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            txx = tx*x;
+            foundY = false;
+            for( y in yIter3 ){
+                s = s0 + sxx + sy*y;
+                t = t0 + txx + ty*y;
+                if( s <= 0 || t <= 0 ){
+                    // after filling break
+                    if( foundY ) break;
+                } else {
+                    if( (s + t) < A ) {
+                     // store first hit
+                        setARGB( x, y, color );
+                        foundY = true;
+                    } else {
+                        // after filling break
+                        if( foundY ) break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                    }
+                }
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                
         }
-    }
-    inline
-    function triCalc( x:    Float,  y:    Float
-                    , s0:   Float,  t0:   Float
-                    , sxx:  Float,  sy:   Float
-                    , txx:  Float,  ty:   Float
-                    , A:    Float      ): Bool {
-        var s = s0 + sxx + sy*y;
-        var t = t0 + txx + ty*y;
-        return ( s <= 0 || t <= 0 )? false: (s + t) < A;
     }
     public inline
     function fillGradTri( ax: Float, ay: Float, colA: Int
