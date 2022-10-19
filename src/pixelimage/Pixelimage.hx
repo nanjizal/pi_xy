@@ -53,6 +53,9 @@ class Pixelimage_ {
   public var image:  UInt32Array;
   public var transparent: Bool = false;
   public var isLittle: Bool;
+  public var virtualX: Float = 0;
+  public var virtualY: Float = 0;
+  public var useVirtualPos: Bool = false;
   public function new( width: Int, height: Int, image: UInt32Array ){
     this.width    = width;
     this.height   = height;
@@ -122,6 +125,14 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     inline function get_height(): Int {
         return this.height;
     }
+    public function setRelativePosition( x: Int, y: Int, ?update: Bool = false ){
+        this.useVirtualPos = true;
+        if( x < 0 ) x = 0;
+        if( y < 0 ) y = 0;
+        this.virtualX = x;
+        this.virtualY = y;
+        // TODO: update to implement
+    }
     public var transparent( get, set ): Bool;
     inline function get_transparent(): Bool {
         return this.transparent;
@@ -141,7 +152,10 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     }
     inline 
     function position( x: Int, y: Int ){
-       return Std.int( y * this.width + x );
+        // allows off set position when drawing
+        return ( this.useVirtualPos )?
+            Std.int( ( y - this.virtualY ) * this.width + x - this.virtualX ):
+            Std.int( y * this.width + x );
     }
     inline
     public function setARGB( x: Int, y: Int, color: Int ){
@@ -230,7 +244,7 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
             cx = bx_;
             cy = by_;
         }
-        fillTriUnsafe( ax, ay, bx, by, cx, cy, color ); 
+        fillTriUnsafe( ax, ay, bx, by, cx, cy, color );
     }
     public inline 
     function fillTriUnsafe( ax: Float, ay: Float
@@ -641,11 +655,15 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
         var data = new js.lib.Uint8ClampedArray( view8().buffer );
         var imageData = new js.html.ImageData( data, this.width, this.height );
-        ctx.putImageData( imageData, x, y);
+        ( this.useVirtualPos )? 
+            ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
+            ctx.putImageData( imageData, x, y);
     }
     inline
     public function drawFromContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int ){
-        var imageData = ctx.getImageData( x, y, this.width, this.height);
+        var imageData = ( this.useVirtualPos )?
+            ctx.getImageData( x + this.virtualX, y + this.virtualY, this.width, this.height):
+            ctx.getImageData( x + this.virtualX, y + this.virtualY, this.width, this.height);
         var data = imageData.data;
         var temp = new js.lib.Uint32Array( data.buffer );
         this.image = cast temp;
