@@ -1,4 +1,4 @@
-package pixelimage;
+package pixelimage.iter;
 // module BoundIterator
 
     /*

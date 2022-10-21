@@ -1,132 +1,14 @@
 package pixelimage;
 import pixelimage.Pixelimage;
+import pixelimage.pixel.Pixel32;
+import pixelimage.algo.RoundRecPixel;
+
 @:transient
 @:forward
 abstract Pixelshape( Pixelimage ) to Pixelimage {
     inline
     public function new( w: Int, h: Int ){
         this = new Pixelimage( w, h );
-    }
-    public inline
-    function rotX( x: Float, y: Float, sin: Float, cos: Float ){
-        return x * cos - y * sin;
-    }
-    public inline
-    function rotY( x: Float, y: Float, sin: Float, cos: Float ){
-        return y * cos + x * sin;
-    }
-    public inline 
-    function fillLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, color: Int, ?debugCorners = false ){
-        var o = qy-py;
-        var a = qx-py;
-        var h = Math.pow( o*o + a*a, 0.5 );
-        var theta = Math.atan2( o, a );
-        rotateLine( px, py, thick, h, theta, color, debugCorners );
-    }
-    public inline
-    function rotateLine( px: Float, py: Float
-                       , thick: Float, h: Float
-                       , theta: Float, color: Int
-                       , ?debugCorners: Bool = false ){
-        var sin = Math.sin( theta );
-        var cos = Math.cos( theta );
-        var radius = thick/2;
-        var dx = 0.1;
-        var dy = radius;
-        var cx = h;
-        var cy = radius;
-        var bx = h;
-        var by = -radius;
-        var ax = 0.1;
-        var ay = -radius;
-        var temp = 0.;
-        temp = px + rotX( ax, ay, sin, cos );
-        ay = py + rotY( ax, ay, sin, cos );
-        ax = temp;
-                   
-        temp = px + rotX( bx, by, sin, cos );
-        by = py + rotY( bx, by, sin, cos );
-        bx = temp;
-
-        temp = px + rotX( cx, cy, sin, cos );
-        cy = py + rotY( cx, cy, sin, cos );
-        cx = temp;
-
-        temp = px + rotX( dx, dy, sin, cos );
-        dy = py + rotY( dx, dy, sin, cos ); 
-        dx = temp;
-        /*
-        trace( ax + ' ' + ay );
-        trace( bx + ' ' + by );
-        trace( cx + ' ' + cy );
-        trace( dx + ' ' + dy );
-        */
-        if( debugCorners ){
-            fillSquare( ax, ay, 12, 0xFFFF0000 );
-            fillSquare( bx, by, 12, 0xFF00FF00 );
-            fillSquare( cx, cy, 12, 0xFF0000ff );
-            fillSquare( dx, dy, 12, 0xFFF000F0 );
-        }
-        fillQuad( ax, ay, bx, by, cx, cy, dx, dy, color );
-    }
-    public inline 
-    function fillGradLine( px: Float, py: Float, qx: Float, qy: Float
-                         , thick: Float
-                         , colorA: Int, colorB: Int, colorC: Int, colorD: Int
-                         , ?debugCorners = false ){
-        var o = qy-py;
-        var a = qx-py;
-        var h = Math.pow( o*o + a*a, 0.5 );
-        var theta = Math.atan2( o, a );
-        rotateGradLine( px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
-    }
-    public inline
-    function rotateGradLine( px: Float, py: Float
-                           , thick: Float, h: Float
-                           , theta: Float
-                           , colorA: Int, colorB: Int, colorC: Int, colorD: Int
-                           , ?debugCorners: Bool = false ){
-        var sin = Math.sin( theta );
-        var cos = Math.cos( theta );
-        var radius = thick/2;
-        var dx = 0.1;
-        var dy = radius;
-        var cx = h;
-        var cy = radius;
-        var bx = h;
-        var by = -radius;
-        var ax = 0.1;
-        var ay = -radius;
-        var temp = 0.;
-        temp = px + rotX( ax, ay, sin, cos );
-        ay = py + rotY( ax, ay, sin, cos );
-        ax = temp;
-                   
-        temp = px + rotX( bx, by, sin, cos );
-        by = py + rotY( bx, by, sin, cos );
-        bx = temp;
-
-        temp = px + rotX( cx, cy, sin, cos );
-        cy = py + rotY( cx, cy, sin, cos );
-        cx = temp;
-
-        temp = px + rotX( dx, dy, sin, cos );
-        dy = py + rotY( dx, dy, sin, cos ); 
-        dx = temp;
-        /*
-        trace( ax + ' ' + ay );
-        trace( bx + ' ' + by );
-        trace( cx + ' ' + cy );
-        trace( dx + ' ' + dy );
-        */
-        if( debugCorners ){
-            fillSquare( ax, ay, 12, colorA );
-            fillSquare( bx, by, 12, colorB );
-            fillSquare( cx, cy, 12, colorC );
-            fillSquare( dx, dy, 12, colorD );
-        }
-        fillGradQuad( ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
     }
     /*
     // TODO: may remove.
@@ -157,13 +39,6 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
             this.simpleRect( x, y + i* delta - thick/2, w_, thick, color );
         }
     }
-    public inline
-    function fillSquare( x: Float, y: Float
-                       , d: Float
-                       , color: Int ) {
-        this.simpleRect( x-d/2, y-d/2, d, d, color );
-        //fillRect( x-d/2, y-d/2, d, d, color, phi );
-    }
     /*
     public inline
     function fillDavidStar(x: Float, y: Float
@@ -173,17 +48,6 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
         fillRect( x, y, d*Math.pow(2,0.5), d*Math.pow(2,0.5), color, Math.PI/4 );
     }
     */
-    public inline
-    function fillQuad( ax: Float, ay: Float
-                     , bx: Float, by: Float
-                     , cx: Float, cy: Float
-                     , dx: Float, dy: Float 
-                     , color: Int ){
-        // tri e - a b d
-        // tri f - b c d
-        this.fillTri( ax, ay, bx, by, dx, dy, color );
-        this.fillTri( bx, by, cx, cy, dx, dy, color );
-    }
     /**
         x, y      - position
         hi, wid   - the outside dimensions
@@ -196,32 +60,8 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                           , color: Int
                           , ?dx:   Float = -1.,  ?dy: Float = -1.
                           , ?fat:  Float = -1.,  ?tall:  Float = -1. 
-                          ){ // phi not implemented
-        // if no dx set
-        // use smallest dimension and assume three parts
-        // with the middle section the goldenRatio larger!
-        if( dx < 0. ){
-            var smallest = ( hi < wid )? hi: wid;
-            var goldenRatio = 1.61803398875;
-            dx = smallest / ( goldenRatio + 2 );
-        }
-        if( dy < 0. )   dy = dx;
-        if( fat < 0. )  fat = wid - 2*dx;
-        if( tall < 0. ) tall = hi - 2*dy;
-        var rightRadius  = wid - fat - dx;
-        var bottomRadius = hi - tall - dy;
-        var farX = x + dx + fat;
-        var lowerY = y + dy + tall;
-        // top row
-        fillQuadrantII( x + dx, y + dy, dx, dy, color );
-        this.simpleRect(  x + dx, y, fat, dy, color );
-        fillQuadrantI(  farX, y + dy, rightRadius, dy, color );
-        // middle row  ( will need more splitting with gradient )
-        this.simpleRect(  x, y + dy, wid, tall, color );
-        // bottom row
-        fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, color );
-        this.simpleRect(   x + dx, lowerY, fat, bottomRadius, color );
-        fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, color );
+                          ){ 
+        fillRoundRectangle( abstract, x, y, wid, hi, color, dx, dy, fat, tall );
     }
     /**
         x, y      - position
@@ -231,59 +71,12 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     **/
     public inline
     function fillGrad4RoundRect( x:     Float,        y:     Float
-                          , hi:    Float,        wid:   Float
-                          , colorA: Int, colorB: Int, colorC: Int, colorD: Int
-                          , ?dx:   Float = -1.,  ?dy: Float = -1.
-                          , ?fat:  Float = -1.,  ?tall:  Float = -1. 
-                          ){ // phi not implemented
-        // if no dx set
-        // use smallest dimension and assume three parts
-        // with the middle section the goldenRatio larger!
-        if( dx < 0. ){
-            var smallest = ( hi < wid )? hi: wid;
-            var goldenRatio = 1.61803398875;
-            dx = smallest / ( goldenRatio + 2 );
-        }
-        if( dy < 0. )   dy = dx;
-        if( fat < 0. )  fat = wid - 2*dx;
-        if( tall < 0. ) tall = hi - 2*dy;
-        var rightRadius  = wid - fat - dx;
-        var bottomRadius = hi - tall - dy;
-        var farX = x + dx + fat;
-        var lowerY = y + dy + tall;
-        // top row
-        fillQuadrantII( x + dx, y + dy, dx, dy, colorA );
-        fillGradRect(  x + dx, y, fat, dy, colorA, colorB, colorB, colorA );
-        fillQuadrantI(  farX, y + dy, rightRadius, dy, colorB );
-        // middle row  ( will need more splitting with gradient )
-        fillGradRect(  x, y + dy, dx, tall, colorA, colorA, colorD, colorD );
-        fillGradRect(  x + dx, y + dy, fat, tall, colorA, colorB, colorC, colorD );
-        fillGradRect(  farX, y + dy, rightRadius, tall, colorB, colorB, colorC, colorC );
-        // bottom row
-        fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, colorD );
-        fillGradRect(   x + dx, lowerY, fat, bottomRadius, colorD, colorC, colorC, colorD );
-        fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, colorC );
-    }
-    public inline 
-    function fillGradRect( x:   Float, y: Float
-                         , wid: Float, hi: Float
-                         , colorA: Int, colorB: Int, colorC: Int, colorD: Int ){
-        var bx = x + wid;
-        var cy = y + hi;
-        fillGradQuad( x,  y,  colorA
-                    , bx, y,  colorB
-                    , bx, cy, colorC
-                    , x,  cy, colorD );
-    }
-    public inline
-    function fillGradQuad( ax: Float, ay: Float, colorA: Int
-                         , bx: Float, by: Float, colorB: Int
-                         , cx: Float, cy: Float, colorC: Int 
-                         , dx: Float, dy: Float, colorD: Int ){
-        // tri e - a b d
-        // tri f - b c d
-        this.fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
-        this.fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
+                               , hi:    Float,        wid:   Float
+                               , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+                               , ?dx:   Float = -1.,  ?dy: Float = -1.
+                               , ?fat:  Float = -1.,  ?tall:  Float = -1. 
+                               ){ 
+        fillGrad4RoundRectangle( abstract, x, y, hi, wid, colorA, colorC, colorB, colorD, dx, dy, fat, tall );
     }
     public inline
     function testFillSimonSaysQuadrant( cx: Float, cy: Float, radius: Float ){

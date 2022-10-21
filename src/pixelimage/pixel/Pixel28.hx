@@ -42,7 +42,7 @@ abstract Pixel28( Int ) to Int {
     public function transferColor(): Pixel28
         return ( isLittleEndian )? flip13(): ( cast this: Pixel28 );
     inline
-    public function stringHash6(): String 
+    public function stringHash(): String 
         return '#' + StringTools.hex( this, 6 );
     inline
     public static function fromChannels( ch1: Int, ch2: Int, ch3: Int ): Pixel28
