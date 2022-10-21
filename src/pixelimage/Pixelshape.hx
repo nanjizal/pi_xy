@@ -1,4 +1,4 @@
-package pixelImage;
+package pixelimage;
 import pixelimage.Pixelimage;
 @:transient
 @:forward

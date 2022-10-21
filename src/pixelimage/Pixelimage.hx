@@ -1,130 +1,19 @@
 package pixelimage;
-/*
-// Example use.. currently set only for canvas.
-
--js bin/test.js
--lib htmlHelper
--lib pixelimage
--main Main
--D js-flatten 
--dce full
-#--no-traces
---next
--cmd echo '<!DOCTYPE html><meta charset="UTF-8"><html><body><script src="test.js"></script></body></html>' >bin/index.html
-# open html on linux.
--cmd cd bin/
--cmd firefox "./index.html"
-
-import htmlHelper.canvas.CanvasSetup;
-import htmlHelper.canvas.Surface;
-import pixelimage.Pixelimage;
-function main() new Main();
-class Main {
-    public var canvasSetup = new CanvasSetup();
-    public function new(){
-        trace( 'Pixelimage example on Canvas' );
-        var g   = canvasSetup.surface;
-        var p = new Pixelimage( 1024, 768 );
-        p.simpleRect( 100, 100, 300, 200, 0xff4211bc );
-        p.fillTri( 100, 100, 200, 120, 150, 300, 0xffF000c0 );
-        p.fillGradTri( 100, 100, 0xffff0000
-                     , 500, 300, 0xFF00ff00
-                     , 300, 500, 0xFF0000ff);
-        p.fillRegPoly( 300, 300, 90, 200, 0xFF00Ffcc );// circles and ellipses
-        p.drawToContext( g.me, 0, 0 );
-        p.drawFromContext( g.me, 0, 0 );
-        trace( p.getPixelString( 101, 101) );
-   }
-}
-
-*/
 
 import haxe.io.UInt32Array;
 import pixelimage.BoundIterator;
-final isLittleEndian = (() -> {
-    final a8 = new js.lib.Uint8Array(4);
-    final a32 = (new js.lib.Uint32Array(a8.buffer)[0]=0xFFcc0011);
-    return !(a8[0]==0xff);
-})();
-@:structInit
-class Pixelimage_ {
-  public var width:  Int;
-  public var height: Int;
-  public var image:  UInt32Array;
-  public var transparent: Bool = false;
-  public var isLittle: Bool;
-  public var virtualX: Float = 0;
-  public var virtualY: Float = 0;
-  public var useVirtualPos: Bool = false;
-  public function new( width: Int, height: Int, image: UInt32Array ){
-    this.width    = width;
-    this.height   = height;
-    this.image    = image;
-    this.isLittle = isLittleEndian;
-    this.transparent = false;
-  }
-}
+import pixelimage.ImageStruct;
+import pixelimage.pixel.Pixel32;
+import pixelimage.pixel.Pixel28;
+
 @:transient
-abstract Pixel32( Int ){
-    inline public function new( v: Int ){
-        this = v;
-    }
-    inline public function toCanvas():Int{
-        var c = this;
-        // abgr
-        return if( isLittleEndian ){
-            var a = c >> 24 & 0xFF;
-            var r = c >> 16 & 0xFF;
-            var g = c >> 8 & 0xFF;
-            var b = c & 0xFF;
-            a << 24 | b << 16 | g << 8 | r;
-        } else { 
-            c;
-        }
-    }
-    inline public
-    function fromCanvas():Int {
-        var c = this;
-        return if( isLittleEndian ){
-            var a = c >> 24 & 0xFF;
-            var b = c >> 16 & 0xFF;
-            var g = c >> 8 & 0xFF;
-            var r = c & 0xFF;
-            // argb
-            a << 24 | r << 16 | g << 8 | b;
-        } else {
-            c;
-        }
-    }
-    inline public
-    function rgbToCanvas():Int {
-        var rgb = this;
-        var r = rgb >> 16 & 0xFF;
-        var g = rgb >> 8 & 0xFF;
-        var b = rgb & 0xFF;
-        // abgr
-        return b << 16 | g << 8 | r; 
-    }
-    inline public
-    function rgbFromCanvas():Int {
-        var c = this;
-        var b = c >> 16 & 0xFF;
-        var g = c >> 8 & 0xFF;
-        var r = c & 0xFF;
-        // rgb
-        return r << 16 | g << 8 | b << 0;
-    }
-}
-@:transient
-abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
+abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     public var width( get, never ): Int;
-    inline function get_width(): Int {
+    inline function get_width(): Int
        return this.width;
-    }
     public var height( get, never ): Int;
-    inline function get_height(): Int {
+    inline function get_height(): Int
         return this.height;
-    }
     public function setRelativePosition( x: Int, y: Int, ?update: Bool = false ){
         this.useVirtualPos = true;
         if( x < 0 ) x = 0;
@@ -134,9 +23,8 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
         // TODO: update to implement
     }
     public var transparent( get, set ): Bool;
-    inline function get_transparent(): Bool {
+    inline function get_transparent(): Bool
         return this.transparent;
-    }
     inline function set_transparent( v: Bool ): Bool {
         this.transparent = v;
         return v;
@@ -144,72 +32,65 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     inline
     public function new( w: Int, h: Int ){
        this = ( 
-        { width:  w
-        , height: h
+        { width:  w, height: h
         , image:  new haxe.io.UInt32Array( Std.int( w * h  ) ) 
-        }: Pixelimage_ 
+        }: ImageStruct
         );
     }
+    inline
+    function pos4( x: Int, y: Int, ?off: Int = 0 ): Int
+        return Std.int( position( x, y ) * 4 ) + off; 
     inline 
     function position( x: Int, y: Int ){
-        // allows off set position when drawing
-        return ( this.useVirtualPos )?
+        return ( this.useVirtualPos )? /* allows off set position when drawing */
             Std.int( ( y - this.virtualY ) * this.width + x - this.virtualX ):
             Std.int( y * this.width + x );
     }
     inline
-    public function setARGB( x: Int, y: Int, color: Int ){
-        if( isColorTransparent( color ) && this.transparent ){
+    public function setARGB( x: Int, y: Int, color: Int ): Int {
+        var c = new pixelimage.pixel.Pixel32( color );
+        if( c.isTransparent() && this.transparent ){
             colorXpixel( color, position( x, y ) );
         } else {
-            this.image[ position( x, y ) ] = new Pixel32( color ).toCanvas();
+            this.image[ position( x, y ) ] = c.transferColor();
         }
+        return color;
     }
     inline
     public function getARGB( x: Int, y: Int ): Int {
-        return new Pixel32( this.image[ position( x, y ) ] ).fromCanvas();
+        var c: Pixel32 = cast this.image[ position( x, y ) ];
+        return c.transferColor();
     }
-    inline
-    function pos4( x: Int, y: Int, ?off: Int = 0 ): Int {
-        return Std.int( position( x, y ) * 4 ) + off;
-    }     
     inline 
     function view8():js.lib.Uint8Array {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }  
+    /*
     inline
-    public function setIalpha( x: Int, y: Int, alpha: Int ) {
+    public function setIalpha( x: Int, y: Int, alpha: Int )
         view8()[ pos4( x, y, 0 ) ] = alpha;    
-    }
     inline
-    public function getIalpha( x: Int, y: Int ): Int {
-        return view8()[ pos4( x, y, 0 )];   
-    }
+    public function getIalpha( x: Int, y: Int ): Int
+        return view8()[ pos4( x, y, 0 )];
     inline
-    public function setIrgb( x: Int, y: Int, rgb: Int ) {
+    public function setIrgb( x: Int, y: Int, rgb: Int ){
         var a = getIalpha( x, y );
         // abgr
-        this.image[ position( x, y ) ] = a << 24 | new Pixel32( rgb ).rgbToCanvas();   
+        this.image[ position( x, y ) ] = ( a << 24 | new Pixel32( rgb ) ).transferColor();   
     }
     inline
     public function getIrgb( x: Int, y: Int ): Int {
         var c = this.image[ position( x, y ) ];
-        // rgb
-        return new Pixel32(c).rgbFromCanvas();
+        return new Pixel32( c ).rgbFromCanvas(); // rgb
     }
+    */
     inline public
-    function stringHash8( col: Int ): String
-        return '#' + StringTools.hex( col, 8 );
-    inline public
-    function stringHash6( col: Int ): String 
-        return '#' + StringTools.hex( col, 6 );
-    inline public
-    function getPixelString( x: Int, y: Int )
-        return stringHash8( getARGB( x, y ) );
-    inline public
-    function getRGBString( x: Int, y: Int )
-        return stringHash6( getIrgb( x, y ) );
+    function getPixelString( x: Int, y: Int ): String
+        return ( new Pixel32( getARGB( x, y ) ) ).stringHash();
+    //inline public
+    //function getRGBString( x: Int, y: Int ): String
+    //    return ( new Pixel28( getIrgb( x, y ) ) ).stringHash();
     inline public 
     function simpleRect( x: Float, y: Float
                        , w: Float, h: Float
@@ -340,10 +221,12 @@ abstract Pixelimage( Pixelimage_ ) from Pixelimage_ to Pixelimage {
     function argbToPixel( a: Int, r: Int, g: Int, b: Int, location: Int ){
         this.image[ location ] = ( this.isLittle )? a << 24 | b << 16 | g << 8 | r: a << 24 | r << 16 | g << 8 | b;
     }
+    /*
     public inline 
     function isColorTransparent( color: Int ): Bool {
         return ( ( color >> 24 ) & 0xFF ) < 0xFE;
     }
+    */
     public inline
     function colorXpixel( color: Int, location: Int ){
         var a = color >> 24 & 0xFF;

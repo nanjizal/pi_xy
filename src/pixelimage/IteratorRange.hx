@@ -1,4 +1,4 @@
-package;
+package pixelimage;
 @:access(IntIterator.min, IntIterator.max )
 class IntIterStart {
     public var start: Int;
