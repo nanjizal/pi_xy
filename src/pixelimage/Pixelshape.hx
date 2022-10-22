@@ -63,6 +63,21 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                           ){ 
         fillRoundRectangle( abstract, x, y, wid, hi, color, dx, dy, fat, tall );
     }
+    public inline
+    function lineRoundRect( x:     Float,        y:     Float
+                          , hi:    Float,        wid:   Float
+                          , thick: Float
+                          , color: Int
+                          , ?dx:   Float = -1.,  ?dy: Float = -1.
+                          , ?fat:  Float = -1.,  ?tall:  Float = -1. 
+                          ){ 
+        var temp = new Pixelimage( Math.ceil( hi ), Math.ceil( wid ) );
+        temp.transparent = false;
+        fillRoundRectangle( temp, 0, 0, wid, hi, color, dx, dy, fat, tall );
+        fillRoundRectangle( temp, thick, thick, wid-2*thick, hi-2*hi, 0x00000000, dx, dy, fat, tall );
+        putImageData( temp, x, y );
+        temp = null;
+    }
     /**
         x, y      - position
         hi, wid   - the outside dimensions
@@ -77,6 +92,21 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                                , ?fat:  Float = -1.,  ?tall:  Float = -1. 
                                ){ 
         fillGrad4RoundRectangle( abstract, x, y, hi, wid, colorA, colorC, colorB, colorD, dx, dy, fat, tall );
+    }
+    public inline
+    function fillGrad4RoundRect( x:     Float,        y:     Float
+                               , hi:    Float,        wid:   Float
+                               , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+                               , ?dx:   Float = -1.,  ?dy: Float = -1.
+                               , ?fat:  Float = -1.,  ?tall:  Float = -1. 
+                               ){ 
+        var temp = new Pixelimage( Math.ceil( hi ), Math.ceil( wid ) );
+        temp.transparent = false;
+        fillGrad4RoundRectangle( temp, 0, 0, hi, wid, colorA, colorC, colorB, colorD, dx, dy, fat, tall );
+        fillRoundRectangle( temp, thick, thick, wid-2*thick, hi-2*hi, 0x00000000, dx, dy, fat, tall );
+        putImageData( temp, x, y );
+        temp = null;
+
     }
     public inline
     function testFillSimonSaysQuadrant( cx: Float, cy: Float, radius: Float ){

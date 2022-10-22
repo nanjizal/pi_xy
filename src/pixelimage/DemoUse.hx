@@ -17,22 +17,28 @@ class DemoUse {
         p.setRelativePosition( 0, 0 );
         drawGrid( p );
         drawAlphaTriangle( p );
-        simonSays( p );
+        drawRadials( p );
+        //simonSays( p );
         p.fillGrad4RoundRect( 1340, 280, 150, 280, 0xff8a7676, 0xff757567, 0xff545951, 0xff51515d );
         p.drawToContext( g.me, 0, 0 );
         p.drawFromContext( g.me, 0, 0 );
         trace( p.getPixelString( 101, 101) );
-   }
+     }
 
-   public function simonSays( p: Pixelshape ){
-        p.testFillSimonSaysQuadrant( 300, 300, 100 );
-   }
+     public function drawRadials( p: Pixelshape ){
+          p.fillRadialRectangle( 150, 150, 500, 300, 0xFFc0FF00, 0xFF00c0FF, -0.25, -0.25 );
+          p.lineRadialEllipseTri( 600, 650, 290, 200, 100, 100,0xffe100ff, 0xff3a20af, -0.75, -0.75, Math.PI/6 );
+     }
 
-   public function drawGrid( p: Pixelshape ){
-        p.lineGrid( 100, 100, 1024*3, 768*3, 100, 2.5, 0xfF003300 );
-   }
+     public function simonSays( p: Pixelshape ){
+          p.testFillSimonSaysQuadrant( 300, 300, 100 );
+     }
 
-   public function drawAlphaTriangle( p: Pixelshape ){
+     public function drawGrid( p: Pixelshape ){
+          p.lineGrid( 100, 100, 1024*3, 768*3, 100, 2.5, 0xfF003300 );
+     }
+
+     public function drawAlphaTriangle( p: Pixelshape ){
         var a = [ 0x33F000c0
                 , 0x99F000c0
                 , 0xaaF000c0

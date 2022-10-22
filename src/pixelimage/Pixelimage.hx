@@ -15,6 +15,7 @@ import pixelimage.algo.PolyPixel;
 //import pixelimage.algo.QuadPixel;
 import pixelimage.algo.QuadrantPixel;
 import pixelimage.algo.RoundRecPixel;
+import pixelimage.algo.RectanglePixel;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -159,8 +160,8 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     }
     public inline
     function fillGradTri( ax: Float, ay: Float, colA: Pixel32
-                            , bx: Float, by: Float, colB: Pixel32
-                            , cx: Float, cy: Float, colC: Pixel32 ){
+                        , bx: Float, by: Float, colB: Pixel32
+                        , cx: Float, cy: Float, colC: Pixel32 ){
         fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     public inline 
@@ -214,7 +215,107 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         if( printSides ) trace( noSides );
         fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
     }
-    
+    // setup so large ellipses automatically use more sides.
+    public inline
+    function lineEllipseTri( cx: Float, cy: Float
+                           , rx: Float, ry: Float
+                           , drx: Float, dry: Float                               
+                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var rLarge = ( rx < ry )? ry: rx;
+        var rDif = rLarge - rSmall;
+        var noSides = circleError( rSmall, targetError );
+        if( printSides ) trace( noSides );
+        var temp = ( phi == 0 )? new Pixelimage( Std.int( 2*rx ), Std.int( 2*ry ) ):
+                                 new Pixelimage( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
+        temp.transparent = false;
+        if( phi == 0 ){
+            temp.fillPolyBuild( rx, ry, rx, ry, color, phi, noSides );
+        } else {
+            temp.fillPolyBuild( rx+rDif, ry+rDif, rx, ry, color, phi, noSides );
+        }
+        // remove center
+        var rx2 = rx - drx;
+        var ry2 = ry - dry;
+        rSmall = ( rx > ry )? ry: rx;
+        // erase middle
+        if( phi == 0 ){
+            temp.fillPolyBuild( rx, ry, rx2, ry2, 0x00000000, phi, noSides );
+            putPixelImage( temp, Std.int( cx-rx ), Std.int( cy-ry ) );
+        } else {
+            temp.fillPolyBuild( rx + rDif, ry + rDif, rx2, ry2, 0x00000000, phi, noSides );
+            putPixelImage( temp, Std.int( cx-rx-rDif ), Std.int( cy-ry-rDif ) );
+        }
+        // temp.image = null;
+        temp = null;
+    }
+    public inline
+    function fillRadialEllipseTri( cx: Float, cy: Float
+                                 , rx: Float, ry: Float
+                                 , colorIn: Int, colorOut: Int
+                                 , gx: Float = 0., gy: Float = 0.
+                                 , ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        if( printSides ) trace( noSides );
+        fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
+    }
+    public inline
+    function lineRadialEllipseTri( cx: Float, cy: Float
+                                 , rx: Float, ry: Float
+                                 , drx: Float, dry: Float
+                                 , colorIn: Int, colorOut: Int
+                                 , gx: Float = 0., gy: Float = 0.
+                                 , ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var rLarge = ( rx < ry )? ry: rx;
+        var rDif = rLarge - rSmall;
+        var noSides = circleError( rSmall, targetError );
+        if( printSides ) trace( noSides );
+        var temp = ( phi == 0 )? new Pixelimage( Std.int( 2*rx ), Std.int( 2*ry ) ):
+                                 new Pixelimage( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
+        temp.transparent = false;
+        if( phi == 0 ){
+            fillRadialPolyBuild( temp, rx, ry, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
+        } else {
+            fillRadialPolyBuild( temp, rx+rDif, ry+rDif, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
+        }
+        // remove center
+        var rx2 = rx - drx;
+        var ry2 = ry - dry;
+        rSmall = ( rx > ry )? ry: rx;
+        // erase middle
+        if( phi == 0 ){
+            temp.fillPolyBuild( rx, ry, rx2, ry2, 0x00000000, phi, noSides );
+            putPixelImage( temp, Std.int( cx-rx ), Std.int( cy-ry ) );
+        } else {
+            temp.fillPolyBuild( rx+rDif, ry+rDif, rx2, ry2, 0x00000000, phi, noSides );
+            putPixelImage( temp, Std.int( cx-rx-rDif ), Std.int( cy-ry-rDif ) ); 
+        }
+        // temp.image = null;
+        temp = null;
+    }
+    /*
+       radial rectangle created with triangles, better fill possible
+       gx, gy any value between -1 and 1 and denote distance from centre
+    */
+    public inline
+    function fillRadialRectangle( x:   Float, y: Float
+                                , wid: Float, hi: Float 
+                                , colorIn: Pixel32, colorOut: Pixel32
+                                , ?gx: Float = 0,  ?gy: Float = 0
+                                ){
+        var temp = new Pixelimage( Math.ceil( wid ), Math.ceil( hi ) );
+        var rx = wid/2;
+        var ry = hi/2;
+        temp.transparent = false; // should be default anyway.
+        // draw base color
+        temp.simpleRect( 0, 0, wid, hi, colorOut );
+        // should over write pixels
+        temp.fillRadialEllipseTri( rx, ry, rx, ry, colorIn, colorOut, gx, gy );
+        putPixelImage( temp, Std.int( x ), Std.int( y ) );
+        temp = null;
+    }
     /**
      * fillQuadrant draws a quarter arc.
      * 
@@ -235,7 +336,28 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                           , ?sides: Int = 36, cornerUp: Bool = true ){
         fillPolygonBuild( this, cx, cy, rx, ry, color, phi, sides, cornerUp );
     }
-
+    // phi controls rotation
+    // cornerUp is to rotate the structure before phi so top is flat.
+    inline public
+    function fillRadialPolyon( cx: Float,  cy: Float
+                             , rx: Float,  ry: Float
+                             , colorIn: Int, colorOut: Int
+                             , gx: Float = 0.,  gy: Float = 0.
+                             , ?phi: Float = 0., ?sides: Int = 36
+                             , cornerUp: Bool = true ){
+        fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy , phi, sides, cornerUp );
+    }
+    inline public
+    function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int ){
+        // ignore useVirtualPos for now.
+        // ignore could use one loop for now.
+        for( dy in 0...pixelImage.height ){
+            for( dx in 0...pixelImage.width ){
+                var col = pixelImage.getARGB( dx, dy );
+                if( col != 0 ) setARGB( x + dx, y + dy, col );
+            }
+        }
+    }
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
