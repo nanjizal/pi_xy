@@ -71,11 +71,11 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                           , ?dx:   Float = -1.,  ?dy: Float = -1.
                           , ?fat:  Float = -1.,  ?tall:  Float = -1. 
                           ){ 
-        var temp = new Pixelimage( Math.ceil( hi ), Math.ceil( wid ) );
+        var temp = new Pixelshape( Math.ceil( hi ), Math.ceil( wid ) );
         temp.transparent = false;
         fillRoundRectangle( temp, 0, 0, wid, hi, color, dx, dy, fat, tall );
         fillRoundRectangle( temp, thick, thick, wid-2*thick, hi-2*hi, 0x00000000, dx, dy, fat, tall );
-        putImageData( temp, x, y );
+        this.putPixelImage( temp, Std.int( x ), Std.int( y ) );
         temp = null;
     }
     /**
@@ -94,17 +94,18 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
         fillGrad4RoundRectangle( abstract, x, y, hi, wid, colorA, colorC, colorB, colorD, dx, dy, fat, tall );
     }
     public inline
-    function fillGrad4RoundRect( x:     Float,        y:     Float
+    function lineGrad4RoundRect( x:     Float,        y:     Float
                                , hi:    Float,        wid:   Float
+                               , thick: Float
                                , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
                                , ?dx:   Float = -1.,  ?dy: Float = -1.
                                , ?fat:  Float = -1.,  ?tall:  Float = -1. 
                                ){ 
-        var temp = new Pixelimage( Math.ceil( hi ), Math.ceil( wid ) );
+        var temp = new Pixelshape( Math.ceil( hi ), Math.ceil( wid ) );
         temp.transparent = false;
         fillGrad4RoundRectangle( temp, 0, 0, hi, wid, colorA, colorC, colorB, colorD, dx, dy, fat, tall );
         fillRoundRectangle( temp, thick, thick, wid-2*thick, hi-2*hi, 0x00000000, dx, dy, fat, tall );
-        putImageData( temp, x, y );
+        this.putPixelImage( temp, Std.int( x ), Std.int( y ) );
         temp = null;
 
     }
