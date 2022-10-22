@@ -547,6 +547,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.image = cast temp;
     }
     #end
+    inline public
+    function getBytes(){
+        return Bytes.ofData( view8.buffer );
+    }
+    
 
     // maybe remove
     /*
