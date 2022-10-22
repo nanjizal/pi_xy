@@ -246,6 +246,7 @@ var pixelimage_DemoUse = function() {
 	this.drawGrid(p);
 	this.drawAlphaTriangle(p);
 	this.drawRadials(p);
+	this.drawGridMask(p);
 	var dx = -1.;
 	var dy = -1.;
 	var fat = -1.;
@@ -1815,13 +1816,58 @@ var pixelimage_DemoUse = function() {
 		lastY = nextY;
 	}
 	var ctx = g.me;
-	var dataimg = p.image;
-	var data = new Uint8ClampedArray(new Uint8Array(dataimg.buffer).buffer);
-	var imageData = new ImageData(data,p.width,p.height);
-	if(p.useVirtualPos) {
-		ctx.putImageData(imageData,0 - p.virtualX,0 - p.virtualY);
+	if(p.useMask && p.mask != null) {
+		var w = p.width;
+		var h = p.height;
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		var _g = 0;
+		var _g1 = p.image.length;
+		while(_g < _g1) {
+			var i = _g++;
+			var this1 = p.image[i];
+			var p0 = this1;
+			var this2 = p.mask.image[i];
+			var m1 = this2;
+			var value;
+			if(m1 == 0) {
+				var this3 = p0;
+				value = this3;
+			} else {
+				var this4 = m1 >> 24 & 255;
+				var m0 = this4 == 0 ? 0. : this4 / 255;
+				var this5 = m1 >> 16 & 255;
+				var m11 = this5 == 0 ? 0. : this5 / 255;
+				var this6 = m1 >> 8 & 255;
+				var m2 = this6 == 0 ? 0. : this6 / 255;
+				var this7 = m1 & 255;
+				var m3 = this7 == 0 ? 0. : this7 / 255;
+				var ch0 = (1. - m0) * (p0 >> 24 & 255) | 0;
+				var ch1 = (1. - m11) * (p0 >> 16 & 255) | 0;
+				var ch2 = (1. - m2) * (p0 >> 8 & 255) | 0;
+				var ch3 = (1. - m3) * (p0 & 255) | 0;
+				value = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+			}
+			temp.image[i] = value;
+		}
+		var dataimg = temp.image;
+		var data = new Uint8ClampedArray(new Uint8Array(dataimg.buffer).buffer);
+		var imageData = new ImageData(data,p.width,p.height);
+		if(p.useVirtualPos) {
+			ctx.putImageData(imageData,0 - p.virtualX,0 - p.virtualY);
+		} else {
+			ctx.putImageData(imageData,0,0);
+		}
 	} else {
-		ctx.putImageData(imageData,0,0);
+		var dataimg = p.image;
+		var data = new Uint8ClampedArray(new Uint8Array(dataimg.buffer).buffer);
+		var imageData = new ImageData(data,p.width,p.height);
+		if(p.useVirtualPos) {
+			ctx.putImageData(imageData,0 - p.virtualX,0 - p.virtualY);
+		} else {
+			ctx.putImageData(imageData,0,0);
+		}
 	}
 	var ctx = g.me;
 	var imageData = p.useVirtualPos ? ctx.getImageData(p.virtualX,p.virtualY,p.width,p.height) : ctx.getImageData(0,0,p.width,p.height);
@@ -1830,7 +1876,7 @@ var pixelimage_DemoUse = function() {
 	p.image = temp;
 	var c = p.image[p.useVirtualPos ? (101 - p.virtualY) * p.width + 101 - p.virtualX | 0 : 101 * p.width + 101 | 0];
 	var this1 = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-	haxe_Log.trace("#" + StringTools.hex(this1,8),{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 25, className : "pixelimage.DemoUse", methodName : "new"});
+	haxe_Log.trace("#" + StringTools.hex(this1,8),{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 26, className : "pixelimage.DemoUse", methodName : "new"});
 };
 pixelimage_DemoUse.__name__ = true;
 pixelimage_DemoUse.prototype = {
@@ -2202,32 +2248,58 @@ pixelimage_DemoUse.prototype = {
 				var dx = _g2++;
 				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
 				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
 				if(col != 0) {
 					var x1 = x + dx;
 					var y1 = y + dy;
-					var this1 = col;
-					var c1 = this1;
-					if((c1 >> 24 & 255) < 254 && p.transparent) {
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && p.transparent) {
 						var location = p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0;
-						var this2 = p.image[location];
-						var this3 = this2;
-						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-						var this5 = this4 >> 24 & 255;
-						var a1 = this5 == 0 ? 0. : this5 / 255;
-						var this6 = this4 >> 16 & 255;
-						var r1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this4 >> 8 & 255;
-						var g1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this4 & 255;
-						var b1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = col >> 24 & 255;
-						var a2 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = col >> 16 & 255;
-						var r2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = col >> 8 & 255;
-						var g2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = col & 255;
-						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var this11 = p.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
 						var a3 = a1 * (1 - a2);
 						var r = 255 * (r1 * a3 + r2 * a2) | 0;
 						var g = 255 * (g1 * a3 + g2 * a2) | 0;
@@ -2236,7 +2308,7 @@ pixelimage_DemoUse.prototype = {
 						var blended = a << 24 | r << 16 | g << 8 | b;
 						p.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 					} else {
-						p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
 					}
 				}
 			}
@@ -3083,32 +3155,58 @@ pixelimage_DemoUse.prototype = {
 					var dx = _g2++;
 					var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
 					var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					if(temp.useMask && temp.mask != null) {
+						var this1 = temp.mask;
+						var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+						var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						var maskPixel = this2;
+						var this3 = col;
+						var this4 = this3;
+						if(maskPixel == 0) {
+							var this5 = this4;
+							col = this5;
+						} else {
+							var this6 = maskPixel >> 24 & 255;
+							var m0 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = maskPixel >> 16 & 255;
+							var m1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = maskPixel >> 8 & 255;
+							var m2 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = maskPixel & 255;
+							var m3 = this9 == 0 ? 0. : this9 / 255;
+							var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+							var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+							var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+							var ch3 = (1. - m3) * (this4 & 255) | 0;
+							col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+						}
+					}
 					if(col != 0) {
 						var x1 = x + dx;
 						var y1 = y + dy;
-						var this1 = col;
-						var c1 = this1;
-						if((c1 >> 24 & 255) < 254 && p.transparent) {
+						var this10 = col;
+						var c2 = this10;
+						if((c2 >> 24 & 255) < 254 && p.transparent) {
 							var location = p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0;
-							var this2 = p.image[location];
-							var this3 = this2;
-							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-							var this5 = this4 >> 24 & 255;
-							var a1 = this5 == 0 ? 0. : this5 / 255;
-							var this6 = this4 >> 16 & 255;
-							var r1 = this6 == 0 ? 0. : this6 / 255;
-							var this7 = this4 >> 8 & 255;
-							var g1 = this7 == 0 ? 0. : this7 / 255;
-							var this8 = this4 & 255;
-							var b1 = this8 == 0 ? 0. : this8 / 255;
-							var this9 = col >> 24 & 255;
-							var a2 = this9 == 0 ? 0. : this9 / 255;
-							var this10 = col >> 16 & 255;
-							var r2 = this10 == 0 ? 0. : this10 / 255;
-							var this11 = col >> 8 & 255;
-							var g2 = this11 == 0 ? 0. : this11 / 255;
-							var this12 = col & 255;
-							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var this11 = p.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = col >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = col >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = col >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = col & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
 							var a3 = a1 * (1 - a2);
 							var r = 255 * (r1 * a3 + r2 * a2) | 0;
 							var g = 255 * (g1 * a3 + g2 * a2) | 0;
@@ -3117,7 +3215,7 @@ pixelimage_DemoUse.prototype = {
 							var blended = a << 24 | r << 16 | g << 8 | b;
 							p.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 						} else {
-							p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
 						}
 					}
 				}
@@ -3369,32 +3467,58 @@ pixelimage_DemoUse.prototype = {
 					var dx = _g2++;
 					var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
 					var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					if(temp.useMask && temp.mask != null) {
+						var this1 = temp.mask;
+						var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+						var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						var maskPixel = this2;
+						var this3 = col;
+						var this4 = this3;
+						if(maskPixel == 0) {
+							var this5 = this4;
+							col = this5;
+						} else {
+							var this6 = maskPixel >> 24 & 255;
+							var m0 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = maskPixel >> 16 & 255;
+							var m1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = maskPixel >> 8 & 255;
+							var m2 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = maskPixel & 255;
+							var m3 = this9 == 0 ? 0. : this9 / 255;
+							var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+							var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+							var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+							var ch3 = (1. - m3) * (this4 & 255) | 0;
+							col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+						}
+					}
 					if(col != 0) {
 						var x1 = x + dx;
 						var y1 = y + dy;
-						var this1 = col;
-						var c1 = this1;
-						if((c1 >> 24 & 255) < 254 && p.transparent) {
+						var this10 = col;
+						var c2 = this10;
+						if((c2 >> 24 & 255) < 254 && p.transparent) {
 							var location = p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0;
-							var this2 = p.image[location];
-							var this3 = this2;
-							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-							var this5 = this4 >> 24 & 255;
-							var a1 = this5 == 0 ? 0. : this5 / 255;
-							var this6 = this4 >> 16 & 255;
-							var r1 = this6 == 0 ? 0. : this6 / 255;
-							var this7 = this4 >> 8 & 255;
-							var g1 = this7 == 0 ? 0. : this7 / 255;
-							var this8 = this4 & 255;
-							var b1 = this8 == 0 ? 0. : this8 / 255;
-							var this9 = col >> 24 & 255;
-							var a2 = this9 == 0 ? 0. : this9 / 255;
-							var this10 = col >> 16 & 255;
-							var r2 = this10 == 0 ? 0. : this10 / 255;
-							var this11 = col >> 8 & 255;
-							var g2 = this11 == 0 ? 0. : this11 / 255;
-							var this12 = col & 255;
-							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var this11 = p.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = col >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = col >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = col >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = col & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
 							var a3 = a1 * (1 - a2);
 							var r = 255 * (r1 * a3 + r2 * a2) | 0;
 							var g = 255 * (g1 * a3 + g2 * a2) | 0;
@@ -3403,13 +3527,185 @@ pixelimage_DemoUse.prototype = {
 							var blended = a << 24 | r << 16 | g << 8 | b;
 							p.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 						} else {
-							p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							p.image[p.useVirtualPos ? (y1 - p.virtualY) * p.width + x1 - p.virtualX | 0 : y1 * p.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
 						}
 					}
 				}
 			}
 		}
 		temp = null;
+	}
+	,drawGridMask: function(p) {
+		if(p.mask == null) {
+			var w = p.width;
+			var h = p.height;
+			var this1 = new Uint32Array(w * h | 0);
+			var this2 = new pixelimage_ImageStruct(w,h,this1);
+			p.mask = this2;
+			p.mask.transparent = false;
+			var this1 = p.mask;
+			var p1 = 0;
+			var xx = p1;
+			var q = 0;
+			var maxX = p.width | 0;
+			var maxY = p.height | 0;
+			while(true) {
+				var x = p1++;
+				var this2 = 0;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p1 > maxX) {
+					p1 = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		p.useMask = true;
+		var pimage = p.mask;
+		var pixelShape = pimage;
+		var h_ = 2300;
+		var w_ = 3000;
+		var _g = 0;
+		var _g1 = 31;
+		while(_g < _g1) {
+			var i = _g++;
+			var x = 150 + i * 100 - 1.25;
+			var p = x | 0;
+			var xx = p;
+			var q = 150;
+			var maxX = x + 2.5 | 0;
+			var maxY = 150 + h_ | 0;
+			while(true) {
+				var x1 = p++;
+				var this1 = 218103807;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+					var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0;
+					var this2 = pixelShape.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 12;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var _g = 0;
+		var _g1 = 24;
+		while(_g < _g1) {
+			var i = _g++;
+			var y = 150 + i * 100 - 1.25;
+			var p = 150;
+			var xx = p;
+			var q = y | 0;
+			var maxX = 150 + w_ | 0;
+			var maxY = y + 2.5 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = 218103807;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+					var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x - pixelShape.virtualX | 0 : q * pixelShape.width + x | 0;
+					var this2 = pixelShape.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 12;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x - pixelShape.virtualX | 0 : q * pixelShape.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
 	}
 	,drawGrid: function(p) {
 		var h_ = 2300;
@@ -3966,6 +4262,7 @@ function pixelimage_DemoUse_main() {
 	new pixelimage_DemoUse();
 }
 var pixelimage_ImageStruct = function(width,height,image) {
+	this.useMask = false;
 	this.useVirtualPos = false;
 	this.virtualY = 0;
 	this.virtualX = 0;

@@ -18,6 +18,7 @@ class DemoUse {
         drawGrid( p );
         drawAlphaTriangle( p );
         drawRadials( p );
+        drawGridMask( ( p: Pixelimage ) );
         //simonSays( p );
         p.fillGrad4RoundRect( 1340, 280, 150, 280, 0xff8a7676, 0xff757567, 0xff545951, 0xff51515d );
         p.drawToContext( g.me, 0, 0 );
@@ -32,6 +33,13 @@ class DemoUse {
 
      public function simonSays( p: Pixelshape ){
           p.testFillSimonSaysQuadrant( 300, 300, 100 );
+     }
+
+     public function drawGridMask( p: Pixelimage ){
+          p.hasMask = true;
+          var pimage =  p.mask;
+          var pixelShape: Pixelshape = cast pimage;
+          pixelShape.lineGrid( 150, 150, 1024*3, 768*3, 100, 2.5, 0x0cFFFFFF );
      }
 
      public function drawGrid( p: Pixelshape ){

@@ -18,6 +18,8 @@ class ImageStruct {
   public var virtualX: Float = 0;
   public var virtualY: Float = 0;
   public var useVirtualPos: Bool = false;
+  public var mask: Pixelimage;
+  public var useMask: Bool = false;
   public function new( width: Int, height: Int, image: UInt32Array ){
     this.width    = width;
     this.height   = height;

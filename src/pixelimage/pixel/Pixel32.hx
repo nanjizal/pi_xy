@@ -75,6 +75,23 @@ abstract Pixel32( Int ) to Int from Int {
              | ( PixelChannel.toHexInt( r ) << 16 ) 
              | ( PixelChannel.toHexInt( g ) << 8 ) 
              |   PixelChannel.toHexInt( b ): Pixel32 );
+    inline 
+    public function maskPixel( m: Pixel32 ): Pixel32 {
+        return if( m*1 == 0 ){
+            return new Pixel32( this );
+        } else {
+            var m0: Float = m.c0;
+            var m1: Float = m.c1;
+            var m2: Float = m.c2;
+            var m3: Float = m.c3;
+            // may need some extra logic for round error especially at 1, 0?
+            var ch0 = Std.int( (1.-m0)*abstract.c0 );
+            var ch1 = Std.int( (1.-m1)*abstract.c1 );
+            var ch2 = Std.int( (1.-m2)*abstract.c2 );
+            var ch3 = Std.int( (1.-m3)*abstract.c3 );
+            Pixel32.from_argb( ch0, ch1, ch2, ch3 );
+        }
+    }
     public inline
     function channelBlend( ch0: PixelChannel
                          , ch1: PixelChannel

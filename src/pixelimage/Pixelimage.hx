@@ -53,6 +53,36 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.transparent = v;
         return v;
     }
+    public var mask( get, set ): Pixelimage;
+    inline function get_mask(): Pixelimage
+        return this.mask;
+    inline function set_mask( v: Pixelimage ): Pixelimage {
+        this.useMask = true;
+        this.mask = v;
+        return v;
+    }
+    public var image( get, never ): UInt32Array;
+    inline function get_image():  UInt32Array
+        return this.image;
+    /*
+    inline function set_image( v:  UInt32Array ):  UInt32Array {
+        this.image = v;
+        return v;
+    }
+    */
+    public var hasMask( get, set ): Bool;
+    inline function set_hasMask( v: Bool ): Bool {
+        if( this.mask == null && v == true ){
+            this.mask = new Pixelimage( this.width, this.height );
+            this.mask.transparent = false;
+            // set mask intially to let all images through
+            this.mask.simpleRect( 0, 0, this.width, this.height, 0x00000000 );
+        }
+        this.useMask = v;
+        return v;
+    }
+    inline function get_hasMask(): Bool
+        return this.useMask;
     inline
     public function new( w: Int, h: Int ){
        this = ( 
@@ -466,12 +496,16 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.
     **/
     inline public
-    function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int ){
+    function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int, ?useAvaliableMask = true ){
         // ignore useVirtualPos for now.
         // ignore could use one loop for now.
         for( dy in 0...pixelImage.height ){
             for( dx in 0...pixelImage.width ){
                 var col = pixelImage.getARGB( dx, dy );
+                if( pixelImage.hasMask && useAvaliableMask && pixelImage.mask != null ){
+                    var maskPixel = new Pixel32( pixelImage.mask.getARGB( dx, dy ) );
+                    col = new Pixel32( col ).maskPixel( maskPixel );
+                }
                 if( col != 0 ) setARGB( x + dx, y + dy, col );
             }
         }
@@ -482,12 +516,26 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     #if js
     inline
-    public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){
-        var data = new js.lib.Uint8ClampedArray( view8().buffer );
-        var imageData = new js.html.ImageData( data, this.width, this.height );
-        ( this.useVirtualPos )? 
-            ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
-            ctx.putImageData( imageData, x, y);
+    public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int, ?useAvaliableMask = true  ){
+        if( this.useMask && useAvaliableMask && this.mask != null ){
+            var temp = new Pixelimage( width, height );
+            for( i in 0...this.image.length ){
+                var p0 =  new Pixel32( image[ i ] );
+                var m1 =  new Pixel32( mask.image[ i ] );
+                temp.image[ i ] = p0.maskPixel( m1 );
+            }
+            var data = new js.lib.Uint8ClampedArray( temp.view8().buffer );
+            var imageData = new js.html.ImageData( data, this.width, this.height );
+            ( this.useVirtualPos )? 
+                ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
+                ctx.putImageData( imageData, x, y);
+        } else {
+            var data = new js.lib.Uint8ClampedArray( view8().buffer );
+            var imageData = new js.html.ImageData( data, this.width, this.height );
+            ( this.useVirtualPos )? 
+                ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
+                ctx.putImageData( imageData, x, y);
+        }
     }
     inline
     public function drawFromContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int ){
