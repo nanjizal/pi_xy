@@ -2,7 +2,12 @@ package pixelimage.pixel;
 import pixelimage.Endian;
 import pixelimage.pixel.Pixel28;
 import pixelimage.pixel.PixelChannel;
-
+/**
+    provides an abstract 32 bit color ARGB or ABGR
+    can decompose channels c0,c1,c2,c3
+    transferColor is used to flip R and B when drawing and reading from the canvas ( as required endian )
+    channelBlend and alphaBlend are algorthms to blend a semi transparent pixel over another it does not transfer color channels
+**/
 @:forward
 @:transient
 abstract Pixel32( Int ) to Int from Int {

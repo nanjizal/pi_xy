@@ -19,12 +19,22 @@ import pixelimage.algo.RectanglePixel;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
+    /**
+        provides the width used by the UInt32Array
+    **/
     public var width( get, never ): Int;
     inline function get_width(): Int
        return this.width;
+    /**
+        provides the height used by the UInt32Array
+    **/
     public var height( get, never ): Int;
     inline function get_height(): Int
         return this.height;
+    /**
+        setting relative position provide a drawing offset, it must be positive
+        update is no currentl use yet
+    **/
     public function setRelativePosition( x: Int, y: Int, ?update: Bool = false ){
         this.useVirtualPos = true;
         if( x < 0 ) x = 0;
@@ -33,6 +43,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.virtualY = y;
         // TODO: update to implement
     }
+    /**
+        transparent to false will allow setARGB to overwrite pixels, true will alpha blend them when new pixel is semi transparent
+    **/
     public var transparent( get, set ): Bool;
     inline function get_transparent(): Bool
         return this.transparent;
@@ -48,20 +61,33 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }: ImageStruct
         );
     }
+    /**
+        this provides a location for a UIn8 access of a color channel
+    **/
     inline
     function pos4( x: Int, y: Int, ?off: Int = 0 ): Int
         return Std.int( position( x, y ) * 4 ) + off; 
+    /**
+        provides the location of the pixel after considering any relative internal x,y offset
+    **/
     inline 
     public function position( x: Int, y: Int ){
         return ( this.useVirtualPos )? /* allows off set position when drawing */
             Std.int( ( y - this.virtualY ) * this.width + x - this.virtualX ):
             Std.int( y * this.width + x );
     }
+    /**
+        Provides a view for single color channel access, not usually used
+    **/
     inline 
     function view8():js.lib.Uint8Array {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }
+    /**
+        The main way is set the pixel color at x, y
+        applies an alpha blend if pixel is semi-transparent and if the pixelimage is transparent true
+    **/
     inline
     public function setARGB( x: Int, y: Int, color: Int ): Int {
         var c = new Pixel32( color );
@@ -72,21 +98,36 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }
         return color;
     }
+    /**
+        returns the current pixel colour, since canvas context is ABGR on little endian this will correct
+        from the internal value
+    **/
     inline
     public function getARGB( x: Int, y: Int ): Int {
         var c: Pixel32 = cast this.image[ position( x, y ) ];
         return c.transferColor();
     }
+    /**
+        allows setting all 4 colour channels with a location
+        @:see position   to obtain the location
+    **/
     public inline
     function set_argbPixel( a: Int, r: Int, g: Int, b: Int, location: Int ){
         ( this.transparent && a < 0xFE )? channelBlend( a, r, g, b, location ): 
                                           argbToPixel( a, r, g, b, location );
     }
+    /**
+        used more internally to set colours from algorithms does not apply alpha blend
+    **/
     public inline 
     function argbToPixel( a: Int, r: Int, g: Int, b: Int, location: Int ){
         this.image[ location ] = ( this.isLittle )? 
             Pixel32.fromChannels( a, b, g, r ): Pixel32.fromChannels( a, r, g, b );
     }
+    /**
+        used internally is set colours from algorithms only applies alpha blend
+        @see setARGB
+    **/
     public inline
     function channelBlend( a: PixelChannel
                           , r: PixelChannel
@@ -96,15 +137,24 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var blended = old + Pixel32.fromChannels( a, r, g, b );
         this.image[ location ] = blended.transferColor();
     }
+    /**
+        used internally to set colours from algorithms only applies 
+        @see setARGB
+    **/
     public inline
     function colorBlend( color: Pixel32, location: Int ){
         var blended = ( new Pixel32( this.image[ location ] ) ).transferColor() + color;
         this.image[ location ] = blended.transferColor();
     }
+    /**
+        mainly used for color debugging provides getARGB in hex string format
+    **/
     inline public
     function getPixelString( x: Int, y: Int ): String
         return ( new Pixel32( getARGB( x, y ) ) ).stringHash();
-
+    /**
+        provides a simple filled Rectangle
+    **/
     inline public 
     function simpleRect( x: Float, y: Float
                        , w: Float, h: Float
@@ -123,12 +173,20 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             if( q > maxY ) break;
         }
     }
+    /**
+        provides a simple filled square a short cut 
+        @see simpleRect
+    **/
     public inline
     function fillSquare( x: Float, y: Float
                        , d: Float
                        , color: Int ) {
         simpleRect( x-d/2, y-d/2, d, d, color );
     }
+    /**
+        provides a filled triangle give a,b,c coordinates
+        automagically rearranges coordinates so it always renders
+    **/
     public inline
     function fillTri( ax: Float, ay: Float
                     , bx: Float, by: Float
@@ -147,6 +205,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }
         fillTriUnsafe( this, ax, ay, bx, by, cx, cy, color );
     }
+    /**
+        uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
+    **/
     public inline
     function fillQuad( ax: Float, ay: Float
                      , bx: Float, by: Float
@@ -158,12 +219,19 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         fillTri( ax, ay, bx, by, dx, dy, color );
         fillTri( bx, by, cx, cy, dx, dy, color );
     }
+    /**
+        creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
+        with respective colors after coordinate pairs
+    **/
     public inline
     function fillGradTri( ax: Float, ay: Float, colA: Pixel32
                         , bx: Float, by: Float, colB: Pixel32
                         , cx: Float, cy: Float, colC: Pixel32 ){
         fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
+    /**
+        uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours
+    **/
     public inline 
     function fillGradRect( x:   Float, y: Float
                          , wid: Float, hi: Float
@@ -175,6 +243,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , bx, cy, colorC
                     , x,  cy, colorD );
     }
+    /**
+        uses two triangle to form a quad with clockwise coordinates a,b,c,d
+        with respective colours after each coordinate pair
+
+        a better render maybe possible see commented out code in algo.QuadPixel and lerp code in algo.GeomPixel
+        ( better render approach compiles but does not yet work, maybe easy? ). 
+    **/
     public inline
     function fillGradQuad( ax: Float, ay: Float, colorA: Pixel32
                          , bx: Float, by: Float, colorB: Pixel32
@@ -185,6 +260,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
         fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
     }
+    /**
+        provides a thick line using two triangles vector p, q
+        debug corners draws coloured squares on the corners for development
+    **/
     public inline 
     function fillLine( px: Float, py: Float, qx: Float, qy: Float
                      , thick: Float, color: Int, ?debugCorners = false ){
@@ -194,6 +273,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var theta = Math.atan2( o, a );
         rotateLine( this, px, py, thick, h, theta, color, debugCorners );
     }
+    /**
+        provides a thick line using two gradient triangle vector p,q
+        the four colors are arranged clockwise a,b,c,d
+        debug corners draws coloured squares on the corners for development
+    **/
     public inline 
     function fillGradLine( px: Float, py: Float, qx: Float, qy: Float
                          , thick: Float
@@ -205,7 +289,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var theta = Math.atan2( o, a );
         rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
     }
-    // setup so large ellipses automatically use more sides.
+    /**
+        this is used for drawing a filled ellipse or circle ( using triangles ), it uses more sides when larger and can be tweaked with targetError
+        drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
+        setup so large ellipses automatically use more sides.
+    **/
     public inline
     function fillEllipseTri( cx: Float, cy: Float
                            , rx: Float, ry: Float
@@ -215,7 +303,14 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         if( printSides ) trace( noSides );
         fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
     }
-    // setup so large ellipses automatically use more sides.
+    /**
+        this is provides a thick outline ellipse or circle ( using triangles ), large ones have more sides.
+        @:see fillEllipseTri
+        it uses a temp pixelimage with transparent false,
+        and a second ellipse to remove the centre before copying over pixels
+        setup so large ellipses automatically use more sides.
+        for phi rotated ellipses it over estimates the temp pixelimage to be safe
+    **/
     public inline
     function lineEllipseTri( cx: Float, cy: Float
                            , rx: Float, ry: Float
@@ -249,6 +344,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // temp.image = null;
         temp = null;
     }
+    /**
+        provides a filled ellipse/circle using triangles and more sides for large with a radial color gradient from the centre 
+        colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
+        there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse
+    **/
     public inline
     function fillRadialEllipseTri( cx: Float, cy: Float
                                  , rx: Float, ry: Float
@@ -260,6 +360,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         if( printSides ) trace( noSides );
         fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
     }
+    /**
+        radial ellipse thick line 
+        @see fillRadialEllipseTri
+    **/
     public inline
     function lineRadialEllipseTri( cx: Float, cy: Float
                                  , rx: Float, ry: Float
@@ -295,10 +399,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // temp.image = null;
         temp = null;
     }
-    /*
-       radial rectangle created with triangles, better fill possible
-       gx, gy any value between -1 and 1 and denote distance from centre
-    */
+    /**
+        provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
+        @:see fillRadialEllipseTri
+
+    **/
     public inline
     function fillRadialRectangle( x:   Float, y: Float
                                 , wid: Float, hi: Float 
@@ -317,8 +422,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         temp = null;
     }
     /**
-     * fillQuadrant draws a quarter arc.
-     * 
+        fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape
      **/
     inline public
     function fillQuadrant( cx: Float, cy: Float
@@ -327,8 +431,14 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                          , color:  Int, ?phi:   Float, ?targetError: Float = 1.05 ){
         solidQuadrant( this, cx, cy, rx, ry, startAngle, color, phi, targetError );
     }
-    // phi controls rotation
-    // cornerUp is to rotate the structure before phi so top is flat.
+    /**
+        this provides building block for regular polygons,ellipses and circles
+        cornerUp false will have polygon with flat edge on the top
+        defined from centre cx,cy the radius allow stretching the regualar and phi controls rotation
+        sides defines the sides required
+        would be nice to add skew in future?
+        cornerUp may need debugging
+    **/
     inline public
     function fillPolyBuild( cx: Float,  cy: Float
                           , rx: Float,  ry: Float
@@ -336,8 +446,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                           , ?sides: Int = 36, cornerUp: Bool = true ){
         fillPolygonBuild( this, cx, cy, rx, ry, color, phi, sides, cornerUp );
     }
-    // phi controls rotation
-    // cornerUp is to rotate the structure before phi so top is flat.
+    /**
+        @see fillPolyBuild
+        this is a version with radial gradient applied so the centre is one color, but only used gradient triangles so limited
+    **/
     inline public
     function fillRadialPolyon( cx: Float,  cy: Float
                              , rx: Float,  ry: Float
@@ -347,6 +459,12 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                              , cornerUp: Bool = true ){
         fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy , phi, sides, cornerUp );
     }
+    /**
+        used to draw one pixelimage on part of another, essentially it is a copy
+        black transparent pixels are ignored.
+        this is used also internally so that shapes can be composed with transparent false 
+        useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.
+    **/
     inline public
     function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int ){
         // ignore useVirtualPos for now.
@@ -358,6 +476,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             }
         }
     }
+    /**
+        Currently library only supports Javascript target and puts the UInt32Array on the canvas context
+        hope to add c++ and some toolkits later.
+    **/
     #if js
     inline
     public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int  ){

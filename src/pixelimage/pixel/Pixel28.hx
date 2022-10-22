@@ -1,7 +1,11 @@
 package pixelimage.pixel;
 import pixelimage.Endian;
 import pixelimage.pixel.Pixel32;
-
+/**
+    This is an abstract RGB or BGR pixel 
+    not used much
+    @see Pixel32
+**/
 @:forward
 @:transient
 abstract Pixel28( Int ) to Int {

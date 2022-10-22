@@ -1,5 +1,8 @@
 package pixelimage.pixel;
-
+/**
+    helper for working with colour channels
+    so providing float ones for calculations and bounding for when converting back
+**/
 @:forward
 @:transient
 abstract PixelChannel( Int ) to Int from Int {

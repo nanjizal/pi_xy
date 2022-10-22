@@ -20,6 +20,9 @@ package pixelimage.iter;
             }
         }
     }
+    /*
+        Used for bounding box iteration, calculates lo...hi iterator from 4 values. 
+    */
     inline
     function boundIterator4( a: Float, b: Float, c: Float, d: Float ): IntIterator {
         var min = Math.floor( a );

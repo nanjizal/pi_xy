@@ -1,4 +1,7 @@
 package pixelimage.iter;
+/**
+    Like a normal IntIterator but allows access of start and max after construction and reuse.
+**/
 @:access(IntIterator.min, IntIterator.max )
 class IntIterStart {
     public var start: Int;
