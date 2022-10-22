@@ -1,6 +1,8 @@
 -cp src
 -js bin/test.js
 -lib htmlHelper
+-lib Vision
+-lib format
 #-lib pixelimage
 -main pixelimage.DemoUse
 -D js-flatten 

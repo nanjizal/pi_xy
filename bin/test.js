@@ -235,7 +235,7 @@ js_Boot.__string_rec = function(o,s) {
 };
 var pixelimage_DemoUse = function() {
 	this.canvasSetup = new htmlHelper_canvas_CanvasSetup();
-	haxe_Log.trace("Pixelimage example on Canvas",{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 13, className : "pixelimage.DemoUse", methodName : "new"});
+	haxe_Log.trace("Pixelimage example on Canvas",{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 14, className : "pixelimage.DemoUse", methodName : "new"});
 	var g = this.canvasSetup.surface;
 	var this1 = new Uint32Array(12582912);
 	var this2 = new pixelimage_ImageStruct(4096,3072,this1);
@@ -1876,7 +1876,7 @@ var pixelimage_DemoUse = function() {
 	p.image = temp;
 	var c = p.image[p.useVirtualPos ? (101 - p.virtualY) * p.width + 101 - p.virtualX | 0 : 101 * p.width + 101 | 0];
 	var this1 = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-	haxe_Log.trace("#" + StringTools.hex(this1,8),{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 26, className : "pixelimage.DemoUse", methodName : "new"});
+	haxe_Log.trace("#" + StringTools.hex(this1,8),{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 36, className : "pixelimage.DemoUse", methodName : "new"});
 };
 pixelimage_DemoUse.__name__ = true;
 pixelimage_DemoUse.prototype = {
@@ -4294,6 +4294,41 @@ var pixelimage_iter_IntIterStart = function(min_,max_) {
 	this.max = max_;
 };
 pixelimage_iter_IntIterStart.__name__ = true;
+var vision_ds_Line2D = function(start,end) {
+	this.end = new vision_ds_Point2D(0,0);
+	this.start = new vision_ds_Point2D(0,0);
+	this.start.x = start.x;
+	this.start.y = start.y;
+	this.end.x = end.x;
+	this.end.y = end.y;
+	var x = end.x - start.x;
+	var y = end.y - start.y;
+	this.radians = Math.atan2(x,y);
+	this.slope = Math.tan(this.radians);
+	this.degrees = this.radians * 180 / Math.PI;
+};
+vision_ds_Line2D.__name__ = true;
+vision_ds_Line2D.prototype = {
+	toString: function() {
+		return "\n (" + Std.string(this.start) + ".x, " + Std.string(this.start) + ".y) --> (" + Std.string(this.end) + ".x, " + Std.string(this.end) + ".y)";
+	}
+};
+var vision_ds_Point2D = function(x,y) {
+	if(y == null) {
+		y = 0;
+	}
+	if(x == null) {
+		x = 0;
+	}
+	this.x = x;
+	this.y = y;
+};
+vision_ds_Point2D.__name__ = true;
+vision_ds_Point2D.prototype = {
+	toString: function() {
+		return "(" + this.x + ", " + this.y + ")";
+	}
+};
 var $_;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
 $global.$haxeUID |= 0;

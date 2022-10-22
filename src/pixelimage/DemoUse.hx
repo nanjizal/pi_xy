@@ -3,6 +3,7 @@ package pixelimage;
 import htmlHelper.canvas.CanvasSetup;
 import htmlHelper.canvas.Surface;
 import pixelimage.Pixelimage;
+import vision.Vision;
 
 function main() new DemoUse();
 class DemoUse {
@@ -21,6 +22,15 @@ class DemoUse {
         drawGridMask( ( p: Pixelimage ) );
         //simonSays( p );
         p.fillGrad4RoundRect( 1340, 280, 150, 280, 0xff8a7676, 0xff757567, 0xff545951, 0xff51515d );
+        
+        // applying Vision test 
+        /*
+        var v = (p.transferClone()).toVisionImage();
+        Vision.grayscale( v );
+        var pTemp = new Pixelimage( p.width, p.height );
+        pTemp.fromVisionImage( v );
+        p.transferIn( pTemp );
+        */
         p.drawToContext( g.me, 0, 0 );
         p.drawFromContext( g.me, 0, 0 );
         trace( p.getPixelString( 101, 101) );

@@ -1,5 +1,6 @@
 package pixelimage;
 
+import vision.ds.Image;
 import haxe.io.UInt32Array;
 import pixelimage.iter.BoundIterator;
 import pixelimage.iter.IteratorRange;
@@ -16,6 +17,7 @@ import pixelimage.algo.PolyPixel;
 import pixelimage.algo.QuadrantPixel;
 import pixelimage.algo.RoundRecPixel;
 import pixelimage.algo.RectanglePixel;
+import pixelimage.aVision.VisionImageHolder;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -547,12 +549,39 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.image = cast temp;
     }
     #end
-    inline public
-    function getBytes(){
-        return Bytes.ofData( view8.buffer );
+    inline
+    public function transferClone(): Pixelimage {
+        var out = new Pixelimage( width, height );
+        for( i in 0...image.length ){
+            out.image[ i ] = (new Pixel32( image[i] )).flip13();
+        }
+        return out;
     }
-    
-
+    inline 
+    public function transferIn( p: Pixelimage ){
+        for( i in 0...p.image.length ){
+            image[ i ] = ( new Pixel32( p.image[ i ] ) ).flip13();
+        }
+    }
+    inline
+    public function getBytes(){
+        return haxe.io.Bytes.ofData( view8().buffer );
+    }
+    inline
+    public function fromBytes( bytes: haxe.io.Bytes, pos ){
+        this.image = haxe.io.UInt32Array.fromBytes( bytes, pos );
+    }
+    inline
+    public function toVisionImage(): vision.ds.Image {
+        var vih = VisionImageHolder.fromBytes( width, height, getBytes() );
+        return vih.image();
+    } 
+    inline 
+    public function fromVisionImage( v: vision.ds.Image ){
+        var vhi: VisionImageHolder = cast v;
+        var bytes = vhi.toBytes();
+        return fromBytes( bytes, 0 );
+    }
     // maybe remove
     /*
     inline public
@@ -578,6 +607,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     */
 
 }
+
 // references
 // http://totologic.blogspot.com/2014/01/accurate-point-in-triangle-test.html
 // https://codeplea.com/triangular-interpolation *
