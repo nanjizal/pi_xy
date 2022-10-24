@@ -4,6 +4,8 @@ import htmlHelper.canvas.CanvasSetup;
 import htmlHelper.canvas.Surface;
 import pixelimage.Pixelimage;
 import vision.Vision;
+import vision.ds.Kernal2D;
+import pixelimage.aVision.ImageBytes;
 
 function main() new DemoUse();
 class DemoUse {
@@ -24,16 +26,26 @@ class DemoUse {
         p.fillGrad4RoundRect( 1340, 280, 150, 280, 0xff8a7676, 0xff757567, 0xff545951, 0xff51515d );
         
         // applying Vision test 
+        
+        // p == Pixelshape or Pixelimage
+        // transfer flips channel 1 and 3 around as I store ABGR for canvas.
+        // this is lightly a bit heavy as 1024*4 x 768*4 pixelimage at the moment.
+        //
         /*
-        var v = (p.transferClone()).toVisionImage();
-        Vision.grayscale( v );
+        var img = new vision.ds.Image( p.width, p.height );
+        //p.transferClone()
+        injectBytesInImage( p.getBytes(), img );
+        Vision.grayscale(img);
+        //Vision.convolve( img, BoxBlur);
+        //Vision.convolve(img, UnsharpMasking);
         var pTemp = new Pixelimage( p.width, p.height );
-        pTemp.fromVisionImage( v );
-        p.transferIn( pTemp );
-        */
+        //p.transferIn( pTemp );
+        pTemp.fromBytes( extractBytesFromImage( img ), 0 );
+        pTemp.drawToContext( g.me, 0, 0 );
+*/
         p.drawToContext( g.me, 0, 0 );
-        p.drawFromContext( g.me, 0, 0 );
-        trace( p.getPixelString( 101, 101) );
+        //p.drawFromContext( g.me, 0, 0 );
+        //trace( p.getPixelString( 101, 101) );
      }
 
      public function drawRadials( p: Pixelshape ){

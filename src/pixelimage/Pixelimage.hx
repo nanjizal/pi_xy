@@ -17,7 +17,6 @@ import pixelimage.algo.PolyPixel;
 import pixelimage.algo.QuadrantPixel;
 import pixelimage.algo.RoundRecPixel;
 import pixelimage.algo.RectanglePixel;
-import pixelimage.aVision.VisionImageHolder;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -571,17 +570,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     public function fromBytes( bytes: haxe.io.Bytes, pos ){
         this.image = haxe.io.UInt32Array.fromBytes( bytes, pos );
     }
-    inline
-    public function toVisionImage(): vision.ds.Image {
-        var vih = VisionImageHolder.fromBytes( width, height, getBytes() );
-        return vih.image();
-    } 
-    inline 
-    public function fromVisionImage( v: vision.ds.Image ){
-        var vhi: VisionImageHolder = cast v;
-        var bytes = vhi.toBytes();
-        return fromBytes( bytes, 0 );
-    }
+    
     // maybe remove
     /*
     inline public

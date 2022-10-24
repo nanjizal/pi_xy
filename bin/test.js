@@ -19,23 +19,6 @@ Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
 };
-var StringTools = function() { };
-StringTools.__name__ = true;
-StringTools.hex = function(n,digits) {
-	var s = "";
-	var hexChars = "0123456789ABCDEF";
-	while(true) {
-		s = hexChars.charAt(n & 15) + s;
-		n >>>= 4;
-		if(!(n > 0)) {
-			break;
-		}
-	}
-	if(digits != null) {
-		while(s.length < digits) s = "0" + s;
-	}
-	return s;
-};
 var haxe_Log = function() { };
 haxe_Log.__name__ = true;
 haxe_Log.formatOutput = function(v,infos) {
@@ -235,7 +218,7 @@ js_Boot.__string_rec = function(o,s) {
 };
 var pixelimage_DemoUse = function() {
 	this.canvasSetup = new htmlHelper_canvas_CanvasSetup();
-	haxe_Log.trace("Pixelimage example on Canvas",{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 14, className : "pixelimage.DemoUse", methodName : "new"});
+	haxe_Log.trace("Pixelimage example on Canvas",{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 16, className : "pixelimage.DemoUse", methodName : "new"});
 	var g = this.canvasSetup.surface;
 	var this1 = new Uint32Array(12582912);
 	var this2 = new pixelimage_ImageStruct(4096,3072,this1);
@@ -1869,14 +1852,6 @@ var pixelimage_DemoUse = function() {
 			ctx.putImageData(imageData,0,0);
 		}
 	}
-	var ctx = g.me;
-	var imageData = p.useVirtualPos ? ctx.getImageData(p.virtualX,p.virtualY,p.width,p.height) : ctx.getImageData(0,0,p.width,p.height);
-	var data = imageData.data;
-	var temp = new Uint32Array(data.buffer);
-	p.image = temp;
-	var c = p.image[p.useVirtualPos ? (101 - p.virtualY) * p.width + 101 - p.virtualX | 0 : 101 * p.width + 101 | 0];
-	var this1 = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-	haxe_Log.trace("#" + StringTools.hex(this1,8),{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 36, className : "pixelimage.DemoUse", methodName : "new"});
 };
 pixelimage_DemoUse.__name__ = true;
 pixelimage_DemoUse.prototype = {
