@@ -14,6 +14,25 @@ abstract Pixel32( Int ) to Int from Int {
     inline
     public function new( v: Int )
         this = v;
+    /**
+        returns the 0x00 -> 0xFF number component
+        in ARGB, 0 -> B, 1 -> G, 2 - R, 3 -> A  
+    **/
+    inline 
+    public function hexChannel( i: Int ): PixelChannel {
+        return switch( i ){
+            case 0:
+                ( cast this >> 24 & 0xFF: PixelChannel );
+            case 1:
+                ( cast this >> 16 & 0xFF: PixelChannel );
+            case 2:
+                ( cast this >> 8 & 0xFF : PixelChannel );
+            case 3:
+                ( cast this & 0xFF: PixelChannel );
+            case _:
+                ( 0x00: PixelChannel );
+        }
+    }
     public var c0( get, set ): PixelChannel;
     inline
     function get_c0(): PixelChannel 
