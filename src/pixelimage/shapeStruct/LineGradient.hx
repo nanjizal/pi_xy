@@ -62,6 +62,7 @@ class LineGradient extends BasicGradient {
                 super.setParameter( name, value );
     }
     public function render( pixelImage: Pixelimage ){
-        pixelimage.fillGradLine( x1, y1, x2, y2, strokeWidth, colorA, colorB, colorC, colorD );
+        pixelimage.fillGradLine( x1, y1, x2, y2, strokeWidth
+            , cornerColor[0], cornerColor[1], cornerColor[2], colorColor[3] );
     }
 }
