@@ -4,7 +4,7 @@ import pixelimage.shapeStruct.FillShape;
 
 @:structInit
 class PathElementShape extends FillShape {
-    public var points: Array<Float>;
+    public var pathData: Array<Float>;
     public function new(  opacity            = 1.
                         , visibility          = true;
                         , strokeColor        = 0x000000

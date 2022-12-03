@@ -6,8 +6,7 @@ import pixelimage.shapeStruct.FillShape;
 class CircleShape extends FillShape {
     public var left:    Float;
     public var top:     Float;
-    public var width:   Float;
-    public var height:  Float;
+    public var diameter:   Float;
     public function new(  opacity            = 1.
                         , visibility          = true;
                         , strokeColor        = 0x000000

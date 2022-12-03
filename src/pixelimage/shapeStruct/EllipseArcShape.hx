@@ -42,9 +42,11 @@ class EllipseArcShape extends FillShape {
             cast 'height':
                 height = Std.parseFloat( value );
             cast 'startAngle':
-                startAngle = Std.parseFloat( value );
+                var degree = Std.parseFloat( value );
+                startAngle = ( degree == 0 ) 0: Math.PI*degree/180;
             cast 'sweepAngle':
-                sweepAngle = Std.parseFloat( value );
+                var degree = Std.parseFloat( value );
+                sweepAngle = ( degree == 0 ) 0: Math.PI*degree/180;
             cast _:
                 super.setParameter( name, value );
     }

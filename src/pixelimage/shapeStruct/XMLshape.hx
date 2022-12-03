@@ -42,8 +42,8 @@ class XMLshape {
                 var s = new LineShape();
                 for( att in xml.attributes() ) s.setParameter( att, xml.get( att ) );
                 s.render( pixelImage );
-            case 'PathElement':
-                var s = new PathElement();
+            case 'PathElementShape':
+                var s = new PathElementShape();
                 for( att in xml.attributes() ) s.setParameter( att, xml.get( att ) );
                 s.render( pixelImage );
             case 'PieArcShape':
@@ -83,7 +83,7 @@ class XMLshape {
                 for( att in xml.attributes() ) s.setParameter( att, xml.get( att ) );
                 s.render( pixelImage );
             case 'ComponentShape':
-                // this is like a default shape drawn on.
+                // this is like a default shape drawn on, if/when nesting gets setup
                 var s = new ComponentShape();
                 for( att in xml.attributes() ) s.setParameter( att, xml.get( att ) );
             case _:

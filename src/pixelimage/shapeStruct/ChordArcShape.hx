@@ -8,6 +8,8 @@ class ChordArcShape extends FillShape {
     public var top:     Float;
     public var width:   Float;
     public var height:  Float;
+    public var startAngle: Float;
+    public var sweepAngle: Float;
     public function new(  opacity            = 1.
                         , visibility         = true;
                         , strokeColor        = 0x000000
@@ -42,9 +44,11 @@ class ChordArcShape extends FillShape {
             cast 'height':
                 hight = Std.parseFloat( value );
             cast 'startAngle':
-                startAngle = Std.parseFloat( value );
+                var degree = Std.parseFloat( value );
+                startAngle = ( degree == 0 ) 0: Math.PI*degree/180;
             cast 'sweepAngle':
-                sweepAngle = Std.parseFloat( value );
+                var degree = Std.parseFloat( value );
+                sweepAngle = ( degree == 0 ) 0: Math.PI*degree/180;
             cast _:
                 super.setParameter( name, value );
         }
