@@ -71,7 +71,7 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                           , ?dx:   Float = -1.,  ?dy: Float = -1.
                           , ?fat:  Float = -1.,  ?tall:  Float = -1. 
                           ){ 
-        var temp = new Pixelshape( Math.ceil( hi ), Math.ceil( wid ) );
+        var temp = new Pixelshape( Math.ceil( wid ), Math.ceil( hi ) );
         temp.transparent = false;
         fillRoundRectangle( temp, 0, 0, wid, hi, color, dx, dy, fat, tall );
         fillRoundRectangle( temp, thick, thick, wid-2*thick, hi-2*hi, 0x00000000, dx, dy, fat, tall );

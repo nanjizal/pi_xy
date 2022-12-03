@@ -19,6 +19,23 @@ Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
 };
+var StringTools = function() { };
+StringTools.__name__ = true;
+StringTools.hex = function(n,digits) {
+	var s = "";
+	var hexChars = "0123456789ABCDEF";
+	while(true) {
+		s = hexChars.charAt(n & 15) + s;
+		n >>>= 4;
+		if(!(n > 0)) {
+			break;
+		}
+	}
+	if(digits != null) {
+		while(s.length < digits) s = "0" + s;
+	}
+	return s;
+};
 var haxe_Log = function() { };
 haxe_Log.__name__ = true;
 haxe_Log.formatOutput = function(v,infos) {
@@ -58,6 +75,7 @@ haxe_iterators_ArrayIterator.prototype = {
 	}
 };
 var htmlHelper_canvas_CanvasSetup = function() {
+	this.factor = 4.;
 	this.divertTrace = new htmlHelper_tools_DivertTrace();
 	var e = null;
 	var this1;
@@ -74,28 +92,34 @@ var htmlHelper_canvas_CanvasSetup = function() {
 	} else {
 		this1 = e;
 	}
-	var canvas = this1;
-	canvas.width = 1024;
-	canvas.height = 768;
-	var dom = canvas;
+	this.canvasWrapper = this1;
+	this.canvasWrapper.width = 1024;
+	this.canvasWrapper.height = 768;
+	var dom = this.canvasWrapper;
 	var style = dom.style;
 	style.background = "black";
-	window.document.body.appendChild(canvas);
-	var this1 = new htmlHelper_canvas_CanvasPlus(canvas.getContext("2d",null),10,10);
+	window.document.body.appendChild(this.canvasWrapper);
+	var this1 = new htmlHelper_canvas_CanvasPlus(this.canvasWrapper.getContext("2d",null),10,10);
+	this1.me.lineWidth = 1;
+	var tmp = StringTools.hex(16744272,6);
+	this1.me.strokeStyle = "#" + tmp;
 	this.surface = this1;
-	var factor = 4.;
-	this.overSampleCanvas(canvas,this.surface.me,factor);
+	this.overSampleCanvas();
 };
 htmlHelper_canvas_CanvasSetup.__name__ = true;
 htmlHelper_canvas_CanvasSetup.prototype = {
-	overSampleCanvas: function(canvas,ctx,factor) {
+	overSampleCanvas: function() {
+		var ctx = this.surface.me;
+		var canvas = this.canvasWrapper;
 		var width = canvas.width;
 		var height = canvas.height;
-		canvas.width = 0 | (width * factor | 0);
-		canvas.height = 0 | (height * factor | 0);
-		canvas.style.width = width + "px";
-		canvas.style.height = height + "px";
-		ctx.scale(factor,factor);
+		canvas.width = 0 | (width * this.factor | 0);
+		canvas.height = 0 | (height * this.factor | 0);
+		var dom = this.canvasWrapper;
+		var style = dom.style;
+		style.width = width + "px";
+		style.height = height + "px";
+		ctx.scale(this.factor,this.factor);
 	}
 };
 var htmlHelper_canvas_CanvasPlus = function(me,x,y) {

@@ -3,7 +3,7 @@
     "name"         : "pixelimage",
     "url"          : "https://github.com/nanjizal/pixelimage#pixelimage",
     "license"      : "MIT",
-    "tags"         : ["cross", "image","2d" ],
+    "tags"         : ["cross", "image", "2d"],
     "description"  : "pixelimage, image utility",
     "version"      : "0.0.1-alpha",
     "releasenote"  : "See https://github.com/nanjizal/pixelimage/blob/master/CHANGELOG.md",

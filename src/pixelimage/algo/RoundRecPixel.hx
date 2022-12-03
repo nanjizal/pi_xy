@@ -13,7 +13,7 @@ import pixelimage.pixel.Pixel32;
     inline
     function fillRoundRectangle( pixelshape: Pixelshape
                           , x:     Float,        y:     Float
-                          , hi:    Float,        wid:   Float
+                          , wid:    Float,       hi:   Float
                           , color: Int
                           , ?dx:   Float = -1.,  ?dy: Float = -1.
                           , ?fat:  Float = -1.,  ?tall:  Float = -1. 
