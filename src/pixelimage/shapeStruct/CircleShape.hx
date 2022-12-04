@@ -28,7 +28,7 @@ class CircleShape extends FillShape {
         switch( name ){
             case 'left':
                 left     = Std.parseFloat( value );
-            case 'strokeWidth':
+            case 'top':
                 top      = Std.parseFloat( value );
             case 'diameter':
                 diameter = Std.parseFloat( value );
@@ -37,17 +37,18 @@ class CircleShape extends FillShape {
         }
     }
     public override function render( pixelImage: Pixelimage ){
+        var w = Math.round( strokeWidth/2 );
         var r = diameter/2;
-        var innerR = diameter/2 - strokeWidth/2;
-        var cx = left - diameter/2;
-        var cy = top - diameter/2;
+        var innerR = diameter/2 - 4*w;
+        var cx = diameter/2;
+        var cy = diameter/2;
         var phi = 0.;
-        var innerCx: Float = cx + strokeWidth;
-        var innerCy: Float = cy + strokeWidth;
+        var innerCx: Float = cx - w/4;
+        var innerCy: Float = cy - w/4;
         var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
-        pixelImage.fillEllipseTri( cx, cy, r, r, strokeColor, phi );
-        pixelImage.fillEllipseTri( innerCx, innerCy, innerR, innerR, fill, phi );
+        temp.fillEllipseTri( cx, cy, r, r, strokeColor, phi );
+        temp.fillEllipseTri( innerCx, innerCy, innerR, innerR, fill, phi );
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
     }

@@ -10,7 +10,7 @@ class LineShape extends BasicShape {
     public var y2: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
-                        , strokeColor        = 0x000000
+                        , strokeColor        = 0xFFF00000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/

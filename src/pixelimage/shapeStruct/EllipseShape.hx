@@ -39,21 +39,22 @@ class EllipseShape extends FillShape {
                 height = Std.parseFloat( value );
             case _:
                 super.setParameter( name, value );
+        }
     }
     public override function render( pixelImage: Pixelimage ){
         var rW = width/2;
         var rH = height/2;
         var innerRw = rW - strokeWidth/2;
         var innerRh = rH - strokeWidth/2;
-        var cx = left - rW;
-        var cy = top - rH;
+        var cx = rW;
+        var cy = rH;
         var phi = 0;
         var innerCx = cx + strokeWidth;
         var innerCy = cy + strokeWidth;
-        var temp = new Pixelimage( Math.ceil( wid ), Math.ceil( hi ) );
+        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
-        pixelImage.fillEllipseTri( cx, cy, rW, rH, strokeColor, phi );
-        pixelImage.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
+        temp.fillEllipseTri( cx, cy, rW, rH, strokeColor, phi );
+        temp.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
     }

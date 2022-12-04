@@ -17,7 +17,7 @@ class GroupShape {
             case 'opacity':
                 opacity = Std.parseFloat( value );
             case _:
-                trace( 'property not found' );
+                trace( 'property not found ' + name );
         }
     }
     public function render( pixelImage: Pixelimage ){

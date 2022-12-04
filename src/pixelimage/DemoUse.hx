@@ -21,9 +21,16 @@ class DemoUse {
         var p = new Pixelshape( 1024*4, 768*4 );
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
-        XMLshape.withString( p, circleTest );
-     
-
+        var str = circleTest;
+        trace( 'circleTest ' + str );
+        //XMLshape.withString( p, circleTest );
+        trace( 'test2');
+        var str =  lineShapeTest;
+        //XMLshape.withString( p, str );
+        //XMLshape.withString( p, ellipseTest );
+        var str = triangleGradientTest;
+        trace( str );
+        XMLshape.withString( p, str );
         /*
         drawGrid( p );
         drawAlphaTriangle( p );
