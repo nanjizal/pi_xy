@@ -6,6 +6,9 @@ import pixelimage.Pixelimage;
 import vision.Vision;
 import vision.ds.Kernal2D;
 import pixelimage.aVision.ImageBytes;
+import pixelimage.shapeStruct.*;
+import pixelimage.shapeStruct.XMLshape;
+import pixelimage.shapeStruct.XMLshapeSamples;
 
 function main() new DemoUse();
 class DemoUse {
@@ -18,13 +21,19 @@ class DemoUse {
         var p = new Pixelshape( 1024*4, 768*4 );
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
+        XMLshape.withString( p, circleTest );
+     
+
+        /*
         drawGrid( p );
         drawAlphaTriangle( p );
         drawRadials( p );
         drawGridMask( ( p: Pixelimage ) );
         //simonSays( p );
         p.fillGrad4RoundRect( 1340, 280, 150, 280, 0xff8a7676, 0xff757567, 0xff545951, 0xff51515d );
-        
+        */
+
+
         // applying Vision test 
         
         // p == Pixelshape or Pixelimage

@@ -1,23 +1,23 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.BasicGradient;
 
-abstract enum ColorDirection( String ){
-    public var widthways = 'widthways';
-    public var longways = 'longways';
+enum abstract ColorDirection( String ){
+    var widthways = 'widthways';
+    var longways = 'longways';
 }
 
 @:structInit
 class PolyLineGradient extends BasicGradient {
-    public var points: Array<Float>;
+    public var points: Null<Array<Float>>;
     public var strokeWidth: Float;
     public var colorDirection: ColorDirection;
     public function new(  opacity            = 1.
-                        , visibility         = true;
+                        , visibility         = true
                         , strokeWidth        = 1.
-                        , points
-                        , colorDirection = longways;
-                        , colors
+                        , points             = null
+                        , colorDirection = longways
+                        , colors            = null
                         ){
         super( opacity, visibility, colors );
         this.strokeWidth = strokeWidth;
@@ -26,21 +26,21 @@ class PolyLineGradient extends BasicGradient {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'strokeWidth':
+            case 'strokeWidth':
                 strokeWidth = Std.parseFloat( value );
-            cast 'points':
+            case 'points':
                 value = value.split('[')[1].split(']')[0];
                 points = [ for( n in value.split(',') ) Std.parseFloat( n )  ];
-            cast 'colorDirection':
-                colorDirection ( value == 'widthways' )? widthways: longways;
-            cast 'colors':
+            case 'colorDirection':
+                colorDirection = ( value == 'widthways' )? widthways: longways;
+            case 'colors':
                 value = value.split('[')[1].split(']')[0];
                 cornerColors = [ for( n in value.split(',') ) Std.parseInt( n )  ];
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage, Pixelimage ){
+    public override function render( pixelImage: Pixelimage ){
         {
             var l = points.length;
             if( l < 4 ) return;
@@ -56,10 +56,10 @@ class PolyLineGradient extends BasicGradient {
             i++;
             var colorCount = 0;
             var colorLen = cornerColors.length;
-            var colorA = '0';
-            var colorB = '0';
-            var colorC = '0';
-            var colorD = '0';
+            var colorA = 0;
+            var colorB = 0;
+            var colorC = 0;
+            var colorD = 0;
             while( i < l ){
                 x = points[ i ];
                 i++;
@@ -87,7 +87,7 @@ class PolyLineGradient extends BasicGradient {
                     colorCount++;
                     if( colorCount >= colorLen ) colorCount = 0;
                 }
-                pixelimage.fillGradLine( x, y, nextX, nextY, strokeWidth, colorA, colorB, colorC, colorD );
+                pixelImage.fillGradLine( x, y, nextX, nextY, strokeWidth, colorA, colorB, colorC, colorD );
             }
         }
     }

@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
@@ -9,17 +9,18 @@ class SquareShape extends FillShape {
     public var top:     Float;
     public var width:   Float;
     public var height:  Float;
+    public var diameter: Float;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , left = 0.;
-                        , top = 0.;
-                        , diameter = 1.;
+                        , left = 0.
+                        , top = 0.
+                        , diameter = 1.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.left      = left;
@@ -28,19 +29,19 @@ class SquareShape extends FillShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'left':
+            case 'left':
                 left = Std.parseFloat( value );
-            cast 'top':
+            case 'top':
                 top = Std.parseFloat( value );
-            cast 'diameter':
+            case 'diameter':
                 diameter = Std.parseFloat( value );
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }
     public override function render( pixelImage: Pixelimage ){
         //pixelImage.fillSquare( left, top, diameter, fill );
-        var temp = new Pixelimage( Math.ceil( wid ), Math.ceil( hi ) );
+        var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
         temp.simpleRect( 0, 0, diameter, diameter, strokeColor );
         temp.simpleRect( strokeWidth, strokeWidth, diameter-2*strokeWidth, diameter-2*strokeWidth, fill );

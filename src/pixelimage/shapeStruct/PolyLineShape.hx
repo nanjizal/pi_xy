@@ -1,33 +1,33 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
 
 @:structInit
 class PolyLineShape extends FillShape {
-    public var points: Array<Float>;
+    public var points: Null<Array<Float>>;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , points
+                        , points = null
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.points = points;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'points':
+            case 'points':
                 value = value.split('[')[1].split(']')[0];
                 points = [ for( n in value.split(',') ) Std.parseFloat( n )  ];
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage, Pixelimage ){
+    public override function render( pixelImage: Pixelimage ){
         {
             var l = points.length;
             if( l < 4 ) return;

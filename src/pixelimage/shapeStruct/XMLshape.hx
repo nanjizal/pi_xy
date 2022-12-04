@@ -1,20 +1,21 @@
 package pixelimage.shapeStruct;
 //import haxe.xml.Access;
+import pixelimage.Pixelimage;
 
 class XMLshape {
     var pixelImage: Pixelimage;
     var xml: Xml;
-    public function new( pixelImage: PixelImage, xml: Xml ){
+    public function new( pixelImage: Pixelimage, xml: Xml ){
         this.pixelImage = pixelImage;
         this.xml = xml;
         process();
     }
-    public static inline withString( pixelImage: PixelImage, str: String ): XMLshape {
+    public static inline function withString( pixelImage: Pixelimage, str: String ): XMLshape {
         var xml = Xml.parse( str ).firstChild();
         return new XMLshape( pixelImage, xml );
     }
     function process(){
-        for( e in Xml.elements ) processShape( e );
+        for( e in xml.elements() ) processShape( e );
     }
     function processShape( x: Xml ){
         switch( x.nodeName ){
@@ -24,7 +25,11 @@ class XMLshape {
                 s.render( pixelImage );
             case 'CircleShape':
                 var s = new CircleShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
+                trace( 'circleShape');
+                for( att in x.attributes() ) {
+                    trace( att );
+                    s.setParameter( att, x.get( att ) );
+                }
                 s.render( pixelImage );
             case 'CubicCurveShape':
                 var s = new CubicCurveShape();
@@ -88,5 +93,6 @@ class XMLshape {
                 for( att in xml.attributes() ) s.setParameter( att, xml.get( att ) );
             case _:
                 trace( 'shape unfound' );
+        }
     }
 }

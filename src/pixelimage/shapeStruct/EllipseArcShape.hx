@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
 
@@ -8,20 +8,22 @@ class EllipseArcShape extends FillShape {
     public var top:     Float;
     public var width:   Float;
     public var height:  Float;
+    public var startAngle: Float;
+    public var sweepAngle: Float;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , left = 0.;
-                        , top = 0.;
-                        , width = 1.;
-                        , height = 1.;
+                        , left = 0.
+                        , top = 0.
+                        , width = 1.
+                        , height = 1.
                         , startAngle = 0.
-                        , sweepAngle   = ( Math.PI );
+                        , sweepAngle = 0.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.left   = left;
@@ -33,24 +35,25 @@ class EllipseArcShape extends FillShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'left':
+            case 'left':
                 left = Std.parseFloat( value );
-            cast 'top':
+            case 'top':
                 top = Std.parseFloat( value );
-            cast 'width':
+            case 'width':
                 width = Std.parseFloat( value );
-            cast 'height':
+            case 'height':
                 height = Std.parseFloat( value );
-            cast 'startAngle':
+            case 'startAngle':
                 var degree = Std.parseFloat( value );
-                startAngle = ( degree == 0 ) 0: Math.PI*degree/180;
-            cast 'sweepAngle':
+                startAngle = ( degree == 0 )? 0: Math.PI*degree/180;
+            case 'sweepAngle':
                 var degree = Std.parseFloat( value );
-                sweepAngle = ( degree == 0 ) 0: Math.PI*degree/180;
-            cast _:
+                sweepAngle = ( degree == 0 )? 0: Math.PI*degree/180;
+            case _:
                 super.setParameter( name, value );
+        }
     }
-    public fuction render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ){
         trace( 'no implemented yet' );
     }
 }

@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
 
@@ -13,7 +13,7 @@ class QuadCurveShape extends FillShape {
     public var x4:      Float;
     public var y4:      Float;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
@@ -21,12 +21,14 @@ class QuadCurveShape extends FillShape {
                         /*strokeEnd: Round*/
                         , fill = 0x000000
                         , thru = false
-                        , x1: Float
-                        , y1: Float
-                        , x2: Float
-                        , y2: Float
-                        , x3: Float
-                        , y3: Float
+                        , x1 = 0.
+                        , y1 = 0.
+                        , x2 = 0.
+                        , y2 = 0.
+                        , x3 = 0.
+                        , y3 = 0.
+                        , x4 = 0.
+                        , y4 = 0.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.x1 = x1;
@@ -40,27 +42,27 @@ class QuadCurveShape extends FillShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'x1':
+            case 'x1':
                 x1 = Std.parseFloat( value );
-            cast 'y1':
+            case 'y1':
                 y1 = Std.parseFloat( value );
-            cast 'x2':
+            case 'x2':
                 x2 = Std.parseFloat( value );
-            cast 'y2':
+            case 'y2':
                 y2 = Std.parseFloat( value );
-            cast 'x3':
+            case 'x3':
                 x3 = Std.parseFloat( value );
-            cast 'y3':
+            case 'y3':
                 y3 = Std.parseFloat( value );
-            cast 'x4':
+            case 'x4':
                 x4 = Std.parseFloat( value );
-            cast 'y4':
+            case 'y4':
                 y4 = Std.parseFloat( value );
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }
-    public function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ){
         trace( 'Yet to implement');
     }
 }

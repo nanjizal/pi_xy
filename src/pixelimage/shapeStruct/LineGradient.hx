@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.BasicGradient;
 
@@ -10,16 +10,16 @@ class LineGradient extends BasicGradient {
     public var y2: Float;
     public var strokeWidth: Float;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
                         , y2 = 0.
-                        , colorA = 0xFFFF9900;
-                        , colorB = 0xFFBFFF00;
-                        , colorC = 0xFF00EAFF;
-                        , colorD = 0xFF7300FF;
-                        , strokeWidth = 1.;
+                        , colorA = 0xFFFF9900
+                        , colorB = 0xFFBFFF00
+                        , colorC = 0xFF00EAFF
+                        , colorD = 0xFF7300FF
+                        , strokeWidth = 1.
                         ){
         super( opacity, visibility, [ colorA, colorB, colorC, colorD ] );
         this.x1 = x1;
@@ -30,39 +30,40 @@ class LineGradient extends BasicGradient {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'x1':
+            case 'x1':
                 x1 = Std.parseFloat( value );
-            cast 'y1':
+            case 'y1':
                 y1 = Std.parseFloat( value );
-            cast 'x2':
+            case 'x2':
                 x2 = Std.parseFloat( value );
-            cast 'y2':
+            case 'y2':
                 y2 = Std.parseFloat( value );
-            cast 'colorA':
-                colorA = Std.parseInt( value );
-            cast 'colorB':
-                colorB = Std.parseInt( value );
-            cast 'colorC':
-                colorC = Std.parseInt( value );
-            cast 'colorD':
-                colorD = Std.parseInt( value );
-            cast 'colorFirst':
-                colorA = Std.parseInt( value );
-                colorD = Std.parseInt( value );
-            cast 'colorSecond':
-                colorB = Std.parseInt( value );
-                colorC = Std.parseInt( value );
-            cast 'colorTop':
-                colorA = Std.parseInt( value );
-                colorB = Std.parseInt( value );
-            cast 'colorBottom':
-                colorC = Std.parseInt( value );
-                colorD = Std.parseInt( value );
-            cast _:
+            case 'colorA':
+                cornerColors[0] = Std.parseInt( value );
+            case 'colorB':
+                cornerColors[1] = Std.parseInt( value );
+            case 'colorC':
+                cornerColors[2] = Std.parseInt( value );
+            case 'colorD':
+                cornerColors[3] = Std.parseInt( value );
+            case 'colorFirst':
+                cornerColors[0] = Std.parseInt( value );
+                cornerColors[4] = Std.parseInt( value );
+            case 'colorSecond':
+                cornerColors[2] = Std.parseInt( value );
+                cornerColors[3] = Std.parseInt( value );
+            case 'colorTop':
+                cornerColors[0] = Std.parseInt( value );
+                cornerColors[2] = Std.parseInt( value );
+            case 'colorBottom':
+                cornerColors[4] = Std.parseInt( value );
+                cornerColors[3] = Std.parseInt( value );
+            case _:
                 super.setParameter( name, value );
+        }
     }
-    public function render( pixelImage: Pixelimage ){
-        pixelimage.fillGradLine( x1, y1, x2, y2, strokeWidth
-            , cornerColors[0], cornerColors[1], cornerColors[2], colorColors[3] );
+    public override function render( pixelImage: Pixelimage ){
+        pixelImage.fillGradLine( x1, y1, x2, y2, strokeWidth
+            , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
     }
 }

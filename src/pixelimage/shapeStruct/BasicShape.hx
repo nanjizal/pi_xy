@@ -1,24 +1,21 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 
-abstract enum DashGap( String ) {
-    DASH = 'dash';
-    GAP  = 'gap';
+enum abstract DashGap( String ) {
+    var DASH = 'dash';
+    var GAP  = 'gap';
 }
 
 @:structInit
 class BasicShape extends GroupShape {
-    var isDirty = true;
     public static var dashLength: Float = 2.;
     public static var gapLength:  Float = 1.;
-    public var opacity:           Float;
-    public var visibility:         Bool;
 
     public var strokeColor:       Int;
     public var strokeWidth:       Float;
 
     // implement dashGapArray
-    public var dashGapArray:      Null<Array<DashGap>>;
+    public var strokeDashGapArray:      Null<Array<DashGap>>;
     
     // implement line end
     //public var strokeStart:   Round;
@@ -28,7 +25,6 @@ class BasicShape extends GroupShape {
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
-                        
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         ){
@@ -39,13 +35,13 @@ class BasicShape extends GroupShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'strokeColor':
+            case 'strokeColor':
                 strokeColor = Std.parseInt( value );
-            cast 'strokeWidth':
+            case 'strokeWidth':
                 strokeWidth = Std.parseFloat( value );
-            cast 'strokeDashGapArray':
+            case 'strokeDashGapArray':
                 strokeDashGapArray = null; // not implemented
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }

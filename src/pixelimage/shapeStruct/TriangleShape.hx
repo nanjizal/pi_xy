@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 
 import pixelimage.shapeStruct.FillShape;
 import pixelimage.Pixelimage;
@@ -12,19 +12,19 @@ class TriangleShape extends FillShape {
     public var x3:      Float;
     public var y3:      Float;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , x1: Float
-                        , y1: Float
-                        , x2: Float
-                        , y2: Float
-                        , x3: Float
-                        , y3: Float
+                        , x1 = 0.
+                        , y1 = 0.
+                        , x2 = 0.
+                        , y2 = 0.
+                        , x3 = 0.
+                        , y3 = 0.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.x1 = x1;
@@ -34,25 +34,25 @@ class TriangleShape extends FillShape {
         this.x3 = x3;
         this.y3 = y3;
     }
-    public function override setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'x1':
+            case 'x1':
                 x1 = Std.parseFloat( value );
-            cast 'y1':
+            case 'y1':
                 y1 = Std.parseFloat( value );
-            cast 'x2':
+            case 'x2':
                 x2 = Std.parseFloat( value );
-            cast 'y2':
+            case 'y2':
                 y2 = Std.parseFloat( value );
-            cast 'x3':
+            case 'x3':
                 x3 = Std.parseFloat( value );
-            cast 'y3':
+            case 'y3':
                 y3 = Std.parseFloat( value );
-            cast _:
+            case _:
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: PixelImage ){
+    public override function render( pixelImage: Pixelimage ){
         pixelImage.fillTri( x1, y1, x2, y2, x3, y3, fill );
         //TODO improve corners of line fill
         pixelImage.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );

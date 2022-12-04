@@ -1,13 +1,13 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.BasicShape;
 
 @:structInit
 class FillShape extends BasicShape {
-    public var fill: Float;
+    public var fill: Int;
     public function new(  opacity            = 1.
+                        , visibility          = true
                         , strokeColor        = 0x000000
-                        , visibility          = true;
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
@@ -17,11 +17,12 @@ class FillShape extends BasicShape {
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray );
         this.fill = fill;
     }
-    public function override setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'fill':
-                fill = Std.parseFloat( value );
-            cast _:
+            case 'fill':
+                fill = Std.parseInt( value );
+            case _:
                 super.setParameter( name, value );
+        }
     }
 }

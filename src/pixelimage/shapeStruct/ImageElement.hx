@@ -1,4 +1,4 @@
-class pixelimage.shapeStruct;
+package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
 
@@ -10,18 +10,18 @@ class ImageElement extends FillShape {
     public var height:  Float;
     public var content: String;
     public function new(  opacity            = 1.
-                        , visibility          = true;
+                        , visibility          = true
                         , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , left = 0.;
-                        , top = 0.;
-                        , width = 1.;
-                        , height = 1.;
-                        , contents;
+                        , left = 0.
+                        , top = 0.
+                        , width = 1.
+                        , height = 1.
+                        , contents = '';
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.left   = left;
@@ -30,19 +30,20 @@ class ImageElement extends FillShape {
         this.height = height;
         this.content = content;
     }
-    public function override setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: String ){
         switch( name ){
-            cast 'left':
+            case 'left':
                 left = Std.parseFloat( value );
-            cast 'top':
+            case 'top':
                 top = Std.parseFloat( value );
-            cast 'width':
+            case 'width':
                 width = Std.parseFloat( value );
-            cast 'height':
+            case 'height':
                 height = Std.parseFloat( value );
-            cast 'content':
+            case 'content':
                 content = value;
-            cast _:
+            case _:
                 super.setParameter( name, value );
+        }
     }
 }
