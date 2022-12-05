@@ -21,93 +21,53 @@ class XMLshape {
         for( e in xml.elements() ) processShape( e );
     }
     function processShape( x: Xml ){
+        var s: ShapeInterface = 
         switch( x.nodeName ){
             case 'ChordArcShape':
-                var s = new ChordArcShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new ChordArcShape();
             case 'CircleShape':
-                var s = new CircleShape();
-                for( att in x.attributes() ) {
-                    trace( att + ' ' + x.get(att) );
-                    s.setParameter( att, x.get( att ) );
-                }
-                s.render( pixelImage );
+                new CircleShape();
             case 'CubicCurveShape':
-                var s = new CubicCurveShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new CubicCurveShape();
             case 'EllipseArcShape':
-                var s = new EllipseArcShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new EllipseArcShape();
             case 'EllipseShape':
-                    var s = new EllipseShape();
-                    for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                    s.render( pixelImage );   
+                new EllipseShape(); 
             case 'LineGradient':
-                var s = new LineGradient();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new LineGradient();
             case 'LineShape':
-                var s = new LineShape();
-                trace( 's' + x );
-                for( att in x.attributes() ) {
-                    trace( att + ' ' + x.get(att) );
-                    s.setParameter( att, x.get( att ) );
-                }
-                s.render( pixelImage );
+                new LineShape();
             case 'PathElementShape':
-                var s = new PathElementShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new PathElementShape();
             case 'PieArcShape':
-                var s = new PieArcShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new PieArcShape();
             case 'PolyLineGradient':
-                var s = new PolyLineGradient();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new PolyLineGradient();
             case 'PolyLineShape':
-                var s = new PolyLineShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new PolyLineShape();
             case 'QuadCurveShape':
-                var s = new QuadCurveShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new QuadCurveShape();
             case 'QuadShape':
-                var s = new QuadShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new QuadShape();
             case 'RectangleShape':
-                var s = new RectangleShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new RectangleShape();
             case 'SquareShape':
-                var s = new SquareShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new SquareShape();
             case 'TriangleGradient':
                 trace('triangle gradient');
-                var s = new TriangleGradient();
-                
-                for( att in x.attributes() ) {
-                    trace( att + ' ' + x.get(att) );
-                    s.setParameter( att, x.get( att ) );
-                }
-                s.render( pixelImage );
+                new TriangleGradient();
             case 'TriangleShape':
-                var s = new TriangleShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
-                s.render( pixelImage );
+                new TriangleShape();
             case 'ComponentShape':
                 // this is like a default shape drawn on, if/when nesting gets setup
-                var s = new ComponentShape();
-                for( att in x.attributes() ) s.setParameter( att, x.get( att ) );
+                new ComponentShape();
             case _:
-                trace( 'shape unfound' );
+                throw( 'shape unfound' );
         }
+        for( att in x.attributes() ){
+            trace( att + ' ' + x.get(att) );
+            s.setParameter( att, x.get( att ) );
+        }
+        s.render( pixelImage );
     }
 }

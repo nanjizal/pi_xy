@@ -8930,179 +8930,76 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 		}
 	}
 	,processShape: function(x) {
+		var s;
 		if(x.nodeType != Xml.Element) {
 			throw haxe_Exception.thrown("Bad node type, expected Element but found " + (x.nodeType == null ? "null" : XmlType.toString(x.nodeType)));
 		}
 		switch(x.nodeName) {
 		case "ChordArcShape":
-			var s = new pixelimage_shapeStruct_ChordArcShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_ChordArcShape();
 			break;
 		case "CircleShape":
-			var s = new pixelimage_shapeStruct_CircleShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 32, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_CircleShape();
 			break;
 		case "ComponentShape":
-			var s = new pixelimage_shapeStruct_ComponentShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
+			s = new pixelimage_shapeStruct_ComponentShape();
 			break;
 		case "CubicCurveShape":
-			var s = new pixelimage_shapeStruct_CubicCurveShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_CubicCurveShape();
 			break;
 		case "EllipseArcShape":
-			var s = new pixelimage_shapeStruct_EllipseArcShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_EllipseArcShape();
 			break;
 		case "EllipseShape":
-			var s = new pixelimage_shapeStruct_EllipseShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_EllipseShape();
 			break;
 		case "LineGradient":
-			var s = new pixelimage_shapeStruct_LineGradient();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_LineGradient();
 			break;
 		case "LineShape":
-			var s = new pixelimage_shapeStruct_LineShape();
-			haxe_Log.trace("s" + Std.string(x),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 54, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 56, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_LineShape();
 			break;
 		case "PathElementShape":
-			var s = new pixelimage_shapeStruct_PathElementShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_PathElementShape();
 			break;
 		case "PieArcShape":
-			var s = new pixelimage_shapeStruct_PieArcShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_PieArcShape();
 			break;
 		case "PolyLineGradient":
-			var s = new pixelimage_shapeStruct_PolyLineGradient();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_PolyLineGradient();
 			break;
 		case "PolyLineShape":
-			var s = new pixelimage_shapeStruct_PolyLineShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_PolyLineShape();
 			break;
 		case "QuadCurveShape":
-			var s = new pixelimage_shapeStruct_QuadCurveShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_QuadCurveShape();
 			break;
 		case "QuadShape":
-			var s = new pixelimage_shapeStruct_QuadShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_QuadShape();
 			break;
 		case "RectangleShape":
-			var s = new pixelimage_shapeStruct_RectangleShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_RectangleShape();
 			break;
 		case "SquareShape":
-			var s = new pixelimage_shapeStruct_SquareShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_SquareShape();
 			break;
 		case "TriangleGradient":
-			haxe_Log.trace("triangle gradient",{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 93, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
-			var s = new pixelimage_shapeStruct_TriangleGradient();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 97, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			haxe_Log.trace("triangle gradient",{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 57, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
+			s = new pixelimage_shapeStruct_TriangleGradient();
 			break;
 		case "TriangleShape":
-			var s = new pixelimage_shapeStruct_TriangleShape();
-			var att = x.attributes();
-			while(att.hasNext()) {
-				var att1 = att.next();
-				s.setParameter(att1,x.get(att1));
-			}
-			s.render(this.pixelImage);
+			s = new pixelimage_shapeStruct_TriangleShape();
 			break;
 		default:
-			haxe_Log.trace("shape unfound",{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 110, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
+			throw haxe_Exception.thrown("shape unfound");
 		}
+		var att = x.attributes();
+		while(att.hasNext()) {
+			var att1 = att.next();
+			haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 68, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
+			s.setParameter(att1,x.get(att1));
+		}
+		s.render(this.pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_XMLshape
 };

@@ -2,7 +2,7 @@ package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 
 @:structInit
-abstract class GroupShape implements ShapeInteface {
+abstract class GroupShape implements ShapeInterface {
     var isDirty = true;
     public var visibility: Bool;
     public var opacity: Float;
