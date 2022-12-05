@@ -46,4 +46,8 @@ class ImageElement extends FillShape {
                 super.setParameter( name, value );
         }
     }
+    public override function render( pixelImage ): PixelImage {
+        trace( 'Not implemented yet ');
+        return super.render( pixelImage );
+    }
 }

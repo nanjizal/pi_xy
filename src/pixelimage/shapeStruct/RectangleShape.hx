@@ -47,7 +47,7 @@ class RectangleShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         if( rounded == false ){
             // simple rectangle
             var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
@@ -64,5 +64,6 @@ class RectangleShape extends FillShape {
             pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
             temp = null;
         }
+        return super.render( pixelImage );
     }
 }

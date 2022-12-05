@@ -52,11 +52,12 @@ class TriangleShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         pixelImage.fillTri( x1, y1, x2, y2, x3, y3, fill );
         //TODO improve corners of line fill
         pixelImage.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
         pixelImage.fillLine( x2, y2, x3, y3, strokeWidth, strokeColor );
         pixelImage.fillLine( x3, y3, x1, y1, strokeWidth, strokeColor );
+        return super.render( pixelImage );
     }
 }

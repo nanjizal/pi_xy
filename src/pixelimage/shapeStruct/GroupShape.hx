@@ -2,7 +2,7 @@ package pixelimage.shapeStruct;
 import pixelimage.Pixelimage;
 
 @:structInit
-class GroupShape {
+abstract class GroupShape implements ShapeInteface {
     var isDirty = true;
     public var visibility: Bool;
     public var opacity: Float;
@@ -20,7 +20,7 @@ class GroupShape {
                 trace( 'property not found ' + name );
         }
     }
-    public function render( pixelImage: Pixelimage ){
-        // 
+    public function render( pixelImage: Pixelimage ): Pixelimage {
+        return pixelImage; 
     }
 }

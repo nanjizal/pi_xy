@@ -36,7 +36,7 @@ class CircleShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         var w = Math.round( strokeWidth/2 );
         var r = diameter/2;
         var innerR = diameter/2 - 4*w;
@@ -51,5 +51,6 @@ class CircleShape extends FillShape {
         temp.fillEllipseTri( innerCx, innerCy, innerR, innerR, fill, phi );
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
+        return super.render( pixelImage );
     }
 }

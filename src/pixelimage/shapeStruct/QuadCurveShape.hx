@@ -62,7 +62,8 @@ class QuadCurveShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
-        trace( 'Yet to implement');
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
+        trace( 'Not implemented Yet');
+        return super.render( pixelImage );
     }
 }

@@ -39,7 +39,7 @@ class SquareShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         //pixelImage.fillSquare( left, top, diameter, fill );
         var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
@@ -47,5 +47,6 @@ class SquareShape extends FillShape {
         temp.simpleRect( strokeWidth, strokeWidth, diameter-2*strokeWidth, diameter-2*strokeWidth, fill );
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
+        return super.render( pixelImage );
     }
 }

@@ -27,7 +27,7 @@ class ComponentShape extends FillShape {
         this.width  = width;
         this.height = height;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: String ): Void {
         switch( name ){
             case 'left':
                 left = Std.parseFloat( value );

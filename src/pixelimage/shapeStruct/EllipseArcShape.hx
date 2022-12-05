@@ -53,7 +53,8 @@ class EllipseArcShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         trace( 'no implemented yet' );
+        return super.render( pixelImage );
     }
 }

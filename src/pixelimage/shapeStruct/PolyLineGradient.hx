@@ -24,7 +24,7 @@ class PolyLineGradient extends BasicGradient {
         this.colorDirection = colorDirection;
         this.points = points;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: String ): Void {
         switch( name ){
             case 'strokeWidth':
                 strokeWidth = Std.parseFloat( value );
@@ -40,11 +40,11 @@ class PolyLineGradient extends BasicGradient {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         {
             var l = points.length;
-            if( l < 4 ) return;
-            if( l%2 != 0 ) return;
+            if( l < 4 ) return pixelImage;
+            if( l%2 != 0 ) return pixelImage;
             var i = 0;
             var x = 0.;
             var y = 0.;
@@ -89,6 +89,8 @@ class PolyLineGradient extends BasicGradient {
                 }
                 pixelImage.fillGradLine( x, y, nextX, nextY, strokeWidth, colorA, colorB, colorC, colorD );
             }
+            
         }
+        return super.render( pixelImage );
     }
 }

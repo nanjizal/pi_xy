@@ -1295,6 +1295,7 @@ pixelimage_shapeStruct_GroupShape.prototype = {
 		}
 	}
 	,render: function(pixelImage) {
+		return pixelImage;
 	}
 	,__class__: pixelimage_shapeStruct_GroupShape
 };
@@ -1474,6 +1475,7 @@ pixelimage_shapeStruct_ChordArcShape.prototype = $extend(pixelimage_shapeStruct_
 	}
 	,render: function(pixelImage) {
 		haxe_Log.trace("Not implemented yet",{ fileName : "src/pixelimage/shapeStruct/ChordArcShape.hx", lineNumber : 57, className : "pixelimage.shapeStruct.ChordArcShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_ChordArcShape
 });
@@ -2106,6 +2108,7 @@ pixelimage_shapeStruct_CircleShape.prototype = $extend(pixelimage_shapeStruct_Fi
 			}
 		}
 		temp = null;
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_CircleShape
 });
@@ -2244,6 +2247,7 @@ pixelimage_shapeStruct_CubicCurveShape.prototype = $extend(pixelimage_shapeStruc
 	}
 	,render: function(pixelImage) {
 		haxe_Log.trace("not implemeted yet",{ fileName : "src/pixelimage/shapeStruct/CubicCurveShape.hx", lineNumber : 60, className : "pixelimage.shapeStruct.CubicCurveShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_CubicCurveShape
 });
@@ -2320,6 +2324,7 @@ pixelimage_shapeStruct_EllipseArcShape.prototype = $extend(pixelimage_shapeStruc
 	}
 	,render: function(pixelImage) {
 		haxe_Log.trace("no implemented yet",{ fileName : "src/pixelimage/shapeStruct/EllipseArcShape.hx", lineNumber : 57, className : "pixelimage.shapeStruct.EllipseArcShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_EllipseArcShape
 });
@@ -2960,6 +2965,7 @@ pixelimage_shapeStruct_EllipseShape.prototype = $extend(pixelimage_shapeStruct_F
 			}
 		}
 		temp = null;
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_EllipseShape
 });
@@ -3504,6 +3510,7 @@ pixelimage_shapeStruct_LineGradient.prototype = $extend(pixelimage_shapeStruct_B
 				}
 			}
 		}
+		return pixelimage_shapeStruct_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_LineGradient
 });
@@ -3965,6 +3972,7 @@ pixelimage_shapeStruct_LineShape.prototype = $extend(pixelimage_shapeStruct_Basi
 				}
 			}
 		}
+		return pixelimage_shapeStruct_BasicShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_LineShape
 });
@@ -3999,6 +4007,10 @@ pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStru
 		} else {
 			pixelimage_shapeStruct_FillShape.prototype.setParameter.call(this,name,value);
 		}
+	}
+	,render: function(pixelImage) {
+		haxe_Log.trace("Not implemented Yet",{ fileName : "src/pixelimage/shapeStruct/PathElementShape.hx", lineNumber : 30, className : "pixelimage.shapeStruct.PathElementShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_PathElementShape
 });
@@ -4073,6 +4085,10 @@ pixelimage_shapeStruct_PieArcShape.prototype = $extend(pixelimage_shapeStruct_Fi
 			pixelimage_shapeStruct_FillShape.prototype.setParameter.call(this,name,value);
 		}
 	}
+	,render: function(pixelImage) {
+		haxe_Log.trace("Not implemented Yet",{ fileName : "src/pixelimage/shapeStruct/PieArcShape.hx", lineNumber : 57, className : "pixelimage.shapeStruct.PieArcShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
+	}
 	,__class__: pixelimage_shapeStruct_PieArcShape
 });
 var pixelimage_shapeStruct_PolyLineGradient = function(opacity,visibility,strokeWidth,points,colorDirection,colors) {
@@ -4135,10 +4151,10 @@ pixelimage_shapeStruct_PolyLineGradient.prototype = $extend(pixelimage_shapeStru
 	,render: function(pixelImage) {
 		var l = this.points.length;
 		if(l < 4) {
-			return;
+			return pixelImage;
 		}
 		if(l % 2 != 0) {
-			return;
+			return pixelImage;
 		}
 		var i = 0;
 		var x = 0.;
@@ -4636,6 +4652,7 @@ pixelimage_shapeStruct_PolyLineGradient.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 		}
+		return pixelimage_shapeStruct_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_PolyLineGradient
 });
@@ -4680,10 +4697,10 @@ pixelimage_shapeStruct_PolyLineShape.prototype = $extend(pixelimage_shapeStruct_
 	,render: function(pixelImage) {
 		var l = this.points.length;
 		if(l < 4) {
-			return;
+			return pixelImage;
 		}
 		if(l % 2 != 0) {
-			return;
+			return pixelImage;
 		}
 		var i = 0;
 		var x = 0.;
@@ -5105,6 +5122,7 @@ pixelimage_shapeStruct_PolyLineShape.prototype = $extend(pixelimage_shapeStruct_
 				}
 			}
 		}
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_PolyLineShape
 });
@@ -5195,7 +5213,8 @@ pixelimage_shapeStruct_QuadCurveShape.prototype = $extend(pixelimage_shapeStruct
 		}
 	}
 	,render: function(pixelImage) {
-		haxe_Log.trace("Yet to implement",{ fileName : "src/pixelimage/shapeStruct/QuadCurveShape.hx", lineNumber : 66, className : "pixelimage.shapeStruct.QuadCurveShape", methodName : "render"});
+		haxe_Log.trace("Not implemented Yet",{ fileName : "src/pixelimage/shapeStruct/QuadCurveShape.hx", lineNumber : 66, className : "pixelimage.shapeStruct.QuadCurveShape", methodName : "render"});
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_QuadCurveShape
 });
@@ -5460,6 +5479,7 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 				}
 			}
 		}
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_QuadShape
 });
@@ -7081,6 +7101,7 @@ pixelimage_shapeStruct_RectangleShape.prototype = $extend(pixelimage_shapeStruct
 			}
 			temp = null;
 		}
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_RectangleShape
 });
@@ -7317,6 +7338,7 @@ pixelimage_shapeStruct_SquareShape.prototype = $extend(pixelimage_shapeStruct_Fi
 			}
 		}
 		temp = null;
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_SquareShape
 });
@@ -7513,6 +7535,7 @@ pixelimage_shapeStruct_TriangleGradient.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 		}
+		return pixelimage_shapeStruct_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_TriangleGradient
 });
@@ -8888,6 +8911,7 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 				}
 			}
 		}
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_TriangleShape
 });

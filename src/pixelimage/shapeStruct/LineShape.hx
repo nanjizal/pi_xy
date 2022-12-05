@@ -40,7 +40,8 @@ class LineShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         pixelImage.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
+        return super.render( pixelImage );
     }
 }

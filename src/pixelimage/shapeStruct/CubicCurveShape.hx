@@ -56,7 +56,8 @@ class CubicCurveShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         trace( 'not implemeted yet' );
+        return super.render( pixelImage );
     }
 }

@@ -41,7 +41,7 @@ class EllipseShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         var rW = width/2;
         var rH = height/2;
         var innerRw = rW - strokeWidth/2;
@@ -57,5 +57,6 @@ class EllipseShape extends FillShape {
         temp.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
+        return super.render( pixelImage );
     }
 }

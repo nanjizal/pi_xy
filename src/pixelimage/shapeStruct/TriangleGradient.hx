@@ -55,7 +55,8 @@ class TriangleGradient extends BasicGradient {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         pixelImage.fillGradTri( aX, aY, cornerColors[0], bX, bY, cornerColors[1], cX, cY, cornerColors[2] );
+        return super.render( pixelImage );
     }
 }

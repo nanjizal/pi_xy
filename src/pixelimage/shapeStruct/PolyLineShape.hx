@@ -27,11 +27,11 @@ class PolyLineShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ){
+    public override function render( pixelImage: Pixelimage ): Pixelimage {
         {
             var l = points.length;
-            if( l < 4 ) return;
-            if( l%2 != 0 ) return;
+            if( l < 4 ) return pixelImage;
+            if( l%2 != 0 ) return pixelImage;
             var i = 0;
             var x = 0.;
             var y = 0.;
@@ -51,5 +51,6 @@ class PolyLineShape extends FillShape {
                 pixelImage.fillLine( x, y, nextX, nextY, strokeWidth, strokeColor );
             }
         }
+        return super.render( pixelImage );
     }
 }
