@@ -1,8 +1,7 @@
 package pixelimage.shapeStruct;
 
 function shapeTestArr():Array<String>{
-    return [    triangleGradientTest
-            ,   chordArcTest
+    return [    chordArcTest
             ,   circleTest
             ,   cubicCurveTest
             ,   ellipseArcTest
@@ -15,6 +14,7 @@ function shapeTestArr():Array<String>{
             ,   quadShape
             ,   rectangleShape
             ,   squareShape
+            ,   triangleGradientTest
             ,   triangleShape ];
 }
 
