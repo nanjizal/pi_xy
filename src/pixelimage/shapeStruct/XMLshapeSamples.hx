@@ -1,5 +1,24 @@
 package pixelimage.shapeStruct;
 
+function shapeTestArr():Array<String>{
+    return [    triangleGradientTest
+            ,   chordArcTest
+            ,   circleTest
+            ,   cubicCurveTest
+            ,   ellipseArcTest
+            ,   ellipseTest
+            ,   lineGradientTest
+            ,   lineShapeTest
+            ,   polyLineGradientTest
+            ,   polyLineShapeTest 
+            ,   quadCurveTest 
+            ,   quadShape
+            ,   rectangleShape
+            ,   squareShape
+            ,   triangleShape ];
+}
+
+
 var triangleGradientTest: String = '<TriangleGradient aX="100" aY="100" bX="200" bY="150" cX="130" cY="220" colorA="0xffFF0000" colorB="0xff0f00ff" colorC="0xffcc00cc"></TriangleGradient>';
 // strokeColor='0xFF0000' strokeWidth='1' fill='0xFF00FF00'
 // left='100' top='100' width='200' height='50'
