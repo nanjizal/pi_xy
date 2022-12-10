@@ -54,7 +54,14 @@ class EllipseArcShape extends FillShape {
         }
     }
     public override function render( pixelImage: Pixelimage ): Pixelimage {
-        trace( 'no implemented yet' );
+        var rx = width/2;
+        var ry = height/2;
+        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+        temp.transparent = false;
+        temp.fillPie( rx, ry, rx, ry, startAngle, sweepAngle, strokeColor );
+        temp.fillPie( rx, ry, rx-strokeWidth, ry-strokeWidth, startAngle, sweepAngle, fill );
+        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        temp = null;
         return super.render( pixelImage );
     }
 }

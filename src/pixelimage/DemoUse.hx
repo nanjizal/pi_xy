@@ -21,6 +21,36 @@ class DemoUse {
         var p = new Pixelshape( 1024*4, 768*4 );
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
+        var count = 0;
+        /*
+        var px = 400.;
+        var py = 400.;
+        var qx = px;
+        var qy = py;
+        var len = 200.;
+        var strokeWidth = 10;
+        var strokeColor = 0xFFff0000;
+        for( i in 0...36 ){
+            var theta = 10*i*Math.PI/180;
+            qx = len*Math.cos( theta ) + px;
+            qy = len*Math.sin( theta ) + py;
+            p.fillLine( qx, qy, px, py, strokeWidth, strokeColor );
+        }
+        */
+        
+        for( aShape in shapeTestArr() ){
+            //if( count > 3 ) break;
+            var aShape = shapeTestArr()[0];
+            /*
+            var data = aShape.split('\n');
+            for( i in 0...data.length ) data[ i ] = StringTools.trim(data[ i ]);
+            var str = data.join(' ');
+            XMLshape.withString( p, str );*/
+            XMLshape.withString( p, aShape );
+            count++;
+        }
+        
+        /*
         var str = circleTest;
         trace( 'circleTest ' + str );
         //XMLshape.withString( p, circleTest );
@@ -31,6 +61,7 @@ class DemoUse {
         var str = triangleGradientTest;
         trace( str );
         XMLshape.withString( p, str );
+        */
         /*
         drawGrid( p );
         drawAlphaTriangle( p );

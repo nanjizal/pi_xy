@@ -20,6 +20,7 @@ class XMLshape {
         //trace( xml );
         for( e in xml.elements() ) processShape( e );
     }
+    
     function processShape( x: Xml ){
         var s: ShapeInterface = 
         switch( x.nodeName ){

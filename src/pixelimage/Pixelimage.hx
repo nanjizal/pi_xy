@@ -236,6 +236,44 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }
         fillTriUnsafe( this, ax, ay, bx, by, cx, cy, color );
     }
+    public inline
+    function sweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32 ){
+        var currAngle = startRadian;
+        var bx = rx * Math.cos( currAngle ) + ax;
+        var by = ry * Math.sin( currAngle ) + ay;
+        // last pie
+        currAngle = startRadian + sweepRadian;
+        var cx = rx * Math.cos( currAngle ) + ax;
+        var cy = ry * Math.sin( currAngle ) + ay;
+        fillTri( ax, ay, bx, by, cx, cy, color );
+    }
+    public inline
+    function fillPie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
+        var currAngle = startRadian;
+        var tot = Math.floor( sweepRadian/theta );
+        theta += (sweepRadian/theta - tot)/noSides;
+        tot = Math.floor( sweepRadian/theta );
+        var bx = rx * Math.cos( currAngle ) + ax;
+        var by = ry * Math.sin( currAngle ) + ay;
+        var cx = 0.;
+        var cy = 0.;
+        for( i in 1...tot+1){
+            currAngle = startRadian + i*theta;
+            cx = rx * Math.cos( currAngle ) + ax;
+            cy = ry * Math.sin( currAngle ) + ay;
+            fillTri( ax, ay, bx, by, cx, cy, color );
+            bx = cx;
+            by = cy;
+        }
+        // last pie
+        currAngle = startRadian + sweepRadian;
+        cx = rx * Math.cos( currAngle ) + ax;
+        cy = ry * Math.sin( currAngle ) + ay;
+        fillTri( ax, ay, bx, by, cx, cy, color );
+    }
     /**
         uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
     **/
@@ -259,6 +297,35 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                         , bx: Float, by: Float, colB: Pixel32
                         , cx: Float, cy: Float, colC: Pixel32 ){
         fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
+    }
+    public inline
+    function fillRadialPie( ax: Float, ay: Float
+                          , rx: Float, ry: Float
+                          , startRadian: Float, sweepRadian: Float
+                          , centreColor: Pixel32, outerColor: Pixel32, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        var theta = Math.PI/noSides; // *2 but make it smaller
+        var currAngle = startRadian;
+        var tot = Math.floor( sweepRadian/theta );
+        theta += (sweepRadian/theta - tot)/noSides;
+        var bx = rx * Math.cos( currAngle ) + ax;
+        var by = ry * Math.sin( currAngle ) + ay;
+        var cx = 0.;
+        var cy = 0.;
+        for( i in 1...tot+1 ){
+            currAngle = startRadian + i*theta;
+            cx = rx * Math.cos( currAngle ) + ax;
+            cy = ry * Math.sin( currAngle ) + ay;
+            fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
+            bx = cx;
+            by = cy;
+        }
+        // last pie
+        currAngle = startRadian + sweepRadian;
+        cx = rx * Math.cos( currAngle ) + ax;
+        cy = ry * Math.sin( currAngle ) + ay;
+        fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
     }
     /**
         uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours
@@ -299,7 +366,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     function fillLine( px: Float, py: Float, qx: Float, qy: Float
                      , thick: Float, color: Int, ?debugCorners = false ){
         var o = qy-py;
-        var a = qx-py;
+        var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
         rotateLine( this, px, py, thick, h, theta, color, debugCorners );

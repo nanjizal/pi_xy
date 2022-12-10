@@ -54,7 +54,26 @@ class PieArcShape extends FillShape {
         }
     }
     public override function render( pixelImage: Pixelimage ): Pixelimage {
-        trace( 'Not implemented Yet');
+        var rx = width/2;
+        var ry = height/2;
+        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+        temp.transparent = false;
+        temp.fillPie( rx, ry, rx, ry, startAngle, sweepAngle, strokeColor );
+        temp.fillPie( rx, ry, rx-strokeWidth, ry-strokeWidth, startAngle, sweepAngle, fill );
+
+        var bx = rx * Math.cos( startAngle ) + rx;
+        var by = ry * Math.sin( startAngle ) + ry;
+        var currAngle = startAngle + sweepAngle/2;
+        var ax = strokeWidth * Math.cos( currAngle ) + rx;
+        var ay = strokeWidth * Math.sin( currAngle ) + ry;
+        currAngle = startAngle + sweepAngle;
+        var cx = rx * Math.cos( currAngle ) + rx;
+        var cy = ry * Math.sin( currAngle ) + ry;
+        // broken
+        //temp.fillLine( cx, cy, bx, by, strokeWidth, strokeColor );
+        
+        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        temp = null;
         return super.render( pixelImage );
     }
 }
