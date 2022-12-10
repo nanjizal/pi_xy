@@ -299,6 +299,19 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     public inline
+    function sweepGradTri( ax: Float, ay: Float, rx: Float, ry: Float
+                        , startRadian: Float, sweepRadian: Float
+                        , colA: Pixel32, colB: Pixel32, colC: Pixel32 ){
+        var currAngle = startRadian;
+        var bx = rx * Math.cos( currAngle ) + ax;
+        var by = ry * Math.sin( currAngle ) + ay;
+        // last pie
+        currAngle = startRadian + sweepRadian;
+        var cx = rx * Math.cos( currAngle ) + ax;
+        var cy = ry * Math.sin( currAngle ) + ay;
+        fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
+    }
+    public inline
     function fillRadialPie( ax: Float, ay: Float
                           , rx: Float, ry: Float
                           , startRadian: Float, sweepRadian: Float
@@ -382,7 +395,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                          , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
                          , ?debugCorners = false ){
         var o = qy-py;
-        var a = qx-py;
+        var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
         rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );

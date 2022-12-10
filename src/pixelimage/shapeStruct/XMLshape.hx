@@ -24,14 +24,12 @@ class XMLshape {
     function processShape( x: Xml ){
         var s: ShapeInterface = 
         switch( x.nodeName ){
-            case 'ChordArcShape':
-                new ChordArcShape();
+            case 'ArcShape':
+                new ArcShape();
             case 'CircleShape':
                 new CircleShape();
             case 'CubicCurveShape':
                 new CubicCurveShape();
-            case 'EllipseArcShape':
-                new EllipseArcShape();
             case 'EllipseShape':
                 new EllipseShape(); 
             case 'LineGradient':
@@ -40,8 +38,6 @@ class XMLshape {
                 new LineShape();
             case 'PathElementShape':
                 new PathElementShape();
-            case 'PieArcShape':
-                new PieArcShape();
             case 'PolyLineGradient':
                 new PolyLineGradient();
             case 'PolyLineShape':

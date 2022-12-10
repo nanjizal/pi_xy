@@ -1,6 +1,7 @@
 -cp src
 -js bin/test.js
 -lib htmlHelper
+-lib justPath
 -lib Vision
 -lib format
 #-lib pixelimage

@@ -1,13 +1,14 @@
 package pixelimage.shapeStruct;
 
 function shapeTestArr():Array<String>{
-    return [    chordArcTest
+    return [    arcTest
             ,   circleTest
             ,   cubicCurveTest
-            ,   ellipseArcTest
             ,   ellipseTest
             ,   lineGradientTest
             ,   lineShapeTest
+            ,   pathElementQuadTest
+            ,   pathElementCubicTest
             ,   polyLineGradientTest
             ,   polyLineShapeTest 
             ,   quadCurveTest 
@@ -21,13 +22,14 @@ function shapeTestArr():Array<String>{
 // strokeColor='0xFF0000' strokeWidth='1' fill='0xFF00FF00'
 // left='100' top='100' width='200' height='50'
 
-var chordArcTest = 
-                    '<ChordArcShape 
+var arcTest = 
+                    '<ArcShape 
                         left="100"  top="100" 
                         width="500" height="480" 
                         strokeColor="0xFFFF0000" strokeWidth="5" 
                         fill="0xFF00FF00" 
-                        startAngle="0" sweepAngle="240"></ChordArcShape>';
+                        startAngle="0" sweepAngle="240"
+                        arcType="pie"></ArcShape>';
 
 var circleTest: String = 
                     '<CircleShape 
@@ -87,15 +89,21 @@ var lineShapeTest: String =
                         x2="360" y2="120" 
                         strokeWidth="30" strokeColor="0xffFF0000">
                     </LineShape>';
-
+var quadtest_d      = "M200,300 Q400,50 600,300 T1000,300";
+var cubictest_d     = "M100,200 C100,100 250,100 250,200S400,300 400,200";
 // needs justPath to implement..?
-var pathElementTest =
+var pathElementQuadTest =
                     '<PathElementShape 
-                        path="svg path here" 
+                        path="$quadtest_d" 
                         strokewidth="1" strokeColor="0xFF0000" 
                         fill="0x0000ff">
                     </PathElementShape>';
-
+var pathElementCubicTest =
+                    '<PathElementShape 
+                        path="$cubictest_d" 
+                        strokewidth="1" strokeColor="0xFF0000" 
+                        fill="0x0000ff">
+                    </PathElementShape>';
 var polyLineGradientTest = 
                     '<PolyLineGradient 
                         points= "[ 100, 100, 50, 50, 30, 30, 70, 200 ]" 
