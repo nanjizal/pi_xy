@@ -89,26 +89,28 @@ var lineShapeTest: String =
                         x2="360" y2="120" 
                         strokeWidth="30" strokeColor="0xffFF0000">
                     </LineShape>';
-var quadtest_d      = "M200,300 Q400,50 600,300 T1000,300";
-var cubictest_d     = "M100,200 C100,100 250,100 250,200S400,300 400,200";
+var quadtest_d      = 'M200,300 Q400,50 600,300 T1000,300';
+var cubictest_d     = 'M100,200 C100,100 250,100 250,200S400,300 400,200';
 // needs justPath to implement..?
 var pathElementQuadTest =
                     '<PathElementShape 
-                        path="$quadtest_d" 
-                        strokewidth="1" strokeColor="0xFF0000" 
+                        pathData="$quadtest_d" 
+                        strokeWidth="10" strokeColor="0xFFFF0000" 
                         fill="0x0000ff">
                     </PathElementShape>';
 var pathElementCubicTest =
                     '<PathElementShape 
-                        path="$cubictest_d" 
-                        strokewidth="1" strokeColor="0xFF0000" 
-                        fill="0x0000ff">
+                        pathData="$cubictest_d" 
+                        translateX="0"
+                        translateY="0"
+                        strokeWidth="30" strokeColor="0xFFFF0000" 
+                        fill="0xff0000ff">
                     </PathElementShape>';
 var polyLineGradientTest = 
                     '<PolyLineGradient 
                         points= "[ 100, 100, 50, 50, 30, 30, 70, 200 ]" 
                         colorDirection="longways" 
-                        cornerColors="[ 0xFF0000, 0x0f00ff, 0xaaaa00, 0xcc00cc ]">
+                        cornerColors="[ 0xFF0000, 0xb1afcc, 0xaaaa00, 0xcc00cc ]">
                     </PolyLineGradient>';
 
 var polyLineShapeTest = 

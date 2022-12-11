@@ -38,7 +38,7 @@ class DemoUse {
         }
         */
         
-        for( aShape in shapeTestArr() ){
+        //for( aShape in shapeTestArr() ){
             //if( count > 3 ) break;
             var aShape = shapeTestArr()[6];
             /*
@@ -48,7 +48,7 @@ class DemoUse {
             XMLshape.withString( p, str );*/
             XMLshape.withString( p, aShape );
             count++;
-        }
+        //}
         
         /*
         var str = circleTest;

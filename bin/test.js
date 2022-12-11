@@ -1240,6 +1240,11800 @@ js_Boot.__isNativeObj = function(o) {
 js_Boot.__resolveNativeClass = function(name) {
 	return $global[name];
 };
+var justPath_EllipseArc = function(arc_) {
+	this.arc = arc_;
+};
+justPath_EllipseArc.__name__ = "justPath.EllipseArc";
+justPath_EllipseArc.prototype = {
+	lineRender: function(moveTo,lineTo,dA,renderFirst) {
+		if(renderFirst == null) {
+			renderFirst = true;
+		}
+		var sign = this.arc.delta > 0 ? 1 : -1;
+		var totalSteps = Math.ceil(Math.abs(this.arc.delta) / dA);
+		var theta = this.arc.alpha;
+		var step = this.arc.delta / totalSteps;
+		if(renderFirst) {
+			var px = this.arc.cx + this.arc.rx * Math.cos(theta);
+			var py = this.arc.cy + this.arc.ry * Math.sin(theta);
+			px -= this.arc.cx;
+			py -= this.arc.cy;
+			var dx = px;
+			var dy = py;
+			px = dx * this.arc.phiCos - dy * this.arc.phiSin;
+			py = dx * this.arc.phiSin + dy * this.arc.phiCos;
+			this.x = px + this.arc.cx;
+			this.y = py + this.arc.cy;
+			moveTo(this.x,this.y);
+		}
+		var _g = 1;
+		var _g1 = totalSteps;
+		while(_g < _g1) {
+			var i = _g++;
+			theta += step;
+			var px = this.arc.cx + this.arc.rx * Math.cos(theta);
+			var py = this.arc.cy + this.arc.ry * Math.sin(theta);
+			px -= this.arc.cx;
+			py -= this.arc.cy;
+			var dx = px;
+			var dy = py;
+			px = dx * this.arc.phiCos - dy * this.arc.phiSin;
+			py = dx * this.arc.phiSin + dy * this.arc.phiCos;
+			this.x = px + this.arc.cx;
+			this.y = py + this.arc.cy;
+			lineTo(this.x,this.y);
+		}
+		var theta = this.arc.omega;
+		var px = this.arc.cx + this.arc.rx * Math.cos(theta);
+		var py = this.arc.cy + this.arc.ry * Math.sin(theta);
+		px -= this.arc.cx;
+		py -= this.arc.cy;
+		var dx = px;
+		var dy = py;
+		px = dx * this.arc.phiCos - dy * this.arc.phiSin;
+		py = dx * this.arc.phiSin + dy * this.arc.phiCos;
+		this.x = px + this.arc.cx;
+		this.y = py + this.arc.cy;
+		lineTo(this.x,this.y);
+	}
+	,__class__: justPath_EllipseArc
+};
+var justPath_ILinePathContext = function() { };
+justPath_ILinePathContext.__name__ = "justPath.ILinePathContext";
+justPath_ILinePathContext.__isInterface__ = true;
+justPath_ILinePathContext.prototype = {
+	__class__: justPath_ILinePathContext
+};
+var justPath_StoreF6 = function() {
+	this.count = 0;
+	this.l = 0;
+};
+justPath_StoreF6.__name__ = "justPath.StoreF6";
+justPath_StoreF6.prototype = {
+	push: function(v) {
+		switch(this.l) {
+		case 0:
+			this.s0 = v;
+			break;
+		case 1:
+			this.s1 = v;
+			break;
+		case 2:
+			this.s2 = v;
+			break;
+		case 3:
+			this.s3 = v;
+			break;
+		case 4:
+			this.s4 = v;
+			break;
+		case 5:
+			this.s5 = v;
+			break;
+		default:
+			if(this.s6 == null) {
+				this.s6 = new justPath_StoreF6();
+			}
+			this.s6.push(v);
+		}
+		this.l++;
+	}
+	,shift: function() {
+		var out = this.s0;
+		if(this.l != 0) {
+			this.s0 = this.s1;
+			this.s1 = this.s2;
+			this.s2 = this.s3;
+			this.s3 = this.s4;
+			this.s4 = this.s5;
+			this.s5 = null;
+			if(this.s6 != null) {
+				this.s5 = this.s6.shift();
+			}
+			this.l--;
+		}
+		return out;
+	}
+	,hasNext: function() {
+		return this.count < this.l + 1;
+	}
+	,next: function() {
+		var out = null;
+		switch(this.count) {
+		case 0:
+			out = this.s0;
+			break;
+		case 1:
+			out = this.s1;
+			break;
+		case 2:
+			out = this.s2;
+			break;
+		case 3:
+			out = this.s3;
+			break;
+		case 4:
+			out = this.s4;
+			break;
+		case 5:
+			out = this.s5;
+			break;
+		default:
+			out = this.s6.next();
+		}
+		this.count++;
+		return out;
+	}
+	,__class__: justPath_StoreF6
+};
+var justPath_SvgLinePath = function(pathContext_) {
+	this.py = 0.;
+	this.px = 0.;
+	this.l = 0;
+	this.c = 0;
+	this.controlY = 0.;
+	this.controlX = 0.;
+	this.lastY = 0.;
+	this.lastX = 0.;
+	this.pos = 0;
+	this.str = "";
+	this.pathContext = pathContext_;
+};
+justPath_SvgLinePath.__name__ = "justPath.SvgLinePath";
+justPath_SvgLinePath.prototype = {
+	parse: function(str_) {
+		this.str = str_;
+		this.pos = 0;
+		this.l = this.str.length;
+		this.c = this.str.charCodeAt(this.pos++);
+		var count = 0;
+		this.store = new justPath_StoreF6();
+		while(this.pos < this.l) {
+			switch(this.c) {
+			case 65:
+				var _this = this.store;
+				_this.l = 0;
+				_this.s0 = null;
+				_this.s1 = null;
+				_this.s2 = null;
+				_this.s3 = null;
+				_this.s4 = null;
+				_this.s5 = null;
+				_this.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp = "";
+				var exit = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp != "") {
+							if((this.store.l & 1) == 0) {
+								var _this1 = this.store;
+								var v = parseFloat(temp);
+								switch(_this1.l) {
+								case 0:
+									_this1.s0 = v;
+									break;
+								case 1:
+									_this1.s1 = v;
+									break;
+								case 2:
+									_this1.s2 = v;
+									break;
+								case 3:
+									_this1.s3 = v;
+									break;
+								case 4:
+									_this1.s4 = v;
+									break;
+								case 5:
+									_this1.s5 = v;
+									break;
+								default:
+									if(_this1.s6 == null) {
+										_this1.s6 = new justPath_StoreF6();
+									}
+									var _this2 = _this1.s6;
+									switch(_this2.l) {
+									case 0:
+										_this2.s0 = v;
+										break;
+									case 1:
+										_this2.s1 = v;
+										break;
+									case 2:
+										_this2.s2 = v;
+										break;
+									case 3:
+										_this2.s3 = v;
+										break;
+									case 4:
+										_this2.s4 = v;
+										break;
+									case 5:
+										_this2.s5 = v;
+										break;
+									default:
+										if(_this2.s6 == null) {
+											_this2.s6 = new justPath_StoreF6();
+										}
+										_this2.s6.push(v);
+									}
+									_this2.l++;
+								}
+								_this1.l++;
+							} else {
+								var _this3 = this.store;
+								var v1 = parseFloat(temp);
+								switch(_this3.l) {
+								case 0:
+									_this3.s0 = v1;
+									break;
+								case 1:
+									_this3.s1 = v1;
+									break;
+								case 2:
+									_this3.s2 = v1;
+									break;
+								case 3:
+									_this3.s3 = v1;
+									break;
+								case 4:
+									_this3.s4 = v1;
+									break;
+								case 5:
+									_this3.s5 = v1;
+									break;
+								default:
+									if(_this3.s6 == null) {
+										_this3.s6 = new justPath_StoreF6();
+									}
+									var _this4 = _this3.s6;
+									switch(_this4.l) {
+									case 0:
+										_this4.s0 = v1;
+										break;
+									case 1:
+										_this4.s1 = v1;
+										break;
+									case 2:
+										_this4.s2 = v1;
+										break;
+									case 3:
+										_this4.s3 = v1;
+										break;
+									case 4:
+										_this4.s4 = v1;
+										break;
+									case 5:
+										_this4.s5 = v1;
+										break;
+									default:
+										if(_this4.s6 == null) {
+											_this4.s6 = new justPath_StoreF6();
+										}
+										_this4.s6.push(v1);
+									}
+									_this4.l++;
+								}
+								_this3.l++;
+							}
+							temp = "";
+						}
+						break;
+					case 45:
+						if(temp != "") {
+							if((this.store.l & 1) == 0) {
+								var _this5 = this.store;
+								var v2 = parseFloat(temp);
+								switch(_this5.l) {
+								case 0:
+									_this5.s0 = v2;
+									break;
+								case 1:
+									_this5.s1 = v2;
+									break;
+								case 2:
+									_this5.s2 = v2;
+									break;
+								case 3:
+									_this5.s3 = v2;
+									break;
+								case 4:
+									_this5.s4 = v2;
+									break;
+								case 5:
+									_this5.s5 = v2;
+									break;
+								default:
+									if(_this5.s6 == null) {
+										_this5.s6 = new justPath_StoreF6();
+									}
+									var _this6 = _this5.s6;
+									switch(_this6.l) {
+									case 0:
+										_this6.s0 = v2;
+										break;
+									case 1:
+										_this6.s1 = v2;
+										break;
+									case 2:
+										_this6.s2 = v2;
+										break;
+									case 3:
+										_this6.s3 = v2;
+										break;
+									case 4:
+										_this6.s4 = v2;
+										break;
+									case 5:
+										_this6.s5 = v2;
+										break;
+									default:
+										if(_this6.s6 == null) {
+											_this6.s6 = new justPath_StoreF6();
+										}
+										_this6.s6.push(v2);
+									}
+									_this6.l++;
+								}
+								_this5.l++;
+							} else {
+								var _this7 = this.store;
+								var v3 = parseFloat(temp);
+								switch(_this7.l) {
+								case 0:
+									_this7.s0 = v3;
+									break;
+								case 1:
+									_this7.s1 = v3;
+									break;
+								case 2:
+									_this7.s2 = v3;
+									break;
+								case 3:
+									_this7.s3 = v3;
+									break;
+								case 4:
+									_this7.s4 = v3;
+									break;
+								case 5:
+									_this7.s5 = v3;
+									break;
+								default:
+									if(_this7.s6 == null) {
+										_this7.s6 = new justPath_StoreF6();
+									}
+									var _this8 = _this7.s6;
+									switch(_this8.l) {
+									case 0:
+										_this8.s0 = v3;
+										break;
+									case 1:
+										_this8.s1 = v3;
+										break;
+									case 2:
+										_this8.s2 = v3;
+										break;
+									case 3:
+										_this8.s3 = v3;
+										break;
+									case 4:
+										_this8.s4 = v3;
+										break;
+									case 5:
+										_this8.s5 = v3;
+										break;
+									default:
+										if(_this8.s6 == null) {
+											_this8.s6 = new justPath_StoreF6();
+										}
+										_this8.s6.push(v3);
+									}
+									_this8.l++;
+								}
+								_this7.l++;
+							}
+						}
+						temp = "-";
+						break;
+					case 46:
+						temp += ".";
+						break;
+					case 48:
+						temp += "0";
+						break;
+					case 49:
+						temp += "1";
+						break;
+					case 50:
+						temp += "2";
+						break;
+					case 51:
+						temp += "3";
+						break;
+					case 52:
+						temp += "4";
+						break;
+					case 53:
+						temp += "5";
+						break;
+					case 54:
+						temp += "6";
+						break;
+					case 55:
+						temp += "7";
+						break;
+					case 56:
+						temp += "8";
+						break;
+					case 57:
+						temp += "9";
+						break;
+					default:
+						if(temp != "") {
+							if((this.store.l & 1) == 0) {
+								var _this9 = this.store;
+								var v4 = parseFloat(temp);
+								switch(_this9.l) {
+								case 0:
+									_this9.s0 = v4;
+									break;
+								case 1:
+									_this9.s1 = v4;
+									break;
+								case 2:
+									_this9.s2 = v4;
+									break;
+								case 3:
+									_this9.s3 = v4;
+									break;
+								case 4:
+									_this9.s4 = v4;
+									break;
+								case 5:
+									_this9.s5 = v4;
+									break;
+								default:
+									if(_this9.s6 == null) {
+										_this9.s6 = new justPath_StoreF6();
+									}
+									var _this10 = _this9.s6;
+									switch(_this10.l) {
+									case 0:
+										_this10.s0 = v4;
+										break;
+									case 1:
+										_this10.s1 = v4;
+										break;
+									case 2:
+										_this10.s2 = v4;
+										break;
+									case 3:
+										_this10.s3 = v4;
+										break;
+									case 4:
+										_this10.s4 = v4;
+										break;
+									case 5:
+										_this10.s5 = v4;
+										break;
+									default:
+										if(_this10.s6 == null) {
+											_this10.s6 = new justPath_StoreF6();
+										}
+										_this10.s6.push(v4);
+									}
+									_this10.l++;
+								}
+								_this9.l++;
+							} else {
+								var _this11 = this.store;
+								var v5 = parseFloat(temp);
+								switch(_this11.l) {
+								case 0:
+									_this11.s0 = v5;
+									break;
+								case 1:
+									_this11.s1 = v5;
+									break;
+								case 2:
+									_this11.s2 = v5;
+									break;
+								case 3:
+									_this11.s3 = v5;
+									break;
+								case 4:
+									_this11.s4 = v5;
+									break;
+								case 5:
+									_this11.s5 = v5;
+									break;
+								default:
+									if(_this11.s6 == null) {
+										_this11.s6 = new justPath_StoreF6();
+									}
+									var _this12 = _this11.s6;
+									switch(_this12.l) {
+									case 0:
+										_this12.s0 = v5;
+										break;
+									case 1:
+										_this12.s1 = v5;
+										break;
+									case 2:
+										_this12.s2 = v5;
+										break;
+									case 3:
+										_this12.s3 = v5;
+										break;
+									case 4:
+										_this12.s4 = v5;
+										break;
+									case 5:
+										_this12.s5 = v5;
+										break;
+									default:
+										if(_this12.s6 == null) {
+											_this12.s6 = new justPath_StoreF6();
+										}
+										_this12.s6.push(v5);
+									}
+									_this12.l++;
+								}
+								_this11.l++;
+							}
+							temp = "";
+						}
+						this.pos--;
+						exit = true;
+					}
+					if(exit) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 7) {
+					var sx = this.lastX;
+					var sy = this.lastY;
+					var _this13 = this.store;
+					var out = _this13.s0;
+					if(_this13.l != 0) {
+						_this13.s0 = _this13.s1;
+						_this13.s1 = _this13.s2;
+						_this13.s2 = _this13.s3;
+						_this13.s3 = _this13.s4;
+						_this13.s4 = _this13.s5;
+						_this13.s5 = null;
+						if(_this13.s6 != null) {
+							var _this14 = _this13.s6;
+							var out1 = _this14.s0;
+							if(_this14.l != 0) {
+								_this14.s0 = _this14.s1;
+								_this14.s1 = _this14.s2;
+								_this14.s2 = _this14.s3;
+								_this14.s3 = _this14.s4;
+								_this14.s4 = _this14.s5;
+								_this14.s5 = null;
+								if(_this14.s6 != null) {
+									_this14.s5 = _this14.s6.shift();
+								}
+								_this14.l--;
+							}
+							_this13.s5 = out1;
+						}
+						_this13.l--;
+					}
+					var xr = out;
+					var _this15 = this.store;
+					var out2 = _this15.s0;
+					if(_this15.l != 0) {
+						_this15.s0 = _this15.s1;
+						_this15.s1 = _this15.s2;
+						_this15.s2 = _this15.s3;
+						_this15.s3 = _this15.s4;
+						_this15.s4 = _this15.s5;
+						_this15.s5 = null;
+						if(_this15.s6 != null) {
+							var _this16 = _this15.s6;
+							var out3 = _this16.s0;
+							if(_this16.l != 0) {
+								_this16.s0 = _this16.s1;
+								_this16.s1 = _this16.s2;
+								_this16.s2 = _this16.s3;
+								_this16.s3 = _this16.s4;
+								_this16.s4 = _this16.s5;
+								_this16.s5 = null;
+								if(_this16.s6 != null) {
+									_this16.s5 = _this16.s6.shift();
+								}
+								_this16.l--;
+							}
+							_this15.s5 = out3;
+						}
+						_this15.l--;
+					}
+					var yr = out2;
+					var _this17 = this.store;
+					var out4 = _this17.s0;
+					if(_this17.l != 0) {
+						_this17.s0 = _this17.s1;
+						_this17.s1 = _this17.s2;
+						_this17.s2 = _this17.s3;
+						_this17.s3 = _this17.s4;
+						_this17.s4 = _this17.s5;
+						_this17.s5 = null;
+						if(_this17.s6 != null) {
+							var _this18 = _this17.s6;
+							var out5 = _this18.s0;
+							if(_this18.l != 0) {
+								_this18.s0 = _this18.s1;
+								_this18.s1 = _this18.s2;
+								_this18.s2 = _this18.s3;
+								_this18.s3 = _this18.s4;
+								_this18.s4 = _this18.s5;
+								_this18.s5 = null;
+								if(_this18.s6 != null) {
+									_this18.s5 = _this18.s6.shift();
+								}
+								_this18.l--;
+							}
+							_this17.s5 = out5;
+						}
+						_this17.l--;
+					}
+					var phi = out4;
+					var _this19 = this.store;
+					var out6 = _this19.s0;
+					if(_this19.l != 0) {
+						_this19.s0 = _this19.s1;
+						_this19.s1 = _this19.s2;
+						_this19.s2 = _this19.s3;
+						_this19.s3 = _this19.s4;
+						_this19.s4 = _this19.s5;
+						_this19.s5 = null;
+						if(_this19.s6 != null) {
+							var _this20 = _this19.s6;
+							var out7 = _this20.s0;
+							if(_this20.l != 0) {
+								_this20.s0 = _this20.s1;
+								_this20.s1 = _this20.s2;
+								_this20.s2 = _this20.s3;
+								_this20.s3 = _this20.s4;
+								_this20.s4 = _this20.s5;
+								_this20.s5 = null;
+								if(_this20.s6 != null) {
+									var _this21 = _this20.s6;
+									var out8 = _this21.s0;
+									if(_this21.l != 0) {
+										_this21.s0 = _this21.s1;
+										_this21.s1 = _this21.s2;
+										_this21.s2 = _this21.s3;
+										_this21.s3 = _this21.s4;
+										_this21.s4 = _this21.s5;
+										_this21.s5 = null;
+										if(_this21.s6 != null) {
+											_this21.s5 = _this21.s6.shift();
+										}
+										_this21.l--;
+									}
+									_this20.s5 = out8;
+								}
+								_this20.l--;
+							}
+							_this19.s5 = out7;
+						}
+						_this19.l--;
+					}
+					var large = out6 | 0;
+					var _this22 = this.store;
+					var out9 = _this22.s0;
+					if(_this22.l != 0) {
+						_this22.s0 = _this22.s1;
+						_this22.s1 = _this22.s2;
+						_this22.s2 = _this22.s3;
+						_this22.s3 = _this22.s4;
+						_this22.s4 = _this22.s5;
+						_this22.s5 = null;
+						if(_this22.s6 != null) {
+							var _this23 = _this22.s6;
+							var out10 = _this23.s0;
+							if(_this23.l != 0) {
+								_this23.s0 = _this23.s1;
+								_this23.s1 = _this23.s2;
+								_this23.s2 = _this23.s3;
+								_this23.s3 = _this23.s4;
+								_this23.s4 = _this23.s5;
+								_this23.s5 = null;
+								if(_this23.s6 != null) {
+									var _this24 = _this23.s6;
+									var out11 = _this24.s0;
+									if(_this24.l != 0) {
+										_this24.s0 = _this24.s1;
+										_this24.s1 = _this24.s2;
+										_this24.s2 = _this24.s3;
+										_this24.s3 = _this24.s4;
+										_this24.s4 = _this24.s5;
+										_this24.s5 = null;
+										if(_this24.s6 != null) {
+											_this24.s5 = _this24.s6.shift();
+										}
+										_this24.l--;
+									}
+									_this23.s5 = out11;
+								}
+								_this23.l--;
+							}
+							_this22.s5 = out10;
+						}
+						_this22.l--;
+					}
+					var sweep = out9 | 0;
+					var _this25 = this.store;
+					var out12 = _this25.s0;
+					if(_this25.l != 0) {
+						_this25.s0 = _this25.s1;
+						_this25.s1 = _this25.s2;
+						_this25.s2 = _this25.s3;
+						_this25.s3 = _this25.s4;
+						_this25.s4 = _this25.s5;
+						_this25.s5 = null;
+						if(_this25.s6 != null) {
+							var _this26 = _this25.s6;
+							var out13 = _this26.s0;
+							if(_this26.l != 0) {
+								_this26.s0 = _this26.s1;
+								_this26.s1 = _this26.s2;
+								_this26.s2 = _this26.s3;
+								_this26.s3 = _this26.s4;
+								_this26.s4 = _this26.s5;
+								_this26.s5 = null;
+								if(_this26.s6 != null) {
+									_this26.s5 = _this26.s6.shift();
+								}
+								_this26.l--;
+							}
+							_this25.s5 = out13;
+						}
+						_this25.l--;
+					}
+					this.lastX = out12;
+					var _this27 = this.store;
+					var out14 = _this27.s0;
+					if(_this27.l != 0) {
+						_this27.s0 = _this27.s1;
+						_this27.s1 = _this27.s2;
+						_this27.s2 = _this27.s3;
+						_this27.s3 = _this27.s4;
+						_this27.s4 = _this27.s5;
+						_this27.s5 = null;
+						if(_this27.s6 != null) {
+							var _this28 = _this27.s6;
+							var out15 = _this28.s0;
+							if(_this28.l != 0) {
+								_this28.s0 = _this28.s1;
+								_this28.s1 = _this28.s2;
+								_this28.s2 = _this28.s3;
+								_this28.s3 = _this28.s4;
+								_this28.s4 = _this28.s5;
+								_this28.s5 = null;
+								if(_this28.s6 != null) {
+									_this28.s5 = _this28.s6.shift();
+								}
+								_this28.l--;
+							}
+							_this27.s5 = out15;
+						}
+						_this27.l--;
+					}
+					this.lastY = out14;
+					var sx1 = sx;
+					var sy1 = sy;
+					var phi1 = phi;
+					var ex = this.lastX;
+					var ey = this.lastY;
+					var mx = (sx1 - ex) / 2;
+					var my = (sy1 - ey) / 2;
+					var ax = (sx1 + ex) / 2;
+					var ay = (sy1 + ey) / 2;
+					phi1 %= 360;
+					phi1 = phi1 * Math.PI / 180;
+					var sin = Math.sin(phi1);
+					var cos = Math.cos(phi1);
+					var x1 = mx * cos + my * sin;
+					var y1 = -mx * sin + my * cos;
+					var rx = Math.abs(xr);
+					var ry = Math.abs(yr);
+					var rxx = rx * rx;
+					var ryy = ry * ry;
+					var xx1 = x1 * x1;
+					var yy1 = y1 * y1;
+					var check = xx1 / rxx + yy1 / ryy;
+					if(check > 1) {
+						rx *= Math.sqrt(check);
+						ry *= Math.sqrt(check);
+						rxx = rx * rx;
+						ryy = ry * ry;
+					}
+					var sign = large == sweep ? -1 : 1;
+					var sq = (rxx * ryy - rxx * yy1 - ryy * xx1) / (rxx * yy1 + ryy * xx1);
+					if(sq < 0) {
+						sq = 0;
+					}
+					var coef = sign * Math.sqrt(sq);
+					var cx1 = coef * rx * y1 / ry;
+					var cy1 = -coef * ry * x1 / rx;
+					var cx = ax + cx1 * cos - cy1 * sin;
+					var cy = ay + cx1 * sin + cy1 * cos;
+					var phiSin = Math.sin(-phi1);
+					var phiCos = Math.cos(-phi1);
+					sx1 -= cx;
+					sy1 -= cy;
+					var dx = sx1;
+					var dy = sy1;
+					sx1 = dx * phiCos - dy * phiSin;
+					sy1 = dx * phiSin + dy * phiCos;
+					sx1 += cx;
+					sy1 += cy;
+					ex -= cx;
+					ey -= cy;
+					var dx1 = ex;
+					var dy1 = ey;
+					ex = dx1 * phiCos - dy1 * phiSin;
+					ey = dx1 * phiSin + dy1 * phiCos;
+					ex += cx;
+					ey += cy;
+					var alpha = Math.atan2(rx * (cy - sy1),ry * (cx - sx1)) - Math.PI;
+					var omega = Math.atan2(rx * (cy - ey),ry * (cx - ex)) - Math.PI;
+					var delta = alpha - omega;
+					if(sweep == 1 && delta > 0) {
+						delta -= 2 * Math.PI;
+					} else if(sweep == 0 && delta < 0) {
+						delta += 2 * Math.PI;
+					}
+					var this1 = { cx : cx, cy : cy, rx : rx, ry : ry, alpha : alpha, omega : omega, delta : -delta, phi : phi1, phiSin : Math.sin(phi1), phiCos : Math.cos(phi1)};
+					var ellipseData = this1;
+					var ellipse = new justPath_EllipseArc(ellipseData);
+					ellipse.lineRender(($_=this.pathContext,$bind($_,$_.moveTo)),($_=this.pathContext,$bind($_,$_.lineTo)),Math.PI / 18);
+				} else if(this.store.l > 7) {
+					while(this.store.l > 6) {
+						var sx2 = this.lastX;
+						var sy2 = this.lastY;
+						var _this29 = this.store;
+						var out16 = _this29.s0;
+						if(_this29.l != 0) {
+							_this29.s0 = _this29.s1;
+							_this29.s1 = _this29.s2;
+							_this29.s2 = _this29.s3;
+							_this29.s3 = _this29.s4;
+							_this29.s4 = _this29.s5;
+							_this29.s5 = null;
+							if(_this29.s6 != null) {
+								var _this30 = _this29.s6;
+								var out17 = _this30.s0;
+								if(_this30.l != 0) {
+									_this30.s0 = _this30.s1;
+									_this30.s1 = _this30.s2;
+									_this30.s2 = _this30.s3;
+									_this30.s3 = _this30.s4;
+									_this30.s4 = _this30.s5;
+									_this30.s5 = null;
+									if(_this30.s6 != null) {
+										_this30.s5 = _this30.s6.shift();
+									}
+									_this30.l--;
+								}
+								_this29.s5 = out17;
+							}
+							_this29.l--;
+						}
+						var xr1 = out16;
+						var _this31 = this.store;
+						var out18 = _this31.s0;
+						if(_this31.l != 0) {
+							_this31.s0 = _this31.s1;
+							_this31.s1 = _this31.s2;
+							_this31.s2 = _this31.s3;
+							_this31.s3 = _this31.s4;
+							_this31.s4 = _this31.s5;
+							_this31.s5 = null;
+							if(_this31.s6 != null) {
+								var _this32 = _this31.s6;
+								var out19 = _this32.s0;
+								if(_this32.l != 0) {
+									_this32.s0 = _this32.s1;
+									_this32.s1 = _this32.s2;
+									_this32.s2 = _this32.s3;
+									_this32.s3 = _this32.s4;
+									_this32.s4 = _this32.s5;
+									_this32.s5 = null;
+									if(_this32.s6 != null) {
+										_this32.s5 = _this32.s6.shift();
+									}
+									_this32.l--;
+								}
+								_this31.s5 = out19;
+							}
+							_this31.l--;
+						}
+						var yr1 = out18;
+						var _this33 = this.store;
+						var out20 = _this33.s0;
+						if(_this33.l != 0) {
+							_this33.s0 = _this33.s1;
+							_this33.s1 = _this33.s2;
+							_this33.s2 = _this33.s3;
+							_this33.s3 = _this33.s4;
+							_this33.s4 = _this33.s5;
+							_this33.s5 = null;
+							if(_this33.s6 != null) {
+								var _this34 = _this33.s6;
+								var out21 = _this34.s0;
+								if(_this34.l != 0) {
+									_this34.s0 = _this34.s1;
+									_this34.s1 = _this34.s2;
+									_this34.s2 = _this34.s3;
+									_this34.s3 = _this34.s4;
+									_this34.s4 = _this34.s5;
+									_this34.s5 = null;
+									if(_this34.s6 != null) {
+										_this34.s5 = _this34.s6.shift();
+									}
+									_this34.l--;
+								}
+								_this33.s5 = out21;
+							}
+							_this33.l--;
+						}
+						var phi2 = out20;
+						var _this35 = this.store;
+						var out22 = _this35.s0;
+						if(_this35.l != 0) {
+							_this35.s0 = _this35.s1;
+							_this35.s1 = _this35.s2;
+							_this35.s2 = _this35.s3;
+							_this35.s3 = _this35.s4;
+							_this35.s4 = _this35.s5;
+							_this35.s5 = null;
+							if(_this35.s6 != null) {
+								var _this36 = _this35.s6;
+								var out23 = _this36.s0;
+								if(_this36.l != 0) {
+									_this36.s0 = _this36.s1;
+									_this36.s1 = _this36.s2;
+									_this36.s2 = _this36.s3;
+									_this36.s3 = _this36.s4;
+									_this36.s4 = _this36.s5;
+									_this36.s5 = null;
+									if(_this36.s6 != null) {
+										var _this37 = _this36.s6;
+										var out24 = _this37.s0;
+										if(_this37.l != 0) {
+											_this37.s0 = _this37.s1;
+											_this37.s1 = _this37.s2;
+											_this37.s2 = _this37.s3;
+											_this37.s3 = _this37.s4;
+											_this37.s4 = _this37.s5;
+											_this37.s5 = null;
+											if(_this37.s6 != null) {
+												_this37.s5 = _this37.s6.shift();
+											}
+											_this37.l--;
+										}
+										_this36.s5 = out24;
+									}
+									_this36.l--;
+								}
+								_this35.s5 = out23;
+							}
+							_this35.l--;
+						}
+						var large1 = out22 | 0;
+						var _this38 = this.store;
+						var out25 = _this38.s0;
+						if(_this38.l != 0) {
+							_this38.s0 = _this38.s1;
+							_this38.s1 = _this38.s2;
+							_this38.s2 = _this38.s3;
+							_this38.s3 = _this38.s4;
+							_this38.s4 = _this38.s5;
+							_this38.s5 = null;
+							if(_this38.s6 != null) {
+								var _this39 = _this38.s6;
+								var out26 = _this39.s0;
+								if(_this39.l != 0) {
+									_this39.s0 = _this39.s1;
+									_this39.s1 = _this39.s2;
+									_this39.s2 = _this39.s3;
+									_this39.s3 = _this39.s4;
+									_this39.s4 = _this39.s5;
+									_this39.s5 = null;
+									if(_this39.s6 != null) {
+										var _this40 = _this39.s6;
+										var out27 = _this40.s0;
+										if(_this40.l != 0) {
+											_this40.s0 = _this40.s1;
+											_this40.s1 = _this40.s2;
+											_this40.s2 = _this40.s3;
+											_this40.s3 = _this40.s4;
+											_this40.s4 = _this40.s5;
+											_this40.s5 = null;
+											if(_this40.s6 != null) {
+												_this40.s5 = _this40.s6.shift();
+											}
+											_this40.l--;
+										}
+										_this39.s5 = out27;
+									}
+									_this39.l--;
+								}
+								_this38.s5 = out26;
+							}
+							_this38.l--;
+						}
+						var sweep1 = out25 | 0;
+						var _this41 = this.store;
+						var out28 = _this41.s0;
+						if(_this41.l != 0) {
+							_this41.s0 = _this41.s1;
+							_this41.s1 = _this41.s2;
+							_this41.s2 = _this41.s3;
+							_this41.s3 = _this41.s4;
+							_this41.s4 = _this41.s5;
+							_this41.s5 = null;
+							if(_this41.s6 != null) {
+								var _this42 = _this41.s6;
+								var out29 = _this42.s0;
+								if(_this42.l != 0) {
+									_this42.s0 = _this42.s1;
+									_this42.s1 = _this42.s2;
+									_this42.s2 = _this42.s3;
+									_this42.s3 = _this42.s4;
+									_this42.s4 = _this42.s5;
+									_this42.s5 = null;
+									if(_this42.s6 != null) {
+										_this42.s5 = _this42.s6.shift();
+									}
+									_this42.l--;
+								}
+								_this41.s5 = out29;
+							}
+							_this41.l--;
+						}
+						this.lastX = out28;
+						var _this43 = this.store;
+						var out30 = _this43.s0;
+						if(_this43.l != 0) {
+							_this43.s0 = _this43.s1;
+							_this43.s1 = _this43.s2;
+							_this43.s2 = _this43.s3;
+							_this43.s3 = _this43.s4;
+							_this43.s4 = _this43.s5;
+							_this43.s5 = null;
+							if(_this43.s6 != null) {
+								var _this44 = _this43.s6;
+								var out31 = _this44.s0;
+								if(_this44.l != 0) {
+									_this44.s0 = _this44.s1;
+									_this44.s1 = _this44.s2;
+									_this44.s2 = _this44.s3;
+									_this44.s3 = _this44.s4;
+									_this44.s4 = _this44.s5;
+									_this44.s5 = null;
+									if(_this44.s6 != null) {
+										_this44.s5 = _this44.s6.shift();
+									}
+									_this44.l--;
+								}
+								_this43.s5 = out31;
+							}
+							_this43.l--;
+						}
+						this.lastY = out30;
+						var sx3 = sx2;
+						var sy3 = sy2;
+						var phi3 = phi2;
+						var ex1 = this.lastX;
+						var ey1 = this.lastY;
+						var mx1 = (sx3 - ex1) / 2;
+						var my1 = (sy3 - ey1) / 2;
+						var ax1 = (sx3 + ex1) / 2;
+						var ay1 = (sy3 + ey1) / 2;
+						phi3 %= 360;
+						phi3 = phi3 * Math.PI / 180;
+						var sin1 = Math.sin(phi3);
+						var cos1 = Math.cos(phi3);
+						var x11 = mx1 * cos1 + my1 * sin1;
+						var y11 = -mx1 * sin1 + my1 * cos1;
+						var rx1 = Math.abs(xr1);
+						var ry1 = Math.abs(yr1);
+						var rxx1 = rx1 * rx1;
+						var ryy1 = ry1 * ry1;
+						var xx11 = x11 * x11;
+						var yy11 = y11 * y11;
+						var check1 = xx11 / rxx1 + yy11 / ryy1;
+						if(check1 > 1) {
+							rx1 *= Math.sqrt(check1);
+							ry1 *= Math.sqrt(check1);
+							rxx1 = rx1 * rx1;
+							ryy1 = ry1 * ry1;
+						}
+						var sign1 = large1 == sweep1 ? -1 : 1;
+						var sq1 = (rxx1 * ryy1 - rxx1 * yy11 - ryy1 * xx11) / (rxx1 * yy11 + ryy1 * xx11);
+						if(sq1 < 0) {
+							sq1 = 0;
+						}
+						var coef1 = sign1 * Math.sqrt(sq1);
+						var cx11 = coef1 * rx1 * y11 / ry1;
+						var cy11 = -coef1 * ry1 * x11 / rx1;
+						var cx2 = ax1 + cx11 * cos1 - cy11 * sin1;
+						var cy2 = ay1 + cx11 * sin1 + cy11 * cos1;
+						var phiSin1 = Math.sin(-phi3);
+						var phiCos1 = Math.cos(-phi3);
+						sx3 -= cx2;
+						sy3 -= cy2;
+						var dx2 = sx3;
+						var dy2 = sy3;
+						sx3 = dx2 * phiCos1 - dy2 * phiSin1;
+						sy3 = dx2 * phiSin1 + dy2 * phiCos1;
+						sx3 += cx2;
+						sy3 += cy2;
+						ex1 -= cx2;
+						ey1 -= cy2;
+						var dx3 = ex1;
+						var dy3 = ey1;
+						ex1 = dx3 * phiCos1 - dy3 * phiSin1;
+						ey1 = dx3 * phiSin1 + dy3 * phiCos1;
+						ex1 += cx2;
+						ey1 += cy2;
+						var alpha1 = Math.atan2(rx1 * (cy2 - sy3),ry1 * (cx2 - sx3)) - Math.PI;
+						var omega1 = Math.atan2(rx1 * (cy2 - ey1),ry1 * (cx2 - ex1)) - Math.PI;
+						var delta1 = alpha1 - omega1;
+						if(sweep1 == 1 && delta1 > 0) {
+							delta1 -= 2 * Math.PI;
+						} else if(sweep1 == 0 && delta1 < 0) {
+							delta1 += 2 * Math.PI;
+						}
+						var this2 = { cx : cx2, cy : cy2, rx : rx1, ry : ry1, alpha : alpha1, omega : omega1, delta : -delta1, phi : phi3, phiSin : Math.sin(phi3), phiCos : Math.cos(phi3)};
+						var ellipseData1 = this2;
+						var ellipse1 = new justPath_EllipseArc(ellipseData1);
+						ellipse1.lineRender(($_=this.pathContext,$bind($_,$_.moveTo)),($_=this.pathContext,$bind($_,$_.lineTo)),Math.PI / 18);
+					}
+				}
+				break;
+			case 66:
+				haxe_Log.trace("bearing - not implemented",{ fileName : "justPath/SvgLinePath.hx", lineNumber : 380, className : "justPath.SvgLinePath", methodName : "parse"});
+				throw haxe_Exception.thrown("bearing not supported please remove");
+			case 67:
+				var _this45 = this.store;
+				_this45.l = 0;
+				_this45.s0 = null;
+				_this45.s1 = null;
+				_this45.s2 = null;
+				_this45.s3 = null;
+				_this45.s4 = null;
+				_this45.s5 = null;
+				_this45.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp1 = "";
+				var exit1 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp1 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this46 = this.store;
+								var v6 = parseFloat(temp1);
+								switch(_this46.l) {
+								case 0:
+									_this46.s0 = v6;
+									break;
+								case 1:
+									_this46.s1 = v6;
+									break;
+								case 2:
+									_this46.s2 = v6;
+									break;
+								case 3:
+									_this46.s3 = v6;
+									break;
+								case 4:
+									_this46.s4 = v6;
+									break;
+								case 5:
+									_this46.s5 = v6;
+									break;
+								default:
+									if(_this46.s6 == null) {
+										_this46.s6 = new justPath_StoreF6();
+									}
+									var _this47 = _this46.s6;
+									switch(_this47.l) {
+									case 0:
+										_this47.s0 = v6;
+										break;
+									case 1:
+										_this47.s1 = v6;
+										break;
+									case 2:
+										_this47.s2 = v6;
+										break;
+									case 3:
+										_this47.s3 = v6;
+										break;
+									case 4:
+										_this47.s4 = v6;
+										break;
+									case 5:
+										_this47.s5 = v6;
+										break;
+									default:
+										if(_this47.s6 == null) {
+											_this47.s6 = new justPath_StoreF6();
+										}
+										_this47.s6.push(v6);
+									}
+									_this47.l++;
+								}
+								_this46.l++;
+							} else {
+								var _this48 = this.store;
+								var v7 = parseFloat(temp1);
+								switch(_this48.l) {
+								case 0:
+									_this48.s0 = v7;
+									break;
+								case 1:
+									_this48.s1 = v7;
+									break;
+								case 2:
+									_this48.s2 = v7;
+									break;
+								case 3:
+									_this48.s3 = v7;
+									break;
+								case 4:
+									_this48.s4 = v7;
+									break;
+								case 5:
+									_this48.s5 = v7;
+									break;
+								default:
+									if(_this48.s6 == null) {
+										_this48.s6 = new justPath_StoreF6();
+									}
+									var _this49 = _this48.s6;
+									switch(_this49.l) {
+									case 0:
+										_this49.s0 = v7;
+										break;
+									case 1:
+										_this49.s1 = v7;
+										break;
+									case 2:
+										_this49.s2 = v7;
+										break;
+									case 3:
+										_this49.s3 = v7;
+										break;
+									case 4:
+										_this49.s4 = v7;
+										break;
+									case 5:
+										_this49.s5 = v7;
+										break;
+									default:
+										if(_this49.s6 == null) {
+											_this49.s6 = new justPath_StoreF6();
+										}
+										_this49.s6.push(v7);
+									}
+									_this49.l++;
+								}
+								_this48.l++;
+							}
+							temp1 = "";
+						}
+						break;
+					case 45:
+						if(temp1 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this50 = this.store;
+								var v8 = parseFloat(temp1);
+								switch(_this50.l) {
+								case 0:
+									_this50.s0 = v8;
+									break;
+								case 1:
+									_this50.s1 = v8;
+									break;
+								case 2:
+									_this50.s2 = v8;
+									break;
+								case 3:
+									_this50.s3 = v8;
+									break;
+								case 4:
+									_this50.s4 = v8;
+									break;
+								case 5:
+									_this50.s5 = v8;
+									break;
+								default:
+									if(_this50.s6 == null) {
+										_this50.s6 = new justPath_StoreF6();
+									}
+									var _this51 = _this50.s6;
+									switch(_this51.l) {
+									case 0:
+										_this51.s0 = v8;
+										break;
+									case 1:
+										_this51.s1 = v8;
+										break;
+									case 2:
+										_this51.s2 = v8;
+										break;
+									case 3:
+										_this51.s3 = v8;
+										break;
+									case 4:
+										_this51.s4 = v8;
+										break;
+									case 5:
+										_this51.s5 = v8;
+										break;
+									default:
+										if(_this51.s6 == null) {
+											_this51.s6 = new justPath_StoreF6();
+										}
+										_this51.s6.push(v8);
+									}
+									_this51.l++;
+								}
+								_this50.l++;
+							} else {
+								var _this52 = this.store;
+								var v9 = parseFloat(temp1);
+								switch(_this52.l) {
+								case 0:
+									_this52.s0 = v9;
+									break;
+								case 1:
+									_this52.s1 = v9;
+									break;
+								case 2:
+									_this52.s2 = v9;
+									break;
+								case 3:
+									_this52.s3 = v9;
+									break;
+								case 4:
+									_this52.s4 = v9;
+									break;
+								case 5:
+									_this52.s5 = v9;
+									break;
+								default:
+									if(_this52.s6 == null) {
+										_this52.s6 = new justPath_StoreF6();
+									}
+									var _this53 = _this52.s6;
+									switch(_this53.l) {
+									case 0:
+										_this53.s0 = v9;
+										break;
+									case 1:
+										_this53.s1 = v9;
+										break;
+									case 2:
+										_this53.s2 = v9;
+										break;
+									case 3:
+										_this53.s3 = v9;
+										break;
+									case 4:
+										_this53.s4 = v9;
+										break;
+									case 5:
+										_this53.s5 = v9;
+										break;
+									default:
+										if(_this53.s6 == null) {
+											_this53.s6 = new justPath_StoreF6();
+										}
+										_this53.s6.push(v9);
+									}
+									_this53.l++;
+								}
+								_this52.l++;
+							}
+						}
+						temp1 = "-";
+						break;
+					case 46:
+						temp1 += ".";
+						break;
+					case 48:
+						temp1 += "0";
+						break;
+					case 49:
+						temp1 += "1";
+						break;
+					case 50:
+						temp1 += "2";
+						break;
+					case 51:
+						temp1 += "3";
+						break;
+					case 52:
+						temp1 += "4";
+						break;
+					case 53:
+						temp1 += "5";
+						break;
+					case 54:
+						temp1 += "6";
+						break;
+					case 55:
+						temp1 += "7";
+						break;
+					case 56:
+						temp1 += "8";
+						break;
+					case 57:
+						temp1 += "9";
+						break;
+					default:
+						if(temp1 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this54 = this.store;
+								var v10 = parseFloat(temp1);
+								switch(_this54.l) {
+								case 0:
+									_this54.s0 = v10;
+									break;
+								case 1:
+									_this54.s1 = v10;
+									break;
+								case 2:
+									_this54.s2 = v10;
+									break;
+								case 3:
+									_this54.s3 = v10;
+									break;
+								case 4:
+									_this54.s4 = v10;
+									break;
+								case 5:
+									_this54.s5 = v10;
+									break;
+								default:
+									if(_this54.s6 == null) {
+										_this54.s6 = new justPath_StoreF6();
+									}
+									var _this55 = _this54.s6;
+									switch(_this55.l) {
+									case 0:
+										_this55.s0 = v10;
+										break;
+									case 1:
+										_this55.s1 = v10;
+										break;
+									case 2:
+										_this55.s2 = v10;
+										break;
+									case 3:
+										_this55.s3 = v10;
+										break;
+									case 4:
+										_this55.s4 = v10;
+										break;
+									case 5:
+										_this55.s5 = v10;
+										break;
+									default:
+										if(_this55.s6 == null) {
+											_this55.s6 = new justPath_StoreF6();
+										}
+										_this55.s6.push(v10);
+									}
+									_this55.l++;
+								}
+								_this54.l++;
+							} else {
+								var _this56 = this.store;
+								var v11 = parseFloat(temp1);
+								switch(_this56.l) {
+								case 0:
+									_this56.s0 = v11;
+									break;
+								case 1:
+									_this56.s1 = v11;
+									break;
+								case 2:
+									_this56.s2 = v11;
+									break;
+								case 3:
+									_this56.s3 = v11;
+									break;
+								case 4:
+									_this56.s4 = v11;
+									break;
+								case 5:
+									_this56.s5 = v11;
+									break;
+								default:
+									if(_this56.s6 == null) {
+										_this56.s6 = new justPath_StoreF6();
+									}
+									var _this57 = _this56.s6;
+									switch(_this57.l) {
+									case 0:
+										_this57.s0 = v11;
+										break;
+									case 1:
+										_this57.s1 = v11;
+										break;
+									case 2:
+										_this57.s2 = v11;
+										break;
+									case 3:
+										_this57.s3 = v11;
+										break;
+									case 4:
+										_this57.s4 = v11;
+										break;
+									case 5:
+										_this57.s5 = v11;
+										break;
+									default:
+										if(_this57.s6 == null) {
+											_this57.s6 = new justPath_StoreF6();
+										}
+										_this57.s6.push(v11);
+									}
+									_this57.l++;
+								}
+								_this56.l++;
+							}
+							temp1 = "";
+						}
+						this.pos--;
+						exit1 = true;
+					}
+					if(exit1) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					this.controlX = this.store.s2;
+					this.controlY = this.store.s3;
+					this.lastX = this.store.s4;
+					this.lastY = this.store.s5;
+					var x12 = this.store.s0;
+					var y12 = this.store.s1;
+					var x2 = this.controlX;
+					var y2 = this.controlY;
+					var x3 = this.lastX;
+					var y3 = this.lastY;
+					var tempArr = [];
+					var ax2 = this.px;
+					var ay2 = this.py;
+					var x = ax2 - x12;
+					var y = ay2 - y12;
+					var x4 = x12 - x2;
+					var y4 = y12 - y2;
+					var x5 = x2 - x3;
+					var y5 = y2 - y3;
+					var approxDistance = Math.sqrt(x * x + y * y) + Math.sqrt(x4 * x4 + y4 * y4) + Math.sqrt(x5 * x5 + y5 * y5);
+					if(approxDistance == 0) {
+						approxDistance = 0.000001;
+					}
+					var step = Math.min(1 / (approxDistance * 0.707),0.03);
+					var l = tempArr.length;
+					tempArr[l++] = ax2;
+					tempArr[l++] = ay2;
+					var t = step;
+					while(t < 1.) {
+						var u = 1 - t;
+						tempArr[l++] = Math.pow(u,3) * ax2 + 3 * Math.pow(u,2) * t * x12 + 3 * u * Math.pow(t,2) * x2 + Math.pow(t,3) * x3;
+						var u1 = 1 - t;
+						tempArr[l++] = Math.pow(u1,3) * ay2 + 3 * Math.pow(u1,2) * t * y12 + 3 * u1 * Math.pow(t,2) * y2 + Math.pow(t,3) * y3;
+						t += step;
+					}
+					tempArr[l++] = x3;
+					tempArr[l++] = y3;
+					haxe_Log.trace(tempArr,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+					var withMove = false;
+					if(withMove == null) {
+						withMove = true;
+					}
+					var l1 = tempArr.length;
+					var i = 2;
+					if(withMove) {
+						this.pathContext.moveTo(tempArr[0],tempArr[1]);
+					} else {
+						this.pathContext.lineTo(tempArr[0],tempArr[1]);
+					}
+					while(i < l1) {
+						this.pathContext.lineTo(tempArr[i],tempArr[i + 1]);
+						i += 2;
+					}
+					tempArr = [];
+					this.px = x3;
+					this.py = y3;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var _this58 = this.store;
+						var out32 = _this58.s0;
+						if(_this58.l != 0) {
+							_this58.s0 = _this58.s1;
+							_this58.s1 = _this58.s2;
+							_this58.s2 = _this58.s3;
+							_this58.s3 = _this58.s4;
+							_this58.s4 = _this58.s5;
+							_this58.s5 = null;
+							if(_this58.s6 != null) {
+								var _this59 = _this58.s6;
+								var out33 = _this59.s0;
+								if(_this59.l != 0) {
+									_this59.s0 = _this59.s1;
+									_this59.s1 = _this59.s2;
+									_this59.s2 = _this59.s3;
+									_this59.s3 = _this59.s4;
+									_this59.s4 = _this59.s5;
+									_this59.s5 = null;
+									if(_this59.s6 != null) {
+										_this59.s5 = _this59.s6.shift();
+									}
+									_this59.l--;
+								}
+								_this58.s5 = out33;
+							}
+							_this58.l--;
+						}
+						var firstX = out32;
+						var _this60 = this.store;
+						var out34 = _this60.s0;
+						if(_this60.l != 0) {
+							_this60.s0 = _this60.s1;
+							_this60.s1 = _this60.s2;
+							_this60.s2 = _this60.s3;
+							_this60.s3 = _this60.s4;
+							_this60.s4 = _this60.s5;
+							_this60.s5 = null;
+							if(_this60.s6 != null) {
+								var _this61 = _this60.s6;
+								var out35 = _this61.s0;
+								if(_this61.l != 0) {
+									_this61.s0 = _this61.s1;
+									_this61.s1 = _this61.s2;
+									_this61.s2 = _this61.s3;
+									_this61.s3 = _this61.s4;
+									_this61.s4 = _this61.s5;
+									_this61.s5 = null;
+									if(_this61.s6 != null) {
+										_this61.s5 = _this61.s6.shift();
+									}
+									_this61.l--;
+								}
+								_this60.s5 = out35;
+							}
+							_this60.l--;
+						}
+						var firstY = out34;
+						var _this62 = this.store;
+						var out36 = _this62.s0;
+						if(_this62.l != 0) {
+							_this62.s0 = _this62.s1;
+							_this62.s1 = _this62.s2;
+							_this62.s2 = _this62.s3;
+							_this62.s3 = _this62.s4;
+							_this62.s4 = _this62.s5;
+							_this62.s5 = null;
+							if(_this62.s6 != null) {
+								var _this63 = _this62.s6;
+								var out37 = _this63.s0;
+								if(_this63.l != 0) {
+									_this63.s0 = _this63.s1;
+									_this63.s1 = _this63.s2;
+									_this63.s2 = _this63.s3;
+									_this63.s3 = _this63.s4;
+									_this63.s4 = _this63.s5;
+									_this63.s5 = null;
+									if(_this63.s6 != null) {
+										_this63.s5 = _this63.s6.shift();
+									}
+									_this63.l--;
+								}
+								_this62.s5 = out37;
+							}
+							_this62.l--;
+						}
+						this.controlX = out36;
+						var _this64 = this.store;
+						var out38 = _this64.s0;
+						if(_this64.l != 0) {
+							_this64.s0 = _this64.s1;
+							_this64.s1 = _this64.s2;
+							_this64.s2 = _this64.s3;
+							_this64.s3 = _this64.s4;
+							_this64.s4 = _this64.s5;
+							_this64.s5 = null;
+							if(_this64.s6 != null) {
+								var _this65 = _this64.s6;
+								var out39 = _this65.s0;
+								if(_this65.l != 0) {
+									_this65.s0 = _this65.s1;
+									_this65.s1 = _this65.s2;
+									_this65.s2 = _this65.s3;
+									_this65.s3 = _this65.s4;
+									_this65.s4 = _this65.s5;
+									_this65.s5 = null;
+									if(_this65.s6 != null) {
+										_this65.s5 = _this65.s6.shift();
+									}
+									_this65.l--;
+								}
+								_this64.s5 = out39;
+							}
+							_this64.l--;
+						}
+						this.controlY = out38;
+						var _this66 = this.store;
+						var out40 = _this66.s0;
+						if(_this66.l != 0) {
+							_this66.s0 = _this66.s1;
+							_this66.s1 = _this66.s2;
+							_this66.s2 = _this66.s3;
+							_this66.s3 = _this66.s4;
+							_this66.s4 = _this66.s5;
+							_this66.s5 = null;
+							if(_this66.s6 != null) {
+								var _this67 = _this66.s6;
+								var out41 = _this67.s0;
+								if(_this67.l != 0) {
+									_this67.s0 = _this67.s1;
+									_this67.s1 = _this67.s2;
+									_this67.s2 = _this67.s3;
+									_this67.s3 = _this67.s4;
+									_this67.s4 = _this67.s5;
+									_this67.s5 = null;
+									if(_this67.s6 != null) {
+										_this67.s5 = _this67.s6.shift();
+									}
+									_this67.l--;
+								}
+								_this66.s5 = out41;
+							}
+							_this66.l--;
+						}
+						this.lastX = out40;
+						var _this68 = this.store;
+						var out42 = _this68.s0;
+						if(_this68.l != 0) {
+							_this68.s0 = _this68.s1;
+							_this68.s1 = _this68.s2;
+							_this68.s2 = _this68.s3;
+							_this68.s3 = _this68.s4;
+							_this68.s4 = _this68.s5;
+							_this68.s5 = null;
+							if(_this68.s6 != null) {
+								var _this69 = _this68.s6;
+								var out43 = _this69.s0;
+								if(_this69.l != 0) {
+									_this69.s0 = _this69.s1;
+									_this69.s1 = _this69.s2;
+									_this69.s2 = _this69.s3;
+									_this69.s3 = _this69.s4;
+									_this69.s4 = _this69.s5;
+									_this69.s5 = null;
+									if(_this69.s6 != null) {
+										_this69.s5 = _this69.s6.shift();
+									}
+									_this69.l--;
+								}
+								_this68.s5 = out43;
+							}
+							_this68.l--;
+						}
+						this.lastY = out42;
+						var x21 = this.controlX;
+						var y21 = this.controlY;
+						var x31 = this.lastX;
+						var y31 = this.lastY;
+						var tempArr1 = [];
+						var ax3 = this.px;
+						var ay3 = this.py;
+						var x6 = ax3 - firstX;
+						var y6 = ay3 - firstY;
+						var x7 = firstX - x21;
+						var y7 = firstY - y21;
+						var x8 = x21 - x31;
+						var y8 = y21 - y31;
+						var approxDistance1 = Math.sqrt(x6 * x6 + y6 * y6) + Math.sqrt(x7 * x7 + y7 * y7) + Math.sqrt(x8 * x8 + y8 * y8);
+						if(approxDistance1 == 0) {
+							approxDistance1 = 0.000001;
+						}
+						var step1 = Math.min(1 / (approxDistance1 * 0.707),0.03);
+						var l2 = tempArr1.length;
+						tempArr1[l2++] = ax3;
+						tempArr1[l2++] = ay3;
+						var t1 = step1;
+						while(t1 < 1.) {
+							var u2 = 1 - t1;
+							tempArr1[l2++] = Math.pow(u2,3) * ax3 + 3 * Math.pow(u2,2) * t1 * firstX + 3 * u2 * Math.pow(t1,2) * x21 + Math.pow(t1,3) * x31;
+							var u3 = 1 - t1;
+							tempArr1[l2++] = Math.pow(u3,3) * ay3 + 3 * Math.pow(u3,2) * t1 * firstY + 3 * u3 * Math.pow(t1,2) * y21 + Math.pow(t1,3) * y31;
+							t1 += step1;
+						}
+						tempArr1[l2++] = x31;
+						tempArr1[l2++] = y31;
+						haxe_Log.trace(tempArr1,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+						var withMove1 = false;
+						if(withMove1 == null) {
+							withMove1 = true;
+						}
+						var l3 = tempArr1.length;
+						var i1 = 2;
+						if(withMove1) {
+							this.pathContext.moveTo(tempArr1[0],tempArr1[1]);
+						} else {
+							this.pathContext.lineTo(tempArr1[0],tempArr1[1]);
+						}
+						while(i1 < l3) {
+							this.pathContext.lineTo(tempArr1[i1],tempArr1[i1 + 1]);
+							i1 += 2;
+						}
+						tempArr1 = [];
+						this.px = x31;
+						this.py = y31;
+					}
+				}
+				break;
+			case 72:
+				var process = false;
+				if(process == null) {
+					process = true;
+				}
+				var _this70 = this.store;
+				_this70.l = 0;
+				_this70.s0 = null;
+				_this70.s1 = null;
+				_this70.s2 = null;
+				_this70.s3 = null;
+				_this70.s4 = null;
+				_this70.s5 = null;
+				_this70.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp2 = "";
+				var exit2 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp2 != "") {
+							if(process) {
+								if((this.store.l & 1) == 0) {
+									var _this71 = this.store;
+									var v12 = parseFloat(temp2);
+									switch(_this71.l) {
+									case 0:
+										_this71.s0 = v12;
+										break;
+									case 1:
+										_this71.s1 = v12;
+										break;
+									case 2:
+										_this71.s2 = v12;
+										break;
+									case 3:
+										_this71.s3 = v12;
+										break;
+									case 4:
+										_this71.s4 = v12;
+										break;
+									case 5:
+										_this71.s5 = v12;
+										break;
+									default:
+										if(_this71.s6 == null) {
+											_this71.s6 = new justPath_StoreF6();
+										}
+										var _this72 = _this71.s6;
+										switch(_this72.l) {
+										case 0:
+											_this72.s0 = v12;
+											break;
+										case 1:
+											_this72.s1 = v12;
+											break;
+										case 2:
+											_this72.s2 = v12;
+											break;
+										case 3:
+											_this72.s3 = v12;
+											break;
+										case 4:
+											_this72.s4 = v12;
+											break;
+										case 5:
+											_this72.s5 = v12;
+											break;
+										default:
+											if(_this72.s6 == null) {
+												_this72.s6 = new justPath_StoreF6();
+											}
+											_this72.s6.push(v12);
+										}
+										_this72.l++;
+									}
+									_this71.l++;
+								} else {
+									var _this73 = this.store;
+									var v13 = parseFloat(temp2);
+									switch(_this73.l) {
+									case 0:
+										_this73.s0 = v13;
+										break;
+									case 1:
+										_this73.s1 = v13;
+										break;
+									case 2:
+										_this73.s2 = v13;
+										break;
+									case 3:
+										_this73.s3 = v13;
+										break;
+									case 4:
+										_this73.s4 = v13;
+										break;
+									case 5:
+										_this73.s5 = v13;
+										break;
+									default:
+										if(_this73.s6 == null) {
+											_this73.s6 = new justPath_StoreF6();
+										}
+										var _this74 = _this73.s6;
+										switch(_this74.l) {
+										case 0:
+											_this74.s0 = v13;
+											break;
+										case 1:
+											_this74.s1 = v13;
+											break;
+										case 2:
+											_this74.s2 = v13;
+											break;
+										case 3:
+											_this74.s3 = v13;
+											break;
+										case 4:
+											_this74.s4 = v13;
+											break;
+										case 5:
+											_this74.s5 = v13;
+											break;
+										default:
+											if(_this74.s6 == null) {
+												_this74.s6 = new justPath_StoreF6();
+											}
+											_this74.s6.push(v13);
+										}
+										_this74.l++;
+									}
+									_this73.l++;
+								}
+							} else {
+								var _this75 = this.store;
+								var v14 = parseFloat(temp2);
+								switch(_this75.l) {
+								case 0:
+									_this75.s0 = v14;
+									break;
+								case 1:
+									_this75.s1 = v14;
+									break;
+								case 2:
+									_this75.s2 = v14;
+									break;
+								case 3:
+									_this75.s3 = v14;
+									break;
+								case 4:
+									_this75.s4 = v14;
+									break;
+								case 5:
+									_this75.s5 = v14;
+									break;
+								default:
+									if(_this75.s6 == null) {
+										_this75.s6 = new justPath_StoreF6();
+									}
+									var _this76 = _this75.s6;
+									switch(_this76.l) {
+									case 0:
+										_this76.s0 = v14;
+										break;
+									case 1:
+										_this76.s1 = v14;
+										break;
+									case 2:
+										_this76.s2 = v14;
+										break;
+									case 3:
+										_this76.s3 = v14;
+										break;
+									case 4:
+										_this76.s4 = v14;
+										break;
+									case 5:
+										_this76.s5 = v14;
+										break;
+									default:
+										if(_this76.s6 == null) {
+											_this76.s6 = new justPath_StoreF6();
+										}
+										_this76.s6.push(v14);
+									}
+									_this76.l++;
+								}
+								_this75.l++;
+							}
+							temp2 = "";
+						}
+						break;
+					case 45:
+						if(temp2 != "") {
+							if(process) {
+								if((this.store.l & 1) == 0) {
+									var _this77 = this.store;
+									var v15 = parseFloat(temp2);
+									switch(_this77.l) {
+									case 0:
+										_this77.s0 = v15;
+										break;
+									case 1:
+										_this77.s1 = v15;
+										break;
+									case 2:
+										_this77.s2 = v15;
+										break;
+									case 3:
+										_this77.s3 = v15;
+										break;
+									case 4:
+										_this77.s4 = v15;
+										break;
+									case 5:
+										_this77.s5 = v15;
+										break;
+									default:
+										if(_this77.s6 == null) {
+											_this77.s6 = new justPath_StoreF6();
+										}
+										var _this78 = _this77.s6;
+										switch(_this78.l) {
+										case 0:
+											_this78.s0 = v15;
+											break;
+										case 1:
+											_this78.s1 = v15;
+											break;
+										case 2:
+											_this78.s2 = v15;
+											break;
+										case 3:
+											_this78.s3 = v15;
+											break;
+										case 4:
+											_this78.s4 = v15;
+											break;
+										case 5:
+											_this78.s5 = v15;
+											break;
+										default:
+											if(_this78.s6 == null) {
+												_this78.s6 = new justPath_StoreF6();
+											}
+											_this78.s6.push(v15);
+										}
+										_this78.l++;
+									}
+									_this77.l++;
+								} else {
+									var _this79 = this.store;
+									var v16 = parseFloat(temp2);
+									switch(_this79.l) {
+									case 0:
+										_this79.s0 = v16;
+										break;
+									case 1:
+										_this79.s1 = v16;
+										break;
+									case 2:
+										_this79.s2 = v16;
+										break;
+									case 3:
+										_this79.s3 = v16;
+										break;
+									case 4:
+										_this79.s4 = v16;
+										break;
+									case 5:
+										_this79.s5 = v16;
+										break;
+									default:
+										if(_this79.s6 == null) {
+											_this79.s6 = new justPath_StoreF6();
+										}
+										var _this80 = _this79.s6;
+										switch(_this80.l) {
+										case 0:
+											_this80.s0 = v16;
+											break;
+										case 1:
+											_this80.s1 = v16;
+											break;
+										case 2:
+											_this80.s2 = v16;
+											break;
+										case 3:
+											_this80.s3 = v16;
+											break;
+										case 4:
+											_this80.s4 = v16;
+											break;
+										case 5:
+											_this80.s5 = v16;
+											break;
+										default:
+											if(_this80.s6 == null) {
+												_this80.s6 = new justPath_StoreF6();
+											}
+											_this80.s6.push(v16);
+										}
+										_this80.l++;
+									}
+									_this79.l++;
+								}
+							} else {
+								var _this81 = this.store;
+								var v17 = parseFloat(temp2);
+								switch(_this81.l) {
+								case 0:
+									_this81.s0 = v17;
+									break;
+								case 1:
+									_this81.s1 = v17;
+									break;
+								case 2:
+									_this81.s2 = v17;
+									break;
+								case 3:
+									_this81.s3 = v17;
+									break;
+								case 4:
+									_this81.s4 = v17;
+									break;
+								case 5:
+									_this81.s5 = v17;
+									break;
+								default:
+									if(_this81.s6 == null) {
+										_this81.s6 = new justPath_StoreF6();
+									}
+									var _this82 = _this81.s6;
+									switch(_this82.l) {
+									case 0:
+										_this82.s0 = v17;
+										break;
+									case 1:
+										_this82.s1 = v17;
+										break;
+									case 2:
+										_this82.s2 = v17;
+										break;
+									case 3:
+										_this82.s3 = v17;
+										break;
+									case 4:
+										_this82.s4 = v17;
+										break;
+									case 5:
+										_this82.s5 = v17;
+										break;
+									default:
+										if(_this82.s6 == null) {
+											_this82.s6 = new justPath_StoreF6();
+										}
+										_this82.s6.push(v17);
+									}
+									_this82.l++;
+								}
+								_this81.l++;
+							}
+						}
+						temp2 = "-";
+						break;
+					case 46:
+						temp2 += ".";
+						break;
+					case 48:
+						temp2 += "0";
+						break;
+					case 49:
+						temp2 += "1";
+						break;
+					case 50:
+						temp2 += "2";
+						break;
+					case 51:
+						temp2 += "3";
+						break;
+					case 52:
+						temp2 += "4";
+						break;
+					case 53:
+						temp2 += "5";
+						break;
+					case 54:
+						temp2 += "6";
+						break;
+					case 55:
+						temp2 += "7";
+						break;
+					case 56:
+						temp2 += "8";
+						break;
+					case 57:
+						temp2 += "9";
+						break;
+					default:
+						if(temp2 != "") {
+							if(process) {
+								if((this.store.l & 1) == 0) {
+									var _this83 = this.store;
+									var v18 = parseFloat(temp2);
+									switch(_this83.l) {
+									case 0:
+										_this83.s0 = v18;
+										break;
+									case 1:
+										_this83.s1 = v18;
+										break;
+									case 2:
+										_this83.s2 = v18;
+										break;
+									case 3:
+										_this83.s3 = v18;
+										break;
+									case 4:
+										_this83.s4 = v18;
+										break;
+									case 5:
+										_this83.s5 = v18;
+										break;
+									default:
+										if(_this83.s6 == null) {
+											_this83.s6 = new justPath_StoreF6();
+										}
+										var _this84 = _this83.s6;
+										switch(_this84.l) {
+										case 0:
+											_this84.s0 = v18;
+											break;
+										case 1:
+											_this84.s1 = v18;
+											break;
+										case 2:
+											_this84.s2 = v18;
+											break;
+										case 3:
+											_this84.s3 = v18;
+											break;
+										case 4:
+											_this84.s4 = v18;
+											break;
+										case 5:
+											_this84.s5 = v18;
+											break;
+										default:
+											if(_this84.s6 == null) {
+												_this84.s6 = new justPath_StoreF6();
+											}
+											_this84.s6.push(v18);
+										}
+										_this84.l++;
+									}
+									_this83.l++;
+								} else {
+									var _this85 = this.store;
+									var v19 = parseFloat(temp2);
+									switch(_this85.l) {
+									case 0:
+										_this85.s0 = v19;
+										break;
+									case 1:
+										_this85.s1 = v19;
+										break;
+									case 2:
+										_this85.s2 = v19;
+										break;
+									case 3:
+										_this85.s3 = v19;
+										break;
+									case 4:
+										_this85.s4 = v19;
+										break;
+									case 5:
+										_this85.s5 = v19;
+										break;
+									default:
+										if(_this85.s6 == null) {
+											_this85.s6 = new justPath_StoreF6();
+										}
+										var _this86 = _this85.s6;
+										switch(_this86.l) {
+										case 0:
+											_this86.s0 = v19;
+											break;
+										case 1:
+											_this86.s1 = v19;
+											break;
+										case 2:
+											_this86.s2 = v19;
+											break;
+										case 3:
+											_this86.s3 = v19;
+											break;
+										case 4:
+											_this86.s4 = v19;
+											break;
+										case 5:
+											_this86.s5 = v19;
+											break;
+										default:
+											if(_this86.s6 == null) {
+												_this86.s6 = new justPath_StoreF6();
+											}
+											_this86.s6.push(v19);
+										}
+										_this86.l++;
+									}
+									_this85.l++;
+								}
+							} else {
+								var _this87 = this.store;
+								var v20 = parseFloat(temp2);
+								switch(_this87.l) {
+								case 0:
+									_this87.s0 = v20;
+									break;
+								case 1:
+									_this87.s1 = v20;
+									break;
+								case 2:
+									_this87.s2 = v20;
+									break;
+								case 3:
+									_this87.s3 = v20;
+									break;
+								case 4:
+									_this87.s4 = v20;
+									break;
+								case 5:
+									_this87.s5 = v20;
+									break;
+								default:
+									if(_this87.s6 == null) {
+										_this87.s6 = new justPath_StoreF6();
+									}
+									var _this88 = _this87.s6;
+									switch(_this88.l) {
+									case 0:
+										_this88.s0 = v20;
+										break;
+									case 1:
+										_this88.s1 = v20;
+										break;
+									case 2:
+										_this88.s2 = v20;
+										break;
+									case 3:
+										_this88.s3 = v20;
+										break;
+									case 4:
+										_this88.s4 = v20;
+										break;
+									case 5:
+										_this88.s5 = v20;
+										break;
+									default:
+										if(_this88.s6 == null) {
+											_this88.s6 = new justPath_StoreF6();
+										}
+										_this88.s6.push(v20);
+									}
+									_this88.l++;
+								}
+								_this87.l++;
+							}
+							temp2 = "";
+						}
+						this.pos--;
+						exit2 = true;
+					}
+					if(exit2) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 1) {
+					this.lastX = this.store.s0;
+					var x_ = this.lastX;
+					var y_ = this.lastY;
+					this.pathContext.lineTo(x_,y_);
+					this.px = x_;
+					this.py = y_;
+				} else if(this.store.l > 1) {
+					while(this.store.l > 0) {
+						var _this89 = this.store;
+						var out44 = _this89.s0;
+						if(_this89.l != 0) {
+							_this89.s0 = _this89.s1;
+							_this89.s1 = _this89.s2;
+							_this89.s2 = _this89.s3;
+							_this89.s3 = _this89.s4;
+							_this89.s4 = _this89.s5;
+							_this89.s5 = null;
+							if(_this89.s6 != null) {
+								var _this90 = _this89.s6;
+								var out45 = _this90.s0;
+								if(_this90.l != 0) {
+									_this90.s0 = _this90.s1;
+									_this90.s1 = _this90.s2;
+									_this90.s2 = _this90.s3;
+									_this90.s3 = _this90.s4;
+									_this90.s4 = _this90.s5;
+									_this90.s5 = null;
+									if(_this90.s6 != null) {
+										_this90.s5 = _this90.s6.shift();
+									}
+									_this90.l--;
+								}
+								_this89.s5 = out45;
+							}
+							_this89.l--;
+						}
+						this.lastX = out44;
+						var x_1 = this.lastX;
+						var y_1 = this.lastY;
+						this.pathContext.lineTo(x_1,y_1);
+						this.px = x_1;
+						this.py = y_1;
+					}
+				}
+				break;
+			case 76:
+				var _this91 = this.store;
+				_this91.l = 0;
+				_this91.s0 = null;
+				_this91.s1 = null;
+				_this91.s2 = null;
+				_this91.s3 = null;
+				_this91.s4 = null;
+				_this91.s5 = null;
+				_this91.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp3 = "";
+				var exit3 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp3 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this92 = this.store;
+								var v21 = parseFloat(temp3);
+								switch(_this92.l) {
+								case 0:
+									_this92.s0 = v21;
+									break;
+								case 1:
+									_this92.s1 = v21;
+									break;
+								case 2:
+									_this92.s2 = v21;
+									break;
+								case 3:
+									_this92.s3 = v21;
+									break;
+								case 4:
+									_this92.s4 = v21;
+									break;
+								case 5:
+									_this92.s5 = v21;
+									break;
+								default:
+									if(_this92.s6 == null) {
+										_this92.s6 = new justPath_StoreF6();
+									}
+									var _this93 = _this92.s6;
+									switch(_this93.l) {
+									case 0:
+										_this93.s0 = v21;
+										break;
+									case 1:
+										_this93.s1 = v21;
+										break;
+									case 2:
+										_this93.s2 = v21;
+										break;
+									case 3:
+										_this93.s3 = v21;
+										break;
+									case 4:
+										_this93.s4 = v21;
+										break;
+									case 5:
+										_this93.s5 = v21;
+										break;
+									default:
+										if(_this93.s6 == null) {
+											_this93.s6 = new justPath_StoreF6();
+										}
+										_this93.s6.push(v21);
+									}
+									_this93.l++;
+								}
+								_this92.l++;
+							} else {
+								var _this94 = this.store;
+								var v22 = parseFloat(temp3);
+								switch(_this94.l) {
+								case 0:
+									_this94.s0 = v22;
+									break;
+								case 1:
+									_this94.s1 = v22;
+									break;
+								case 2:
+									_this94.s2 = v22;
+									break;
+								case 3:
+									_this94.s3 = v22;
+									break;
+								case 4:
+									_this94.s4 = v22;
+									break;
+								case 5:
+									_this94.s5 = v22;
+									break;
+								default:
+									if(_this94.s6 == null) {
+										_this94.s6 = new justPath_StoreF6();
+									}
+									var _this95 = _this94.s6;
+									switch(_this95.l) {
+									case 0:
+										_this95.s0 = v22;
+										break;
+									case 1:
+										_this95.s1 = v22;
+										break;
+									case 2:
+										_this95.s2 = v22;
+										break;
+									case 3:
+										_this95.s3 = v22;
+										break;
+									case 4:
+										_this95.s4 = v22;
+										break;
+									case 5:
+										_this95.s5 = v22;
+										break;
+									default:
+										if(_this95.s6 == null) {
+											_this95.s6 = new justPath_StoreF6();
+										}
+										_this95.s6.push(v22);
+									}
+									_this95.l++;
+								}
+								_this94.l++;
+							}
+							temp3 = "";
+						}
+						break;
+					case 45:
+						if(temp3 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this96 = this.store;
+								var v23 = parseFloat(temp3);
+								switch(_this96.l) {
+								case 0:
+									_this96.s0 = v23;
+									break;
+								case 1:
+									_this96.s1 = v23;
+									break;
+								case 2:
+									_this96.s2 = v23;
+									break;
+								case 3:
+									_this96.s3 = v23;
+									break;
+								case 4:
+									_this96.s4 = v23;
+									break;
+								case 5:
+									_this96.s5 = v23;
+									break;
+								default:
+									if(_this96.s6 == null) {
+										_this96.s6 = new justPath_StoreF6();
+									}
+									var _this97 = _this96.s6;
+									switch(_this97.l) {
+									case 0:
+										_this97.s0 = v23;
+										break;
+									case 1:
+										_this97.s1 = v23;
+										break;
+									case 2:
+										_this97.s2 = v23;
+										break;
+									case 3:
+										_this97.s3 = v23;
+										break;
+									case 4:
+										_this97.s4 = v23;
+										break;
+									case 5:
+										_this97.s5 = v23;
+										break;
+									default:
+										if(_this97.s6 == null) {
+											_this97.s6 = new justPath_StoreF6();
+										}
+										_this97.s6.push(v23);
+									}
+									_this97.l++;
+								}
+								_this96.l++;
+							} else {
+								var _this98 = this.store;
+								var v24 = parseFloat(temp3);
+								switch(_this98.l) {
+								case 0:
+									_this98.s0 = v24;
+									break;
+								case 1:
+									_this98.s1 = v24;
+									break;
+								case 2:
+									_this98.s2 = v24;
+									break;
+								case 3:
+									_this98.s3 = v24;
+									break;
+								case 4:
+									_this98.s4 = v24;
+									break;
+								case 5:
+									_this98.s5 = v24;
+									break;
+								default:
+									if(_this98.s6 == null) {
+										_this98.s6 = new justPath_StoreF6();
+									}
+									var _this99 = _this98.s6;
+									switch(_this99.l) {
+									case 0:
+										_this99.s0 = v24;
+										break;
+									case 1:
+										_this99.s1 = v24;
+										break;
+									case 2:
+										_this99.s2 = v24;
+										break;
+									case 3:
+										_this99.s3 = v24;
+										break;
+									case 4:
+										_this99.s4 = v24;
+										break;
+									case 5:
+										_this99.s5 = v24;
+										break;
+									default:
+										if(_this99.s6 == null) {
+											_this99.s6 = new justPath_StoreF6();
+										}
+										_this99.s6.push(v24);
+									}
+									_this99.l++;
+								}
+								_this98.l++;
+							}
+						}
+						temp3 = "-";
+						break;
+					case 46:
+						temp3 += ".";
+						break;
+					case 48:
+						temp3 += "0";
+						break;
+					case 49:
+						temp3 += "1";
+						break;
+					case 50:
+						temp3 += "2";
+						break;
+					case 51:
+						temp3 += "3";
+						break;
+					case 52:
+						temp3 += "4";
+						break;
+					case 53:
+						temp3 += "5";
+						break;
+					case 54:
+						temp3 += "6";
+						break;
+					case 55:
+						temp3 += "7";
+						break;
+					case 56:
+						temp3 += "8";
+						break;
+					case 57:
+						temp3 += "9";
+						break;
+					default:
+						if(temp3 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this100 = this.store;
+								var v25 = parseFloat(temp3);
+								switch(_this100.l) {
+								case 0:
+									_this100.s0 = v25;
+									break;
+								case 1:
+									_this100.s1 = v25;
+									break;
+								case 2:
+									_this100.s2 = v25;
+									break;
+								case 3:
+									_this100.s3 = v25;
+									break;
+								case 4:
+									_this100.s4 = v25;
+									break;
+								case 5:
+									_this100.s5 = v25;
+									break;
+								default:
+									if(_this100.s6 == null) {
+										_this100.s6 = new justPath_StoreF6();
+									}
+									var _this101 = _this100.s6;
+									switch(_this101.l) {
+									case 0:
+										_this101.s0 = v25;
+										break;
+									case 1:
+										_this101.s1 = v25;
+										break;
+									case 2:
+										_this101.s2 = v25;
+										break;
+									case 3:
+										_this101.s3 = v25;
+										break;
+									case 4:
+										_this101.s4 = v25;
+										break;
+									case 5:
+										_this101.s5 = v25;
+										break;
+									default:
+										if(_this101.s6 == null) {
+											_this101.s6 = new justPath_StoreF6();
+										}
+										_this101.s6.push(v25);
+									}
+									_this101.l++;
+								}
+								_this100.l++;
+							} else {
+								var _this102 = this.store;
+								var v26 = parseFloat(temp3);
+								switch(_this102.l) {
+								case 0:
+									_this102.s0 = v26;
+									break;
+								case 1:
+									_this102.s1 = v26;
+									break;
+								case 2:
+									_this102.s2 = v26;
+									break;
+								case 3:
+									_this102.s3 = v26;
+									break;
+								case 4:
+									_this102.s4 = v26;
+									break;
+								case 5:
+									_this102.s5 = v26;
+									break;
+								default:
+									if(_this102.s6 == null) {
+										_this102.s6 = new justPath_StoreF6();
+									}
+									var _this103 = _this102.s6;
+									switch(_this103.l) {
+									case 0:
+										_this103.s0 = v26;
+										break;
+									case 1:
+										_this103.s1 = v26;
+										break;
+									case 2:
+										_this103.s2 = v26;
+										break;
+									case 3:
+										_this103.s3 = v26;
+										break;
+									case 4:
+										_this103.s4 = v26;
+										break;
+									case 5:
+										_this103.s5 = v26;
+										break;
+									default:
+										if(_this103.s6 == null) {
+											_this103.s6 = new justPath_StoreF6();
+										}
+										_this103.s6.push(v26);
+									}
+									_this103.l++;
+								}
+								_this102.l++;
+							}
+							temp3 = "";
+						}
+						this.pos--;
+						exit3 = true;
+					}
+					if(exit3) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.lastX = this.store.s0;
+					this.lastY = this.store.s1;
+					var x_2 = this.lastX;
+					var y_2 = this.lastY;
+					this.pathContext.lineTo(x_2,y_2);
+					this.px = x_2;
+					this.py = y_2;
+				} else if(this.store.l > 2) {
+					while(this.store.l > 1) {
+						var _this104 = this.store;
+						var out46 = _this104.s0;
+						if(_this104.l != 0) {
+							_this104.s0 = _this104.s1;
+							_this104.s1 = _this104.s2;
+							_this104.s2 = _this104.s3;
+							_this104.s3 = _this104.s4;
+							_this104.s4 = _this104.s5;
+							_this104.s5 = null;
+							if(_this104.s6 != null) {
+								var _this105 = _this104.s6;
+								var out47 = _this105.s0;
+								if(_this105.l != 0) {
+									_this105.s0 = _this105.s1;
+									_this105.s1 = _this105.s2;
+									_this105.s2 = _this105.s3;
+									_this105.s3 = _this105.s4;
+									_this105.s4 = _this105.s5;
+									_this105.s5 = null;
+									if(_this105.s6 != null) {
+										_this105.s5 = _this105.s6.shift();
+									}
+									_this105.l--;
+								}
+								_this104.s5 = out47;
+							}
+							_this104.l--;
+						}
+						this.lastX = out46;
+						var _this106 = this.store;
+						var out48 = _this106.s0;
+						if(_this106.l != 0) {
+							_this106.s0 = _this106.s1;
+							_this106.s1 = _this106.s2;
+							_this106.s2 = _this106.s3;
+							_this106.s3 = _this106.s4;
+							_this106.s4 = _this106.s5;
+							_this106.s5 = null;
+							if(_this106.s6 != null) {
+								var _this107 = _this106.s6;
+								var out49 = _this107.s0;
+								if(_this107.l != 0) {
+									_this107.s0 = _this107.s1;
+									_this107.s1 = _this107.s2;
+									_this107.s2 = _this107.s3;
+									_this107.s3 = _this107.s4;
+									_this107.s4 = _this107.s5;
+									_this107.s5 = null;
+									if(_this107.s6 != null) {
+										_this107.s5 = _this107.s6.shift();
+									}
+									_this107.l--;
+								}
+								_this106.s5 = out49;
+							}
+							_this106.l--;
+						}
+						this.lastY = out48;
+						var x_3 = this.lastX;
+						var y_3 = this.lastY;
+						this.pathContext.lineTo(x_3,y_3);
+						this.px = x_3;
+						this.py = y_3;
+					}
+				}
+				break;
+			case 77:
+				var _this108 = this.store;
+				_this108.l = 0;
+				_this108.s0 = null;
+				_this108.s1 = null;
+				_this108.s2 = null;
+				_this108.s3 = null;
+				_this108.s4 = null;
+				_this108.s5 = null;
+				_this108.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp4 = "";
+				var exit4 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp4 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this109 = this.store;
+								var v27 = parseFloat(temp4);
+								switch(_this109.l) {
+								case 0:
+									_this109.s0 = v27;
+									break;
+								case 1:
+									_this109.s1 = v27;
+									break;
+								case 2:
+									_this109.s2 = v27;
+									break;
+								case 3:
+									_this109.s3 = v27;
+									break;
+								case 4:
+									_this109.s4 = v27;
+									break;
+								case 5:
+									_this109.s5 = v27;
+									break;
+								default:
+									if(_this109.s6 == null) {
+										_this109.s6 = new justPath_StoreF6();
+									}
+									var _this110 = _this109.s6;
+									switch(_this110.l) {
+									case 0:
+										_this110.s0 = v27;
+										break;
+									case 1:
+										_this110.s1 = v27;
+										break;
+									case 2:
+										_this110.s2 = v27;
+										break;
+									case 3:
+										_this110.s3 = v27;
+										break;
+									case 4:
+										_this110.s4 = v27;
+										break;
+									case 5:
+										_this110.s5 = v27;
+										break;
+									default:
+										if(_this110.s6 == null) {
+											_this110.s6 = new justPath_StoreF6();
+										}
+										_this110.s6.push(v27);
+									}
+									_this110.l++;
+								}
+								_this109.l++;
+							} else {
+								var _this111 = this.store;
+								var v28 = parseFloat(temp4);
+								switch(_this111.l) {
+								case 0:
+									_this111.s0 = v28;
+									break;
+								case 1:
+									_this111.s1 = v28;
+									break;
+								case 2:
+									_this111.s2 = v28;
+									break;
+								case 3:
+									_this111.s3 = v28;
+									break;
+								case 4:
+									_this111.s4 = v28;
+									break;
+								case 5:
+									_this111.s5 = v28;
+									break;
+								default:
+									if(_this111.s6 == null) {
+										_this111.s6 = new justPath_StoreF6();
+									}
+									var _this112 = _this111.s6;
+									switch(_this112.l) {
+									case 0:
+										_this112.s0 = v28;
+										break;
+									case 1:
+										_this112.s1 = v28;
+										break;
+									case 2:
+										_this112.s2 = v28;
+										break;
+									case 3:
+										_this112.s3 = v28;
+										break;
+									case 4:
+										_this112.s4 = v28;
+										break;
+									case 5:
+										_this112.s5 = v28;
+										break;
+									default:
+										if(_this112.s6 == null) {
+											_this112.s6 = new justPath_StoreF6();
+										}
+										_this112.s6.push(v28);
+									}
+									_this112.l++;
+								}
+								_this111.l++;
+							}
+							temp4 = "";
+						}
+						break;
+					case 45:
+						if(temp4 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this113 = this.store;
+								var v29 = parseFloat(temp4);
+								switch(_this113.l) {
+								case 0:
+									_this113.s0 = v29;
+									break;
+								case 1:
+									_this113.s1 = v29;
+									break;
+								case 2:
+									_this113.s2 = v29;
+									break;
+								case 3:
+									_this113.s3 = v29;
+									break;
+								case 4:
+									_this113.s4 = v29;
+									break;
+								case 5:
+									_this113.s5 = v29;
+									break;
+								default:
+									if(_this113.s6 == null) {
+										_this113.s6 = new justPath_StoreF6();
+									}
+									var _this114 = _this113.s6;
+									switch(_this114.l) {
+									case 0:
+										_this114.s0 = v29;
+										break;
+									case 1:
+										_this114.s1 = v29;
+										break;
+									case 2:
+										_this114.s2 = v29;
+										break;
+									case 3:
+										_this114.s3 = v29;
+										break;
+									case 4:
+										_this114.s4 = v29;
+										break;
+									case 5:
+										_this114.s5 = v29;
+										break;
+									default:
+										if(_this114.s6 == null) {
+											_this114.s6 = new justPath_StoreF6();
+										}
+										_this114.s6.push(v29);
+									}
+									_this114.l++;
+								}
+								_this113.l++;
+							} else {
+								var _this115 = this.store;
+								var v30 = parseFloat(temp4);
+								switch(_this115.l) {
+								case 0:
+									_this115.s0 = v30;
+									break;
+								case 1:
+									_this115.s1 = v30;
+									break;
+								case 2:
+									_this115.s2 = v30;
+									break;
+								case 3:
+									_this115.s3 = v30;
+									break;
+								case 4:
+									_this115.s4 = v30;
+									break;
+								case 5:
+									_this115.s5 = v30;
+									break;
+								default:
+									if(_this115.s6 == null) {
+										_this115.s6 = new justPath_StoreF6();
+									}
+									var _this116 = _this115.s6;
+									switch(_this116.l) {
+									case 0:
+										_this116.s0 = v30;
+										break;
+									case 1:
+										_this116.s1 = v30;
+										break;
+									case 2:
+										_this116.s2 = v30;
+										break;
+									case 3:
+										_this116.s3 = v30;
+										break;
+									case 4:
+										_this116.s4 = v30;
+										break;
+									case 5:
+										_this116.s5 = v30;
+										break;
+									default:
+										if(_this116.s6 == null) {
+											_this116.s6 = new justPath_StoreF6();
+										}
+										_this116.s6.push(v30);
+									}
+									_this116.l++;
+								}
+								_this115.l++;
+							}
+						}
+						temp4 = "-";
+						break;
+					case 46:
+						temp4 += ".";
+						break;
+					case 48:
+						temp4 += "0";
+						break;
+					case 49:
+						temp4 += "1";
+						break;
+					case 50:
+						temp4 += "2";
+						break;
+					case 51:
+						temp4 += "3";
+						break;
+					case 52:
+						temp4 += "4";
+						break;
+					case 53:
+						temp4 += "5";
+						break;
+					case 54:
+						temp4 += "6";
+						break;
+					case 55:
+						temp4 += "7";
+						break;
+					case 56:
+						temp4 += "8";
+						break;
+					case 57:
+						temp4 += "9";
+						break;
+					default:
+						if(temp4 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this117 = this.store;
+								var v31 = parseFloat(temp4);
+								switch(_this117.l) {
+								case 0:
+									_this117.s0 = v31;
+									break;
+								case 1:
+									_this117.s1 = v31;
+									break;
+								case 2:
+									_this117.s2 = v31;
+									break;
+								case 3:
+									_this117.s3 = v31;
+									break;
+								case 4:
+									_this117.s4 = v31;
+									break;
+								case 5:
+									_this117.s5 = v31;
+									break;
+								default:
+									if(_this117.s6 == null) {
+										_this117.s6 = new justPath_StoreF6();
+									}
+									var _this118 = _this117.s6;
+									switch(_this118.l) {
+									case 0:
+										_this118.s0 = v31;
+										break;
+									case 1:
+										_this118.s1 = v31;
+										break;
+									case 2:
+										_this118.s2 = v31;
+										break;
+									case 3:
+										_this118.s3 = v31;
+										break;
+									case 4:
+										_this118.s4 = v31;
+										break;
+									case 5:
+										_this118.s5 = v31;
+										break;
+									default:
+										if(_this118.s6 == null) {
+											_this118.s6 = new justPath_StoreF6();
+										}
+										_this118.s6.push(v31);
+									}
+									_this118.l++;
+								}
+								_this117.l++;
+							} else {
+								var _this119 = this.store;
+								var v32 = parseFloat(temp4);
+								switch(_this119.l) {
+								case 0:
+									_this119.s0 = v32;
+									break;
+								case 1:
+									_this119.s1 = v32;
+									break;
+								case 2:
+									_this119.s2 = v32;
+									break;
+								case 3:
+									_this119.s3 = v32;
+									break;
+								case 4:
+									_this119.s4 = v32;
+									break;
+								case 5:
+									_this119.s5 = v32;
+									break;
+								default:
+									if(_this119.s6 == null) {
+										_this119.s6 = new justPath_StoreF6();
+									}
+									var _this120 = _this119.s6;
+									switch(_this120.l) {
+									case 0:
+										_this120.s0 = v32;
+										break;
+									case 1:
+										_this120.s1 = v32;
+										break;
+									case 2:
+										_this120.s2 = v32;
+										break;
+									case 3:
+										_this120.s3 = v32;
+										break;
+									case 4:
+										_this120.s4 = v32;
+										break;
+									case 5:
+										_this120.s5 = v32;
+										break;
+									default:
+										if(_this120.s6 == null) {
+											_this120.s6 = new justPath_StoreF6();
+										}
+										_this120.s6.push(v32);
+									}
+									_this120.l++;
+								}
+								_this119.l++;
+							}
+							temp4 = "";
+						}
+						this.pos--;
+						exit4 = true;
+					}
+					if(exit4) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.lastX = this.store.s0;
+					this.lastY = this.store.s1;
+					var x_4 = this.lastX;
+					var y_4 = this.lastY;
+					this.px = x_4;
+					this.py = y_4;
+					this.pathContext.moveTo(x_4,y_4);
+				} else if(this.store.l > 2) {
+					var _this121 = this.store;
+					var out50 = _this121.s0;
+					if(_this121.l != 0) {
+						_this121.s0 = _this121.s1;
+						_this121.s1 = _this121.s2;
+						_this121.s2 = _this121.s3;
+						_this121.s3 = _this121.s4;
+						_this121.s4 = _this121.s5;
+						_this121.s5 = null;
+						if(_this121.s6 != null) {
+							var _this122 = _this121.s6;
+							var out51 = _this122.s0;
+							if(_this122.l != 0) {
+								_this122.s0 = _this122.s1;
+								_this122.s1 = _this122.s2;
+								_this122.s2 = _this122.s3;
+								_this122.s3 = _this122.s4;
+								_this122.s4 = _this122.s5;
+								_this122.s5 = null;
+								if(_this122.s6 != null) {
+									_this122.s5 = _this122.s6.shift();
+								}
+								_this122.l--;
+							}
+							_this121.s5 = out51;
+						}
+						_this121.l--;
+					}
+					this.lastX = out50;
+					var _this123 = this.store;
+					var out52 = _this123.s0;
+					if(_this123.l != 0) {
+						_this123.s0 = _this123.s1;
+						_this123.s1 = _this123.s2;
+						_this123.s2 = _this123.s3;
+						_this123.s3 = _this123.s4;
+						_this123.s4 = _this123.s5;
+						_this123.s5 = null;
+						if(_this123.s6 != null) {
+							var _this124 = _this123.s6;
+							var out53 = _this124.s0;
+							if(_this124.l != 0) {
+								_this124.s0 = _this124.s1;
+								_this124.s1 = _this124.s2;
+								_this124.s2 = _this124.s3;
+								_this124.s3 = _this124.s4;
+								_this124.s4 = _this124.s5;
+								_this124.s5 = null;
+								if(_this124.s6 != null) {
+									_this124.s5 = _this124.s6.shift();
+								}
+								_this124.l--;
+							}
+							_this123.s5 = out53;
+						}
+						_this123.l--;
+					}
+					this.lastY = out52;
+					var x_5 = this.lastX;
+					var y_5 = this.lastY;
+					this.px = x_5;
+					this.py = y_5;
+					this.pathContext.moveTo(x_5,y_5);
+					while(this.store.l > 1) {
+						var _this125 = this.store;
+						var out54 = _this125.s0;
+						if(_this125.l != 0) {
+							_this125.s0 = _this125.s1;
+							_this125.s1 = _this125.s2;
+							_this125.s2 = _this125.s3;
+							_this125.s3 = _this125.s4;
+							_this125.s4 = _this125.s5;
+							_this125.s5 = null;
+							if(_this125.s6 != null) {
+								var _this126 = _this125.s6;
+								var out55 = _this126.s0;
+								if(_this126.l != 0) {
+									_this126.s0 = _this126.s1;
+									_this126.s1 = _this126.s2;
+									_this126.s2 = _this126.s3;
+									_this126.s3 = _this126.s4;
+									_this126.s4 = _this126.s5;
+									_this126.s5 = null;
+									if(_this126.s6 != null) {
+										_this126.s5 = _this126.s6.shift();
+									}
+									_this126.l--;
+								}
+								_this125.s5 = out55;
+							}
+							_this125.l--;
+						}
+						this.lastX = out54;
+						var _this127 = this.store;
+						var out56 = _this127.s0;
+						if(_this127.l != 0) {
+							_this127.s0 = _this127.s1;
+							_this127.s1 = _this127.s2;
+							_this127.s2 = _this127.s3;
+							_this127.s3 = _this127.s4;
+							_this127.s4 = _this127.s5;
+							_this127.s5 = null;
+							if(_this127.s6 != null) {
+								var _this128 = _this127.s6;
+								var out57 = _this128.s0;
+								if(_this128.l != 0) {
+									_this128.s0 = _this128.s1;
+									_this128.s1 = _this128.s2;
+									_this128.s2 = _this128.s3;
+									_this128.s3 = _this128.s4;
+									_this128.s4 = _this128.s5;
+									_this128.s5 = null;
+									if(_this128.s6 != null) {
+										_this128.s5 = _this128.s6.shift();
+									}
+									_this128.l--;
+								}
+								_this127.s5 = out57;
+							}
+							_this127.l--;
+						}
+						this.lastY = out56;
+						var x_6 = this.lastX;
+						var y_6 = this.lastY;
+						this.pathContext.lineTo(x_6,y_6);
+						this.px = x_6;
+						this.py = y_6;
+					}
+				}
+				break;
+			case 81:
+				var _this129 = this.store;
+				_this129.l = 0;
+				_this129.s0 = null;
+				_this129.s1 = null;
+				_this129.s2 = null;
+				_this129.s3 = null;
+				_this129.s4 = null;
+				_this129.s5 = null;
+				_this129.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp5 = "";
+				var exit5 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp5 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this130 = this.store;
+								var v33 = parseFloat(temp5);
+								switch(_this130.l) {
+								case 0:
+									_this130.s0 = v33;
+									break;
+								case 1:
+									_this130.s1 = v33;
+									break;
+								case 2:
+									_this130.s2 = v33;
+									break;
+								case 3:
+									_this130.s3 = v33;
+									break;
+								case 4:
+									_this130.s4 = v33;
+									break;
+								case 5:
+									_this130.s5 = v33;
+									break;
+								default:
+									if(_this130.s6 == null) {
+										_this130.s6 = new justPath_StoreF6();
+									}
+									var _this131 = _this130.s6;
+									switch(_this131.l) {
+									case 0:
+										_this131.s0 = v33;
+										break;
+									case 1:
+										_this131.s1 = v33;
+										break;
+									case 2:
+										_this131.s2 = v33;
+										break;
+									case 3:
+										_this131.s3 = v33;
+										break;
+									case 4:
+										_this131.s4 = v33;
+										break;
+									case 5:
+										_this131.s5 = v33;
+										break;
+									default:
+										if(_this131.s6 == null) {
+											_this131.s6 = new justPath_StoreF6();
+										}
+										_this131.s6.push(v33);
+									}
+									_this131.l++;
+								}
+								_this130.l++;
+							} else {
+								var _this132 = this.store;
+								var v34 = parseFloat(temp5);
+								switch(_this132.l) {
+								case 0:
+									_this132.s0 = v34;
+									break;
+								case 1:
+									_this132.s1 = v34;
+									break;
+								case 2:
+									_this132.s2 = v34;
+									break;
+								case 3:
+									_this132.s3 = v34;
+									break;
+								case 4:
+									_this132.s4 = v34;
+									break;
+								case 5:
+									_this132.s5 = v34;
+									break;
+								default:
+									if(_this132.s6 == null) {
+										_this132.s6 = new justPath_StoreF6();
+									}
+									var _this133 = _this132.s6;
+									switch(_this133.l) {
+									case 0:
+										_this133.s0 = v34;
+										break;
+									case 1:
+										_this133.s1 = v34;
+										break;
+									case 2:
+										_this133.s2 = v34;
+										break;
+									case 3:
+										_this133.s3 = v34;
+										break;
+									case 4:
+										_this133.s4 = v34;
+										break;
+									case 5:
+										_this133.s5 = v34;
+										break;
+									default:
+										if(_this133.s6 == null) {
+											_this133.s6 = new justPath_StoreF6();
+										}
+										_this133.s6.push(v34);
+									}
+									_this133.l++;
+								}
+								_this132.l++;
+							}
+							temp5 = "";
+						}
+						break;
+					case 45:
+						if(temp5 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this134 = this.store;
+								var v35 = parseFloat(temp5);
+								switch(_this134.l) {
+								case 0:
+									_this134.s0 = v35;
+									break;
+								case 1:
+									_this134.s1 = v35;
+									break;
+								case 2:
+									_this134.s2 = v35;
+									break;
+								case 3:
+									_this134.s3 = v35;
+									break;
+								case 4:
+									_this134.s4 = v35;
+									break;
+								case 5:
+									_this134.s5 = v35;
+									break;
+								default:
+									if(_this134.s6 == null) {
+										_this134.s6 = new justPath_StoreF6();
+									}
+									var _this135 = _this134.s6;
+									switch(_this135.l) {
+									case 0:
+										_this135.s0 = v35;
+										break;
+									case 1:
+										_this135.s1 = v35;
+										break;
+									case 2:
+										_this135.s2 = v35;
+										break;
+									case 3:
+										_this135.s3 = v35;
+										break;
+									case 4:
+										_this135.s4 = v35;
+										break;
+									case 5:
+										_this135.s5 = v35;
+										break;
+									default:
+										if(_this135.s6 == null) {
+											_this135.s6 = new justPath_StoreF6();
+										}
+										_this135.s6.push(v35);
+									}
+									_this135.l++;
+								}
+								_this134.l++;
+							} else {
+								var _this136 = this.store;
+								var v36 = parseFloat(temp5);
+								switch(_this136.l) {
+								case 0:
+									_this136.s0 = v36;
+									break;
+								case 1:
+									_this136.s1 = v36;
+									break;
+								case 2:
+									_this136.s2 = v36;
+									break;
+								case 3:
+									_this136.s3 = v36;
+									break;
+								case 4:
+									_this136.s4 = v36;
+									break;
+								case 5:
+									_this136.s5 = v36;
+									break;
+								default:
+									if(_this136.s6 == null) {
+										_this136.s6 = new justPath_StoreF6();
+									}
+									var _this137 = _this136.s6;
+									switch(_this137.l) {
+									case 0:
+										_this137.s0 = v36;
+										break;
+									case 1:
+										_this137.s1 = v36;
+										break;
+									case 2:
+										_this137.s2 = v36;
+										break;
+									case 3:
+										_this137.s3 = v36;
+										break;
+									case 4:
+										_this137.s4 = v36;
+										break;
+									case 5:
+										_this137.s5 = v36;
+										break;
+									default:
+										if(_this137.s6 == null) {
+											_this137.s6 = new justPath_StoreF6();
+										}
+										_this137.s6.push(v36);
+									}
+									_this137.l++;
+								}
+								_this136.l++;
+							}
+						}
+						temp5 = "-";
+						break;
+					case 46:
+						temp5 += ".";
+						break;
+					case 48:
+						temp5 += "0";
+						break;
+					case 49:
+						temp5 += "1";
+						break;
+					case 50:
+						temp5 += "2";
+						break;
+					case 51:
+						temp5 += "3";
+						break;
+					case 52:
+						temp5 += "4";
+						break;
+					case 53:
+						temp5 += "5";
+						break;
+					case 54:
+						temp5 += "6";
+						break;
+					case 55:
+						temp5 += "7";
+						break;
+					case 56:
+						temp5 += "8";
+						break;
+					case 57:
+						temp5 += "9";
+						break;
+					default:
+						if(temp5 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this138 = this.store;
+								var v37 = parseFloat(temp5);
+								switch(_this138.l) {
+								case 0:
+									_this138.s0 = v37;
+									break;
+								case 1:
+									_this138.s1 = v37;
+									break;
+								case 2:
+									_this138.s2 = v37;
+									break;
+								case 3:
+									_this138.s3 = v37;
+									break;
+								case 4:
+									_this138.s4 = v37;
+									break;
+								case 5:
+									_this138.s5 = v37;
+									break;
+								default:
+									if(_this138.s6 == null) {
+										_this138.s6 = new justPath_StoreF6();
+									}
+									var _this139 = _this138.s6;
+									switch(_this139.l) {
+									case 0:
+										_this139.s0 = v37;
+										break;
+									case 1:
+										_this139.s1 = v37;
+										break;
+									case 2:
+										_this139.s2 = v37;
+										break;
+									case 3:
+										_this139.s3 = v37;
+										break;
+									case 4:
+										_this139.s4 = v37;
+										break;
+									case 5:
+										_this139.s5 = v37;
+										break;
+									default:
+										if(_this139.s6 == null) {
+											_this139.s6 = new justPath_StoreF6();
+										}
+										_this139.s6.push(v37);
+									}
+									_this139.l++;
+								}
+								_this138.l++;
+							} else {
+								var _this140 = this.store;
+								var v38 = parseFloat(temp5);
+								switch(_this140.l) {
+								case 0:
+									_this140.s0 = v38;
+									break;
+								case 1:
+									_this140.s1 = v38;
+									break;
+								case 2:
+									_this140.s2 = v38;
+									break;
+								case 3:
+									_this140.s3 = v38;
+									break;
+								case 4:
+									_this140.s4 = v38;
+									break;
+								case 5:
+									_this140.s5 = v38;
+									break;
+								default:
+									if(_this140.s6 == null) {
+										_this140.s6 = new justPath_StoreF6();
+									}
+									var _this141 = _this140.s6;
+									switch(_this141.l) {
+									case 0:
+										_this141.s0 = v38;
+										break;
+									case 1:
+										_this141.s1 = v38;
+										break;
+									case 2:
+										_this141.s2 = v38;
+										break;
+									case 3:
+										_this141.s3 = v38;
+										break;
+									case 4:
+										_this141.s4 = v38;
+										break;
+									case 5:
+										_this141.s5 = v38;
+										break;
+									default:
+										if(_this141.s6 == null) {
+											_this141.s6 = new justPath_StoreF6();
+										}
+										_this141.s6.push(v38);
+									}
+									_this141.l++;
+								}
+								_this140.l++;
+							}
+							temp5 = "";
+						}
+						this.pos--;
+						exit5 = true;
+					}
+					if(exit5) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					this.controlX = this.store.s0;
+					this.controlY = this.store.s1;
+					this.lastX = this.store.s2;
+					this.lastY = this.store.s3;
+					var x13 = this.controlX;
+					var y13 = this.controlY;
+					var x22 = this.lastX;
+					var y22 = this.lastY;
+					var tempArr2 = [];
+					var ax4 = this.px;
+					var ay4 = this.py;
+					var x9 = ax4 - x13;
+					var y9 = ay4 - y13;
+					var x10 = x13 - x22;
+					var y10 = y13 - y22;
+					var approxDistance2 = Math.sqrt(x9 * x9 + y9 * y9) + Math.sqrt(x10 * x10 + y10 * y10);
+					if(approxDistance2 == 0) {
+						approxDistance2 = 0.000001;
+					}
+					var step2 = Math.min(1 / (approxDistance2 * 0.707),justPath_CurveMath_quadStep);
+					var l4 = tempArr2.length;
+					tempArr2[l4++] = ax4;
+					tempArr2[l4++] = ay4;
+					var t2 = step2;
+					while(t2 < 1.) {
+						var u4 = 1 - t2;
+						tempArr2[l4++] = Math.pow(u4,2) * ax4 + 2 * u4 * t2 * x13 + Math.pow(t2,2) * x22;
+						var u5 = 1 - t2;
+						tempArr2[l4++] = Math.pow(u5,2) * ay4 + 2 * u5 * t2 * y13 + Math.pow(t2,2) * y22;
+						t2 += step2;
+					}
+					tempArr2[l4++] = x22;
+					tempArr2[l4++] = y22;
+					haxe_Log.trace(tempArr2,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+					var withMove2 = false;
+					if(withMove2 == null) {
+						withMove2 = true;
+					}
+					var l5 = tempArr2.length;
+					var i2 = 2;
+					if(withMove2) {
+						this.pathContext.moveTo(tempArr2[0],tempArr2[1]);
+					} else {
+						this.pathContext.lineTo(tempArr2[0],tempArr2[1]);
+					}
+					while(i2 < l5) {
+						this.pathContext.lineTo(tempArr2[i2],tempArr2[i2 + 1]);
+						i2 += 2;
+					}
+					tempArr2 = [];
+					this.px = x22;
+					this.py = y22;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var _this142 = this.store;
+						var out58 = _this142.s0;
+						if(_this142.l != 0) {
+							_this142.s0 = _this142.s1;
+							_this142.s1 = _this142.s2;
+							_this142.s2 = _this142.s3;
+							_this142.s3 = _this142.s4;
+							_this142.s4 = _this142.s5;
+							_this142.s5 = null;
+							if(_this142.s6 != null) {
+								var _this143 = _this142.s6;
+								var out59 = _this143.s0;
+								if(_this143.l != 0) {
+									_this143.s0 = _this143.s1;
+									_this143.s1 = _this143.s2;
+									_this143.s2 = _this143.s3;
+									_this143.s3 = _this143.s4;
+									_this143.s4 = _this143.s5;
+									_this143.s5 = null;
+									if(_this143.s6 != null) {
+										_this143.s5 = _this143.s6.shift();
+									}
+									_this143.l--;
+								}
+								_this142.s5 = out59;
+							}
+							_this142.l--;
+						}
+						this.controlX = out58;
+						var _this144 = this.store;
+						var out60 = _this144.s0;
+						if(_this144.l != 0) {
+							_this144.s0 = _this144.s1;
+							_this144.s1 = _this144.s2;
+							_this144.s2 = _this144.s3;
+							_this144.s3 = _this144.s4;
+							_this144.s4 = _this144.s5;
+							_this144.s5 = null;
+							if(_this144.s6 != null) {
+								var _this145 = _this144.s6;
+								var out61 = _this145.s0;
+								if(_this145.l != 0) {
+									_this145.s0 = _this145.s1;
+									_this145.s1 = _this145.s2;
+									_this145.s2 = _this145.s3;
+									_this145.s3 = _this145.s4;
+									_this145.s4 = _this145.s5;
+									_this145.s5 = null;
+									if(_this145.s6 != null) {
+										_this145.s5 = _this145.s6.shift();
+									}
+									_this145.l--;
+								}
+								_this144.s5 = out61;
+							}
+							_this144.l--;
+						}
+						this.controlY = out60;
+						var _this146 = this.store;
+						var out62 = _this146.s0;
+						if(_this146.l != 0) {
+							_this146.s0 = _this146.s1;
+							_this146.s1 = _this146.s2;
+							_this146.s2 = _this146.s3;
+							_this146.s3 = _this146.s4;
+							_this146.s4 = _this146.s5;
+							_this146.s5 = null;
+							if(_this146.s6 != null) {
+								var _this147 = _this146.s6;
+								var out63 = _this147.s0;
+								if(_this147.l != 0) {
+									_this147.s0 = _this147.s1;
+									_this147.s1 = _this147.s2;
+									_this147.s2 = _this147.s3;
+									_this147.s3 = _this147.s4;
+									_this147.s4 = _this147.s5;
+									_this147.s5 = null;
+									if(_this147.s6 != null) {
+										_this147.s5 = _this147.s6.shift();
+									}
+									_this147.l--;
+								}
+								_this146.s5 = out63;
+							}
+							_this146.l--;
+						}
+						this.lastX = out62;
+						var _this148 = this.store;
+						var out64 = _this148.s0;
+						if(_this148.l != 0) {
+							_this148.s0 = _this148.s1;
+							_this148.s1 = _this148.s2;
+							_this148.s2 = _this148.s3;
+							_this148.s3 = _this148.s4;
+							_this148.s4 = _this148.s5;
+							_this148.s5 = null;
+							if(_this148.s6 != null) {
+								var _this149 = _this148.s6;
+								var out65 = _this149.s0;
+								if(_this149.l != 0) {
+									_this149.s0 = _this149.s1;
+									_this149.s1 = _this149.s2;
+									_this149.s2 = _this149.s3;
+									_this149.s3 = _this149.s4;
+									_this149.s4 = _this149.s5;
+									_this149.s5 = null;
+									if(_this149.s6 != null) {
+										_this149.s5 = _this149.s6.shift();
+									}
+									_this149.l--;
+								}
+								_this148.s5 = out65;
+							}
+							_this148.l--;
+						}
+						this.lastY = out64;
+						var x14 = this.controlX;
+						var y14 = this.controlY;
+						var x23 = this.lastX;
+						var y23 = this.lastY;
+						var tempArr3 = [];
+						var ax5 = this.px;
+						var ay5 = this.py;
+						var x15 = ax5 - x14;
+						var y15 = ay5 - y14;
+						var x16 = x14 - x23;
+						var y16 = y14 - y23;
+						var approxDistance3 = Math.sqrt(x15 * x15 + y15 * y15) + Math.sqrt(x16 * x16 + y16 * y16);
+						if(approxDistance3 == 0) {
+							approxDistance3 = 0.000001;
+						}
+						var step3 = Math.min(1 / (approxDistance3 * 0.707),justPath_CurveMath_quadStep);
+						var l6 = tempArr3.length;
+						tempArr3[l6++] = ax5;
+						tempArr3[l6++] = ay5;
+						var t3 = step3;
+						while(t3 < 1.) {
+							var u6 = 1 - t3;
+							tempArr3[l6++] = Math.pow(u6,2) * ax5 + 2 * u6 * t3 * x14 + Math.pow(t3,2) * x23;
+							var u7 = 1 - t3;
+							tempArr3[l6++] = Math.pow(u7,2) * ay5 + 2 * u7 * t3 * y14 + Math.pow(t3,2) * y23;
+							t3 += step3;
+						}
+						tempArr3[l6++] = x23;
+						tempArr3[l6++] = y23;
+						haxe_Log.trace(tempArr3,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+						var withMove3 = false;
+						if(withMove3 == null) {
+							withMove3 = true;
+						}
+						var l7 = tempArr3.length;
+						var i3 = 2;
+						if(withMove3) {
+							this.pathContext.moveTo(tempArr3[0],tempArr3[1]);
+						} else {
+							this.pathContext.lineTo(tempArr3[0],tempArr3[1]);
+						}
+						while(i3 < l7) {
+							this.pathContext.lineTo(tempArr3[i3],tempArr3[i3 + 1]);
+							i3 += 2;
+						}
+						tempArr3 = [];
+						this.px = x23;
+						this.py = y23;
+					}
+				}
+				break;
+			case 83:
+				var _this150 = this.store;
+				_this150.l = 0;
+				_this150.s0 = null;
+				_this150.s1 = null;
+				_this150.s2 = null;
+				_this150.s3 = null;
+				_this150.s4 = null;
+				_this150.s5 = null;
+				_this150.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp6 = "";
+				var exit6 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp6 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this151 = this.store;
+								var v39 = parseFloat(temp6);
+								switch(_this151.l) {
+								case 0:
+									_this151.s0 = v39;
+									break;
+								case 1:
+									_this151.s1 = v39;
+									break;
+								case 2:
+									_this151.s2 = v39;
+									break;
+								case 3:
+									_this151.s3 = v39;
+									break;
+								case 4:
+									_this151.s4 = v39;
+									break;
+								case 5:
+									_this151.s5 = v39;
+									break;
+								default:
+									if(_this151.s6 == null) {
+										_this151.s6 = new justPath_StoreF6();
+									}
+									var _this152 = _this151.s6;
+									switch(_this152.l) {
+									case 0:
+										_this152.s0 = v39;
+										break;
+									case 1:
+										_this152.s1 = v39;
+										break;
+									case 2:
+										_this152.s2 = v39;
+										break;
+									case 3:
+										_this152.s3 = v39;
+										break;
+									case 4:
+										_this152.s4 = v39;
+										break;
+									case 5:
+										_this152.s5 = v39;
+										break;
+									default:
+										if(_this152.s6 == null) {
+											_this152.s6 = new justPath_StoreF6();
+										}
+										_this152.s6.push(v39);
+									}
+									_this152.l++;
+								}
+								_this151.l++;
+							} else {
+								var _this153 = this.store;
+								var v40 = parseFloat(temp6);
+								switch(_this153.l) {
+								case 0:
+									_this153.s0 = v40;
+									break;
+								case 1:
+									_this153.s1 = v40;
+									break;
+								case 2:
+									_this153.s2 = v40;
+									break;
+								case 3:
+									_this153.s3 = v40;
+									break;
+								case 4:
+									_this153.s4 = v40;
+									break;
+								case 5:
+									_this153.s5 = v40;
+									break;
+								default:
+									if(_this153.s6 == null) {
+										_this153.s6 = new justPath_StoreF6();
+									}
+									var _this154 = _this153.s6;
+									switch(_this154.l) {
+									case 0:
+										_this154.s0 = v40;
+										break;
+									case 1:
+										_this154.s1 = v40;
+										break;
+									case 2:
+										_this154.s2 = v40;
+										break;
+									case 3:
+										_this154.s3 = v40;
+										break;
+									case 4:
+										_this154.s4 = v40;
+										break;
+									case 5:
+										_this154.s5 = v40;
+										break;
+									default:
+										if(_this154.s6 == null) {
+											_this154.s6 = new justPath_StoreF6();
+										}
+										_this154.s6.push(v40);
+									}
+									_this154.l++;
+								}
+								_this153.l++;
+							}
+							temp6 = "";
+						}
+						break;
+					case 45:
+						if(temp6 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this155 = this.store;
+								var v41 = parseFloat(temp6);
+								switch(_this155.l) {
+								case 0:
+									_this155.s0 = v41;
+									break;
+								case 1:
+									_this155.s1 = v41;
+									break;
+								case 2:
+									_this155.s2 = v41;
+									break;
+								case 3:
+									_this155.s3 = v41;
+									break;
+								case 4:
+									_this155.s4 = v41;
+									break;
+								case 5:
+									_this155.s5 = v41;
+									break;
+								default:
+									if(_this155.s6 == null) {
+										_this155.s6 = new justPath_StoreF6();
+									}
+									var _this156 = _this155.s6;
+									switch(_this156.l) {
+									case 0:
+										_this156.s0 = v41;
+										break;
+									case 1:
+										_this156.s1 = v41;
+										break;
+									case 2:
+										_this156.s2 = v41;
+										break;
+									case 3:
+										_this156.s3 = v41;
+										break;
+									case 4:
+										_this156.s4 = v41;
+										break;
+									case 5:
+										_this156.s5 = v41;
+										break;
+									default:
+										if(_this156.s6 == null) {
+											_this156.s6 = new justPath_StoreF6();
+										}
+										_this156.s6.push(v41);
+									}
+									_this156.l++;
+								}
+								_this155.l++;
+							} else {
+								var _this157 = this.store;
+								var v42 = parseFloat(temp6);
+								switch(_this157.l) {
+								case 0:
+									_this157.s0 = v42;
+									break;
+								case 1:
+									_this157.s1 = v42;
+									break;
+								case 2:
+									_this157.s2 = v42;
+									break;
+								case 3:
+									_this157.s3 = v42;
+									break;
+								case 4:
+									_this157.s4 = v42;
+									break;
+								case 5:
+									_this157.s5 = v42;
+									break;
+								default:
+									if(_this157.s6 == null) {
+										_this157.s6 = new justPath_StoreF6();
+									}
+									var _this158 = _this157.s6;
+									switch(_this158.l) {
+									case 0:
+										_this158.s0 = v42;
+										break;
+									case 1:
+										_this158.s1 = v42;
+										break;
+									case 2:
+										_this158.s2 = v42;
+										break;
+									case 3:
+										_this158.s3 = v42;
+										break;
+									case 4:
+										_this158.s4 = v42;
+										break;
+									case 5:
+										_this158.s5 = v42;
+										break;
+									default:
+										if(_this158.s6 == null) {
+											_this158.s6 = new justPath_StoreF6();
+										}
+										_this158.s6.push(v42);
+									}
+									_this158.l++;
+								}
+								_this157.l++;
+							}
+						}
+						temp6 = "-";
+						break;
+					case 46:
+						temp6 += ".";
+						break;
+					case 48:
+						temp6 += "0";
+						break;
+					case 49:
+						temp6 += "1";
+						break;
+					case 50:
+						temp6 += "2";
+						break;
+					case 51:
+						temp6 += "3";
+						break;
+					case 52:
+						temp6 += "4";
+						break;
+					case 53:
+						temp6 += "5";
+						break;
+					case 54:
+						temp6 += "6";
+						break;
+					case 55:
+						temp6 += "7";
+						break;
+					case 56:
+						temp6 += "8";
+						break;
+					case 57:
+						temp6 += "9";
+						break;
+					default:
+						if(temp6 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this159 = this.store;
+								var v43 = parseFloat(temp6);
+								switch(_this159.l) {
+								case 0:
+									_this159.s0 = v43;
+									break;
+								case 1:
+									_this159.s1 = v43;
+									break;
+								case 2:
+									_this159.s2 = v43;
+									break;
+								case 3:
+									_this159.s3 = v43;
+									break;
+								case 4:
+									_this159.s4 = v43;
+									break;
+								case 5:
+									_this159.s5 = v43;
+									break;
+								default:
+									if(_this159.s6 == null) {
+										_this159.s6 = new justPath_StoreF6();
+									}
+									var _this160 = _this159.s6;
+									switch(_this160.l) {
+									case 0:
+										_this160.s0 = v43;
+										break;
+									case 1:
+										_this160.s1 = v43;
+										break;
+									case 2:
+										_this160.s2 = v43;
+										break;
+									case 3:
+										_this160.s3 = v43;
+										break;
+									case 4:
+										_this160.s4 = v43;
+										break;
+									case 5:
+										_this160.s5 = v43;
+										break;
+									default:
+										if(_this160.s6 == null) {
+											_this160.s6 = new justPath_StoreF6();
+										}
+										_this160.s6.push(v43);
+									}
+									_this160.l++;
+								}
+								_this159.l++;
+							} else {
+								var _this161 = this.store;
+								var v44 = parseFloat(temp6);
+								switch(_this161.l) {
+								case 0:
+									_this161.s0 = v44;
+									break;
+								case 1:
+									_this161.s1 = v44;
+									break;
+								case 2:
+									_this161.s2 = v44;
+									break;
+								case 3:
+									_this161.s3 = v44;
+									break;
+								case 4:
+									_this161.s4 = v44;
+									break;
+								case 5:
+									_this161.s5 = v44;
+									break;
+								default:
+									if(_this161.s6 == null) {
+										_this161.s6 = new justPath_StoreF6();
+									}
+									var _this162 = _this161.s6;
+									switch(_this162.l) {
+									case 0:
+										_this162.s0 = v44;
+										break;
+									case 1:
+										_this162.s1 = v44;
+										break;
+									case 2:
+										_this162.s2 = v44;
+										break;
+									case 3:
+										_this162.s3 = v44;
+										break;
+									case 4:
+										_this162.s4 = v44;
+										break;
+									case 5:
+										_this162.s5 = v44;
+										break;
+									default:
+										if(_this162.s6 == null) {
+											_this162.s6 = new justPath_StoreF6();
+										}
+										_this162.s6.push(v44);
+									}
+									_this162.l++;
+								}
+								_this161.l++;
+							}
+							temp6 = "";
+						}
+						this.pos--;
+						exit6 = true;
+					}
+					if(exit6) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					var firstX1 = this.store.s0;
+					var firstY1 = this.store.s1;
+					this.controlX = 2 * this.lastX - this.controlX;
+					this.controlY = 2 * this.lastY - this.controlY;
+					var endX = this.store.s2;
+					var endY = this.store.s3;
+					var x17 = this.controlX;
+					var y17 = this.controlY;
+					var tempArr4 = [];
+					var ax6 = this.px;
+					var ay6 = this.py;
+					var x18 = ax6 - x17;
+					var y18 = ay6 - y17;
+					var x19 = x17 - firstX1;
+					var y19 = y17 - firstY1;
+					var x20 = firstX1 - endX;
+					var y20 = firstY1 - endY;
+					var approxDistance4 = Math.sqrt(x18 * x18 + y18 * y18) + Math.sqrt(x19 * x19 + y19 * y19) + Math.sqrt(x20 * x20 + y20 * y20);
+					if(approxDistance4 == 0) {
+						approxDistance4 = 0.000001;
+					}
+					var step4 = Math.min(1 / (approxDistance4 * 0.707),0.03);
+					var l8 = tempArr4.length;
+					tempArr4[l8++] = ax6;
+					tempArr4[l8++] = ay6;
+					var t4 = step4;
+					while(t4 < 1.) {
+						var u8 = 1 - t4;
+						tempArr4[l8++] = Math.pow(u8,3) * ax6 + 3 * Math.pow(u8,2) * t4 * x17 + 3 * u8 * Math.pow(t4,2) * firstX1 + Math.pow(t4,3) * endX;
+						var u9 = 1 - t4;
+						tempArr4[l8++] = Math.pow(u9,3) * ay6 + 3 * Math.pow(u9,2) * t4 * y17 + 3 * u9 * Math.pow(t4,2) * firstY1 + Math.pow(t4,3) * endY;
+						t4 += step4;
+					}
+					tempArr4[l8++] = endX;
+					tempArr4[l8++] = endY;
+					haxe_Log.trace(tempArr4,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+					var withMove4 = false;
+					if(withMove4 == null) {
+						withMove4 = true;
+					}
+					var l9 = tempArr4.length;
+					var i4 = 2;
+					if(withMove4) {
+						this.pathContext.moveTo(tempArr4[0],tempArr4[1]);
+					} else {
+						this.pathContext.lineTo(tempArr4[0],tempArr4[1]);
+					}
+					while(i4 < l9) {
+						this.pathContext.lineTo(tempArr4[i4],tempArr4[i4 + 1]);
+						i4 += 2;
+					}
+					tempArr4 = [];
+					this.px = endX;
+					this.py = endY;
+					this.controlX = this.store.s0;
+					this.controlY = this.store.s1;
+					this.lastX = endX;
+					this.lastY = endY;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var _this163 = this.store;
+						var out66 = _this163.s0;
+						if(_this163.l != 0) {
+							_this163.s0 = _this163.s1;
+							_this163.s1 = _this163.s2;
+							_this163.s2 = _this163.s3;
+							_this163.s3 = _this163.s4;
+							_this163.s4 = _this163.s5;
+							_this163.s5 = null;
+							if(_this163.s6 != null) {
+								var _this164 = _this163.s6;
+								var out67 = _this164.s0;
+								if(_this164.l != 0) {
+									_this164.s0 = _this164.s1;
+									_this164.s1 = _this164.s2;
+									_this164.s2 = _this164.s3;
+									_this164.s3 = _this164.s4;
+									_this164.s4 = _this164.s5;
+									_this164.s5 = null;
+									if(_this164.s6 != null) {
+										_this164.s5 = _this164.s6.shift();
+									}
+									_this164.l--;
+								}
+								_this163.s5 = out67;
+							}
+							_this163.l--;
+						}
+						var firstX2 = out66;
+						var _this165 = this.store;
+						var out68 = _this165.s0;
+						if(_this165.l != 0) {
+							_this165.s0 = _this165.s1;
+							_this165.s1 = _this165.s2;
+							_this165.s2 = _this165.s3;
+							_this165.s3 = _this165.s4;
+							_this165.s4 = _this165.s5;
+							_this165.s5 = null;
+							if(_this165.s6 != null) {
+								var _this166 = _this165.s6;
+								var out69 = _this166.s0;
+								if(_this166.l != 0) {
+									_this166.s0 = _this166.s1;
+									_this166.s1 = _this166.s2;
+									_this166.s2 = _this166.s3;
+									_this166.s3 = _this166.s4;
+									_this166.s4 = _this166.s5;
+									_this166.s5 = null;
+									if(_this166.s6 != null) {
+										_this166.s5 = _this166.s6.shift();
+									}
+									_this166.l--;
+								}
+								_this165.s5 = out69;
+							}
+							_this165.l--;
+						}
+						var firstY2 = out68;
+						this.controlX = 2 * this.lastX - this.controlX;
+						this.controlY = 2 * this.lastY - this.controlY;
+						var _this167 = this.store;
+						var out70 = _this167.s0;
+						if(_this167.l != 0) {
+							_this167.s0 = _this167.s1;
+							_this167.s1 = _this167.s2;
+							_this167.s2 = _this167.s3;
+							_this167.s3 = _this167.s4;
+							_this167.s4 = _this167.s5;
+							_this167.s5 = null;
+							if(_this167.s6 != null) {
+								var _this168 = _this167.s6;
+								var out71 = _this168.s0;
+								if(_this168.l != 0) {
+									_this168.s0 = _this168.s1;
+									_this168.s1 = _this168.s2;
+									_this168.s2 = _this168.s3;
+									_this168.s3 = _this168.s4;
+									_this168.s4 = _this168.s5;
+									_this168.s5 = null;
+									if(_this168.s6 != null) {
+										_this168.s5 = _this168.s6.shift();
+									}
+									_this168.l--;
+								}
+								_this167.s5 = out71;
+							}
+							_this167.l--;
+						}
+						this.lastX = out70;
+						var _this169 = this.store;
+						var out72 = _this169.s0;
+						if(_this169.l != 0) {
+							_this169.s0 = _this169.s1;
+							_this169.s1 = _this169.s2;
+							_this169.s2 = _this169.s3;
+							_this169.s3 = _this169.s4;
+							_this169.s4 = _this169.s5;
+							_this169.s5 = null;
+							if(_this169.s6 != null) {
+								var _this170 = _this169.s6;
+								var out73 = _this170.s0;
+								if(_this170.l != 0) {
+									_this170.s0 = _this170.s1;
+									_this170.s1 = _this170.s2;
+									_this170.s2 = _this170.s3;
+									_this170.s3 = _this170.s4;
+									_this170.s4 = _this170.s5;
+									_this170.s5 = null;
+									if(_this170.s6 != null) {
+										_this170.s5 = _this170.s6.shift();
+									}
+									_this170.l--;
+								}
+								_this169.s5 = out73;
+							}
+							_this169.l--;
+						}
+						this.lastY = out72;
+						var x110 = this.controlX;
+						var y110 = this.controlY;
+						var x32 = this.lastX;
+						var y32 = this.lastY;
+						var tempArr5 = [];
+						var ax7 = this.px;
+						var ay7 = this.py;
+						var x24 = ax7 - x110;
+						var y24 = ay7 - y110;
+						var x25 = x110 - firstX2;
+						var y25 = y110 - firstY2;
+						var x26 = firstX2 - x32;
+						var y26 = firstY2 - y32;
+						var approxDistance5 = Math.sqrt(x24 * x24 + y24 * y24) + Math.sqrt(x25 * x25 + y25 * y25) + Math.sqrt(x26 * x26 + y26 * y26);
+						if(approxDistance5 == 0) {
+							approxDistance5 = 0.000001;
+						}
+						var step5 = Math.min(1 / (approxDistance5 * 0.707),0.03);
+						var l10 = tempArr5.length;
+						tempArr5[l10++] = ax7;
+						tempArr5[l10++] = ay7;
+						var t5 = step5;
+						while(t5 < 1.) {
+							var u10 = 1 - t5;
+							tempArr5[l10++] = Math.pow(u10,3) * ax7 + 3 * Math.pow(u10,2) * t5 * x110 + 3 * u10 * Math.pow(t5,2) * firstX2 + Math.pow(t5,3) * x32;
+							var u11 = 1 - t5;
+							tempArr5[l10++] = Math.pow(u11,3) * ay7 + 3 * Math.pow(u11,2) * t5 * y110 + 3 * u11 * Math.pow(t5,2) * firstY2 + Math.pow(t5,3) * y32;
+							t5 += step5;
+						}
+						tempArr5[l10++] = x32;
+						tempArr5[l10++] = y32;
+						haxe_Log.trace(tempArr5,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+						var withMove5 = false;
+						if(withMove5 == null) {
+							withMove5 = true;
+						}
+						var l11 = tempArr5.length;
+						var i5 = 2;
+						if(withMove5) {
+							this.pathContext.moveTo(tempArr5[0],tempArr5[1]);
+						} else {
+							this.pathContext.lineTo(tempArr5[0],tempArr5[1]);
+						}
+						while(i5 < l11) {
+							this.pathContext.lineTo(tempArr5[i5],tempArr5[i5 + 1]);
+							i5 += 2;
+						}
+						tempArr5 = [];
+						this.px = x32;
+						this.py = y32;
+						this.controlX = firstX2;
+						this.controlY = firstY2;
+					}
+				}
+				break;
+			case 84:
+				var _this171 = this.store;
+				_this171.l = 0;
+				_this171.s0 = null;
+				_this171.s1 = null;
+				_this171.s2 = null;
+				_this171.s3 = null;
+				_this171.s4 = null;
+				_this171.s5 = null;
+				_this171.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp7 = "";
+				var exit7 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp7 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this172 = this.store;
+								var v45 = parseFloat(temp7);
+								switch(_this172.l) {
+								case 0:
+									_this172.s0 = v45;
+									break;
+								case 1:
+									_this172.s1 = v45;
+									break;
+								case 2:
+									_this172.s2 = v45;
+									break;
+								case 3:
+									_this172.s3 = v45;
+									break;
+								case 4:
+									_this172.s4 = v45;
+									break;
+								case 5:
+									_this172.s5 = v45;
+									break;
+								default:
+									if(_this172.s6 == null) {
+										_this172.s6 = new justPath_StoreF6();
+									}
+									var _this173 = _this172.s6;
+									switch(_this173.l) {
+									case 0:
+										_this173.s0 = v45;
+										break;
+									case 1:
+										_this173.s1 = v45;
+										break;
+									case 2:
+										_this173.s2 = v45;
+										break;
+									case 3:
+										_this173.s3 = v45;
+										break;
+									case 4:
+										_this173.s4 = v45;
+										break;
+									case 5:
+										_this173.s5 = v45;
+										break;
+									default:
+										if(_this173.s6 == null) {
+											_this173.s6 = new justPath_StoreF6();
+										}
+										_this173.s6.push(v45);
+									}
+									_this173.l++;
+								}
+								_this172.l++;
+							} else {
+								var _this174 = this.store;
+								var v46 = parseFloat(temp7);
+								switch(_this174.l) {
+								case 0:
+									_this174.s0 = v46;
+									break;
+								case 1:
+									_this174.s1 = v46;
+									break;
+								case 2:
+									_this174.s2 = v46;
+									break;
+								case 3:
+									_this174.s3 = v46;
+									break;
+								case 4:
+									_this174.s4 = v46;
+									break;
+								case 5:
+									_this174.s5 = v46;
+									break;
+								default:
+									if(_this174.s6 == null) {
+										_this174.s6 = new justPath_StoreF6();
+									}
+									var _this175 = _this174.s6;
+									switch(_this175.l) {
+									case 0:
+										_this175.s0 = v46;
+										break;
+									case 1:
+										_this175.s1 = v46;
+										break;
+									case 2:
+										_this175.s2 = v46;
+										break;
+									case 3:
+										_this175.s3 = v46;
+										break;
+									case 4:
+										_this175.s4 = v46;
+										break;
+									case 5:
+										_this175.s5 = v46;
+										break;
+									default:
+										if(_this175.s6 == null) {
+											_this175.s6 = new justPath_StoreF6();
+										}
+										_this175.s6.push(v46);
+									}
+									_this175.l++;
+								}
+								_this174.l++;
+							}
+							temp7 = "";
+						}
+						break;
+					case 45:
+						if(temp7 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this176 = this.store;
+								var v47 = parseFloat(temp7);
+								switch(_this176.l) {
+								case 0:
+									_this176.s0 = v47;
+									break;
+								case 1:
+									_this176.s1 = v47;
+									break;
+								case 2:
+									_this176.s2 = v47;
+									break;
+								case 3:
+									_this176.s3 = v47;
+									break;
+								case 4:
+									_this176.s4 = v47;
+									break;
+								case 5:
+									_this176.s5 = v47;
+									break;
+								default:
+									if(_this176.s6 == null) {
+										_this176.s6 = new justPath_StoreF6();
+									}
+									var _this177 = _this176.s6;
+									switch(_this177.l) {
+									case 0:
+										_this177.s0 = v47;
+										break;
+									case 1:
+										_this177.s1 = v47;
+										break;
+									case 2:
+										_this177.s2 = v47;
+										break;
+									case 3:
+										_this177.s3 = v47;
+										break;
+									case 4:
+										_this177.s4 = v47;
+										break;
+									case 5:
+										_this177.s5 = v47;
+										break;
+									default:
+										if(_this177.s6 == null) {
+											_this177.s6 = new justPath_StoreF6();
+										}
+										_this177.s6.push(v47);
+									}
+									_this177.l++;
+								}
+								_this176.l++;
+							} else {
+								var _this178 = this.store;
+								var v48 = parseFloat(temp7);
+								switch(_this178.l) {
+								case 0:
+									_this178.s0 = v48;
+									break;
+								case 1:
+									_this178.s1 = v48;
+									break;
+								case 2:
+									_this178.s2 = v48;
+									break;
+								case 3:
+									_this178.s3 = v48;
+									break;
+								case 4:
+									_this178.s4 = v48;
+									break;
+								case 5:
+									_this178.s5 = v48;
+									break;
+								default:
+									if(_this178.s6 == null) {
+										_this178.s6 = new justPath_StoreF6();
+									}
+									var _this179 = _this178.s6;
+									switch(_this179.l) {
+									case 0:
+										_this179.s0 = v48;
+										break;
+									case 1:
+										_this179.s1 = v48;
+										break;
+									case 2:
+										_this179.s2 = v48;
+										break;
+									case 3:
+										_this179.s3 = v48;
+										break;
+									case 4:
+										_this179.s4 = v48;
+										break;
+									case 5:
+										_this179.s5 = v48;
+										break;
+									default:
+										if(_this179.s6 == null) {
+											_this179.s6 = new justPath_StoreF6();
+										}
+										_this179.s6.push(v48);
+									}
+									_this179.l++;
+								}
+								_this178.l++;
+							}
+						}
+						temp7 = "-";
+						break;
+					case 46:
+						temp7 += ".";
+						break;
+					case 48:
+						temp7 += "0";
+						break;
+					case 49:
+						temp7 += "1";
+						break;
+					case 50:
+						temp7 += "2";
+						break;
+					case 51:
+						temp7 += "3";
+						break;
+					case 52:
+						temp7 += "4";
+						break;
+					case 53:
+						temp7 += "5";
+						break;
+					case 54:
+						temp7 += "6";
+						break;
+					case 55:
+						temp7 += "7";
+						break;
+					case 56:
+						temp7 += "8";
+						break;
+					case 57:
+						temp7 += "9";
+						break;
+					default:
+						if(temp7 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this180 = this.store;
+								var v49 = parseFloat(temp7);
+								switch(_this180.l) {
+								case 0:
+									_this180.s0 = v49;
+									break;
+								case 1:
+									_this180.s1 = v49;
+									break;
+								case 2:
+									_this180.s2 = v49;
+									break;
+								case 3:
+									_this180.s3 = v49;
+									break;
+								case 4:
+									_this180.s4 = v49;
+									break;
+								case 5:
+									_this180.s5 = v49;
+									break;
+								default:
+									if(_this180.s6 == null) {
+										_this180.s6 = new justPath_StoreF6();
+									}
+									var _this181 = _this180.s6;
+									switch(_this181.l) {
+									case 0:
+										_this181.s0 = v49;
+										break;
+									case 1:
+										_this181.s1 = v49;
+										break;
+									case 2:
+										_this181.s2 = v49;
+										break;
+									case 3:
+										_this181.s3 = v49;
+										break;
+									case 4:
+										_this181.s4 = v49;
+										break;
+									case 5:
+										_this181.s5 = v49;
+										break;
+									default:
+										if(_this181.s6 == null) {
+											_this181.s6 = new justPath_StoreF6();
+										}
+										_this181.s6.push(v49);
+									}
+									_this181.l++;
+								}
+								_this180.l++;
+							} else {
+								var _this182 = this.store;
+								var v50 = parseFloat(temp7);
+								switch(_this182.l) {
+								case 0:
+									_this182.s0 = v50;
+									break;
+								case 1:
+									_this182.s1 = v50;
+									break;
+								case 2:
+									_this182.s2 = v50;
+									break;
+								case 3:
+									_this182.s3 = v50;
+									break;
+								case 4:
+									_this182.s4 = v50;
+									break;
+								case 5:
+									_this182.s5 = v50;
+									break;
+								default:
+									if(_this182.s6 == null) {
+										_this182.s6 = new justPath_StoreF6();
+									}
+									var _this183 = _this182.s6;
+									switch(_this183.l) {
+									case 0:
+										_this183.s0 = v50;
+										break;
+									case 1:
+										_this183.s1 = v50;
+										break;
+									case 2:
+										_this183.s2 = v50;
+										break;
+									case 3:
+										_this183.s3 = v50;
+										break;
+									case 4:
+										_this183.s4 = v50;
+										break;
+									case 5:
+										_this183.s5 = v50;
+										break;
+									default:
+										if(_this183.s6 == null) {
+											_this183.s6 = new justPath_StoreF6();
+										}
+										_this183.s6.push(v50);
+									}
+									_this183.l++;
+								}
+								_this182.l++;
+							}
+							temp7 = "";
+						}
+						this.pos--;
+						exit7 = true;
+					}
+					if(exit7) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.controlX = 2 * this.lastX - this.controlX;
+					this.controlY = 2 * this.lastY - this.controlY;
+					this.lastX = this.store.s0;
+					this.lastY = this.store.s1;
+					var x111 = this.controlX;
+					var y111 = this.controlY;
+					var x27 = this.lastX;
+					var y27 = this.lastY;
+					var tempArr6 = [];
+					var ax8 = this.px;
+					var ay8 = this.py;
+					var x28 = ax8 - x111;
+					var y28 = ay8 - y111;
+					var x29 = x111 - x27;
+					var y29 = y111 - y27;
+					var approxDistance6 = Math.sqrt(x28 * x28 + y28 * y28) + Math.sqrt(x29 * x29 + y29 * y29);
+					if(approxDistance6 == 0) {
+						approxDistance6 = 0.000001;
+					}
+					var step6 = Math.min(1 / (approxDistance6 * 0.707),justPath_CurveMath_quadStep);
+					var l12 = tempArr6.length;
+					tempArr6[l12++] = ax8;
+					tempArr6[l12++] = ay8;
+					var t6 = step6;
+					while(t6 < 1.) {
+						var u12 = 1 - t6;
+						tempArr6[l12++] = Math.pow(u12,2) * ax8 + 2 * u12 * t6 * x111 + Math.pow(t6,2) * x27;
+						var u13 = 1 - t6;
+						tempArr6[l12++] = Math.pow(u13,2) * ay8 + 2 * u13 * t6 * y111 + Math.pow(t6,2) * y27;
+						t6 += step6;
+					}
+					tempArr6[l12++] = x27;
+					tempArr6[l12++] = y27;
+					haxe_Log.trace(tempArr6,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+					var withMove6 = false;
+					if(withMove6 == null) {
+						withMove6 = true;
+					}
+					var l13 = tempArr6.length;
+					var i6 = 2;
+					if(withMove6) {
+						this.pathContext.moveTo(tempArr6[0],tempArr6[1]);
+					} else {
+						this.pathContext.lineTo(tempArr6[0],tempArr6[1]);
+					}
+					while(i6 < l13) {
+						this.pathContext.lineTo(tempArr6[i6],tempArr6[i6 + 1]);
+						i6 += 2;
+					}
+					tempArr6 = [];
+					this.px = x27;
+					this.py = y27;
+				} else if(this.store.l > 2) {
+					while(this.store.l > 1) {
+						this.controlX = 2 * this.lastX - this.controlX;
+						this.controlY = 2 * this.lastY - this.controlY;
+						var _this184 = this.store;
+						var out74 = _this184.s0;
+						if(_this184.l != 0) {
+							_this184.s0 = _this184.s1;
+							_this184.s1 = _this184.s2;
+							_this184.s2 = _this184.s3;
+							_this184.s3 = _this184.s4;
+							_this184.s4 = _this184.s5;
+							_this184.s5 = null;
+							if(_this184.s6 != null) {
+								var _this185 = _this184.s6;
+								var out75 = _this185.s0;
+								if(_this185.l != 0) {
+									_this185.s0 = _this185.s1;
+									_this185.s1 = _this185.s2;
+									_this185.s2 = _this185.s3;
+									_this185.s3 = _this185.s4;
+									_this185.s4 = _this185.s5;
+									_this185.s5 = null;
+									if(_this185.s6 != null) {
+										_this185.s5 = _this185.s6.shift();
+									}
+									_this185.l--;
+								}
+								_this184.s5 = out75;
+							}
+							_this184.l--;
+						}
+						this.lastX = out74;
+						var _this186 = this.store;
+						var out76 = _this186.s0;
+						if(_this186.l != 0) {
+							_this186.s0 = _this186.s1;
+							_this186.s1 = _this186.s2;
+							_this186.s2 = _this186.s3;
+							_this186.s3 = _this186.s4;
+							_this186.s4 = _this186.s5;
+							_this186.s5 = null;
+							if(_this186.s6 != null) {
+								var _this187 = _this186.s6;
+								var out77 = _this187.s0;
+								if(_this187.l != 0) {
+									_this187.s0 = _this187.s1;
+									_this187.s1 = _this187.s2;
+									_this187.s2 = _this187.s3;
+									_this187.s3 = _this187.s4;
+									_this187.s4 = _this187.s5;
+									_this187.s5 = null;
+									if(_this187.s6 != null) {
+										_this187.s5 = _this187.s6.shift();
+									}
+									_this187.l--;
+								}
+								_this186.s5 = out77;
+							}
+							_this186.l--;
+						}
+						this.lastY = out76;
+						var x112 = this.controlX;
+						var y112 = this.controlY;
+						var x210 = this.lastX;
+						var y210 = this.lastY;
+						var tempArr7 = [];
+						var ax9 = this.px;
+						var ay9 = this.py;
+						var x30 = ax9 - x112;
+						var y30 = ay9 - y112;
+						var x33 = x112 - x210;
+						var y33 = y112 - y210;
+						var approxDistance7 = Math.sqrt(x30 * x30 + y30 * y30) + Math.sqrt(x33 * x33 + y33 * y33);
+						if(approxDistance7 == 0) {
+							approxDistance7 = 0.000001;
+						}
+						var step7 = Math.min(1 / (approxDistance7 * 0.707),justPath_CurveMath_quadStep);
+						var l14 = tempArr7.length;
+						tempArr7[l14++] = ax9;
+						tempArr7[l14++] = ay9;
+						var t7 = step7;
+						while(t7 < 1.) {
+							var u14 = 1 - t7;
+							tempArr7[l14++] = Math.pow(u14,2) * ax9 + 2 * u14 * t7 * x112 + Math.pow(t7,2) * x210;
+							var u15 = 1 - t7;
+							tempArr7[l14++] = Math.pow(u15,2) * ay9 + 2 * u15 * t7 * y112 + Math.pow(t7,2) * y210;
+							t7 += step7;
+						}
+						tempArr7[l14++] = x210;
+						tempArr7[l14++] = y210;
+						haxe_Log.trace(tempArr7,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+						var withMove7 = false;
+						if(withMove7 == null) {
+							withMove7 = true;
+						}
+						var l15 = tempArr7.length;
+						var i7 = 2;
+						if(withMove7) {
+							this.pathContext.moveTo(tempArr7[0],tempArr7[1]);
+						} else {
+							this.pathContext.lineTo(tempArr7[0],tempArr7[1]);
+						}
+						while(i7 < l15) {
+							this.pathContext.lineTo(tempArr7[i7],tempArr7[i7 + 1]);
+							i7 += 2;
+						}
+						tempArr7 = [];
+						this.px = x210;
+						this.py = y210;
+					}
+				}
+				break;
+			case 86:
+				var process1 = false;
+				if(process1 == null) {
+					process1 = true;
+				}
+				var _this188 = this.store;
+				_this188.l = 0;
+				_this188.s0 = null;
+				_this188.s1 = null;
+				_this188.s2 = null;
+				_this188.s3 = null;
+				_this188.s4 = null;
+				_this188.s5 = null;
+				_this188.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp8 = "";
+				var exit8 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp8 != "") {
+							if(process1) {
+								if((this.store.l & 1) == 0) {
+									var _this189 = this.store;
+									var v51 = parseFloat(temp8);
+									switch(_this189.l) {
+									case 0:
+										_this189.s0 = v51;
+										break;
+									case 1:
+										_this189.s1 = v51;
+										break;
+									case 2:
+										_this189.s2 = v51;
+										break;
+									case 3:
+										_this189.s3 = v51;
+										break;
+									case 4:
+										_this189.s4 = v51;
+										break;
+									case 5:
+										_this189.s5 = v51;
+										break;
+									default:
+										if(_this189.s6 == null) {
+											_this189.s6 = new justPath_StoreF6();
+										}
+										var _this190 = _this189.s6;
+										switch(_this190.l) {
+										case 0:
+											_this190.s0 = v51;
+											break;
+										case 1:
+											_this190.s1 = v51;
+											break;
+										case 2:
+											_this190.s2 = v51;
+											break;
+										case 3:
+											_this190.s3 = v51;
+											break;
+										case 4:
+											_this190.s4 = v51;
+											break;
+										case 5:
+											_this190.s5 = v51;
+											break;
+										default:
+											if(_this190.s6 == null) {
+												_this190.s6 = new justPath_StoreF6();
+											}
+											_this190.s6.push(v51);
+										}
+										_this190.l++;
+									}
+									_this189.l++;
+								} else {
+									var _this191 = this.store;
+									var v52 = parseFloat(temp8);
+									switch(_this191.l) {
+									case 0:
+										_this191.s0 = v52;
+										break;
+									case 1:
+										_this191.s1 = v52;
+										break;
+									case 2:
+										_this191.s2 = v52;
+										break;
+									case 3:
+										_this191.s3 = v52;
+										break;
+									case 4:
+										_this191.s4 = v52;
+										break;
+									case 5:
+										_this191.s5 = v52;
+										break;
+									default:
+										if(_this191.s6 == null) {
+											_this191.s6 = new justPath_StoreF6();
+										}
+										var _this192 = _this191.s6;
+										switch(_this192.l) {
+										case 0:
+											_this192.s0 = v52;
+											break;
+										case 1:
+											_this192.s1 = v52;
+											break;
+										case 2:
+											_this192.s2 = v52;
+											break;
+										case 3:
+											_this192.s3 = v52;
+											break;
+										case 4:
+											_this192.s4 = v52;
+											break;
+										case 5:
+											_this192.s5 = v52;
+											break;
+										default:
+											if(_this192.s6 == null) {
+												_this192.s6 = new justPath_StoreF6();
+											}
+											_this192.s6.push(v52);
+										}
+										_this192.l++;
+									}
+									_this191.l++;
+								}
+							} else {
+								var _this193 = this.store;
+								var v53 = parseFloat(temp8);
+								switch(_this193.l) {
+								case 0:
+									_this193.s0 = v53;
+									break;
+								case 1:
+									_this193.s1 = v53;
+									break;
+								case 2:
+									_this193.s2 = v53;
+									break;
+								case 3:
+									_this193.s3 = v53;
+									break;
+								case 4:
+									_this193.s4 = v53;
+									break;
+								case 5:
+									_this193.s5 = v53;
+									break;
+								default:
+									if(_this193.s6 == null) {
+										_this193.s6 = new justPath_StoreF6();
+									}
+									var _this194 = _this193.s6;
+									switch(_this194.l) {
+									case 0:
+										_this194.s0 = v53;
+										break;
+									case 1:
+										_this194.s1 = v53;
+										break;
+									case 2:
+										_this194.s2 = v53;
+										break;
+									case 3:
+										_this194.s3 = v53;
+										break;
+									case 4:
+										_this194.s4 = v53;
+										break;
+									case 5:
+										_this194.s5 = v53;
+										break;
+									default:
+										if(_this194.s6 == null) {
+											_this194.s6 = new justPath_StoreF6();
+										}
+										_this194.s6.push(v53);
+									}
+									_this194.l++;
+								}
+								_this193.l++;
+							}
+							temp8 = "";
+						}
+						break;
+					case 45:
+						if(temp8 != "") {
+							if(process1) {
+								if((this.store.l & 1) == 0) {
+									var _this195 = this.store;
+									var v54 = parseFloat(temp8);
+									switch(_this195.l) {
+									case 0:
+										_this195.s0 = v54;
+										break;
+									case 1:
+										_this195.s1 = v54;
+										break;
+									case 2:
+										_this195.s2 = v54;
+										break;
+									case 3:
+										_this195.s3 = v54;
+										break;
+									case 4:
+										_this195.s4 = v54;
+										break;
+									case 5:
+										_this195.s5 = v54;
+										break;
+									default:
+										if(_this195.s6 == null) {
+											_this195.s6 = new justPath_StoreF6();
+										}
+										var _this196 = _this195.s6;
+										switch(_this196.l) {
+										case 0:
+											_this196.s0 = v54;
+											break;
+										case 1:
+											_this196.s1 = v54;
+											break;
+										case 2:
+											_this196.s2 = v54;
+											break;
+										case 3:
+											_this196.s3 = v54;
+											break;
+										case 4:
+											_this196.s4 = v54;
+											break;
+										case 5:
+											_this196.s5 = v54;
+											break;
+										default:
+											if(_this196.s6 == null) {
+												_this196.s6 = new justPath_StoreF6();
+											}
+											_this196.s6.push(v54);
+										}
+										_this196.l++;
+									}
+									_this195.l++;
+								} else {
+									var _this197 = this.store;
+									var v55 = parseFloat(temp8);
+									switch(_this197.l) {
+									case 0:
+										_this197.s0 = v55;
+										break;
+									case 1:
+										_this197.s1 = v55;
+										break;
+									case 2:
+										_this197.s2 = v55;
+										break;
+									case 3:
+										_this197.s3 = v55;
+										break;
+									case 4:
+										_this197.s4 = v55;
+										break;
+									case 5:
+										_this197.s5 = v55;
+										break;
+									default:
+										if(_this197.s6 == null) {
+											_this197.s6 = new justPath_StoreF6();
+										}
+										var _this198 = _this197.s6;
+										switch(_this198.l) {
+										case 0:
+											_this198.s0 = v55;
+											break;
+										case 1:
+											_this198.s1 = v55;
+											break;
+										case 2:
+											_this198.s2 = v55;
+											break;
+										case 3:
+											_this198.s3 = v55;
+											break;
+										case 4:
+											_this198.s4 = v55;
+											break;
+										case 5:
+											_this198.s5 = v55;
+											break;
+										default:
+											if(_this198.s6 == null) {
+												_this198.s6 = new justPath_StoreF6();
+											}
+											_this198.s6.push(v55);
+										}
+										_this198.l++;
+									}
+									_this197.l++;
+								}
+							} else {
+								var _this199 = this.store;
+								var v56 = parseFloat(temp8);
+								switch(_this199.l) {
+								case 0:
+									_this199.s0 = v56;
+									break;
+								case 1:
+									_this199.s1 = v56;
+									break;
+								case 2:
+									_this199.s2 = v56;
+									break;
+								case 3:
+									_this199.s3 = v56;
+									break;
+								case 4:
+									_this199.s4 = v56;
+									break;
+								case 5:
+									_this199.s5 = v56;
+									break;
+								default:
+									if(_this199.s6 == null) {
+										_this199.s6 = new justPath_StoreF6();
+									}
+									var _this200 = _this199.s6;
+									switch(_this200.l) {
+									case 0:
+										_this200.s0 = v56;
+										break;
+									case 1:
+										_this200.s1 = v56;
+										break;
+									case 2:
+										_this200.s2 = v56;
+										break;
+									case 3:
+										_this200.s3 = v56;
+										break;
+									case 4:
+										_this200.s4 = v56;
+										break;
+									case 5:
+										_this200.s5 = v56;
+										break;
+									default:
+										if(_this200.s6 == null) {
+											_this200.s6 = new justPath_StoreF6();
+										}
+										_this200.s6.push(v56);
+									}
+									_this200.l++;
+								}
+								_this199.l++;
+							}
+						}
+						temp8 = "-";
+						break;
+					case 46:
+						temp8 += ".";
+						break;
+					case 48:
+						temp8 += "0";
+						break;
+					case 49:
+						temp8 += "1";
+						break;
+					case 50:
+						temp8 += "2";
+						break;
+					case 51:
+						temp8 += "3";
+						break;
+					case 52:
+						temp8 += "4";
+						break;
+					case 53:
+						temp8 += "5";
+						break;
+					case 54:
+						temp8 += "6";
+						break;
+					case 55:
+						temp8 += "7";
+						break;
+					case 56:
+						temp8 += "8";
+						break;
+					case 57:
+						temp8 += "9";
+						break;
+					default:
+						if(temp8 != "") {
+							if(process1) {
+								if((this.store.l & 1) == 0) {
+									var _this201 = this.store;
+									var v57 = parseFloat(temp8);
+									switch(_this201.l) {
+									case 0:
+										_this201.s0 = v57;
+										break;
+									case 1:
+										_this201.s1 = v57;
+										break;
+									case 2:
+										_this201.s2 = v57;
+										break;
+									case 3:
+										_this201.s3 = v57;
+										break;
+									case 4:
+										_this201.s4 = v57;
+										break;
+									case 5:
+										_this201.s5 = v57;
+										break;
+									default:
+										if(_this201.s6 == null) {
+											_this201.s6 = new justPath_StoreF6();
+										}
+										var _this202 = _this201.s6;
+										switch(_this202.l) {
+										case 0:
+											_this202.s0 = v57;
+											break;
+										case 1:
+											_this202.s1 = v57;
+											break;
+										case 2:
+											_this202.s2 = v57;
+											break;
+										case 3:
+											_this202.s3 = v57;
+											break;
+										case 4:
+											_this202.s4 = v57;
+											break;
+										case 5:
+											_this202.s5 = v57;
+											break;
+										default:
+											if(_this202.s6 == null) {
+												_this202.s6 = new justPath_StoreF6();
+											}
+											_this202.s6.push(v57);
+										}
+										_this202.l++;
+									}
+									_this201.l++;
+								} else {
+									var _this203 = this.store;
+									var v58 = parseFloat(temp8);
+									switch(_this203.l) {
+									case 0:
+										_this203.s0 = v58;
+										break;
+									case 1:
+										_this203.s1 = v58;
+										break;
+									case 2:
+										_this203.s2 = v58;
+										break;
+									case 3:
+										_this203.s3 = v58;
+										break;
+									case 4:
+										_this203.s4 = v58;
+										break;
+									case 5:
+										_this203.s5 = v58;
+										break;
+									default:
+										if(_this203.s6 == null) {
+											_this203.s6 = new justPath_StoreF6();
+										}
+										var _this204 = _this203.s6;
+										switch(_this204.l) {
+										case 0:
+											_this204.s0 = v58;
+											break;
+										case 1:
+											_this204.s1 = v58;
+											break;
+										case 2:
+											_this204.s2 = v58;
+											break;
+										case 3:
+											_this204.s3 = v58;
+											break;
+										case 4:
+											_this204.s4 = v58;
+											break;
+										case 5:
+											_this204.s5 = v58;
+											break;
+										default:
+											if(_this204.s6 == null) {
+												_this204.s6 = new justPath_StoreF6();
+											}
+											_this204.s6.push(v58);
+										}
+										_this204.l++;
+									}
+									_this203.l++;
+								}
+							} else {
+								var _this205 = this.store;
+								var v59 = parseFloat(temp8);
+								switch(_this205.l) {
+								case 0:
+									_this205.s0 = v59;
+									break;
+								case 1:
+									_this205.s1 = v59;
+									break;
+								case 2:
+									_this205.s2 = v59;
+									break;
+								case 3:
+									_this205.s3 = v59;
+									break;
+								case 4:
+									_this205.s4 = v59;
+									break;
+								case 5:
+									_this205.s5 = v59;
+									break;
+								default:
+									if(_this205.s6 == null) {
+										_this205.s6 = new justPath_StoreF6();
+									}
+									var _this206 = _this205.s6;
+									switch(_this206.l) {
+									case 0:
+										_this206.s0 = v59;
+										break;
+									case 1:
+										_this206.s1 = v59;
+										break;
+									case 2:
+										_this206.s2 = v59;
+										break;
+									case 3:
+										_this206.s3 = v59;
+										break;
+									case 4:
+										_this206.s4 = v59;
+										break;
+									case 5:
+										_this206.s5 = v59;
+										break;
+									default:
+										if(_this206.s6 == null) {
+											_this206.s6 = new justPath_StoreF6();
+										}
+										_this206.s6.push(v59);
+									}
+									_this206.l++;
+								}
+								_this205.l++;
+							}
+							temp8 = "";
+						}
+						this.pos--;
+						exit8 = true;
+					}
+					if(exit8) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 1) {
+					var _this207 = this.store;
+					var out78 = _this207.s0;
+					if(_this207.l != 0) {
+						_this207.s0 = _this207.s1;
+						_this207.s1 = _this207.s2;
+						_this207.s2 = _this207.s3;
+						_this207.s3 = _this207.s4;
+						_this207.s4 = _this207.s5;
+						_this207.s5 = null;
+						if(_this207.s6 != null) {
+							var _this208 = _this207.s6;
+							var out79 = _this208.s0;
+							if(_this208.l != 0) {
+								_this208.s0 = _this208.s1;
+								_this208.s1 = _this208.s2;
+								_this208.s2 = _this208.s3;
+								_this208.s3 = _this208.s4;
+								_this208.s4 = _this208.s5;
+								_this208.s5 = null;
+								if(_this208.s6 != null) {
+									_this208.s5 = _this208.s6.shift();
+								}
+								_this208.l--;
+							}
+							_this207.s5 = out79;
+						}
+						_this207.l--;
+					}
+					this.lastY = out78;
+					var x_7 = this.lastX;
+					var y_7 = this.lastY;
+					this.pathContext.lineTo(x_7,y_7);
+					this.px = x_7;
+					this.py = y_7;
+				} else if(this.store.l > 1) {
+					while(this.store.l > 0) {
+						var _this209 = this.store;
+						var out80 = _this209.s0;
+						if(_this209.l != 0) {
+							_this209.s0 = _this209.s1;
+							_this209.s1 = _this209.s2;
+							_this209.s2 = _this209.s3;
+							_this209.s3 = _this209.s4;
+							_this209.s4 = _this209.s5;
+							_this209.s5 = null;
+							if(_this209.s6 != null) {
+								var _this210 = _this209.s6;
+								var out81 = _this210.s0;
+								if(_this210.l != 0) {
+									_this210.s0 = _this210.s1;
+									_this210.s1 = _this210.s2;
+									_this210.s2 = _this210.s3;
+									_this210.s3 = _this210.s4;
+									_this210.s4 = _this210.s5;
+									_this210.s5 = null;
+									if(_this210.s6 != null) {
+										_this210.s5 = _this210.s6.shift();
+									}
+									_this210.l--;
+								}
+								_this209.s5 = out81;
+							}
+							_this209.l--;
+						}
+						this.lastY = out80;
+						var x_8 = this.lastX;
+						var y_8 = this.lastY;
+						this.pathContext.lineTo(x_8,y_8);
+						this.px = x_8;
+						this.py = y_8;
+					}
+				}
+				break;
+			case 97:
+				var _this211 = this.store;
+				_this211.l = 0;
+				_this211.s0 = null;
+				_this211.s1 = null;
+				_this211.s2 = null;
+				_this211.s3 = null;
+				_this211.s4 = null;
+				_this211.s5 = null;
+				_this211.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp9 = "";
+				var exit9 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp9 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this212 = this.store;
+								var v60 = parseFloat(temp9);
+								switch(_this212.l) {
+								case 0:
+									_this212.s0 = v60;
+									break;
+								case 1:
+									_this212.s1 = v60;
+									break;
+								case 2:
+									_this212.s2 = v60;
+									break;
+								case 3:
+									_this212.s3 = v60;
+									break;
+								case 4:
+									_this212.s4 = v60;
+									break;
+								case 5:
+									_this212.s5 = v60;
+									break;
+								default:
+									if(_this212.s6 == null) {
+										_this212.s6 = new justPath_StoreF6();
+									}
+									var _this213 = _this212.s6;
+									switch(_this213.l) {
+									case 0:
+										_this213.s0 = v60;
+										break;
+									case 1:
+										_this213.s1 = v60;
+										break;
+									case 2:
+										_this213.s2 = v60;
+										break;
+									case 3:
+										_this213.s3 = v60;
+										break;
+									case 4:
+										_this213.s4 = v60;
+										break;
+									case 5:
+										_this213.s5 = v60;
+										break;
+									default:
+										if(_this213.s6 == null) {
+											_this213.s6 = new justPath_StoreF6();
+										}
+										_this213.s6.push(v60);
+									}
+									_this213.l++;
+								}
+								_this212.l++;
+							} else {
+								var _this214 = this.store;
+								var v61 = parseFloat(temp9);
+								switch(_this214.l) {
+								case 0:
+									_this214.s0 = v61;
+									break;
+								case 1:
+									_this214.s1 = v61;
+									break;
+								case 2:
+									_this214.s2 = v61;
+									break;
+								case 3:
+									_this214.s3 = v61;
+									break;
+								case 4:
+									_this214.s4 = v61;
+									break;
+								case 5:
+									_this214.s5 = v61;
+									break;
+								default:
+									if(_this214.s6 == null) {
+										_this214.s6 = new justPath_StoreF6();
+									}
+									var _this215 = _this214.s6;
+									switch(_this215.l) {
+									case 0:
+										_this215.s0 = v61;
+										break;
+									case 1:
+										_this215.s1 = v61;
+										break;
+									case 2:
+										_this215.s2 = v61;
+										break;
+									case 3:
+										_this215.s3 = v61;
+										break;
+									case 4:
+										_this215.s4 = v61;
+										break;
+									case 5:
+										_this215.s5 = v61;
+										break;
+									default:
+										if(_this215.s6 == null) {
+											_this215.s6 = new justPath_StoreF6();
+										}
+										_this215.s6.push(v61);
+									}
+									_this215.l++;
+								}
+								_this214.l++;
+							}
+							temp9 = "";
+						}
+						break;
+					case 45:
+						if(temp9 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this216 = this.store;
+								var v62 = parseFloat(temp9);
+								switch(_this216.l) {
+								case 0:
+									_this216.s0 = v62;
+									break;
+								case 1:
+									_this216.s1 = v62;
+									break;
+								case 2:
+									_this216.s2 = v62;
+									break;
+								case 3:
+									_this216.s3 = v62;
+									break;
+								case 4:
+									_this216.s4 = v62;
+									break;
+								case 5:
+									_this216.s5 = v62;
+									break;
+								default:
+									if(_this216.s6 == null) {
+										_this216.s6 = new justPath_StoreF6();
+									}
+									var _this217 = _this216.s6;
+									switch(_this217.l) {
+									case 0:
+										_this217.s0 = v62;
+										break;
+									case 1:
+										_this217.s1 = v62;
+										break;
+									case 2:
+										_this217.s2 = v62;
+										break;
+									case 3:
+										_this217.s3 = v62;
+										break;
+									case 4:
+										_this217.s4 = v62;
+										break;
+									case 5:
+										_this217.s5 = v62;
+										break;
+									default:
+										if(_this217.s6 == null) {
+											_this217.s6 = new justPath_StoreF6();
+										}
+										_this217.s6.push(v62);
+									}
+									_this217.l++;
+								}
+								_this216.l++;
+							} else {
+								var _this218 = this.store;
+								var v63 = parseFloat(temp9);
+								switch(_this218.l) {
+								case 0:
+									_this218.s0 = v63;
+									break;
+								case 1:
+									_this218.s1 = v63;
+									break;
+								case 2:
+									_this218.s2 = v63;
+									break;
+								case 3:
+									_this218.s3 = v63;
+									break;
+								case 4:
+									_this218.s4 = v63;
+									break;
+								case 5:
+									_this218.s5 = v63;
+									break;
+								default:
+									if(_this218.s6 == null) {
+										_this218.s6 = new justPath_StoreF6();
+									}
+									var _this219 = _this218.s6;
+									switch(_this219.l) {
+									case 0:
+										_this219.s0 = v63;
+										break;
+									case 1:
+										_this219.s1 = v63;
+										break;
+									case 2:
+										_this219.s2 = v63;
+										break;
+									case 3:
+										_this219.s3 = v63;
+										break;
+									case 4:
+										_this219.s4 = v63;
+										break;
+									case 5:
+										_this219.s5 = v63;
+										break;
+									default:
+										if(_this219.s6 == null) {
+											_this219.s6 = new justPath_StoreF6();
+										}
+										_this219.s6.push(v63);
+									}
+									_this219.l++;
+								}
+								_this218.l++;
+							}
+						}
+						temp9 = "-";
+						break;
+					case 46:
+						temp9 += ".";
+						break;
+					case 48:
+						temp9 += "0";
+						break;
+					case 49:
+						temp9 += "1";
+						break;
+					case 50:
+						temp9 += "2";
+						break;
+					case 51:
+						temp9 += "3";
+						break;
+					case 52:
+						temp9 += "4";
+						break;
+					case 53:
+						temp9 += "5";
+						break;
+					case 54:
+						temp9 += "6";
+						break;
+					case 55:
+						temp9 += "7";
+						break;
+					case 56:
+						temp9 += "8";
+						break;
+					case 57:
+						temp9 += "9";
+						break;
+					default:
+						if(temp9 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this220 = this.store;
+								var v64 = parseFloat(temp9);
+								switch(_this220.l) {
+								case 0:
+									_this220.s0 = v64;
+									break;
+								case 1:
+									_this220.s1 = v64;
+									break;
+								case 2:
+									_this220.s2 = v64;
+									break;
+								case 3:
+									_this220.s3 = v64;
+									break;
+								case 4:
+									_this220.s4 = v64;
+									break;
+								case 5:
+									_this220.s5 = v64;
+									break;
+								default:
+									if(_this220.s6 == null) {
+										_this220.s6 = new justPath_StoreF6();
+									}
+									var _this221 = _this220.s6;
+									switch(_this221.l) {
+									case 0:
+										_this221.s0 = v64;
+										break;
+									case 1:
+										_this221.s1 = v64;
+										break;
+									case 2:
+										_this221.s2 = v64;
+										break;
+									case 3:
+										_this221.s3 = v64;
+										break;
+									case 4:
+										_this221.s4 = v64;
+										break;
+									case 5:
+										_this221.s5 = v64;
+										break;
+									default:
+										if(_this221.s6 == null) {
+											_this221.s6 = new justPath_StoreF6();
+										}
+										_this221.s6.push(v64);
+									}
+									_this221.l++;
+								}
+								_this220.l++;
+							} else {
+								var _this222 = this.store;
+								var v65 = parseFloat(temp9);
+								switch(_this222.l) {
+								case 0:
+									_this222.s0 = v65;
+									break;
+								case 1:
+									_this222.s1 = v65;
+									break;
+								case 2:
+									_this222.s2 = v65;
+									break;
+								case 3:
+									_this222.s3 = v65;
+									break;
+								case 4:
+									_this222.s4 = v65;
+									break;
+								case 5:
+									_this222.s5 = v65;
+									break;
+								default:
+									if(_this222.s6 == null) {
+										_this222.s6 = new justPath_StoreF6();
+									}
+									var _this223 = _this222.s6;
+									switch(_this223.l) {
+									case 0:
+										_this223.s0 = v65;
+										break;
+									case 1:
+										_this223.s1 = v65;
+										break;
+									case 2:
+										_this223.s2 = v65;
+										break;
+									case 3:
+										_this223.s3 = v65;
+										break;
+									case 4:
+										_this223.s4 = v65;
+										break;
+									case 5:
+										_this223.s5 = v65;
+										break;
+									default:
+										if(_this223.s6 == null) {
+											_this223.s6 = new justPath_StoreF6();
+										}
+										_this223.s6.push(v65);
+									}
+									_this223.l++;
+								}
+								_this222.l++;
+							}
+							temp9 = "";
+						}
+						this.pos--;
+						exit9 = true;
+					}
+					if(exit9) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 7) {
+					var sx4 = this.lastX;
+					var sy4 = this.lastY;
+					var _this224 = this.store;
+					var out82 = _this224.s0;
+					if(_this224.l != 0) {
+						_this224.s0 = _this224.s1;
+						_this224.s1 = _this224.s2;
+						_this224.s2 = _this224.s3;
+						_this224.s3 = _this224.s4;
+						_this224.s4 = _this224.s5;
+						_this224.s5 = null;
+						if(_this224.s6 != null) {
+							var _this225 = _this224.s6;
+							var out83 = _this225.s0;
+							if(_this225.l != 0) {
+								_this225.s0 = _this225.s1;
+								_this225.s1 = _this225.s2;
+								_this225.s2 = _this225.s3;
+								_this225.s3 = _this225.s4;
+								_this225.s4 = _this225.s5;
+								_this225.s5 = null;
+								if(_this225.s6 != null) {
+									_this225.s5 = _this225.s6.shift();
+								}
+								_this225.l--;
+							}
+							_this224.s5 = out83;
+						}
+						_this224.l--;
+					}
+					var xr2 = out82;
+					var _this226 = this.store;
+					var out84 = _this226.s0;
+					if(_this226.l != 0) {
+						_this226.s0 = _this226.s1;
+						_this226.s1 = _this226.s2;
+						_this226.s2 = _this226.s3;
+						_this226.s3 = _this226.s4;
+						_this226.s4 = _this226.s5;
+						_this226.s5 = null;
+						if(_this226.s6 != null) {
+							var _this227 = _this226.s6;
+							var out85 = _this227.s0;
+							if(_this227.l != 0) {
+								_this227.s0 = _this227.s1;
+								_this227.s1 = _this227.s2;
+								_this227.s2 = _this227.s3;
+								_this227.s3 = _this227.s4;
+								_this227.s4 = _this227.s5;
+								_this227.s5 = null;
+								if(_this227.s6 != null) {
+									_this227.s5 = _this227.s6.shift();
+								}
+								_this227.l--;
+							}
+							_this226.s5 = out85;
+						}
+						_this226.l--;
+					}
+					var yr2 = out84;
+					var _this228 = this.store;
+					var out86 = _this228.s0;
+					if(_this228.l != 0) {
+						_this228.s0 = _this228.s1;
+						_this228.s1 = _this228.s2;
+						_this228.s2 = _this228.s3;
+						_this228.s3 = _this228.s4;
+						_this228.s4 = _this228.s5;
+						_this228.s5 = null;
+						if(_this228.s6 != null) {
+							var _this229 = _this228.s6;
+							var out87 = _this229.s0;
+							if(_this229.l != 0) {
+								_this229.s0 = _this229.s1;
+								_this229.s1 = _this229.s2;
+								_this229.s2 = _this229.s3;
+								_this229.s3 = _this229.s4;
+								_this229.s4 = _this229.s5;
+								_this229.s5 = null;
+								if(_this229.s6 != null) {
+									_this229.s5 = _this229.s6.shift();
+								}
+								_this229.l--;
+							}
+							_this228.s5 = out87;
+						}
+						_this228.l--;
+					}
+					var phi4 = out86;
+					var _this230 = this.store;
+					var out88 = _this230.s0;
+					if(_this230.l != 0) {
+						_this230.s0 = _this230.s1;
+						_this230.s1 = _this230.s2;
+						_this230.s2 = _this230.s3;
+						_this230.s3 = _this230.s4;
+						_this230.s4 = _this230.s5;
+						_this230.s5 = null;
+						if(_this230.s6 != null) {
+							var _this231 = _this230.s6;
+							var out89 = _this231.s0;
+							if(_this231.l != 0) {
+								_this231.s0 = _this231.s1;
+								_this231.s1 = _this231.s2;
+								_this231.s2 = _this231.s3;
+								_this231.s3 = _this231.s4;
+								_this231.s4 = _this231.s5;
+								_this231.s5 = null;
+								if(_this231.s6 != null) {
+									var _this232 = _this231.s6;
+									var out90 = _this232.s0;
+									if(_this232.l != 0) {
+										_this232.s0 = _this232.s1;
+										_this232.s1 = _this232.s2;
+										_this232.s2 = _this232.s3;
+										_this232.s3 = _this232.s4;
+										_this232.s4 = _this232.s5;
+										_this232.s5 = null;
+										if(_this232.s6 != null) {
+											_this232.s5 = _this232.s6.shift();
+										}
+										_this232.l--;
+									}
+									_this231.s5 = out90;
+								}
+								_this231.l--;
+							}
+							_this230.s5 = out89;
+						}
+						_this230.l--;
+					}
+					var large2 = out88 | 0;
+					var _this233 = this.store;
+					var out91 = _this233.s0;
+					if(_this233.l != 0) {
+						_this233.s0 = _this233.s1;
+						_this233.s1 = _this233.s2;
+						_this233.s2 = _this233.s3;
+						_this233.s3 = _this233.s4;
+						_this233.s4 = _this233.s5;
+						_this233.s5 = null;
+						if(_this233.s6 != null) {
+							var _this234 = _this233.s6;
+							var out92 = _this234.s0;
+							if(_this234.l != 0) {
+								_this234.s0 = _this234.s1;
+								_this234.s1 = _this234.s2;
+								_this234.s2 = _this234.s3;
+								_this234.s3 = _this234.s4;
+								_this234.s4 = _this234.s5;
+								_this234.s5 = null;
+								if(_this234.s6 != null) {
+									var _this235 = _this234.s6;
+									var out93 = _this235.s0;
+									if(_this235.l != 0) {
+										_this235.s0 = _this235.s1;
+										_this235.s1 = _this235.s2;
+										_this235.s2 = _this235.s3;
+										_this235.s3 = _this235.s4;
+										_this235.s4 = _this235.s5;
+										_this235.s5 = null;
+										if(_this235.s6 != null) {
+											_this235.s5 = _this235.s6.shift();
+										}
+										_this235.l--;
+									}
+									_this234.s5 = out93;
+								}
+								_this234.l--;
+							}
+							_this233.s5 = out92;
+						}
+						_this233.l--;
+					}
+					var sweep2 = out91 | 0;
+					var _this236 = this.store;
+					var out94 = _this236.s0;
+					if(_this236.l != 0) {
+						_this236.s0 = _this236.s1;
+						_this236.s1 = _this236.s2;
+						_this236.s2 = _this236.s3;
+						_this236.s3 = _this236.s4;
+						_this236.s4 = _this236.s5;
+						_this236.s5 = null;
+						if(_this236.s6 != null) {
+							var _this237 = _this236.s6;
+							var out95 = _this237.s0;
+							if(_this237.l != 0) {
+								_this237.s0 = _this237.s1;
+								_this237.s1 = _this237.s2;
+								_this237.s2 = _this237.s3;
+								_this237.s3 = _this237.s4;
+								_this237.s4 = _this237.s5;
+								_this237.s5 = null;
+								if(_this237.s6 != null) {
+									_this237.s5 = _this237.s6.shift();
+								}
+								_this237.l--;
+							}
+							_this236.s5 = out95;
+						}
+						_this236.l--;
+					}
+					this.lastX = out94 + this.lastX;
+					var _this238 = this.store;
+					var out96 = _this238.s0;
+					if(_this238.l != 0) {
+						_this238.s0 = _this238.s1;
+						_this238.s1 = _this238.s2;
+						_this238.s2 = _this238.s3;
+						_this238.s3 = _this238.s4;
+						_this238.s4 = _this238.s5;
+						_this238.s5 = null;
+						if(_this238.s6 != null) {
+							var _this239 = _this238.s6;
+							var out97 = _this239.s0;
+							if(_this239.l != 0) {
+								_this239.s0 = _this239.s1;
+								_this239.s1 = _this239.s2;
+								_this239.s2 = _this239.s3;
+								_this239.s3 = _this239.s4;
+								_this239.s4 = _this239.s5;
+								_this239.s5 = null;
+								if(_this239.s6 != null) {
+									_this239.s5 = _this239.s6.shift();
+								}
+								_this239.l--;
+							}
+							_this238.s5 = out97;
+						}
+						_this238.l--;
+					}
+					this.lastY = out96 + this.lastY;
+					var sx5 = sx4;
+					var sy5 = sy4;
+					var phi5 = phi4;
+					var ex2 = this.lastX;
+					var ey2 = this.lastY;
+					var mx2 = (sx5 - ex2) / 2;
+					var my2 = (sy5 - ey2) / 2;
+					var ax10 = (sx5 + ex2) / 2;
+					var ay10 = (sy5 + ey2) / 2;
+					phi5 %= 360;
+					phi5 = phi5 * Math.PI / 180;
+					var sin2 = Math.sin(phi5);
+					var cos2 = Math.cos(phi5);
+					var x113 = mx2 * cos2 + my2 * sin2;
+					var y113 = -mx2 * sin2 + my2 * cos2;
+					var rx2 = Math.abs(xr2);
+					var ry2 = Math.abs(yr2);
+					var rxx2 = rx2 * rx2;
+					var ryy2 = ry2 * ry2;
+					var xx12 = x113 * x113;
+					var yy12 = y113 * y113;
+					var check2 = xx12 / rxx2 + yy12 / ryy2;
+					if(check2 > 1) {
+						rx2 *= Math.sqrt(check2);
+						ry2 *= Math.sqrt(check2);
+						rxx2 = rx2 * rx2;
+						ryy2 = ry2 * ry2;
+					}
+					var sign2 = large2 == sweep2 ? -1 : 1;
+					var sq2 = (rxx2 * ryy2 - rxx2 * yy12 - ryy2 * xx12) / (rxx2 * yy12 + ryy2 * xx12);
+					if(sq2 < 0) {
+						sq2 = 0;
+					}
+					var coef2 = sign2 * Math.sqrt(sq2);
+					var cx12 = coef2 * rx2 * y113 / ry2;
+					var cy12 = -coef2 * ry2 * x113 / rx2;
+					var cx3 = ax10 + cx12 * cos2 - cy12 * sin2;
+					var cy3 = ay10 + cx12 * sin2 + cy12 * cos2;
+					var phiSin2 = Math.sin(-phi5);
+					var phiCos2 = Math.cos(-phi5);
+					sx5 -= cx3;
+					sy5 -= cy3;
+					var dx4 = sx5;
+					var dy4 = sy5;
+					sx5 = dx4 * phiCos2 - dy4 * phiSin2;
+					sy5 = dx4 * phiSin2 + dy4 * phiCos2;
+					sx5 += cx3;
+					sy5 += cy3;
+					ex2 -= cx3;
+					ey2 -= cy3;
+					var dx5 = ex2;
+					var dy5 = ey2;
+					ex2 = dx5 * phiCos2 - dy5 * phiSin2;
+					ey2 = dx5 * phiSin2 + dy5 * phiCos2;
+					ex2 += cx3;
+					ey2 += cy3;
+					var alpha2 = Math.atan2(rx2 * (cy3 - sy5),ry2 * (cx3 - sx5)) - Math.PI;
+					var omega2 = Math.atan2(rx2 * (cy3 - ey2),ry2 * (cx3 - ex2)) - Math.PI;
+					var delta2 = alpha2 - omega2;
+					if(sweep2 == 1 && delta2 > 0) {
+						delta2 -= 2 * Math.PI;
+					} else if(sweep2 == 0 && delta2 < 0) {
+						delta2 += 2 * Math.PI;
+					}
+					var this3 = { cx : cx3, cy : cy3, rx : rx2, ry : ry2, alpha : alpha2, omega : omega2, delta : -delta2, phi : phi5, phiSin : Math.sin(phi5), phiCos : Math.cos(phi5)};
+					var ellipseData2 = this3;
+					var ellipse2 = new justPath_EllipseArc(ellipseData2);
+					ellipse2.lineRender(($_=this.pathContext,$bind($_,$_.moveTo)),($_=this.pathContext,$bind($_,$_.lineTo)),Math.PI / 18);
+				} else if(this.store.l > 7) {
+					while(this.store.l > 6) {
+						var sx6 = this.lastX;
+						var sy6 = this.lastY;
+						var _this240 = this.store;
+						var out98 = _this240.s0;
+						if(_this240.l != 0) {
+							_this240.s0 = _this240.s1;
+							_this240.s1 = _this240.s2;
+							_this240.s2 = _this240.s3;
+							_this240.s3 = _this240.s4;
+							_this240.s4 = _this240.s5;
+							_this240.s5 = null;
+							if(_this240.s6 != null) {
+								var _this241 = _this240.s6;
+								var out99 = _this241.s0;
+								if(_this241.l != 0) {
+									_this241.s0 = _this241.s1;
+									_this241.s1 = _this241.s2;
+									_this241.s2 = _this241.s3;
+									_this241.s3 = _this241.s4;
+									_this241.s4 = _this241.s5;
+									_this241.s5 = null;
+									if(_this241.s6 != null) {
+										_this241.s5 = _this241.s6.shift();
+									}
+									_this241.l--;
+								}
+								_this240.s5 = out99;
+							}
+							_this240.l--;
+						}
+						var xr3 = out98;
+						var _this242 = this.store;
+						var out100 = _this242.s0;
+						if(_this242.l != 0) {
+							_this242.s0 = _this242.s1;
+							_this242.s1 = _this242.s2;
+							_this242.s2 = _this242.s3;
+							_this242.s3 = _this242.s4;
+							_this242.s4 = _this242.s5;
+							_this242.s5 = null;
+							if(_this242.s6 != null) {
+								var _this243 = _this242.s6;
+								var out101 = _this243.s0;
+								if(_this243.l != 0) {
+									_this243.s0 = _this243.s1;
+									_this243.s1 = _this243.s2;
+									_this243.s2 = _this243.s3;
+									_this243.s3 = _this243.s4;
+									_this243.s4 = _this243.s5;
+									_this243.s5 = null;
+									if(_this243.s6 != null) {
+										_this243.s5 = _this243.s6.shift();
+									}
+									_this243.l--;
+								}
+								_this242.s5 = out101;
+							}
+							_this242.l--;
+						}
+						var yr3 = out100;
+						var _this244 = this.store;
+						var out102 = _this244.s0;
+						if(_this244.l != 0) {
+							_this244.s0 = _this244.s1;
+							_this244.s1 = _this244.s2;
+							_this244.s2 = _this244.s3;
+							_this244.s3 = _this244.s4;
+							_this244.s4 = _this244.s5;
+							_this244.s5 = null;
+							if(_this244.s6 != null) {
+								var _this245 = _this244.s6;
+								var out103 = _this245.s0;
+								if(_this245.l != 0) {
+									_this245.s0 = _this245.s1;
+									_this245.s1 = _this245.s2;
+									_this245.s2 = _this245.s3;
+									_this245.s3 = _this245.s4;
+									_this245.s4 = _this245.s5;
+									_this245.s5 = null;
+									if(_this245.s6 != null) {
+										_this245.s5 = _this245.s6.shift();
+									}
+									_this245.l--;
+								}
+								_this244.s5 = out103;
+							}
+							_this244.l--;
+						}
+						var phi6 = out102;
+						var _this246 = this.store;
+						var out104 = _this246.s0;
+						if(_this246.l != 0) {
+							_this246.s0 = _this246.s1;
+							_this246.s1 = _this246.s2;
+							_this246.s2 = _this246.s3;
+							_this246.s3 = _this246.s4;
+							_this246.s4 = _this246.s5;
+							_this246.s5 = null;
+							if(_this246.s6 != null) {
+								var _this247 = _this246.s6;
+								var out105 = _this247.s0;
+								if(_this247.l != 0) {
+									_this247.s0 = _this247.s1;
+									_this247.s1 = _this247.s2;
+									_this247.s2 = _this247.s3;
+									_this247.s3 = _this247.s4;
+									_this247.s4 = _this247.s5;
+									_this247.s5 = null;
+									if(_this247.s6 != null) {
+										var _this248 = _this247.s6;
+										var out106 = _this248.s0;
+										if(_this248.l != 0) {
+											_this248.s0 = _this248.s1;
+											_this248.s1 = _this248.s2;
+											_this248.s2 = _this248.s3;
+											_this248.s3 = _this248.s4;
+											_this248.s4 = _this248.s5;
+											_this248.s5 = null;
+											if(_this248.s6 != null) {
+												_this248.s5 = _this248.s6.shift();
+											}
+											_this248.l--;
+										}
+										_this247.s5 = out106;
+									}
+									_this247.l--;
+								}
+								_this246.s5 = out105;
+							}
+							_this246.l--;
+						}
+						var large3 = out104 | 0;
+						var _this249 = this.store;
+						var out107 = _this249.s0;
+						if(_this249.l != 0) {
+							_this249.s0 = _this249.s1;
+							_this249.s1 = _this249.s2;
+							_this249.s2 = _this249.s3;
+							_this249.s3 = _this249.s4;
+							_this249.s4 = _this249.s5;
+							_this249.s5 = null;
+							if(_this249.s6 != null) {
+								var _this250 = _this249.s6;
+								var out108 = _this250.s0;
+								if(_this250.l != 0) {
+									_this250.s0 = _this250.s1;
+									_this250.s1 = _this250.s2;
+									_this250.s2 = _this250.s3;
+									_this250.s3 = _this250.s4;
+									_this250.s4 = _this250.s5;
+									_this250.s5 = null;
+									if(_this250.s6 != null) {
+										var _this251 = _this250.s6;
+										var out109 = _this251.s0;
+										if(_this251.l != 0) {
+											_this251.s0 = _this251.s1;
+											_this251.s1 = _this251.s2;
+											_this251.s2 = _this251.s3;
+											_this251.s3 = _this251.s4;
+											_this251.s4 = _this251.s5;
+											_this251.s5 = null;
+											if(_this251.s6 != null) {
+												_this251.s5 = _this251.s6.shift();
+											}
+											_this251.l--;
+										}
+										_this250.s5 = out109;
+									}
+									_this250.l--;
+								}
+								_this249.s5 = out108;
+							}
+							_this249.l--;
+						}
+						var sweep3 = out107 | 0;
+						var _this252 = this.store;
+						var out110 = _this252.s0;
+						if(_this252.l != 0) {
+							_this252.s0 = _this252.s1;
+							_this252.s1 = _this252.s2;
+							_this252.s2 = _this252.s3;
+							_this252.s3 = _this252.s4;
+							_this252.s4 = _this252.s5;
+							_this252.s5 = null;
+							if(_this252.s6 != null) {
+								var _this253 = _this252.s6;
+								var out111 = _this253.s0;
+								if(_this253.l != 0) {
+									_this253.s0 = _this253.s1;
+									_this253.s1 = _this253.s2;
+									_this253.s2 = _this253.s3;
+									_this253.s3 = _this253.s4;
+									_this253.s4 = _this253.s5;
+									_this253.s5 = null;
+									if(_this253.s6 != null) {
+										_this253.s5 = _this253.s6.shift();
+									}
+									_this253.l--;
+								}
+								_this252.s5 = out111;
+							}
+							_this252.l--;
+						}
+						this.lastX = out110 + this.lastX;
+						var _this254 = this.store;
+						var out112 = _this254.s0;
+						if(_this254.l != 0) {
+							_this254.s0 = _this254.s1;
+							_this254.s1 = _this254.s2;
+							_this254.s2 = _this254.s3;
+							_this254.s3 = _this254.s4;
+							_this254.s4 = _this254.s5;
+							_this254.s5 = null;
+							if(_this254.s6 != null) {
+								var _this255 = _this254.s6;
+								var out113 = _this255.s0;
+								if(_this255.l != 0) {
+									_this255.s0 = _this255.s1;
+									_this255.s1 = _this255.s2;
+									_this255.s2 = _this255.s3;
+									_this255.s3 = _this255.s4;
+									_this255.s4 = _this255.s5;
+									_this255.s5 = null;
+									if(_this255.s6 != null) {
+										_this255.s5 = _this255.s6.shift();
+									}
+									_this255.l--;
+								}
+								_this254.s5 = out113;
+							}
+							_this254.l--;
+						}
+						this.lastY = out112 + this.lastY;
+						var sx7 = sx6;
+						var sy7 = sy6;
+						var phi7 = phi6;
+						var ex3 = this.lastX;
+						var ey3 = this.lastY;
+						var mx3 = (sx7 - ex3) / 2;
+						var my3 = (sy7 - ey3) / 2;
+						var ax11 = (sx7 + ex3) / 2;
+						var ay11 = (sy7 + ey3) / 2;
+						phi7 %= 360;
+						phi7 = phi7 * Math.PI / 180;
+						var sin3 = Math.sin(phi7);
+						var cos3 = Math.cos(phi7);
+						var x114 = mx3 * cos3 + my3 * sin3;
+						var y114 = -mx3 * sin3 + my3 * cos3;
+						var rx3 = Math.abs(xr3);
+						var ry3 = Math.abs(yr3);
+						var rxx3 = rx3 * rx3;
+						var ryy3 = ry3 * ry3;
+						var xx13 = x114 * x114;
+						var yy13 = y114 * y114;
+						var check3 = xx13 / rxx3 + yy13 / ryy3;
+						if(check3 > 1) {
+							rx3 *= Math.sqrt(check3);
+							ry3 *= Math.sqrt(check3);
+							rxx3 = rx3 * rx3;
+							ryy3 = ry3 * ry3;
+						}
+						var sign3 = large3 == sweep3 ? -1 : 1;
+						var sq3 = (rxx3 * ryy3 - rxx3 * yy13 - ryy3 * xx13) / (rxx3 * yy13 + ryy3 * xx13);
+						if(sq3 < 0) {
+							sq3 = 0;
+						}
+						var coef3 = sign3 * Math.sqrt(sq3);
+						var cx13 = coef3 * rx3 * y114 / ry3;
+						var cy13 = -coef3 * ry3 * x114 / rx3;
+						var cx4 = ax11 + cx13 * cos3 - cy13 * sin3;
+						var cy4 = ay11 + cx13 * sin3 + cy13 * cos3;
+						var phiSin3 = Math.sin(-phi7);
+						var phiCos3 = Math.cos(-phi7);
+						sx7 -= cx4;
+						sy7 -= cy4;
+						var dx6 = sx7;
+						var dy6 = sy7;
+						sx7 = dx6 * phiCos3 - dy6 * phiSin3;
+						sy7 = dx6 * phiSin3 + dy6 * phiCos3;
+						sx7 += cx4;
+						sy7 += cy4;
+						ex3 -= cx4;
+						ey3 -= cy4;
+						var dx7 = ex3;
+						var dy7 = ey3;
+						ex3 = dx7 * phiCos3 - dy7 * phiSin3;
+						ey3 = dx7 * phiSin3 + dy7 * phiCos3;
+						ex3 += cx4;
+						ey3 += cy4;
+						var alpha3 = Math.atan2(rx3 * (cy4 - sy7),ry3 * (cx4 - sx7)) - Math.PI;
+						var omega3 = Math.atan2(rx3 * (cy4 - ey3),ry3 * (cx4 - ex3)) - Math.PI;
+						var delta3 = alpha3 - omega3;
+						if(sweep3 == 1 && delta3 > 0) {
+							delta3 -= 2 * Math.PI;
+						} else if(sweep3 == 0 && delta3 < 0) {
+							delta3 += 2 * Math.PI;
+						}
+						var this4 = { cx : cx4, cy : cy4, rx : rx3, ry : ry3, alpha : alpha3, omega : omega3, delta : -delta3, phi : phi7, phiSin : Math.sin(phi7), phiCos : Math.cos(phi7)};
+						var ellipseData3 = this4;
+						var ellipse3 = new justPath_EllipseArc(ellipseData3);
+						ellipse3.lineRender(($_=this.pathContext,$bind($_,$_.moveTo)),($_=this.pathContext,$bind($_,$_.lineTo)),Math.PI / 18);
+					}
+				}
+				break;
+			case 99:
+				var _this256 = this.store;
+				_this256.l = 0;
+				_this256.s0 = null;
+				_this256.s1 = null;
+				_this256.s2 = null;
+				_this256.s3 = null;
+				_this256.s4 = null;
+				_this256.s5 = null;
+				_this256.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp10 = "";
+				var exit10 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp10 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this257 = this.store;
+								var v66 = parseFloat(temp10);
+								switch(_this257.l) {
+								case 0:
+									_this257.s0 = v66;
+									break;
+								case 1:
+									_this257.s1 = v66;
+									break;
+								case 2:
+									_this257.s2 = v66;
+									break;
+								case 3:
+									_this257.s3 = v66;
+									break;
+								case 4:
+									_this257.s4 = v66;
+									break;
+								case 5:
+									_this257.s5 = v66;
+									break;
+								default:
+									if(_this257.s6 == null) {
+										_this257.s6 = new justPath_StoreF6();
+									}
+									var _this258 = _this257.s6;
+									switch(_this258.l) {
+									case 0:
+										_this258.s0 = v66;
+										break;
+									case 1:
+										_this258.s1 = v66;
+										break;
+									case 2:
+										_this258.s2 = v66;
+										break;
+									case 3:
+										_this258.s3 = v66;
+										break;
+									case 4:
+										_this258.s4 = v66;
+										break;
+									case 5:
+										_this258.s5 = v66;
+										break;
+									default:
+										if(_this258.s6 == null) {
+											_this258.s6 = new justPath_StoreF6();
+										}
+										_this258.s6.push(v66);
+									}
+									_this258.l++;
+								}
+								_this257.l++;
+							} else {
+								var _this259 = this.store;
+								var v67 = parseFloat(temp10);
+								switch(_this259.l) {
+								case 0:
+									_this259.s0 = v67;
+									break;
+								case 1:
+									_this259.s1 = v67;
+									break;
+								case 2:
+									_this259.s2 = v67;
+									break;
+								case 3:
+									_this259.s3 = v67;
+									break;
+								case 4:
+									_this259.s4 = v67;
+									break;
+								case 5:
+									_this259.s5 = v67;
+									break;
+								default:
+									if(_this259.s6 == null) {
+										_this259.s6 = new justPath_StoreF6();
+									}
+									var _this260 = _this259.s6;
+									switch(_this260.l) {
+									case 0:
+										_this260.s0 = v67;
+										break;
+									case 1:
+										_this260.s1 = v67;
+										break;
+									case 2:
+										_this260.s2 = v67;
+										break;
+									case 3:
+										_this260.s3 = v67;
+										break;
+									case 4:
+										_this260.s4 = v67;
+										break;
+									case 5:
+										_this260.s5 = v67;
+										break;
+									default:
+										if(_this260.s6 == null) {
+											_this260.s6 = new justPath_StoreF6();
+										}
+										_this260.s6.push(v67);
+									}
+									_this260.l++;
+								}
+								_this259.l++;
+							}
+							temp10 = "";
+						}
+						break;
+					case 45:
+						if(temp10 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this261 = this.store;
+								var v68 = parseFloat(temp10);
+								switch(_this261.l) {
+								case 0:
+									_this261.s0 = v68;
+									break;
+								case 1:
+									_this261.s1 = v68;
+									break;
+								case 2:
+									_this261.s2 = v68;
+									break;
+								case 3:
+									_this261.s3 = v68;
+									break;
+								case 4:
+									_this261.s4 = v68;
+									break;
+								case 5:
+									_this261.s5 = v68;
+									break;
+								default:
+									if(_this261.s6 == null) {
+										_this261.s6 = new justPath_StoreF6();
+									}
+									var _this262 = _this261.s6;
+									switch(_this262.l) {
+									case 0:
+										_this262.s0 = v68;
+										break;
+									case 1:
+										_this262.s1 = v68;
+										break;
+									case 2:
+										_this262.s2 = v68;
+										break;
+									case 3:
+										_this262.s3 = v68;
+										break;
+									case 4:
+										_this262.s4 = v68;
+										break;
+									case 5:
+										_this262.s5 = v68;
+										break;
+									default:
+										if(_this262.s6 == null) {
+											_this262.s6 = new justPath_StoreF6();
+										}
+										_this262.s6.push(v68);
+									}
+									_this262.l++;
+								}
+								_this261.l++;
+							} else {
+								var _this263 = this.store;
+								var v69 = parseFloat(temp10);
+								switch(_this263.l) {
+								case 0:
+									_this263.s0 = v69;
+									break;
+								case 1:
+									_this263.s1 = v69;
+									break;
+								case 2:
+									_this263.s2 = v69;
+									break;
+								case 3:
+									_this263.s3 = v69;
+									break;
+								case 4:
+									_this263.s4 = v69;
+									break;
+								case 5:
+									_this263.s5 = v69;
+									break;
+								default:
+									if(_this263.s6 == null) {
+										_this263.s6 = new justPath_StoreF6();
+									}
+									var _this264 = _this263.s6;
+									switch(_this264.l) {
+									case 0:
+										_this264.s0 = v69;
+										break;
+									case 1:
+										_this264.s1 = v69;
+										break;
+									case 2:
+										_this264.s2 = v69;
+										break;
+									case 3:
+										_this264.s3 = v69;
+										break;
+									case 4:
+										_this264.s4 = v69;
+										break;
+									case 5:
+										_this264.s5 = v69;
+										break;
+									default:
+										if(_this264.s6 == null) {
+											_this264.s6 = new justPath_StoreF6();
+										}
+										_this264.s6.push(v69);
+									}
+									_this264.l++;
+								}
+								_this263.l++;
+							}
+						}
+						temp10 = "-";
+						break;
+					case 46:
+						temp10 += ".";
+						break;
+					case 48:
+						temp10 += "0";
+						break;
+					case 49:
+						temp10 += "1";
+						break;
+					case 50:
+						temp10 += "2";
+						break;
+					case 51:
+						temp10 += "3";
+						break;
+					case 52:
+						temp10 += "4";
+						break;
+					case 53:
+						temp10 += "5";
+						break;
+					case 54:
+						temp10 += "6";
+						break;
+					case 55:
+						temp10 += "7";
+						break;
+					case 56:
+						temp10 += "8";
+						break;
+					case 57:
+						temp10 += "9";
+						break;
+					default:
+						if(temp10 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this265 = this.store;
+								var v70 = parseFloat(temp10);
+								switch(_this265.l) {
+								case 0:
+									_this265.s0 = v70;
+									break;
+								case 1:
+									_this265.s1 = v70;
+									break;
+								case 2:
+									_this265.s2 = v70;
+									break;
+								case 3:
+									_this265.s3 = v70;
+									break;
+								case 4:
+									_this265.s4 = v70;
+									break;
+								case 5:
+									_this265.s5 = v70;
+									break;
+								default:
+									if(_this265.s6 == null) {
+										_this265.s6 = new justPath_StoreF6();
+									}
+									var _this266 = _this265.s6;
+									switch(_this266.l) {
+									case 0:
+										_this266.s0 = v70;
+										break;
+									case 1:
+										_this266.s1 = v70;
+										break;
+									case 2:
+										_this266.s2 = v70;
+										break;
+									case 3:
+										_this266.s3 = v70;
+										break;
+									case 4:
+										_this266.s4 = v70;
+										break;
+									case 5:
+										_this266.s5 = v70;
+										break;
+									default:
+										if(_this266.s6 == null) {
+											_this266.s6 = new justPath_StoreF6();
+										}
+										_this266.s6.push(v70);
+									}
+									_this266.l++;
+								}
+								_this265.l++;
+							} else {
+								var _this267 = this.store;
+								var v71 = parseFloat(temp10);
+								switch(_this267.l) {
+								case 0:
+									_this267.s0 = v71;
+									break;
+								case 1:
+									_this267.s1 = v71;
+									break;
+								case 2:
+									_this267.s2 = v71;
+									break;
+								case 3:
+									_this267.s3 = v71;
+									break;
+								case 4:
+									_this267.s4 = v71;
+									break;
+								case 5:
+									_this267.s5 = v71;
+									break;
+								default:
+									if(_this267.s6 == null) {
+										_this267.s6 = new justPath_StoreF6();
+									}
+									var _this268 = _this267.s6;
+									switch(_this268.l) {
+									case 0:
+										_this268.s0 = v71;
+										break;
+									case 1:
+										_this268.s1 = v71;
+										break;
+									case 2:
+										_this268.s2 = v71;
+										break;
+									case 3:
+										_this268.s3 = v71;
+										break;
+									case 4:
+										_this268.s4 = v71;
+										break;
+									case 5:
+										_this268.s5 = v71;
+										break;
+									default:
+										if(_this268.s6 == null) {
+											_this268.s6 = new justPath_StoreF6();
+										}
+										_this268.s6.push(v71);
+									}
+									_this268.l++;
+								}
+								_this267.l++;
+							}
+							temp10 = "";
+						}
+						this.pos--;
+						exit10 = true;
+					}
+					if(exit10) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					var firstX3 = this.store.s0 + this.lastX;
+					var firstY3 = this.store.s1 + this.lastY;
+					this.controlX = this.store.s2 + this.lastX;
+					this.controlY = this.store.s3 + this.lastY;
+					this.lastX = this.store.s4 + this.lastX;
+					this.lastY = this.store.s5 + this.lastY;
+					var x211 = this.controlX;
+					var y211 = this.controlY;
+					var x34 = this.lastX;
+					var y34 = this.lastY;
+					var tempArr8 = [];
+					var ax12 = this.px;
+					var ay12 = this.py;
+					var x35 = ax12 - firstX3;
+					var y35 = ay12 - firstY3;
+					var x36 = firstX3 - x211;
+					var y36 = firstY3 - y211;
+					var x37 = x211 - x34;
+					var y37 = y211 - y34;
+					var approxDistance8 = Math.sqrt(x35 * x35 + y35 * y35) + Math.sqrt(x36 * x36 + y36 * y36) + Math.sqrt(x37 * x37 + y37 * y37);
+					if(approxDistance8 == 0) {
+						approxDistance8 = 0.000001;
+					}
+					var step8 = Math.min(1 / (approxDistance8 * 0.707),0.03);
+					var l16 = tempArr8.length;
+					tempArr8[l16++] = ax12;
+					tempArr8[l16++] = ay12;
+					var t8 = step8;
+					while(t8 < 1.) {
+						var u16 = 1 - t8;
+						tempArr8[l16++] = Math.pow(u16,3) * ax12 + 3 * Math.pow(u16,2) * t8 * firstX3 + 3 * u16 * Math.pow(t8,2) * x211 + Math.pow(t8,3) * x34;
+						var u17 = 1 - t8;
+						tempArr8[l16++] = Math.pow(u17,3) * ay12 + 3 * Math.pow(u17,2) * t8 * firstY3 + 3 * u17 * Math.pow(t8,2) * y211 + Math.pow(t8,3) * y34;
+						t8 += step8;
+					}
+					tempArr8[l16++] = x34;
+					tempArr8[l16++] = y34;
+					haxe_Log.trace(tempArr8,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+					var withMove8 = false;
+					if(withMove8 == null) {
+						withMove8 = true;
+					}
+					var l17 = tempArr8.length;
+					var i8 = 2;
+					if(withMove8) {
+						this.pathContext.moveTo(tempArr8[0],tempArr8[1]);
+					} else {
+						this.pathContext.lineTo(tempArr8[0],tempArr8[1]);
+					}
+					while(i8 < l17) {
+						this.pathContext.lineTo(tempArr8[i8],tempArr8[i8 + 1]);
+						i8 += 2;
+					}
+					tempArr8 = [];
+					this.px = x34;
+					this.py = y34;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var _this269 = this.store;
+						var out114 = _this269.s0;
+						if(_this269.l != 0) {
+							_this269.s0 = _this269.s1;
+							_this269.s1 = _this269.s2;
+							_this269.s2 = _this269.s3;
+							_this269.s3 = _this269.s4;
+							_this269.s4 = _this269.s5;
+							_this269.s5 = null;
+							if(_this269.s6 != null) {
+								var _this270 = _this269.s6;
+								var out115 = _this270.s0;
+								if(_this270.l != 0) {
+									_this270.s0 = _this270.s1;
+									_this270.s1 = _this270.s2;
+									_this270.s2 = _this270.s3;
+									_this270.s3 = _this270.s4;
+									_this270.s4 = _this270.s5;
+									_this270.s5 = null;
+									if(_this270.s6 != null) {
+										_this270.s5 = _this270.s6.shift();
+									}
+									_this270.l--;
+								}
+								_this269.s5 = out115;
+							}
+							_this269.l--;
+						}
+						var firstX4 = out114 + this.lastX;
+						var _this271 = this.store;
+						var out116 = _this271.s0;
+						if(_this271.l != 0) {
+							_this271.s0 = _this271.s1;
+							_this271.s1 = _this271.s2;
+							_this271.s2 = _this271.s3;
+							_this271.s3 = _this271.s4;
+							_this271.s4 = _this271.s5;
+							_this271.s5 = null;
+							if(_this271.s6 != null) {
+								var _this272 = _this271.s6;
+								var out117 = _this272.s0;
+								if(_this272.l != 0) {
+									_this272.s0 = _this272.s1;
+									_this272.s1 = _this272.s2;
+									_this272.s2 = _this272.s3;
+									_this272.s3 = _this272.s4;
+									_this272.s4 = _this272.s5;
+									_this272.s5 = null;
+									if(_this272.s6 != null) {
+										_this272.s5 = _this272.s6.shift();
+									}
+									_this272.l--;
+								}
+								_this271.s5 = out117;
+							}
+							_this271.l--;
+						}
+						var firstY4 = out116 + this.lastY;
+						var _this273 = this.store;
+						var out118 = _this273.s0;
+						if(_this273.l != 0) {
+							_this273.s0 = _this273.s1;
+							_this273.s1 = _this273.s2;
+							_this273.s2 = _this273.s3;
+							_this273.s3 = _this273.s4;
+							_this273.s4 = _this273.s5;
+							_this273.s5 = null;
+							if(_this273.s6 != null) {
+								var _this274 = _this273.s6;
+								var out119 = _this274.s0;
+								if(_this274.l != 0) {
+									_this274.s0 = _this274.s1;
+									_this274.s1 = _this274.s2;
+									_this274.s2 = _this274.s3;
+									_this274.s3 = _this274.s4;
+									_this274.s4 = _this274.s5;
+									_this274.s5 = null;
+									if(_this274.s6 != null) {
+										_this274.s5 = _this274.s6.shift();
+									}
+									_this274.l--;
+								}
+								_this273.s5 = out119;
+							}
+							_this273.l--;
+						}
+						this.controlX = out118 + this.lastX;
+						var _this275 = this.store;
+						var out120 = _this275.s0;
+						if(_this275.l != 0) {
+							_this275.s0 = _this275.s1;
+							_this275.s1 = _this275.s2;
+							_this275.s2 = _this275.s3;
+							_this275.s3 = _this275.s4;
+							_this275.s4 = _this275.s5;
+							_this275.s5 = null;
+							if(_this275.s6 != null) {
+								var _this276 = _this275.s6;
+								var out121 = _this276.s0;
+								if(_this276.l != 0) {
+									_this276.s0 = _this276.s1;
+									_this276.s1 = _this276.s2;
+									_this276.s2 = _this276.s3;
+									_this276.s3 = _this276.s4;
+									_this276.s4 = _this276.s5;
+									_this276.s5 = null;
+									if(_this276.s6 != null) {
+										_this276.s5 = _this276.s6.shift();
+									}
+									_this276.l--;
+								}
+								_this275.s5 = out121;
+							}
+							_this275.l--;
+						}
+						this.controlY = out120 + this.lastY;
+						var _this277 = this.store;
+						var out122 = _this277.s0;
+						if(_this277.l != 0) {
+							_this277.s0 = _this277.s1;
+							_this277.s1 = _this277.s2;
+							_this277.s2 = _this277.s3;
+							_this277.s3 = _this277.s4;
+							_this277.s4 = _this277.s5;
+							_this277.s5 = null;
+							if(_this277.s6 != null) {
+								var _this278 = _this277.s6;
+								var out123 = _this278.s0;
+								if(_this278.l != 0) {
+									_this278.s0 = _this278.s1;
+									_this278.s1 = _this278.s2;
+									_this278.s2 = _this278.s3;
+									_this278.s3 = _this278.s4;
+									_this278.s4 = _this278.s5;
+									_this278.s5 = null;
+									if(_this278.s6 != null) {
+										_this278.s5 = _this278.s6.shift();
+									}
+									_this278.l--;
+								}
+								_this277.s5 = out123;
+							}
+							_this277.l--;
+						}
+						this.lastX = out122 + this.lastX;
+						var _this279 = this.store;
+						var out124 = _this279.s0;
+						if(_this279.l != 0) {
+							_this279.s0 = _this279.s1;
+							_this279.s1 = _this279.s2;
+							_this279.s2 = _this279.s3;
+							_this279.s3 = _this279.s4;
+							_this279.s4 = _this279.s5;
+							_this279.s5 = null;
+							if(_this279.s6 != null) {
+								var _this280 = _this279.s6;
+								var out125 = _this280.s0;
+								if(_this280.l != 0) {
+									_this280.s0 = _this280.s1;
+									_this280.s1 = _this280.s2;
+									_this280.s2 = _this280.s3;
+									_this280.s3 = _this280.s4;
+									_this280.s4 = _this280.s5;
+									_this280.s5 = null;
+									if(_this280.s6 != null) {
+										_this280.s5 = _this280.s6.shift();
+									}
+									_this280.l--;
+								}
+								_this279.s5 = out125;
+							}
+							_this279.l--;
+						}
+						this.lastY = out124 + this.lastY;
+						var x212 = this.controlX;
+						var y212 = this.controlY;
+						var x38 = this.lastX;
+						var y38 = this.lastY;
+						var tempArr9 = [];
+						var ax13 = this.px;
+						var ay13 = this.py;
+						var x39 = ax13 - firstX4;
+						var y39 = ay13 - firstY4;
+						var x40 = firstX4 - x212;
+						var y40 = firstY4 - y212;
+						var x41 = x212 - x38;
+						var y41 = y212 - y38;
+						var approxDistance9 = Math.sqrt(x39 * x39 + y39 * y39) + Math.sqrt(x40 * x40 + y40 * y40) + Math.sqrt(x41 * x41 + y41 * y41);
+						if(approxDistance9 == 0) {
+							approxDistance9 = 0.000001;
+						}
+						var step9 = Math.min(1 / (approxDistance9 * 0.707),0.03);
+						var l18 = tempArr9.length;
+						tempArr9[l18++] = ax13;
+						tempArr9[l18++] = ay13;
+						var t9 = step9;
+						while(t9 < 1.) {
+							var u18 = 1 - t9;
+							tempArr9[l18++] = Math.pow(u18,3) * ax13 + 3 * Math.pow(u18,2) * t9 * firstX4 + 3 * u18 * Math.pow(t9,2) * x212 + Math.pow(t9,3) * x38;
+							var u19 = 1 - t9;
+							tempArr9[l18++] = Math.pow(u19,3) * ay13 + 3 * Math.pow(u19,2) * t9 * firstY4 + 3 * u19 * Math.pow(t9,2) * y212 + Math.pow(t9,3) * y38;
+							t9 += step9;
+						}
+						tempArr9[l18++] = x38;
+						tempArr9[l18++] = y38;
+						haxe_Log.trace(tempArr9,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+						var withMove9 = false;
+						if(withMove9 == null) {
+							withMove9 = true;
+						}
+						var l19 = tempArr9.length;
+						var i9 = 2;
+						if(withMove9) {
+							this.pathContext.moveTo(tempArr9[0],tempArr9[1]);
+						} else {
+							this.pathContext.lineTo(tempArr9[0],tempArr9[1]);
+						}
+						while(i9 < l19) {
+							this.pathContext.lineTo(tempArr9[i9],tempArr9[i9 + 1]);
+							i9 += 2;
+						}
+						tempArr9 = [];
+						this.px = x38;
+						this.py = y38;
+					}
+				}
+				break;
+			case 104:
+				var process2 = false;
+				if(process2 == null) {
+					process2 = true;
+				}
+				var _this281 = this.store;
+				_this281.l = 0;
+				_this281.s0 = null;
+				_this281.s1 = null;
+				_this281.s2 = null;
+				_this281.s3 = null;
+				_this281.s4 = null;
+				_this281.s5 = null;
+				_this281.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp11 = "";
+				var exit11 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp11 != "") {
+							if(process2) {
+								if((this.store.l & 1) == 0) {
+									var _this282 = this.store;
+									var v72 = parseFloat(temp11);
+									switch(_this282.l) {
+									case 0:
+										_this282.s0 = v72;
+										break;
+									case 1:
+										_this282.s1 = v72;
+										break;
+									case 2:
+										_this282.s2 = v72;
+										break;
+									case 3:
+										_this282.s3 = v72;
+										break;
+									case 4:
+										_this282.s4 = v72;
+										break;
+									case 5:
+										_this282.s5 = v72;
+										break;
+									default:
+										if(_this282.s6 == null) {
+											_this282.s6 = new justPath_StoreF6();
+										}
+										var _this283 = _this282.s6;
+										switch(_this283.l) {
+										case 0:
+											_this283.s0 = v72;
+											break;
+										case 1:
+											_this283.s1 = v72;
+											break;
+										case 2:
+											_this283.s2 = v72;
+											break;
+										case 3:
+											_this283.s3 = v72;
+											break;
+										case 4:
+											_this283.s4 = v72;
+											break;
+										case 5:
+											_this283.s5 = v72;
+											break;
+										default:
+											if(_this283.s6 == null) {
+												_this283.s6 = new justPath_StoreF6();
+											}
+											_this283.s6.push(v72);
+										}
+										_this283.l++;
+									}
+									_this282.l++;
+								} else {
+									var _this284 = this.store;
+									var v73 = parseFloat(temp11);
+									switch(_this284.l) {
+									case 0:
+										_this284.s0 = v73;
+										break;
+									case 1:
+										_this284.s1 = v73;
+										break;
+									case 2:
+										_this284.s2 = v73;
+										break;
+									case 3:
+										_this284.s3 = v73;
+										break;
+									case 4:
+										_this284.s4 = v73;
+										break;
+									case 5:
+										_this284.s5 = v73;
+										break;
+									default:
+										if(_this284.s6 == null) {
+											_this284.s6 = new justPath_StoreF6();
+										}
+										var _this285 = _this284.s6;
+										switch(_this285.l) {
+										case 0:
+											_this285.s0 = v73;
+											break;
+										case 1:
+											_this285.s1 = v73;
+											break;
+										case 2:
+											_this285.s2 = v73;
+											break;
+										case 3:
+											_this285.s3 = v73;
+											break;
+										case 4:
+											_this285.s4 = v73;
+											break;
+										case 5:
+											_this285.s5 = v73;
+											break;
+										default:
+											if(_this285.s6 == null) {
+												_this285.s6 = new justPath_StoreF6();
+											}
+											_this285.s6.push(v73);
+										}
+										_this285.l++;
+									}
+									_this284.l++;
+								}
+							} else {
+								var _this286 = this.store;
+								var v74 = parseFloat(temp11);
+								switch(_this286.l) {
+								case 0:
+									_this286.s0 = v74;
+									break;
+								case 1:
+									_this286.s1 = v74;
+									break;
+								case 2:
+									_this286.s2 = v74;
+									break;
+								case 3:
+									_this286.s3 = v74;
+									break;
+								case 4:
+									_this286.s4 = v74;
+									break;
+								case 5:
+									_this286.s5 = v74;
+									break;
+								default:
+									if(_this286.s6 == null) {
+										_this286.s6 = new justPath_StoreF6();
+									}
+									var _this287 = _this286.s6;
+									switch(_this287.l) {
+									case 0:
+										_this287.s0 = v74;
+										break;
+									case 1:
+										_this287.s1 = v74;
+										break;
+									case 2:
+										_this287.s2 = v74;
+										break;
+									case 3:
+										_this287.s3 = v74;
+										break;
+									case 4:
+										_this287.s4 = v74;
+										break;
+									case 5:
+										_this287.s5 = v74;
+										break;
+									default:
+										if(_this287.s6 == null) {
+											_this287.s6 = new justPath_StoreF6();
+										}
+										_this287.s6.push(v74);
+									}
+									_this287.l++;
+								}
+								_this286.l++;
+							}
+							temp11 = "";
+						}
+						break;
+					case 45:
+						if(temp11 != "") {
+							if(process2) {
+								if((this.store.l & 1) == 0) {
+									var _this288 = this.store;
+									var v75 = parseFloat(temp11);
+									switch(_this288.l) {
+									case 0:
+										_this288.s0 = v75;
+										break;
+									case 1:
+										_this288.s1 = v75;
+										break;
+									case 2:
+										_this288.s2 = v75;
+										break;
+									case 3:
+										_this288.s3 = v75;
+										break;
+									case 4:
+										_this288.s4 = v75;
+										break;
+									case 5:
+										_this288.s5 = v75;
+										break;
+									default:
+										if(_this288.s6 == null) {
+											_this288.s6 = new justPath_StoreF6();
+										}
+										var _this289 = _this288.s6;
+										switch(_this289.l) {
+										case 0:
+											_this289.s0 = v75;
+											break;
+										case 1:
+											_this289.s1 = v75;
+											break;
+										case 2:
+											_this289.s2 = v75;
+											break;
+										case 3:
+											_this289.s3 = v75;
+											break;
+										case 4:
+											_this289.s4 = v75;
+											break;
+										case 5:
+											_this289.s5 = v75;
+											break;
+										default:
+											if(_this289.s6 == null) {
+												_this289.s6 = new justPath_StoreF6();
+											}
+											_this289.s6.push(v75);
+										}
+										_this289.l++;
+									}
+									_this288.l++;
+								} else {
+									var _this290 = this.store;
+									var v76 = parseFloat(temp11);
+									switch(_this290.l) {
+									case 0:
+										_this290.s0 = v76;
+										break;
+									case 1:
+										_this290.s1 = v76;
+										break;
+									case 2:
+										_this290.s2 = v76;
+										break;
+									case 3:
+										_this290.s3 = v76;
+										break;
+									case 4:
+										_this290.s4 = v76;
+										break;
+									case 5:
+										_this290.s5 = v76;
+										break;
+									default:
+										if(_this290.s6 == null) {
+											_this290.s6 = new justPath_StoreF6();
+										}
+										var _this291 = _this290.s6;
+										switch(_this291.l) {
+										case 0:
+											_this291.s0 = v76;
+											break;
+										case 1:
+											_this291.s1 = v76;
+											break;
+										case 2:
+											_this291.s2 = v76;
+											break;
+										case 3:
+											_this291.s3 = v76;
+											break;
+										case 4:
+											_this291.s4 = v76;
+											break;
+										case 5:
+											_this291.s5 = v76;
+											break;
+										default:
+											if(_this291.s6 == null) {
+												_this291.s6 = new justPath_StoreF6();
+											}
+											_this291.s6.push(v76);
+										}
+										_this291.l++;
+									}
+									_this290.l++;
+								}
+							} else {
+								var _this292 = this.store;
+								var v77 = parseFloat(temp11);
+								switch(_this292.l) {
+								case 0:
+									_this292.s0 = v77;
+									break;
+								case 1:
+									_this292.s1 = v77;
+									break;
+								case 2:
+									_this292.s2 = v77;
+									break;
+								case 3:
+									_this292.s3 = v77;
+									break;
+								case 4:
+									_this292.s4 = v77;
+									break;
+								case 5:
+									_this292.s5 = v77;
+									break;
+								default:
+									if(_this292.s6 == null) {
+										_this292.s6 = new justPath_StoreF6();
+									}
+									var _this293 = _this292.s6;
+									switch(_this293.l) {
+									case 0:
+										_this293.s0 = v77;
+										break;
+									case 1:
+										_this293.s1 = v77;
+										break;
+									case 2:
+										_this293.s2 = v77;
+										break;
+									case 3:
+										_this293.s3 = v77;
+										break;
+									case 4:
+										_this293.s4 = v77;
+										break;
+									case 5:
+										_this293.s5 = v77;
+										break;
+									default:
+										if(_this293.s6 == null) {
+											_this293.s6 = new justPath_StoreF6();
+										}
+										_this293.s6.push(v77);
+									}
+									_this293.l++;
+								}
+								_this292.l++;
+							}
+						}
+						temp11 = "-";
+						break;
+					case 46:
+						temp11 += ".";
+						break;
+					case 48:
+						temp11 += "0";
+						break;
+					case 49:
+						temp11 += "1";
+						break;
+					case 50:
+						temp11 += "2";
+						break;
+					case 51:
+						temp11 += "3";
+						break;
+					case 52:
+						temp11 += "4";
+						break;
+					case 53:
+						temp11 += "5";
+						break;
+					case 54:
+						temp11 += "6";
+						break;
+					case 55:
+						temp11 += "7";
+						break;
+					case 56:
+						temp11 += "8";
+						break;
+					case 57:
+						temp11 += "9";
+						break;
+					default:
+						if(temp11 != "") {
+							if(process2) {
+								if((this.store.l & 1) == 0) {
+									var _this294 = this.store;
+									var v78 = parseFloat(temp11);
+									switch(_this294.l) {
+									case 0:
+										_this294.s0 = v78;
+										break;
+									case 1:
+										_this294.s1 = v78;
+										break;
+									case 2:
+										_this294.s2 = v78;
+										break;
+									case 3:
+										_this294.s3 = v78;
+										break;
+									case 4:
+										_this294.s4 = v78;
+										break;
+									case 5:
+										_this294.s5 = v78;
+										break;
+									default:
+										if(_this294.s6 == null) {
+											_this294.s6 = new justPath_StoreF6();
+										}
+										var _this295 = _this294.s6;
+										switch(_this295.l) {
+										case 0:
+											_this295.s0 = v78;
+											break;
+										case 1:
+											_this295.s1 = v78;
+											break;
+										case 2:
+											_this295.s2 = v78;
+											break;
+										case 3:
+											_this295.s3 = v78;
+											break;
+										case 4:
+											_this295.s4 = v78;
+											break;
+										case 5:
+											_this295.s5 = v78;
+											break;
+										default:
+											if(_this295.s6 == null) {
+												_this295.s6 = new justPath_StoreF6();
+											}
+											_this295.s6.push(v78);
+										}
+										_this295.l++;
+									}
+									_this294.l++;
+								} else {
+									var _this296 = this.store;
+									var v79 = parseFloat(temp11);
+									switch(_this296.l) {
+									case 0:
+										_this296.s0 = v79;
+										break;
+									case 1:
+										_this296.s1 = v79;
+										break;
+									case 2:
+										_this296.s2 = v79;
+										break;
+									case 3:
+										_this296.s3 = v79;
+										break;
+									case 4:
+										_this296.s4 = v79;
+										break;
+									case 5:
+										_this296.s5 = v79;
+										break;
+									default:
+										if(_this296.s6 == null) {
+											_this296.s6 = new justPath_StoreF6();
+										}
+										var _this297 = _this296.s6;
+										switch(_this297.l) {
+										case 0:
+											_this297.s0 = v79;
+											break;
+										case 1:
+											_this297.s1 = v79;
+											break;
+										case 2:
+											_this297.s2 = v79;
+											break;
+										case 3:
+											_this297.s3 = v79;
+											break;
+										case 4:
+											_this297.s4 = v79;
+											break;
+										case 5:
+											_this297.s5 = v79;
+											break;
+										default:
+											if(_this297.s6 == null) {
+												_this297.s6 = new justPath_StoreF6();
+											}
+											_this297.s6.push(v79);
+										}
+										_this297.l++;
+									}
+									_this296.l++;
+								}
+							} else {
+								var _this298 = this.store;
+								var v80 = parseFloat(temp11);
+								switch(_this298.l) {
+								case 0:
+									_this298.s0 = v80;
+									break;
+								case 1:
+									_this298.s1 = v80;
+									break;
+								case 2:
+									_this298.s2 = v80;
+									break;
+								case 3:
+									_this298.s3 = v80;
+									break;
+								case 4:
+									_this298.s4 = v80;
+									break;
+								case 5:
+									_this298.s5 = v80;
+									break;
+								default:
+									if(_this298.s6 == null) {
+										_this298.s6 = new justPath_StoreF6();
+									}
+									var _this299 = _this298.s6;
+									switch(_this299.l) {
+									case 0:
+										_this299.s0 = v80;
+										break;
+									case 1:
+										_this299.s1 = v80;
+										break;
+									case 2:
+										_this299.s2 = v80;
+										break;
+									case 3:
+										_this299.s3 = v80;
+										break;
+									case 4:
+										_this299.s4 = v80;
+										break;
+									case 5:
+										_this299.s5 = v80;
+										break;
+									default:
+										if(_this299.s6 == null) {
+											_this299.s6 = new justPath_StoreF6();
+										}
+										_this299.s6.push(v80);
+									}
+									_this299.l++;
+								}
+								_this298.l++;
+							}
+							temp11 = "";
+						}
+						this.pos--;
+						exit11 = true;
+					}
+					if(exit11) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 1) {
+					this.lastX += this.store.s0;
+					this.pathContext.lineTo(this.lastX,this.lastY);
+				} else if(this.store.l > 1) {
+					while(this.store.l > 0) {
+						var tmp = this.lastX;
+						var _this300 = this.store;
+						var out126 = _this300.s0;
+						if(_this300.l != 0) {
+							_this300.s0 = _this300.s1;
+							_this300.s1 = _this300.s2;
+							_this300.s2 = _this300.s3;
+							_this300.s3 = _this300.s4;
+							_this300.s4 = _this300.s5;
+							_this300.s5 = null;
+							if(_this300.s6 != null) {
+								var _this301 = _this300.s6;
+								var out127 = _this301.s0;
+								if(_this301.l != 0) {
+									_this301.s0 = _this301.s1;
+									_this301.s1 = _this301.s2;
+									_this301.s2 = _this301.s3;
+									_this301.s3 = _this301.s4;
+									_this301.s4 = _this301.s5;
+									_this301.s5 = null;
+									if(_this301.s6 != null) {
+										_this301.s5 = _this301.s6.shift();
+									}
+									_this301.l--;
+								}
+								_this300.s5 = out127;
+							}
+							_this300.l--;
+						}
+						this.lastX = tmp + out126;
+						var x_9 = this.lastX;
+						var y_9 = this.lastY;
+						this.pathContext.lineTo(x_9,y_9);
+						this.px = x_9;
+						this.py = y_9;
+					}
+				}
+				break;
+			case 108:
+				var _this302 = this.store;
+				_this302.l = 0;
+				_this302.s0 = null;
+				_this302.s1 = null;
+				_this302.s2 = null;
+				_this302.s3 = null;
+				_this302.s4 = null;
+				_this302.s5 = null;
+				_this302.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp12 = "";
+				var exit12 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp12 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this303 = this.store;
+								var v81 = parseFloat(temp12);
+								switch(_this303.l) {
+								case 0:
+									_this303.s0 = v81;
+									break;
+								case 1:
+									_this303.s1 = v81;
+									break;
+								case 2:
+									_this303.s2 = v81;
+									break;
+								case 3:
+									_this303.s3 = v81;
+									break;
+								case 4:
+									_this303.s4 = v81;
+									break;
+								case 5:
+									_this303.s5 = v81;
+									break;
+								default:
+									if(_this303.s6 == null) {
+										_this303.s6 = new justPath_StoreF6();
+									}
+									var _this304 = _this303.s6;
+									switch(_this304.l) {
+									case 0:
+										_this304.s0 = v81;
+										break;
+									case 1:
+										_this304.s1 = v81;
+										break;
+									case 2:
+										_this304.s2 = v81;
+										break;
+									case 3:
+										_this304.s3 = v81;
+										break;
+									case 4:
+										_this304.s4 = v81;
+										break;
+									case 5:
+										_this304.s5 = v81;
+										break;
+									default:
+										if(_this304.s6 == null) {
+											_this304.s6 = new justPath_StoreF6();
+										}
+										_this304.s6.push(v81);
+									}
+									_this304.l++;
+								}
+								_this303.l++;
+							} else {
+								var _this305 = this.store;
+								var v82 = parseFloat(temp12);
+								switch(_this305.l) {
+								case 0:
+									_this305.s0 = v82;
+									break;
+								case 1:
+									_this305.s1 = v82;
+									break;
+								case 2:
+									_this305.s2 = v82;
+									break;
+								case 3:
+									_this305.s3 = v82;
+									break;
+								case 4:
+									_this305.s4 = v82;
+									break;
+								case 5:
+									_this305.s5 = v82;
+									break;
+								default:
+									if(_this305.s6 == null) {
+										_this305.s6 = new justPath_StoreF6();
+									}
+									var _this306 = _this305.s6;
+									switch(_this306.l) {
+									case 0:
+										_this306.s0 = v82;
+										break;
+									case 1:
+										_this306.s1 = v82;
+										break;
+									case 2:
+										_this306.s2 = v82;
+										break;
+									case 3:
+										_this306.s3 = v82;
+										break;
+									case 4:
+										_this306.s4 = v82;
+										break;
+									case 5:
+										_this306.s5 = v82;
+										break;
+									default:
+										if(_this306.s6 == null) {
+											_this306.s6 = new justPath_StoreF6();
+										}
+										_this306.s6.push(v82);
+									}
+									_this306.l++;
+								}
+								_this305.l++;
+							}
+							temp12 = "";
+						}
+						break;
+					case 45:
+						if(temp12 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this307 = this.store;
+								var v83 = parseFloat(temp12);
+								switch(_this307.l) {
+								case 0:
+									_this307.s0 = v83;
+									break;
+								case 1:
+									_this307.s1 = v83;
+									break;
+								case 2:
+									_this307.s2 = v83;
+									break;
+								case 3:
+									_this307.s3 = v83;
+									break;
+								case 4:
+									_this307.s4 = v83;
+									break;
+								case 5:
+									_this307.s5 = v83;
+									break;
+								default:
+									if(_this307.s6 == null) {
+										_this307.s6 = new justPath_StoreF6();
+									}
+									var _this308 = _this307.s6;
+									switch(_this308.l) {
+									case 0:
+										_this308.s0 = v83;
+										break;
+									case 1:
+										_this308.s1 = v83;
+										break;
+									case 2:
+										_this308.s2 = v83;
+										break;
+									case 3:
+										_this308.s3 = v83;
+										break;
+									case 4:
+										_this308.s4 = v83;
+										break;
+									case 5:
+										_this308.s5 = v83;
+										break;
+									default:
+										if(_this308.s6 == null) {
+											_this308.s6 = new justPath_StoreF6();
+										}
+										_this308.s6.push(v83);
+									}
+									_this308.l++;
+								}
+								_this307.l++;
+							} else {
+								var _this309 = this.store;
+								var v84 = parseFloat(temp12);
+								switch(_this309.l) {
+								case 0:
+									_this309.s0 = v84;
+									break;
+								case 1:
+									_this309.s1 = v84;
+									break;
+								case 2:
+									_this309.s2 = v84;
+									break;
+								case 3:
+									_this309.s3 = v84;
+									break;
+								case 4:
+									_this309.s4 = v84;
+									break;
+								case 5:
+									_this309.s5 = v84;
+									break;
+								default:
+									if(_this309.s6 == null) {
+										_this309.s6 = new justPath_StoreF6();
+									}
+									var _this310 = _this309.s6;
+									switch(_this310.l) {
+									case 0:
+										_this310.s0 = v84;
+										break;
+									case 1:
+										_this310.s1 = v84;
+										break;
+									case 2:
+										_this310.s2 = v84;
+										break;
+									case 3:
+										_this310.s3 = v84;
+										break;
+									case 4:
+										_this310.s4 = v84;
+										break;
+									case 5:
+										_this310.s5 = v84;
+										break;
+									default:
+										if(_this310.s6 == null) {
+											_this310.s6 = new justPath_StoreF6();
+										}
+										_this310.s6.push(v84);
+									}
+									_this310.l++;
+								}
+								_this309.l++;
+							}
+						}
+						temp12 = "-";
+						break;
+					case 46:
+						temp12 += ".";
+						break;
+					case 48:
+						temp12 += "0";
+						break;
+					case 49:
+						temp12 += "1";
+						break;
+					case 50:
+						temp12 += "2";
+						break;
+					case 51:
+						temp12 += "3";
+						break;
+					case 52:
+						temp12 += "4";
+						break;
+					case 53:
+						temp12 += "5";
+						break;
+					case 54:
+						temp12 += "6";
+						break;
+					case 55:
+						temp12 += "7";
+						break;
+					case 56:
+						temp12 += "8";
+						break;
+					case 57:
+						temp12 += "9";
+						break;
+					default:
+						if(temp12 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this311 = this.store;
+								var v85 = parseFloat(temp12);
+								switch(_this311.l) {
+								case 0:
+									_this311.s0 = v85;
+									break;
+								case 1:
+									_this311.s1 = v85;
+									break;
+								case 2:
+									_this311.s2 = v85;
+									break;
+								case 3:
+									_this311.s3 = v85;
+									break;
+								case 4:
+									_this311.s4 = v85;
+									break;
+								case 5:
+									_this311.s5 = v85;
+									break;
+								default:
+									if(_this311.s6 == null) {
+										_this311.s6 = new justPath_StoreF6();
+									}
+									var _this312 = _this311.s6;
+									switch(_this312.l) {
+									case 0:
+										_this312.s0 = v85;
+										break;
+									case 1:
+										_this312.s1 = v85;
+										break;
+									case 2:
+										_this312.s2 = v85;
+										break;
+									case 3:
+										_this312.s3 = v85;
+										break;
+									case 4:
+										_this312.s4 = v85;
+										break;
+									case 5:
+										_this312.s5 = v85;
+										break;
+									default:
+										if(_this312.s6 == null) {
+											_this312.s6 = new justPath_StoreF6();
+										}
+										_this312.s6.push(v85);
+									}
+									_this312.l++;
+								}
+								_this311.l++;
+							} else {
+								var _this313 = this.store;
+								var v86 = parseFloat(temp12);
+								switch(_this313.l) {
+								case 0:
+									_this313.s0 = v86;
+									break;
+								case 1:
+									_this313.s1 = v86;
+									break;
+								case 2:
+									_this313.s2 = v86;
+									break;
+								case 3:
+									_this313.s3 = v86;
+									break;
+								case 4:
+									_this313.s4 = v86;
+									break;
+								case 5:
+									_this313.s5 = v86;
+									break;
+								default:
+									if(_this313.s6 == null) {
+										_this313.s6 = new justPath_StoreF6();
+									}
+									var _this314 = _this313.s6;
+									switch(_this314.l) {
+									case 0:
+										_this314.s0 = v86;
+										break;
+									case 1:
+										_this314.s1 = v86;
+										break;
+									case 2:
+										_this314.s2 = v86;
+										break;
+									case 3:
+										_this314.s3 = v86;
+										break;
+									case 4:
+										_this314.s4 = v86;
+										break;
+									case 5:
+										_this314.s5 = v86;
+										break;
+									default:
+										if(_this314.s6 == null) {
+											_this314.s6 = new justPath_StoreF6();
+										}
+										_this314.s6.push(v86);
+									}
+									_this314.l++;
+								}
+								_this313.l++;
+							}
+							temp12 = "";
+						}
+						this.pos--;
+						exit12 = true;
+					}
+					if(exit12) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.lastX = this.store.s0 + this.lastX;
+					this.lastY = this.store.s1 + this.lastY;
+					this.pathContext.lineTo(this.lastX,this.lastY);
+				} else if(this.store.l > 2) {
+					while(this.store.l > 2) {
+						var _this315 = this.store;
+						var out128 = _this315.s0;
+						if(_this315.l != 0) {
+							_this315.s0 = _this315.s1;
+							_this315.s1 = _this315.s2;
+							_this315.s2 = _this315.s3;
+							_this315.s3 = _this315.s4;
+							_this315.s4 = _this315.s5;
+							_this315.s5 = null;
+							if(_this315.s6 != null) {
+								var _this316 = _this315.s6;
+								var out129 = _this316.s0;
+								if(_this316.l != 0) {
+									_this316.s0 = _this316.s1;
+									_this316.s1 = _this316.s2;
+									_this316.s2 = _this316.s3;
+									_this316.s3 = _this316.s4;
+									_this316.s4 = _this316.s5;
+									_this316.s5 = null;
+									if(_this316.s6 != null) {
+										_this316.s5 = _this316.s6.shift();
+									}
+									_this316.l--;
+								}
+								_this315.s5 = out129;
+							}
+							_this315.l--;
+						}
+						this.lastX = out128 + this.lastX;
+						var _this317 = this.store;
+						var out130 = _this317.s0;
+						if(_this317.l != 0) {
+							_this317.s0 = _this317.s1;
+							_this317.s1 = _this317.s2;
+							_this317.s2 = _this317.s3;
+							_this317.s3 = _this317.s4;
+							_this317.s4 = _this317.s5;
+							_this317.s5 = null;
+							if(_this317.s6 != null) {
+								var _this318 = _this317.s6;
+								var out131 = _this318.s0;
+								if(_this318.l != 0) {
+									_this318.s0 = _this318.s1;
+									_this318.s1 = _this318.s2;
+									_this318.s2 = _this318.s3;
+									_this318.s3 = _this318.s4;
+									_this318.s4 = _this318.s5;
+									_this318.s5 = null;
+									if(_this318.s6 != null) {
+										_this318.s5 = _this318.s6.shift();
+									}
+									_this318.l--;
+								}
+								_this317.s5 = out131;
+							}
+							_this317.l--;
+						}
+						this.lastY = out130 + this.lastY;
+						this.pathContext.lineTo(this.lastX,this.lastY);
+					}
+				}
+				break;
+			case 109:
+				var _this319 = this.store;
+				_this319.l = 0;
+				_this319.s0 = null;
+				_this319.s1 = null;
+				_this319.s2 = null;
+				_this319.s3 = null;
+				_this319.s4 = null;
+				_this319.s5 = null;
+				_this319.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp13 = "";
+				var exit13 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp13 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this320 = this.store;
+								var v87 = parseFloat(temp13);
+								switch(_this320.l) {
+								case 0:
+									_this320.s0 = v87;
+									break;
+								case 1:
+									_this320.s1 = v87;
+									break;
+								case 2:
+									_this320.s2 = v87;
+									break;
+								case 3:
+									_this320.s3 = v87;
+									break;
+								case 4:
+									_this320.s4 = v87;
+									break;
+								case 5:
+									_this320.s5 = v87;
+									break;
+								default:
+									if(_this320.s6 == null) {
+										_this320.s6 = new justPath_StoreF6();
+									}
+									var _this321 = _this320.s6;
+									switch(_this321.l) {
+									case 0:
+										_this321.s0 = v87;
+										break;
+									case 1:
+										_this321.s1 = v87;
+										break;
+									case 2:
+										_this321.s2 = v87;
+										break;
+									case 3:
+										_this321.s3 = v87;
+										break;
+									case 4:
+										_this321.s4 = v87;
+										break;
+									case 5:
+										_this321.s5 = v87;
+										break;
+									default:
+										if(_this321.s6 == null) {
+											_this321.s6 = new justPath_StoreF6();
+										}
+										_this321.s6.push(v87);
+									}
+									_this321.l++;
+								}
+								_this320.l++;
+							} else {
+								var _this322 = this.store;
+								var v88 = parseFloat(temp13);
+								switch(_this322.l) {
+								case 0:
+									_this322.s0 = v88;
+									break;
+								case 1:
+									_this322.s1 = v88;
+									break;
+								case 2:
+									_this322.s2 = v88;
+									break;
+								case 3:
+									_this322.s3 = v88;
+									break;
+								case 4:
+									_this322.s4 = v88;
+									break;
+								case 5:
+									_this322.s5 = v88;
+									break;
+								default:
+									if(_this322.s6 == null) {
+										_this322.s6 = new justPath_StoreF6();
+									}
+									var _this323 = _this322.s6;
+									switch(_this323.l) {
+									case 0:
+										_this323.s0 = v88;
+										break;
+									case 1:
+										_this323.s1 = v88;
+										break;
+									case 2:
+										_this323.s2 = v88;
+										break;
+									case 3:
+										_this323.s3 = v88;
+										break;
+									case 4:
+										_this323.s4 = v88;
+										break;
+									case 5:
+										_this323.s5 = v88;
+										break;
+									default:
+										if(_this323.s6 == null) {
+											_this323.s6 = new justPath_StoreF6();
+										}
+										_this323.s6.push(v88);
+									}
+									_this323.l++;
+								}
+								_this322.l++;
+							}
+							temp13 = "";
+						}
+						break;
+					case 45:
+						if(temp13 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this324 = this.store;
+								var v89 = parseFloat(temp13);
+								switch(_this324.l) {
+								case 0:
+									_this324.s0 = v89;
+									break;
+								case 1:
+									_this324.s1 = v89;
+									break;
+								case 2:
+									_this324.s2 = v89;
+									break;
+								case 3:
+									_this324.s3 = v89;
+									break;
+								case 4:
+									_this324.s4 = v89;
+									break;
+								case 5:
+									_this324.s5 = v89;
+									break;
+								default:
+									if(_this324.s6 == null) {
+										_this324.s6 = new justPath_StoreF6();
+									}
+									var _this325 = _this324.s6;
+									switch(_this325.l) {
+									case 0:
+										_this325.s0 = v89;
+										break;
+									case 1:
+										_this325.s1 = v89;
+										break;
+									case 2:
+										_this325.s2 = v89;
+										break;
+									case 3:
+										_this325.s3 = v89;
+										break;
+									case 4:
+										_this325.s4 = v89;
+										break;
+									case 5:
+										_this325.s5 = v89;
+										break;
+									default:
+										if(_this325.s6 == null) {
+											_this325.s6 = new justPath_StoreF6();
+										}
+										_this325.s6.push(v89);
+									}
+									_this325.l++;
+								}
+								_this324.l++;
+							} else {
+								var _this326 = this.store;
+								var v90 = parseFloat(temp13);
+								switch(_this326.l) {
+								case 0:
+									_this326.s0 = v90;
+									break;
+								case 1:
+									_this326.s1 = v90;
+									break;
+								case 2:
+									_this326.s2 = v90;
+									break;
+								case 3:
+									_this326.s3 = v90;
+									break;
+								case 4:
+									_this326.s4 = v90;
+									break;
+								case 5:
+									_this326.s5 = v90;
+									break;
+								default:
+									if(_this326.s6 == null) {
+										_this326.s6 = new justPath_StoreF6();
+									}
+									var _this327 = _this326.s6;
+									switch(_this327.l) {
+									case 0:
+										_this327.s0 = v90;
+										break;
+									case 1:
+										_this327.s1 = v90;
+										break;
+									case 2:
+										_this327.s2 = v90;
+										break;
+									case 3:
+										_this327.s3 = v90;
+										break;
+									case 4:
+										_this327.s4 = v90;
+										break;
+									case 5:
+										_this327.s5 = v90;
+										break;
+									default:
+										if(_this327.s6 == null) {
+											_this327.s6 = new justPath_StoreF6();
+										}
+										_this327.s6.push(v90);
+									}
+									_this327.l++;
+								}
+								_this326.l++;
+							}
+						}
+						temp13 = "-";
+						break;
+					case 46:
+						temp13 += ".";
+						break;
+					case 48:
+						temp13 += "0";
+						break;
+					case 49:
+						temp13 += "1";
+						break;
+					case 50:
+						temp13 += "2";
+						break;
+					case 51:
+						temp13 += "3";
+						break;
+					case 52:
+						temp13 += "4";
+						break;
+					case 53:
+						temp13 += "5";
+						break;
+					case 54:
+						temp13 += "6";
+						break;
+					case 55:
+						temp13 += "7";
+						break;
+					case 56:
+						temp13 += "8";
+						break;
+					case 57:
+						temp13 += "9";
+						break;
+					default:
+						if(temp13 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this328 = this.store;
+								var v91 = parseFloat(temp13);
+								switch(_this328.l) {
+								case 0:
+									_this328.s0 = v91;
+									break;
+								case 1:
+									_this328.s1 = v91;
+									break;
+								case 2:
+									_this328.s2 = v91;
+									break;
+								case 3:
+									_this328.s3 = v91;
+									break;
+								case 4:
+									_this328.s4 = v91;
+									break;
+								case 5:
+									_this328.s5 = v91;
+									break;
+								default:
+									if(_this328.s6 == null) {
+										_this328.s6 = new justPath_StoreF6();
+									}
+									var _this329 = _this328.s6;
+									switch(_this329.l) {
+									case 0:
+										_this329.s0 = v91;
+										break;
+									case 1:
+										_this329.s1 = v91;
+										break;
+									case 2:
+										_this329.s2 = v91;
+										break;
+									case 3:
+										_this329.s3 = v91;
+										break;
+									case 4:
+										_this329.s4 = v91;
+										break;
+									case 5:
+										_this329.s5 = v91;
+										break;
+									default:
+										if(_this329.s6 == null) {
+											_this329.s6 = new justPath_StoreF6();
+										}
+										_this329.s6.push(v91);
+									}
+									_this329.l++;
+								}
+								_this328.l++;
+							} else {
+								var _this330 = this.store;
+								var v92 = parseFloat(temp13);
+								switch(_this330.l) {
+								case 0:
+									_this330.s0 = v92;
+									break;
+								case 1:
+									_this330.s1 = v92;
+									break;
+								case 2:
+									_this330.s2 = v92;
+									break;
+								case 3:
+									_this330.s3 = v92;
+									break;
+								case 4:
+									_this330.s4 = v92;
+									break;
+								case 5:
+									_this330.s5 = v92;
+									break;
+								default:
+									if(_this330.s6 == null) {
+										_this330.s6 = new justPath_StoreF6();
+									}
+									var _this331 = _this330.s6;
+									switch(_this331.l) {
+									case 0:
+										_this331.s0 = v92;
+										break;
+									case 1:
+										_this331.s1 = v92;
+										break;
+									case 2:
+										_this331.s2 = v92;
+										break;
+									case 3:
+										_this331.s3 = v92;
+										break;
+									case 4:
+										_this331.s4 = v92;
+										break;
+									case 5:
+										_this331.s5 = v92;
+										break;
+									default:
+										if(_this331.s6 == null) {
+											_this331.s6 = new justPath_StoreF6();
+										}
+										_this331.s6.push(v92);
+									}
+									_this331.l++;
+								}
+								_this330.l++;
+							}
+							temp13 = "";
+						}
+						this.pos--;
+						exit13 = true;
+					}
+					if(exit13) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.lastX = this.store.s0 + this.lastX;
+					this.lastY = this.store.s1 + this.lastY;
+					this.pathContext.moveTo(this.lastX,this.lastY);
+				} else if(this.store.l > 2) {
+					var _this332 = this.store;
+					var out132 = _this332.s0;
+					if(_this332.l != 0) {
+						_this332.s0 = _this332.s1;
+						_this332.s1 = _this332.s2;
+						_this332.s2 = _this332.s3;
+						_this332.s3 = _this332.s4;
+						_this332.s4 = _this332.s5;
+						_this332.s5 = null;
+						if(_this332.s6 != null) {
+							var _this333 = _this332.s6;
+							var out133 = _this333.s0;
+							if(_this333.l != 0) {
+								_this333.s0 = _this333.s1;
+								_this333.s1 = _this333.s2;
+								_this333.s2 = _this333.s3;
+								_this333.s3 = _this333.s4;
+								_this333.s4 = _this333.s5;
+								_this333.s5 = null;
+								if(_this333.s6 != null) {
+									_this333.s5 = _this333.s6.shift();
+								}
+								_this333.l--;
+							}
+							_this332.s5 = out133;
+						}
+						_this332.l--;
+					}
+					this.lastX = out132 + this.lastX;
+					var _this334 = this.store;
+					var out134 = _this334.s0;
+					if(_this334.l != 0) {
+						_this334.s0 = _this334.s1;
+						_this334.s1 = _this334.s2;
+						_this334.s2 = _this334.s3;
+						_this334.s3 = _this334.s4;
+						_this334.s4 = _this334.s5;
+						_this334.s5 = null;
+						if(_this334.s6 != null) {
+							var _this335 = _this334.s6;
+							var out135 = _this335.s0;
+							if(_this335.l != 0) {
+								_this335.s0 = _this335.s1;
+								_this335.s1 = _this335.s2;
+								_this335.s2 = _this335.s3;
+								_this335.s3 = _this335.s4;
+								_this335.s4 = _this335.s5;
+								_this335.s5 = null;
+								if(_this335.s6 != null) {
+									_this335.s5 = _this335.s6.shift();
+								}
+								_this335.l--;
+							}
+							_this334.s5 = out135;
+						}
+						_this334.l--;
+					}
+					this.lastY = out134 + this.lastY;
+					this.pathContext.moveTo(this.lastX,this.lastY);
+					while(this.store.l > 1) {
+						var _this336 = this.store;
+						var out136 = _this336.s0;
+						if(_this336.l != 0) {
+							_this336.s0 = _this336.s1;
+							_this336.s1 = _this336.s2;
+							_this336.s2 = _this336.s3;
+							_this336.s3 = _this336.s4;
+							_this336.s4 = _this336.s5;
+							_this336.s5 = null;
+							if(_this336.s6 != null) {
+								var _this337 = _this336.s6;
+								var out137 = _this337.s0;
+								if(_this337.l != 0) {
+									_this337.s0 = _this337.s1;
+									_this337.s1 = _this337.s2;
+									_this337.s2 = _this337.s3;
+									_this337.s3 = _this337.s4;
+									_this337.s4 = _this337.s5;
+									_this337.s5 = null;
+									if(_this337.s6 != null) {
+										_this337.s5 = _this337.s6.shift();
+									}
+									_this337.l--;
+								}
+								_this336.s5 = out137;
+							}
+							_this336.l--;
+						}
+						this.lastX = out136 + this.lastX;
+						var _this338 = this.store;
+						var out138 = _this338.s0;
+						if(_this338.l != 0) {
+							_this338.s0 = _this338.s1;
+							_this338.s1 = _this338.s2;
+							_this338.s2 = _this338.s3;
+							_this338.s3 = _this338.s4;
+							_this338.s4 = _this338.s5;
+							_this338.s5 = null;
+							if(_this338.s6 != null) {
+								var _this339 = _this338.s6;
+								var out139 = _this339.s0;
+								if(_this339.l != 0) {
+									_this339.s0 = _this339.s1;
+									_this339.s1 = _this339.s2;
+									_this339.s2 = _this339.s3;
+									_this339.s3 = _this339.s4;
+									_this339.s4 = _this339.s5;
+									_this339.s5 = null;
+									if(_this339.s6 != null) {
+										_this339.s5 = _this339.s6.shift();
+									}
+									_this339.l--;
+								}
+								_this338.s5 = out139;
+							}
+							_this338.l--;
+						}
+						this.lastY = out138 + this.lastY;
+						this.pathContext.lineTo(this.lastX,this.lastY);
+					}
+				}
+				break;
+			case 113:
+				var _this340 = this.store;
+				_this340.l = 0;
+				_this340.s0 = null;
+				_this340.s1 = null;
+				_this340.s2 = null;
+				_this340.s3 = null;
+				_this340.s4 = null;
+				_this340.s5 = null;
+				_this340.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp14 = "";
+				var exit14 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp14 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this341 = this.store;
+								var v93 = parseFloat(temp14);
+								switch(_this341.l) {
+								case 0:
+									_this341.s0 = v93;
+									break;
+								case 1:
+									_this341.s1 = v93;
+									break;
+								case 2:
+									_this341.s2 = v93;
+									break;
+								case 3:
+									_this341.s3 = v93;
+									break;
+								case 4:
+									_this341.s4 = v93;
+									break;
+								case 5:
+									_this341.s5 = v93;
+									break;
+								default:
+									if(_this341.s6 == null) {
+										_this341.s6 = new justPath_StoreF6();
+									}
+									var _this342 = _this341.s6;
+									switch(_this342.l) {
+									case 0:
+										_this342.s0 = v93;
+										break;
+									case 1:
+										_this342.s1 = v93;
+										break;
+									case 2:
+										_this342.s2 = v93;
+										break;
+									case 3:
+										_this342.s3 = v93;
+										break;
+									case 4:
+										_this342.s4 = v93;
+										break;
+									case 5:
+										_this342.s5 = v93;
+										break;
+									default:
+										if(_this342.s6 == null) {
+											_this342.s6 = new justPath_StoreF6();
+										}
+										_this342.s6.push(v93);
+									}
+									_this342.l++;
+								}
+								_this341.l++;
+							} else {
+								var _this343 = this.store;
+								var v94 = parseFloat(temp14);
+								switch(_this343.l) {
+								case 0:
+									_this343.s0 = v94;
+									break;
+								case 1:
+									_this343.s1 = v94;
+									break;
+								case 2:
+									_this343.s2 = v94;
+									break;
+								case 3:
+									_this343.s3 = v94;
+									break;
+								case 4:
+									_this343.s4 = v94;
+									break;
+								case 5:
+									_this343.s5 = v94;
+									break;
+								default:
+									if(_this343.s6 == null) {
+										_this343.s6 = new justPath_StoreF6();
+									}
+									var _this344 = _this343.s6;
+									switch(_this344.l) {
+									case 0:
+										_this344.s0 = v94;
+										break;
+									case 1:
+										_this344.s1 = v94;
+										break;
+									case 2:
+										_this344.s2 = v94;
+										break;
+									case 3:
+										_this344.s3 = v94;
+										break;
+									case 4:
+										_this344.s4 = v94;
+										break;
+									case 5:
+										_this344.s5 = v94;
+										break;
+									default:
+										if(_this344.s6 == null) {
+											_this344.s6 = new justPath_StoreF6();
+										}
+										_this344.s6.push(v94);
+									}
+									_this344.l++;
+								}
+								_this343.l++;
+							}
+							temp14 = "";
+						}
+						break;
+					case 45:
+						if(temp14 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this345 = this.store;
+								var v95 = parseFloat(temp14);
+								switch(_this345.l) {
+								case 0:
+									_this345.s0 = v95;
+									break;
+								case 1:
+									_this345.s1 = v95;
+									break;
+								case 2:
+									_this345.s2 = v95;
+									break;
+								case 3:
+									_this345.s3 = v95;
+									break;
+								case 4:
+									_this345.s4 = v95;
+									break;
+								case 5:
+									_this345.s5 = v95;
+									break;
+								default:
+									if(_this345.s6 == null) {
+										_this345.s6 = new justPath_StoreF6();
+									}
+									var _this346 = _this345.s6;
+									switch(_this346.l) {
+									case 0:
+										_this346.s0 = v95;
+										break;
+									case 1:
+										_this346.s1 = v95;
+										break;
+									case 2:
+										_this346.s2 = v95;
+										break;
+									case 3:
+										_this346.s3 = v95;
+										break;
+									case 4:
+										_this346.s4 = v95;
+										break;
+									case 5:
+										_this346.s5 = v95;
+										break;
+									default:
+										if(_this346.s6 == null) {
+											_this346.s6 = new justPath_StoreF6();
+										}
+										_this346.s6.push(v95);
+									}
+									_this346.l++;
+								}
+								_this345.l++;
+							} else {
+								var _this347 = this.store;
+								var v96 = parseFloat(temp14);
+								switch(_this347.l) {
+								case 0:
+									_this347.s0 = v96;
+									break;
+								case 1:
+									_this347.s1 = v96;
+									break;
+								case 2:
+									_this347.s2 = v96;
+									break;
+								case 3:
+									_this347.s3 = v96;
+									break;
+								case 4:
+									_this347.s4 = v96;
+									break;
+								case 5:
+									_this347.s5 = v96;
+									break;
+								default:
+									if(_this347.s6 == null) {
+										_this347.s6 = new justPath_StoreF6();
+									}
+									var _this348 = _this347.s6;
+									switch(_this348.l) {
+									case 0:
+										_this348.s0 = v96;
+										break;
+									case 1:
+										_this348.s1 = v96;
+										break;
+									case 2:
+										_this348.s2 = v96;
+										break;
+									case 3:
+										_this348.s3 = v96;
+										break;
+									case 4:
+										_this348.s4 = v96;
+										break;
+									case 5:
+										_this348.s5 = v96;
+										break;
+									default:
+										if(_this348.s6 == null) {
+											_this348.s6 = new justPath_StoreF6();
+										}
+										_this348.s6.push(v96);
+									}
+									_this348.l++;
+								}
+								_this347.l++;
+							}
+						}
+						temp14 = "-";
+						break;
+					case 46:
+						temp14 += ".";
+						break;
+					case 48:
+						temp14 += "0";
+						break;
+					case 49:
+						temp14 += "1";
+						break;
+					case 50:
+						temp14 += "2";
+						break;
+					case 51:
+						temp14 += "3";
+						break;
+					case 52:
+						temp14 += "4";
+						break;
+					case 53:
+						temp14 += "5";
+						break;
+					case 54:
+						temp14 += "6";
+						break;
+					case 55:
+						temp14 += "7";
+						break;
+					case 56:
+						temp14 += "8";
+						break;
+					case 57:
+						temp14 += "9";
+						break;
+					default:
+						if(temp14 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this349 = this.store;
+								var v97 = parseFloat(temp14);
+								switch(_this349.l) {
+								case 0:
+									_this349.s0 = v97;
+									break;
+								case 1:
+									_this349.s1 = v97;
+									break;
+								case 2:
+									_this349.s2 = v97;
+									break;
+								case 3:
+									_this349.s3 = v97;
+									break;
+								case 4:
+									_this349.s4 = v97;
+									break;
+								case 5:
+									_this349.s5 = v97;
+									break;
+								default:
+									if(_this349.s6 == null) {
+										_this349.s6 = new justPath_StoreF6();
+									}
+									var _this350 = _this349.s6;
+									switch(_this350.l) {
+									case 0:
+										_this350.s0 = v97;
+										break;
+									case 1:
+										_this350.s1 = v97;
+										break;
+									case 2:
+										_this350.s2 = v97;
+										break;
+									case 3:
+										_this350.s3 = v97;
+										break;
+									case 4:
+										_this350.s4 = v97;
+										break;
+									case 5:
+										_this350.s5 = v97;
+										break;
+									default:
+										if(_this350.s6 == null) {
+											_this350.s6 = new justPath_StoreF6();
+										}
+										_this350.s6.push(v97);
+									}
+									_this350.l++;
+								}
+								_this349.l++;
+							} else {
+								var _this351 = this.store;
+								var v98 = parseFloat(temp14);
+								switch(_this351.l) {
+								case 0:
+									_this351.s0 = v98;
+									break;
+								case 1:
+									_this351.s1 = v98;
+									break;
+								case 2:
+									_this351.s2 = v98;
+									break;
+								case 3:
+									_this351.s3 = v98;
+									break;
+								case 4:
+									_this351.s4 = v98;
+									break;
+								case 5:
+									_this351.s5 = v98;
+									break;
+								default:
+									if(_this351.s6 == null) {
+										_this351.s6 = new justPath_StoreF6();
+									}
+									var _this352 = _this351.s6;
+									switch(_this352.l) {
+									case 0:
+										_this352.s0 = v98;
+										break;
+									case 1:
+										_this352.s1 = v98;
+										break;
+									case 2:
+										_this352.s2 = v98;
+										break;
+									case 3:
+										_this352.s3 = v98;
+										break;
+									case 4:
+										_this352.s4 = v98;
+										break;
+									case 5:
+										_this352.s5 = v98;
+										break;
+									default:
+										if(_this352.s6 == null) {
+											_this352.s6 = new justPath_StoreF6();
+										}
+										_this352.s6.push(v98);
+									}
+									_this352.l++;
+								}
+								_this351.l++;
+							}
+							temp14 = "";
+						}
+						this.pos--;
+						exit14 = true;
+					}
+					if(exit14) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					this.controlX = this.lastX + this.store.s0;
+					this.controlY = this.lastY + this.store.s1;
+					this.lastX = this.store.s0 + this.lastX;
+					this.lastY = this.store.s1 + this.lastY;
+					var x115 = this.controlX;
+					var y115 = this.controlY;
+					var x213 = this.lastX;
+					var y213 = this.lastY;
+					var tempArr10 = [];
+					var ax14 = this.px;
+					var ay14 = this.py;
+					var x42 = ax14 - x115;
+					var y42 = ay14 - y115;
+					var x43 = x115 - x213;
+					var y43 = y115 - y213;
+					var approxDistance10 = Math.sqrt(x42 * x42 + y42 * y42) + Math.sqrt(x43 * x43 + y43 * y43);
+					if(approxDistance10 == 0) {
+						approxDistance10 = 0.000001;
+					}
+					var step10 = Math.min(1 / (approxDistance10 * 0.707),justPath_CurveMath_quadStep);
+					var l20 = tempArr10.length;
+					tempArr10[l20++] = ax14;
+					tempArr10[l20++] = ay14;
+					var t10 = step10;
+					while(t10 < 1.) {
+						var u20 = 1 - t10;
+						tempArr10[l20++] = Math.pow(u20,2) * ax14 + 2 * u20 * t10 * x115 + Math.pow(t10,2) * x213;
+						var u21 = 1 - t10;
+						tempArr10[l20++] = Math.pow(u21,2) * ay14 + 2 * u21 * t10 * y115 + Math.pow(t10,2) * y213;
+						t10 += step10;
+					}
+					tempArr10[l20++] = x213;
+					tempArr10[l20++] = y213;
+					haxe_Log.trace(tempArr10,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+					var withMove10 = false;
+					if(withMove10 == null) {
+						withMove10 = true;
+					}
+					var l21 = tempArr10.length;
+					var i10 = 2;
+					if(withMove10) {
+						this.pathContext.moveTo(tempArr10[0],tempArr10[1]);
+					} else {
+						this.pathContext.lineTo(tempArr10[0],tempArr10[1]);
+					}
+					while(i10 < l21) {
+						this.pathContext.lineTo(tempArr10[i10],tempArr10[i10 + 1]);
+						i10 += 2;
+					}
+					tempArr10 = [];
+					this.px = x213;
+					this.py = y213;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var tmp1 = this.lastX;
+						var _this353 = this.store;
+						var out140 = _this353.s0;
+						if(_this353.l != 0) {
+							_this353.s0 = _this353.s1;
+							_this353.s1 = _this353.s2;
+							_this353.s2 = _this353.s3;
+							_this353.s3 = _this353.s4;
+							_this353.s4 = _this353.s5;
+							_this353.s5 = null;
+							if(_this353.s6 != null) {
+								var _this354 = _this353.s6;
+								var out141 = _this354.s0;
+								if(_this354.l != 0) {
+									_this354.s0 = _this354.s1;
+									_this354.s1 = _this354.s2;
+									_this354.s2 = _this354.s3;
+									_this354.s3 = _this354.s4;
+									_this354.s4 = _this354.s5;
+									_this354.s5 = null;
+									if(_this354.s6 != null) {
+										_this354.s5 = _this354.s6.shift();
+									}
+									_this354.l--;
+								}
+								_this353.s5 = out141;
+							}
+							_this353.l--;
+						}
+						this.controlX = tmp1 + out140;
+						var tmp2 = this.lastY;
+						var _this355 = this.store;
+						var out142 = _this355.s0;
+						if(_this355.l != 0) {
+							_this355.s0 = _this355.s1;
+							_this355.s1 = _this355.s2;
+							_this355.s2 = _this355.s3;
+							_this355.s3 = _this355.s4;
+							_this355.s4 = _this355.s5;
+							_this355.s5 = null;
+							if(_this355.s6 != null) {
+								var _this356 = _this355.s6;
+								var out143 = _this356.s0;
+								if(_this356.l != 0) {
+									_this356.s0 = _this356.s1;
+									_this356.s1 = _this356.s2;
+									_this356.s2 = _this356.s3;
+									_this356.s3 = _this356.s4;
+									_this356.s4 = _this356.s5;
+									_this356.s5 = null;
+									if(_this356.s6 != null) {
+										_this356.s5 = _this356.s6.shift();
+									}
+									_this356.l--;
+								}
+								_this355.s5 = out143;
+							}
+							_this355.l--;
+						}
+						this.controlY = tmp2 + out142;
+						var _this357 = this.store;
+						var out144 = _this357.s0;
+						if(_this357.l != 0) {
+							_this357.s0 = _this357.s1;
+							_this357.s1 = _this357.s2;
+							_this357.s2 = _this357.s3;
+							_this357.s3 = _this357.s4;
+							_this357.s4 = _this357.s5;
+							_this357.s5 = null;
+							if(_this357.s6 != null) {
+								var _this358 = _this357.s6;
+								var out145 = _this358.s0;
+								if(_this358.l != 0) {
+									_this358.s0 = _this358.s1;
+									_this358.s1 = _this358.s2;
+									_this358.s2 = _this358.s3;
+									_this358.s3 = _this358.s4;
+									_this358.s4 = _this358.s5;
+									_this358.s5 = null;
+									if(_this358.s6 != null) {
+										_this358.s5 = _this358.s6.shift();
+									}
+									_this358.l--;
+								}
+								_this357.s5 = out145;
+							}
+							_this357.l--;
+						}
+						this.lastX = out144 + this.lastX;
+						var _this359 = this.store;
+						var out146 = _this359.s0;
+						if(_this359.l != 0) {
+							_this359.s0 = _this359.s1;
+							_this359.s1 = _this359.s2;
+							_this359.s2 = _this359.s3;
+							_this359.s3 = _this359.s4;
+							_this359.s4 = _this359.s5;
+							_this359.s5 = null;
+							if(_this359.s6 != null) {
+								var _this360 = _this359.s6;
+								var out147 = _this360.s0;
+								if(_this360.l != 0) {
+									_this360.s0 = _this360.s1;
+									_this360.s1 = _this360.s2;
+									_this360.s2 = _this360.s3;
+									_this360.s3 = _this360.s4;
+									_this360.s4 = _this360.s5;
+									_this360.s5 = null;
+									if(_this360.s6 != null) {
+										_this360.s5 = _this360.s6.shift();
+									}
+									_this360.l--;
+								}
+								_this359.s5 = out147;
+							}
+							_this359.l--;
+						}
+						this.lastY = out146 + this.lastY;
+						var x116 = this.controlX;
+						var y116 = this.controlY;
+						var x214 = this.lastX;
+						var y214 = this.lastY;
+						var tempArr11 = [];
+						var ax15 = this.px;
+						var ay15 = this.py;
+						var x44 = ax15 - x116;
+						var y44 = ay15 - y116;
+						var x45 = x116 - x214;
+						var y45 = y116 - y214;
+						var approxDistance11 = Math.sqrt(x44 * x44 + y44 * y44) + Math.sqrt(x45 * x45 + y45 * y45);
+						if(approxDistance11 == 0) {
+							approxDistance11 = 0.000001;
+						}
+						var step11 = Math.min(1 / (approxDistance11 * 0.707),justPath_CurveMath_quadStep);
+						var l22 = tempArr11.length;
+						tempArr11[l22++] = ax15;
+						tempArr11[l22++] = ay15;
+						var t11 = step11;
+						while(t11 < 1.) {
+							var u22 = 1 - t11;
+							tempArr11[l22++] = Math.pow(u22,2) * ax15 + 2 * u22 * t11 * x116 + Math.pow(t11,2) * x214;
+							var u23 = 1 - t11;
+							tempArr11[l22++] = Math.pow(u23,2) * ay15 + 2 * u23 * t11 * y116 + Math.pow(t11,2) * y214;
+							t11 += step11;
+						}
+						tempArr11[l22++] = x214;
+						tempArr11[l22++] = y214;
+						haxe_Log.trace(tempArr11,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+						var withMove11 = false;
+						if(withMove11 == null) {
+							withMove11 = true;
+						}
+						var l23 = tempArr11.length;
+						var i11 = 2;
+						if(withMove11) {
+							this.pathContext.moveTo(tempArr11[0],tempArr11[1]);
+						} else {
+							this.pathContext.lineTo(tempArr11[0],tempArr11[1]);
+						}
+						while(i11 < l23) {
+							this.pathContext.lineTo(tempArr11[i11],tempArr11[i11 + 1]);
+							i11 += 2;
+						}
+						tempArr11 = [];
+						this.px = x214;
+						this.py = y214;
+					}
+				}
+				break;
+			case 115:
+				var _this361 = this.store;
+				_this361.l = 0;
+				_this361.s0 = null;
+				_this361.s1 = null;
+				_this361.s2 = null;
+				_this361.s3 = null;
+				_this361.s4 = null;
+				_this361.s5 = null;
+				_this361.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp15 = "";
+				var exit15 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp15 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this362 = this.store;
+								var v99 = parseFloat(temp15);
+								switch(_this362.l) {
+								case 0:
+									_this362.s0 = v99;
+									break;
+								case 1:
+									_this362.s1 = v99;
+									break;
+								case 2:
+									_this362.s2 = v99;
+									break;
+								case 3:
+									_this362.s3 = v99;
+									break;
+								case 4:
+									_this362.s4 = v99;
+									break;
+								case 5:
+									_this362.s5 = v99;
+									break;
+								default:
+									if(_this362.s6 == null) {
+										_this362.s6 = new justPath_StoreF6();
+									}
+									var _this363 = _this362.s6;
+									switch(_this363.l) {
+									case 0:
+										_this363.s0 = v99;
+										break;
+									case 1:
+										_this363.s1 = v99;
+										break;
+									case 2:
+										_this363.s2 = v99;
+										break;
+									case 3:
+										_this363.s3 = v99;
+										break;
+									case 4:
+										_this363.s4 = v99;
+										break;
+									case 5:
+										_this363.s5 = v99;
+										break;
+									default:
+										if(_this363.s6 == null) {
+											_this363.s6 = new justPath_StoreF6();
+										}
+										_this363.s6.push(v99);
+									}
+									_this363.l++;
+								}
+								_this362.l++;
+							} else {
+								var _this364 = this.store;
+								var v100 = parseFloat(temp15);
+								switch(_this364.l) {
+								case 0:
+									_this364.s0 = v100;
+									break;
+								case 1:
+									_this364.s1 = v100;
+									break;
+								case 2:
+									_this364.s2 = v100;
+									break;
+								case 3:
+									_this364.s3 = v100;
+									break;
+								case 4:
+									_this364.s4 = v100;
+									break;
+								case 5:
+									_this364.s5 = v100;
+									break;
+								default:
+									if(_this364.s6 == null) {
+										_this364.s6 = new justPath_StoreF6();
+									}
+									var _this365 = _this364.s6;
+									switch(_this365.l) {
+									case 0:
+										_this365.s0 = v100;
+										break;
+									case 1:
+										_this365.s1 = v100;
+										break;
+									case 2:
+										_this365.s2 = v100;
+										break;
+									case 3:
+										_this365.s3 = v100;
+										break;
+									case 4:
+										_this365.s4 = v100;
+										break;
+									case 5:
+										_this365.s5 = v100;
+										break;
+									default:
+										if(_this365.s6 == null) {
+											_this365.s6 = new justPath_StoreF6();
+										}
+										_this365.s6.push(v100);
+									}
+									_this365.l++;
+								}
+								_this364.l++;
+							}
+							temp15 = "";
+						}
+						break;
+					case 45:
+						if(temp15 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this366 = this.store;
+								var v101 = parseFloat(temp15);
+								switch(_this366.l) {
+								case 0:
+									_this366.s0 = v101;
+									break;
+								case 1:
+									_this366.s1 = v101;
+									break;
+								case 2:
+									_this366.s2 = v101;
+									break;
+								case 3:
+									_this366.s3 = v101;
+									break;
+								case 4:
+									_this366.s4 = v101;
+									break;
+								case 5:
+									_this366.s5 = v101;
+									break;
+								default:
+									if(_this366.s6 == null) {
+										_this366.s6 = new justPath_StoreF6();
+									}
+									var _this367 = _this366.s6;
+									switch(_this367.l) {
+									case 0:
+										_this367.s0 = v101;
+										break;
+									case 1:
+										_this367.s1 = v101;
+										break;
+									case 2:
+										_this367.s2 = v101;
+										break;
+									case 3:
+										_this367.s3 = v101;
+										break;
+									case 4:
+										_this367.s4 = v101;
+										break;
+									case 5:
+										_this367.s5 = v101;
+										break;
+									default:
+										if(_this367.s6 == null) {
+											_this367.s6 = new justPath_StoreF6();
+										}
+										_this367.s6.push(v101);
+									}
+									_this367.l++;
+								}
+								_this366.l++;
+							} else {
+								var _this368 = this.store;
+								var v102 = parseFloat(temp15);
+								switch(_this368.l) {
+								case 0:
+									_this368.s0 = v102;
+									break;
+								case 1:
+									_this368.s1 = v102;
+									break;
+								case 2:
+									_this368.s2 = v102;
+									break;
+								case 3:
+									_this368.s3 = v102;
+									break;
+								case 4:
+									_this368.s4 = v102;
+									break;
+								case 5:
+									_this368.s5 = v102;
+									break;
+								default:
+									if(_this368.s6 == null) {
+										_this368.s6 = new justPath_StoreF6();
+									}
+									var _this369 = _this368.s6;
+									switch(_this369.l) {
+									case 0:
+										_this369.s0 = v102;
+										break;
+									case 1:
+										_this369.s1 = v102;
+										break;
+									case 2:
+										_this369.s2 = v102;
+										break;
+									case 3:
+										_this369.s3 = v102;
+										break;
+									case 4:
+										_this369.s4 = v102;
+										break;
+									case 5:
+										_this369.s5 = v102;
+										break;
+									default:
+										if(_this369.s6 == null) {
+											_this369.s6 = new justPath_StoreF6();
+										}
+										_this369.s6.push(v102);
+									}
+									_this369.l++;
+								}
+								_this368.l++;
+							}
+						}
+						temp15 = "-";
+						break;
+					case 46:
+						temp15 += ".";
+						break;
+					case 48:
+						temp15 += "0";
+						break;
+					case 49:
+						temp15 += "1";
+						break;
+					case 50:
+						temp15 += "2";
+						break;
+					case 51:
+						temp15 += "3";
+						break;
+					case 52:
+						temp15 += "4";
+						break;
+					case 53:
+						temp15 += "5";
+						break;
+					case 54:
+						temp15 += "6";
+						break;
+					case 55:
+						temp15 += "7";
+						break;
+					case 56:
+						temp15 += "8";
+						break;
+					case 57:
+						temp15 += "9";
+						break;
+					default:
+						if(temp15 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this370 = this.store;
+								var v103 = parseFloat(temp15);
+								switch(_this370.l) {
+								case 0:
+									_this370.s0 = v103;
+									break;
+								case 1:
+									_this370.s1 = v103;
+									break;
+								case 2:
+									_this370.s2 = v103;
+									break;
+								case 3:
+									_this370.s3 = v103;
+									break;
+								case 4:
+									_this370.s4 = v103;
+									break;
+								case 5:
+									_this370.s5 = v103;
+									break;
+								default:
+									if(_this370.s6 == null) {
+										_this370.s6 = new justPath_StoreF6();
+									}
+									var _this371 = _this370.s6;
+									switch(_this371.l) {
+									case 0:
+										_this371.s0 = v103;
+										break;
+									case 1:
+										_this371.s1 = v103;
+										break;
+									case 2:
+										_this371.s2 = v103;
+										break;
+									case 3:
+										_this371.s3 = v103;
+										break;
+									case 4:
+										_this371.s4 = v103;
+										break;
+									case 5:
+										_this371.s5 = v103;
+										break;
+									default:
+										if(_this371.s6 == null) {
+											_this371.s6 = new justPath_StoreF6();
+										}
+										_this371.s6.push(v103);
+									}
+									_this371.l++;
+								}
+								_this370.l++;
+							} else {
+								var _this372 = this.store;
+								var v104 = parseFloat(temp15);
+								switch(_this372.l) {
+								case 0:
+									_this372.s0 = v104;
+									break;
+								case 1:
+									_this372.s1 = v104;
+									break;
+								case 2:
+									_this372.s2 = v104;
+									break;
+								case 3:
+									_this372.s3 = v104;
+									break;
+								case 4:
+									_this372.s4 = v104;
+									break;
+								case 5:
+									_this372.s5 = v104;
+									break;
+								default:
+									if(_this372.s6 == null) {
+										_this372.s6 = new justPath_StoreF6();
+									}
+									var _this373 = _this372.s6;
+									switch(_this373.l) {
+									case 0:
+										_this373.s0 = v104;
+										break;
+									case 1:
+										_this373.s1 = v104;
+										break;
+									case 2:
+										_this373.s2 = v104;
+										break;
+									case 3:
+										_this373.s3 = v104;
+										break;
+									case 4:
+										_this373.s4 = v104;
+										break;
+									case 5:
+										_this373.s5 = v104;
+										break;
+									default:
+										if(_this373.s6 == null) {
+											_this373.s6 = new justPath_StoreF6();
+										}
+										_this373.s6.push(v104);
+									}
+									_this373.l++;
+								}
+								_this372.l++;
+							}
+							temp15 = "";
+						}
+						this.pos--;
+						exit15 = true;
+					}
+					if(exit15) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 4) {
+					var firstX5 = this.store.s0 + this.lastX;
+					var firstY5 = this.store.s1 + this.lastY;
+					this.controlX = 2 * this.lastX - this.controlX;
+					this.controlY = 2 * this.lastY - this.controlY;
+					this.lastX = this.store.s2 + this.lastX;
+					this.lastY = this.store.s3 + this.lastY;
+					var x117 = this.controlX;
+					var y117 = this.controlY;
+					var x310 = this.lastX;
+					var y310 = this.lastY;
+					var tempArr12 = [];
+					var ax16 = this.px;
+					var ay16 = this.py;
+					var x46 = ax16 - x117;
+					var y46 = ay16 - y117;
+					var x47 = x117 - firstX5;
+					var y47 = y117 - firstY5;
+					var x48 = firstX5 - x310;
+					var y48 = firstY5 - y310;
+					var approxDistance12 = Math.sqrt(x46 * x46 + y46 * y46) + Math.sqrt(x47 * x47 + y47 * y47) + Math.sqrt(x48 * x48 + y48 * y48);
+					if(approxDistance12 == 0) {
+						approxDistance12 = 0.000001;
+					}
+					var step12 = Math.min(1 / (approxDistance12 * 0.707),0.03);
+					var l24 = tempArr12.length;
+					tempArr12[l24++] = ax16;
+					tempArr12[l24++] = ay16;
+					var t12 = step12;
+					while(t12 < 1.) {
+						var u24 = 1 - t12;
+						tempArr12[l24++] = Math.pow(u24,3) * ax16 + 3 * Math.pow(u24,2) * t12 * x117 + 3 * u24 * Math.pow(t12,2) * firstX5 + Math.pow(t12,3) * x310;
+						var u25 = 1 - t12;
+						tempArr12[l24++] = Math.pow(u25,3) * ay16 + 3 * Math.pow(u25,2) * t12 * y117 + 3 * u25 * Math.pow(t12,2) * firstY5 + Math.pow(t12,3) * y310;
+						t12 += step12;
+					}
+					tempArr12[l24++] = x310;
+					tempArr12[l24++] = y310;
+					haxe_Log.trace(tempArr12,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+					var withMove12 = false;
+					if(withMove12 == null) {
+						withMove12 = true;
+					}
+					var l25 = tempArr12.length;
+					var i12 = 2;
+					if(withMove12) {
+						this.pathContext.moveTo(tempArr12[0],tempArr12[1]);
+					} else {
+						this.pathContext.lineTo(tempArr12[0],tempArr12[1]);
+					}
+					while(i12 < l25) {
+						this.pathContext.lineTo(tempArr12[i12],tempArr12[i12 + 1]);
+						i12 += 2;
+					}
+					tempArr12 = [];
+					this.px = x310;
+					this.py = y310;
+					this.controlX = firstX5;
+					this.controlY = firstY5;
+				} else if(this.store.l > 4) {
+					while(this.store.l > 3) {
+						var _this374 = this.store;
+						var out148 = _this374.s0;
+						if(_this374.l != 0) {
+							_this374.s0 = _this374.s1;
+							_this374.s1 = _this374.s2;
+							_this374.s2 = _this374.s3;
+							_this374.s3 = _this374.s4;
+							_this374.s4 = _this374.s5;
+							_this374.s5 = null;
+							if(_this374.s6 != null) {
+								var _this375 = _this374.s6;
+								var out149 = _this375.s0;
+								if(_this375.l != 0) {
+									_this375.s0 = _this375.s1;
+									_this375.s1 = _this375.s2;
+									_this375.s2 = _this375.s3;
+									_this375.s3 = _this375.s4;
+									_this375.s4 = _this375.s5;
+									_this375.s5 = null;
+									if(_this375.s6 != null) {
+										_this375.s5 = _this375.s6.shift();
+									}
+									_this375.l--;
+								}
+								_this374.s5 = out149;
+							}
+							_this374.l--;
+						}
+						var firstX6 = out148 + this.lastX;
+						var _this376 = this.store;
+						var out150 = _this376.s0;
+						if(_this376.l != 0) {
+							_this376.s0 = _this376.s1;
+							_this376.s1 = _this376.s2;
+							_this376.s2 = _this376.s3;
+							_this376.s3 = _this376.s4;
+							_this376.s4 = _this376.s5;
+							_this376.s5 = null;
+							if(_this376.s6 != null) {
+								var _this377 = _this376.s6;
+								var out151 = _this377.s0;
+								if(_this377.l != 0) {
+									_this377.s0 = _this377.s1;
+									_this377.s1 = _this377.s2;
+									_this377.s2 = _this377.s3;
+									_this377.s3 = _this377.s4;
+									_this377.s4 = _this377.s5;
+									_this377.s5 = null;
+									if(_this377.s6 != null) {
+										_this377.s5 = _this377.s6.shift();
+									}
+									_this377.l--;
+								}
+								_this376.s5 = out151;
+							}
+							_this376.l--;
+						}
+						var firstY6 = out150 + this.lastY;
+						this.controlX = 2 * this.lastX - this.controlX;
+						this.controlY = 2 * this.lastY - this.controlY;
+						var _this378 = this.store;
+						var out152 = _this378.s0;
+						if(_this378.l != 0) {
+							_this378.s0 = _this378.s1;
+							_this378.s1 = _this378.s2;
+							_this378.s2 = _this378.s3;
+							_this378.s3 = _this378.s4;
+							_this378.s4 = _this378.s5;
+							_this378.s5 = null;
+							if(_this378.s6 != null) {
+								var _this379 = _this378.s6;
+								var out153 = _this379.s0;
+								if(_this379.l != 0) {
+									_this379.s0 = _this379.s1;
+									_this379.s1 = _this379.s2;
+									_this379.s2 = _this379.s3;
+									_this379.s3 = _this379.s4;
+									_this379.s4 = _this379.s5;
+									_this379.s5 = null;
+									if(_this379.s6 != null) {
+										_this379.s5 = _this379.s6.shift();
+									}
+									_this379.l--;
+								}
+								_this378.s5 = out153;
+							}
+							_this378.l--;
+						}
+						this.lastX = out152 + this.lastX;
+						var _this380 = this.store;
+						var out154 = _this380.s0;
+						if(_this380.l != 0) {
+							_this380.s0 = _this380.s1;
+							_this380.s1 = _this380.s2;
+							_this380.s2 = _this380.s3;
+							_this380.s3 = _this380.s4;
+							_this380.s4 = _this380.s5;
+							_this380.s5 = null;
+							if(_this380.s6 != null) {
+								var _this381 = _this380.s6;
+								var out155 = _this381.s0;
+								if(_this381.l != 0) {
+									_this381.s0 = _this381.s1;
+									_this381.s1 = _this381.s2;
+									_this381.s2 = _this381.s3;
+									_this381.s3 = _this381.s4;
+									_this381.s4 = _this381.s5;
+									_this381.s5 = null;
+									if(_this381.s6 != null) {
+										_this381.s5 = _this381.s6.shift();
+									}
+									_this381.l--;
+								}
+								_this380.s5 = out155;
+							}
+							_this380.l--;
+						}
+						this.lastY = out154 + this.lastY;
+						var x118 = this.controlX;
+						var y118 = this.controlY;
+						var x311 = this.lastX;
+						var y311 = this.lastY;
+						var tempArr13 = [];
+						var ax17 = this.px;
+						var ay17 = this.py;
+						var x49 = ax17 - x118;
+						var y49 = ay17 - y118;
+						var x50 = x118 - firstX6;
+						var y50 = y118 - firstY6;
+						var x51 = firstX6 - x311;
+						var y51 = firstY6 - y311;
+						var approxDistance13 = Math.sqrt(x49 * x49 + y49 * y49) + Math.sqrt(x50 * x50 + y50 * y50) + Math.sqrt(x51 * x51 + y51 * y51);
+						if(approxDistance13 == 0) {
+							approxDistance13 = 0.000001;
+						}
+						var step13 = Math.min(1 / (approxDistance13 * 0.707),0.03);
+						var l26 = tempArr13.length;
+						tempArr13[l26++] = ax17;
+						tempArr13[l26++] = ay17;
+						var t13 = step13;
+						while(t13 < 1.) {
+							var u26 = 1 - t13;
+							tempArr13[l26++] = Math.pow(u26,3) * ax17 + 3 * Math.pow(u26,2) * t13 * x118 + 3 * u26 * Math.pow(t13,2) * firstX6 + Math.pow(t13,3) * x311;
+							var u27 = 1 - t13;
+							tempArr13[l26++] = Math.pow(u27,3) * ay17 + 3 * Math.pow(u27,2) * t13 * y118 + 3 * u27 * Math.pow(t13,2) * firstY6 + Math.pow(t13,3) * y311;
+							t13 += step13;
+						}
+						tempArr13[l26++] = x311;
+						tempArr13[l26++] = y311;
+						haxe_Log.trace(tempArr13,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+						var withMove13 = false;
+						if(withMove13 == null) {
+							withMove13 = true;
+						}
+						var l27 = tempArr13.length;
+						var i13 = 2;
+						if(withMove13) {
+							this.pathContext.moveTo(tempArr13[0],tempArr13[1]);
+						} else {
+							this.pathContext.lineTo(tempArr13[0],tempArr13[1]);
+						}
+						while(i13 < l27) {
+							this.pathContext.lineTo(tempArr13[i13],tempArr13[i13 + 1]);
+							i13 += 2;
+						}
+						tempArr13 = [];
+						this.px = x311;
+						this.py = y311;
+						this.controlX = firstX6;
+						this.controlY = firstY6;
+					}
+				}
+				break;
+			case 116:
+				var _this382 = this.store;
+				_this382.l = 0;
+				_this382.s0 = null;
+				_this382.s1 = null;
+				_this382.s2 = null;
+				_this382.s3 = null;
+				_this382.s4 = null;
+				_this382.s5 = null;
+				_this382.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp16 = "";
+				var exit16 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp16 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this383 = this.store;
+								var v105 = parseFloat(temp16);
+								switch(_this383.l) {
+								case 0:
+									_this383.s0 = v105;
+									break;
+								case 1:
+									_this383.s1 = v105;
+									break;
+								case 2:
+									_this383.s2 = v105;
+									break;
+								case 3:
+									_this383.s3 = v105;
+									break;
+								case 4:
+									_this383.s4 = v105;
+									break;
+								case 5:
+									_this383.s5 = v105;
+									break;
+								default:
+									if(_this383.s6 == null) {
+										_this383.s6 = new justPath_StoreF6();
+									}
+									var _this384 = _this383.s6;
+									switch(_this384.l) {
+									case 0:
+										_this384.s0 = v105;
+										break;
+									case 1:
+										_this384.s1 = v105;
+										break;
+									case 2:
+										_this384.s2 = v105;
+										break;
+									case 3:
+										_this384.s3 = v105;
+										break;
+									case 4:
+										_this384.s4 = v105;
+										break;
+									case 5:
+										_this384.s5 = v105;
+										break;
+									default:
+										if(_this384.s6 == null) {
+											_this384.s6 = new justPath_StoreF6();
+										}
+										_this384.s6.push(v105);
+									}
+									_this384.l++;
+								}
+								_this383.l++;
+							} else {
+								var _this385 = this.store;
+								var v106 = parseFloat(temp16);
+								switch(_this385.l) {
+								case 0:
+									_this385.s0 = v106;
+									break;
+								case 1:
+									_this385.s1 = v106;
+									break;
+								case 2:
+									_this385.s2 = v106;
+									break;
+								case 3:
+									_this385.s3 = v106;
+									break;
+								case 4:
+									_this385.s4 = v106;
+									break;
+								case 5:
+									_this385.s5 = v106;
+									break;
+								default:
+									if(_this385.s6 == null) {
+										_this385.s6 = new justPath_StoreF6();
+									}
+									var _this386 = _this385.s6;
+									switch(_this386.l) {
+									case 0:
+										_this386.s0 = v106;
+										break;
+									case 1:
+										_this386.s1 = v106;
+										break;
+									case 2:
+										_this386.s2 = v106;
+										break;
+									case 3:
+										_this386.s3 = v106;
+										break;
+									case 4:
+										_this386.s4 = v106;
+										break;
+									case 5:
+										_this386.s5 = v106;
+										break;
+									default:
+										if(_this386.s6 == null) {
+											_this386.s6 = new justPath_StoreF6();
+										}
+										_this386.s6.push(v106);
+									}
+									_this386.l++;
+								}
+								_this385.l++;
+							}
+							temp16 = "";
+						}
+						break;
+					case 45:
+						if(temp16 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this387 = this.store;
+								var v107 = parseFloat(temp16);
+								switch(_this387.l) {
+								case 0:
+									_this387.s0 = v107;
+									break;
+								case 1:
+									_this387.s1 = v107;
+									break;
+								case 2:
+									_this387.s2 = v107;
+									break;
+								case 3:
+									_this387.s3 = v107;
+									break;
+								case 4:
+									_this387.s4 = v107;
+									break;
+								case 5:
+									_this387.s5 = v107;
+									break;
+								default:
+									if(_this387.s6 == null) {
+										_this387.s6 = new justPath_StoreF6();
+									}
+									var _this388 = _this387.s6;
+									switch(_this388.l) {
+									case 0:
+										_this388.s0 = v107;
+										break;
+									case 1:
+										_this388.s1 = v107;
+										break;
+									case 2:
+										_this388.s2 = v107;
+										break;
+									case 3:
+										_this388.s3 = v107;
+										break;
+									case 4:
+										_this388.s4 = v107;
+										break;
+									case 5:
+										_this388.s5 = v107;
+										break;
+									default:
+										if(_this388.s6 == null) {
+											_this388.s6 = new justPath_StoreF6();
+										}
+										_this388.s6.push(v107);
+									}
+									_this388.l++;
+								}
+								_this387.l++;
+							} else {
+								var _this389 = this.store;
+								var v108 = parseFloat(temp16);
+								switch(_this389.l) {
+								case 0:
+									_this389.s0 = v108;
+									break;
+								case 1:
+									_this389.s1 = v108;
+									break;
+								case 2:
+									_this389.s2 = v108;
+									break;
+								case 3:
+									_this389.s3 = v108;
+									break;
+								case 4:
+									_this389.s4 = v108;
+									break;
+								case 5:
+									_this389.s5 = v108;
+									break;
+								default:
+									if(_this389.s6 == null) {
+										_this389.s6 = new justPath_StoreF6();
+									}
+									var _this390 = _this389.s6;
+									switch(_this390.l) {
+									case 0:
+										_this390.s0 = v108;
+										break;
+									case 1:
+										_this390.s1 = v108;
+										break;
+									case 2:
+										_this390.s2 = v108;
+										break;
+									case 3:
+										_this390.s3 = v108;
+										break;
+									case 4:
+										_this390.s4 = v108;
+										break;
+									case 5:
+										_this390.s5 = v108;
+										break;
+									default:
+										if(_this390.s6 == null) {
+											_this390.s6 = new justPath_StoreF6();
+										}
+										_this390.s6.push(v108);
+									}
+									_this390.l++;
+								}
+								_this389.l++;
+							}
+						}
+						temp16 = "-";
+						break;
+					case 46:
+						temp16 += ".";
+						break;
+					case 48:
+						temp16 += "0";
+						break;
+					case 49:
+						temp16 += "1";
+						break;
+					case 50:
+						temp16 += "2";
+						break;
+					case 51:
+						temp16 += "3";
+						break;
+					case 52:
+						temp16 += "4";
+						break;
+					case 53:
+						temp16 += "5";
+						break;
+					case 54:
+						temp16 += "6";
+						break;
+					case 55:
+						temp16 += "7";
+						break;
+					case 56:
+						temp16 += "8";
+						break;
+					case 57:
+						temp16 += "9";
+						break;
+					default:
+						if(temp16 != "") {
+							if((this.store.l & 1) == 0) {
+								var _this391 = this.store;
+								var v109 = parseFloat(temp16);
+								switch(_this391.l) {
+								case 0:
+									_this391.s0 = v109;
+									break;
+								case 1:
+									_this391.s1 = v109;
+									break;
+								case 2:
+									_this391.s2 = v109;
+									break;
+								case 3:
+									_this391.s3 = v109;
+									break;
+								case 4:
+									_this391.s4 = v109;
+									break;
+								case 5:
+									_this391.s5 = v109;
+									break;
+								default:
+									if(_this391.s6 == null) {
+										_this391.s6 = new justPath_StoreF6();
+									}
+									var _this392 = _this391.s6;
+									switch(_this392.l) {
+									case 0:
+										_this392.s0 = v109;
+										break;
+									case 1:
+										_this392.s1 = v109;
+										break;
+									case 2:
+										_this392.s2 = v109;
+										break;
+									case 3:
+										_this392.s3 = v109;
+										break;
+									case 4:
+										_this392.s4 = v109;
+										break;
+									case 5:
+										_this392.s5 = v109;
+										break;
+									default:
+										if(_this392.s6 == null) {
+											_this392.s6 = new justPath_StoreF6();
+										}
+										_this392.s6.push(v109);
+									}
+									_this392.l++;
+								}
+								_this391.l++;
+							} else {
+								var _this393 = this.store;
+								var v110 = parseFloat(temp16);
+								switch(_this393.l) {
+								case 0:
+									_this393.s0 = v110;
+									break;
+								case 1:
+									_this393.s1 = v110;
+									break;
+								case 2:
+									_this393.s2 = v110;
+									break;
+								case 3:
+									_this393.s3 = v110;
+									break;
+								case 4:
+									_this393.s4 = v110;
+									break;
+								case 5:
+									_this393.s5 = v110;
+									break;
+								default:
+									if(_this393.s6 == null) {
+										_this393.s6 = new justPath_StoreF6();
+									}
+									var _this394 = _this393.s6;
+									switch(_this394.l) {
+									case 0:
+										_this394.s0 = v110;
+										break;
+									case 1:
+										_this394.s1 = v110;
+										break;
+									case 2:
+										_this394.s2 = v110;
+										break;
+									case 3:
+										_this394.s3 = v110;
+										break;
+									case 4:
+										_this394.s4 = v110;
+										break;
+									case 5:
+										_this394.s5 = v110;
+										break;
+									default:
+										if(_this394.s6 == null) {
+											_this394.s6 = new justPath_StoreF6();
+										}
+										_this394.s6.push(v110);
+									}
+									_this394.l++;
+								}
+								_this393.l++;
+							}
+							temp16 = "";
+						}
+						this.pos--;
+						exit16 = true;
+					}
+					if(exit16) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 2) {
+					this.controlX = 2 * this.lastX - this.controlX;
+					this.controlY = 2 * this.lastY - this.controlY;
+					this.lastX = this.store.s0 + this.lastY;
+					this.lastY = this.store.s1 + this.lastX;
+					var x119 = this.controlX;
+					var y119 = this.controlY;
+					var x215 = this.lastX;
+					var y215 = this.lastY;
+					var tempArr14 = [];
+					var ax18 = this.px;
+					var ay18 = this.py;
+					var x52 = ax18 - x119;
+					var y52 = ay18 - y119;
+					var x53 = x119 - x215;
+					var y53 = y119 - y215;
+					var approxDistance14 = Math.sqrt(x52 * x52 + y52 * y52) + Math.sqrt(x53 * x53 + y53 * y53);
+					if(approxDistance14 == 0) {
+						approxDistance14 = 0.000001;
+					}
+					var step14 = Math.min(1 / (approxDistance14 * 0.707),justPath_CurveMath_quadStep);
+					var l28 = tempArr14.length;
+					tempArr14[l28++] = ax18;
+					tempArr14[l28++] = ay18;
+					var t14 = step14;
+					while(t14 < 1.) {
+						var u28 = 1 - t14;
+						tempArr14[l28++] = Math.pow(u28,2) * ax18 + 2 * u28 * t14 * x119 + Math.pow(t14,2) * x215;
+						var u29 = 1 - t14;
+						tempArr14[l28++] = Math.pow(u29,2) * ay18 + 2 * u29 * t14 * y119 + Math.pow(t14,2) * y215;
+						t14 += step14;
+					}
+					tempArr14[l28++] = x215;
+					tempArr14[l28++] = y215;
+					haxe_Log.trace(tempArr14,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+					var withMove14 = false;
+					if(withMove14 == null) {
+						withMove14 = true;
+					}
+					var l29 = tempArr14.length;
+					var i14 = 2;
+					if(withMove14) {
+						this.pathContext.moveTo(tempArr14[0],tempArr14[1]);
+					} else {
+						this.pathContext.lineTo(tempArr14[0],tempArr14[1]);
+					}
+					while(i14 < l29) {
+						this.pathContext.lineTo(tempArr14[i14],tempArr14[i14 + 1]);
+						i14 += 2;
+					}
+					tempArr14 = [];
+					this.px = x215;
+					this.py = y215;
+				} else if(this.store.l > 2) {
+					while(this.store.l > 1) {
+						this.controlX = 2 * this.lastX - this.controlX;
+						this.controlY = 2 * this.lastY - this.controlY;
+						var _this395 = this.store;
+						var out156 = _this395.s0;
+						if(_this395.l != 0) {
+							_this395.s0 = _this395.s1;
+							_this395.s1 = _this395.s2;
+							_this395.s2 = _this395.s3;
+							_this395.s3 = _this395.s4;
+							_this395.s4 = _this395.s5;
+							_this395.s5 = null;
+							if(_this395.s6 != null) {
+								var _this396 = _this395.s6;
+								var out157 = _this396.s0;
+								if(_this396.l != 0) {
+									_this396.s0 = _this396.s1;
+									_this396.s1 = _this396.s2;
+									_this396.s2 = _this396.s3;
+									_this396.s3 = _this396.s4;
+									_this396.s4 = _this396.s5;
+									_this396.s5 = null;
+									if(_this396.s6 != null) {
+										_this396.s5 = _this396.s6.shift();
+									}
+									_this396.l--;
+								}
+								_this395.s5 = out157;
+							}
+							_this395.l--;
+						}
+						this.lastX = out156 + this.lastY;
+						var _this397 = this.store;
+						var out158 = _this397.s0;
+						if(_this397.l != 0) {
+							_this397.s0 = _this397.s1;
+							_this397.s1 = _this397.s2;
+							_this397.s2 = _this397.s3;
+							_this397.s3 = _this397.s4;
+							_this397.s4 = _this397.s5;
+							_this397.s5 = null;
+							if(_this397.s6 != null) {
+								var _this398 = _this397.s6;
+								var out159 = _this398.s0;
+								if(_this398.l != 0) {
+									_this398.s0 = _this398.s1;
+									_this398.s1 = _this398.s2;
+									_this398.s2 = _this398.s3;
+									_this398.s3 = _this398.s4;
+									_this398.s4 = _this398.s5;
+									_this398.s5 = null;
+									if(_this398.s6 != null) {
+										_this398.s5 = _this398.s6.shift();
+									}
+									_this398.l--;
+								}
+								_this397.s5 = out159;
+							}
+							_this397.l--;
+						}
+						this.lastY = out158 + this.lastX;
+						var x120 = this.controlX;
+						var y120 = this.controlY;
+						var x216 = this.lastX;
+						var y216 = this.lastY;
+						var tempArr15 = [];
+						var ax19 = this.px;
+						var ay19 = this.py;
+						var x54 = ax19 - x120;
+						var y54 = ay19 - y120;
+						var x55 = x120 - x216;
+						var y55 = y120 - y216;
+						var approxDistance15 = Math.sqrt(x54 * x54 + y54 * y54) + Math.sqrt(x55 * x55 + y55 * y55);
+						if(approxDistance15 == 0) {
+							approxDistance15 = 0.000001;
+						}
+						var step15 = Math.min(1 / (approxDistance15 * 0.707),justPath_CurveMath_quadStep);
+						var l30 = tempArr15.length;
+						tempArr15[l30++] = ax19;
+						tempArr15[l30++] = ay19;
+						var t15 = step15;
+						while(t15 < 1.) {
+							var u30 = 1 - t15;
+							tempArr15[l30++] = Math.pow(u30,2) * ax19 + 2 * u30 * t15 * x120 + Math.pow(t15,2) * x216;
+							var u31 = 1 - t15;
+							tempArr15[l30++] = Math.pow(u31,2) * ay19 + 2 * u31 * t15 * y120 + Math.pow(t15,2) * y216;
+							t15 += step15;
+						}
+						tempArr15[l30++] = x216;
+						tempArr15[l30++] = y216;
+						haxe_Log.trace(tempArr15,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+						var withMove15 = false;
+						if(withMove15 == null) {
+							withMove15 = true;
+						}
+						var l31 = tempArr15.length;
+						var i15 = 2;
+						if(withMove15) {
+							this.pathContext.moveTo(tempArr15[0],tempArr15[1]);
+						} else {
+							this.pathContext.lineTo(tempArr15[0],tempArr15[1]);
+						}
+						while(i15 < l31) {
+							this.pathContext.lineTo(tempArr15[i15],tempArr15[i15 + 1]);
+							i15 += 2;
+						}
+						tempArr15 = [];
+						this.px = x216;
+						this.py = y216;
+					}
+				}
+				break;
+			case 118:
+				var process3 = false;
+				if(process3 == null) {
+					process3 = true;
+				}
+				var _this399 = this.store;
+				_this399.l = 0;
+				_this399.s0 = null;
+				_this399.s1 = null;
+				_this399.s2 = null;
+				_this399.s3 = null;
+				_this399.s4 = null;
+				_this399.s5 = null;
+				_this399.s6 = null;
+				this.c = this.str.charCodeAt(this.pos++);
+				var temp17 = "";
+				var exit17 = false;
+				while(true) {
+					switch(this.c) {
+					case 32:case 44:
+						if(temp17 != "") {
+							if(process3) {
+								if((this.store.l & 1) == 0) {
+									var _this400 = this.store;
+									var v111 = parseFloat(temp17);
+									switch(_this400.l) {
+									case 0:
+										_this400.s0 = v111;
+										break;
+									case 1:
+										_this400.s1 = v111;
+										break;
+									case 2:
+										_this400.s2 = v111;
+										break;
+									case 3:
+										_this400.s3 = v111;
+										break;
+									case 4:
+										_this400.s4 = v111;
+										break;
+									case 5:
+										_this400.s5 = v111;
+										break;
+									default:
+										if(_this400.s6 == null) {
+											_this400.s6 = new justPath_StoreF6();
+										}
+										var _this401 = _this400.s6;
+										switch(_this401.l) {
+										case 0:
+											_this401.s0 = v111;
+											break;
+										case 1:
+											_this401.s1 = v111;
+											break;
+										case 2:
+											_this401.s2 = v111;
+											break;
+										case 3:
+											_this401.s3 = v111;
+											break;
+										case 4:
+											_this401.s4 = v111;
+											break;
+										case 5:
+											_this401.s5 = v111;
+											break;
+										default:
+											if(_this401.s6 == null) {
+												_this401.s6 = new justPath_StoreF6();
+											}
+											_this401.s6.push(v111);
+										}
+										_this401.l++;
+									}
+									_this400.l++;
+								} else {
+									var _this402 = this.store;
+									var v112 = parseFloat(temp17);
+									switch(_this402.l) {
+									case 0:
+										_this402.s0 = v112;
+										break;
+									case 1:
+										_this402.s1 = v112;
+										break;
+									case 2:
+										_this402.s2 = v112;
+										break;
+									case 3:
+										_this402.s3 = v112;
+										break;
+									case 4:
+										_this402.s4 = v112;
+										break;
+									case 5:
+										_this402.s5 = v112;
+										break;
+									default:
+										if(_this402.s6 == null) {
+											_this402.s6 = new justPath_StoreF6();
+										}
+										var _this403 = _this402.s6;
+										switch(_this403.l) {
+										case 0:
+											_this403.s0 = v112;
+											break;
+										case 1:
+											_this403.s1 = v112;
+											break;
+										case 2:
+											_this403.s2 = v112;
+											break;
+										case 3:
+											_this403.s3 = v112;
+											break;
+										case 4:
+											_this403.s4 = v112;
+											break;
+										case 5:
+											_this403.s5 = v112;
+											break;
+										default:
+											if(_this403.s6 == null) {
+												_this403.s6 = new justPath_StoreF6();
+											}
+											_this403.s6.push(v112);
+										}
+										_this403.l++;
+									}
+									_this402.l++;
+								}
+							} else {
+								var _this404 = this.store;
+								var v113 = parseFloat(temp17);
+								switch(_this404.l) {
+								case 0:
+									_this404.s0 = v113;
+									break;
+								case 1:
+									_this404.s1 = v113;
+									break;
+								case 2:
+									_this404.s2 = v113;
+									break;
+								case 3:
+									_this404.s3 = v113;
+									break;
+								case 4:
+									_this404.s4 = v113;
+									break;
+								case 5:
+									_this404.s5 = v113;
+									break;
+								default:
+									if(_this404.s6 == null) {
+										_this404.s6 = new justPath_StoreF6();
+									}
+									var _this405 = _this404.s6;
+									switch(_this405.l) {
+									case 0:
+										_this405.s0 = v113;
+										break;
+									case 1:
+										_this405.s1 = v113;
+										break;
+									case 2:
+										_this405.s2 = v113;
+										break;
+									case 3:
+										_this405.s3 = v113;
+										break;
+									case 4:
+										_this405.s4 = v113;
+										break;
+									case 5:
+										_this405.s5 = v113;
+										break;
+									default:
+										if(_this405.s6 == null) {
+											_this405.s6 = new justPath_StoreF6();
+										}
+										_this405.s6.push(v113);
+									}
+									_this405.l++;
+								}
+								_this404.l++;
+							}
+							temp17 = "";
+						}
+						break;
+					case 45:
+						if(temp17 != "") {
+							if(process3) {
+								if((this.store.l & 1) == 0) {
+									var _this406 = this.store;
+									var v114 = parseFloat(temp17);
+									switch(_this406.l) {
+									case 0:
+										_this406.s0 = v114;
+										break;
+									case 1:
+										_this406.s1 = v114;
+										break;
+									case 2:
+										_this406.s2 = v114;
+										break;
+									case 3:
+										_this406.s3 = v114;
+										break;
+									case 4:
+										_this406.s4 = v114;
+										break;
+									case 5:
+										_this406.s5 = v114;
+										break;
+									default:
+										if(_this406.s6 == null) {
+											_this406.s6 = new justPath_StoreF6();
+										}
+										var _this407 = _this406.s6;
+										switch(_this407.l) {
+										case 0:
+											_this407.s0 = v114;
+											break;
+										case 1:
+											_this407.s1 = v114;
+											break;
+										case 2:
+											_this407.s2 = v114;
+											break;
+										case 3:
+											_this407.s3 = v114;
+											break;
+										case 4:
+											_this407.s4 = v114;
+											break;
+										case 5:
+											_this407.s5 = v114;
+											break;
+										default:
+											if(_this407.s6 == null) {
+												_this407.s6 = new justPath_StoreF6();
+											}
+											_this407.s6.push(v114);
+										}
+										_this407.l++;
+									}
+									_this406.l++;
+								} else {
+									var _this408 = this.store;
+									var v115 = parseFloat(temp17);
+									switch(_this408.l) {
+									case 0:
+										_this408.s0 = v115;
+										break;
+									case 1:
+										_this408.s1 = v115;
+										break;
+									case 2:
+										_this408.s2 = v115;
+										break;
+									case 3:
+										_this408.s3 = v115;
+										break;
+									case 4:
+										_this408.s4 = v115;
+										break;
+									case 5:
+										_this408.s5 = v115;
+										break;
+									default:
+										if(_this408.s6 == null) {
+											_this408.s6 = new justPath_StoreF6();
+										}
+										var _this409 = _this408.s6;
+										switch(_this409.l) {
+										case 0:
+											_this409.s0 = v115;
+											break;
+										case 1:
+											_this409.s1 = v115;
+											break;
+										case 2:
+											_this409.s2 = v115;
+											break;
+										case 3:
+											_this409.s3 = v115;
+											break;
+										case 4:
+											_this409.s4 = v115;
+											break;
+										case 5:
+											_this409.s5 = v115;
+											break;
+										default:
+											if(_this409.s6 == null) {
+												_this409.s6 = new justPath_StoreF6();
+											}
+											_this409.s6.push(v115);
+										}
+										_this409.l++;
+									}
+									_this408.l++;
+								}
+							} else {
+								var _this410 = this.store;
+								var v116 = parseFloat(temp17);
+								switch(_this410.l) {
+								case 0:
+									_this410.s0 = v116;
+									break;
+								case 1:
+									_this410.s1 = v116;
+									break;
+								case 2:
+									_this410.s2 = v116;
+									break;
+								case 3:
+									_this410.s3 = v116;
+									break;
+								case 4:
+									_this410.s4 = v116;
+									break;
+								case 5:
+									_this410.s5 = v116;
+									break;
+								default:
+									if(_this410.s6 == null) {
+										_this410.s6 = new justPath_StoreF6();
+									}
+									var _this411 = _this410.s6;
+									switch(_this411.l) {
+									case 0:
+										_this411.s0 = v116;
+										break;
+									case 1:
+										_this411.s1 = v116;
+										break;
+									case 2:
+										_this411.s2 = v116;
+										break;
+									case 3:
+										_this411.s3 = v116;
+										break;
+									case 4:
+										_this411.s4 = v116;
+										break;
+									case 5:
+										_this411.s5 = v116;
+										break;
+									default:
+										if(_this411.s6 == null) {
+											_this411.s6 = new justPath_StoreF6();
+										}
+										_this411.s6.push(v116);
+									}
+									_this411.l++;
+								}
+								_this410.l++;
+							}
+						}
+						temp17 = "-";
+						break;
+					case 46:
+						temp17 += ".";
+						break;
+					case 48:
+						temp17 += "0";
+						break;
+					case 49:
+						temp17 += "1";
+						break;
+					case 50:
+						temp17 += "2";
+						break;
+					case 51:
+						temp17 += "3";
+						break;
+					case 52:
+						temp17 += "4";
+						break;
+					case 53:
+						temp17 += "5";
+						break;
+					case 54:
+						temp17 += "6";
+						break;
+					case 55:
+						temp17 += "7";
+						break;
+					case 56:
+						temp17 += "8";
+						break;
+					case 57:
+						temp17 += "9";
+						break;
+					default:
+						if(temp17 != "") {
+							if(process3) {
+								if((this.store.l & 1) == 0) {
+									var _this412 = this.store;
+									var v117 = parseFloat(temp17);
+									switch(_this412.l) {
+									case 0:
+										_this412.s0 = v117;
+										break;
+									case 1:
+										_this412.s1 = v117;
+										break;
+									case 2:
+										_this412.s2 = v117;
+										break;
+									case 3:
+										_this412.s3 = v117;
+										break;
+									case 4:
+										_this412.s4 = v117;
+										break;
+									case 5:
+										_this412.s5 = v117;
+										break;
+									default:
+										if(_this412.s6 == null) {
+											_this412.s6 = new justPath_StoreF6();
+										}
+										var _this413 = _this412.s6;
+										switch(_this413.l) {
+										case 0:
+											_this413.s0 = v117;
+											break;
+										case 1:
+											_this413.s1 = v117;
+											break;
+										case 2:
+											_this413.s2 = v117;
+											break;
+										case 3:
+											_this413.s3 = v117;
+											break;
+										case 4:
+											_this413.s4 = v117;
+											break;
+										case 5:
+											_this413.s5 = v117;
+											break;
+										default:
+											if(_this413.s6 == null) {
+												_this413.s6 = new justPath_StoreF6();
+											}
+											_this413.s6.push(v117);
+										}
+										_this413.l++;
+									}
+									_this412.l++;
+								} else {
+									var _this414 = this.store;
+									var v118 = parseFloat(temp17);
+									switch(_this414.l) {
+									case 0:
+										_this414.s0 = v118;
+										break;
+									case 1:
+										_this414.s1 = v118;
+										break;
+									case 2:
+										_this414.s2 = v118;
+										break;
+									case 3:
+										_this414.s3 = v118;
+										break;
+									case 4:
+										_this414.s4 = v118;
+										break;
+									case 5:
+										_this414.s5 = v118;
+										break;
+									default:
+										if(_this414.s6 == null) {
+											_this414.s6 = new justPath_StoreF6();
+										}
+										var _this415 = _this414.s6;
+										switch(_this415.l) {
+										case 0:
+											_this415.s0 = v118;
+											break;
+										case 1:
+											_this415.s1 = v118;
+											break;
+										case 2:
+											_this415.s2 = v118;
+											break;
+										case 3:
+											_this415.s3 = v118;
+											break;
+										case 4:
+											_this415.s4 = v118;
+											break;
+										case 5:
+											_this415.s5 = v118;
+											break;
+										default:
+											if(_this415.s6 == null) {
+												_this415.s6 = new justPath_StoreF6();
+											}
+											_this415.s6.push(v118);
+										}
+										_this415.l++;
+									}
+									_this414.l++;
+								}
+							} else {
+								var _this416 = this.store;
+								var v119 = parseFloat(temp17);
+								switch(_this416.l) {
+								case 0:
+									_this416.s0 = v119;
+									break;
+								case 1:
+									_this416.s1 = v119;
+									break;
+								case 2:
+									_this416.s2 = v119;
+									break;
+								case 3:
+									_this416.s3 = v119;
+									break;
+								case 4:
+									_this416.s4 = v119;
+									break;
+								case 5:
+									_this416.s5 = v119;
+									break;
+								default:
+									if(_this416.s6 == null) {
+										_this416.s6 = new justPath_StoreF6();
+									}
+									var _this417 = _this416.s6;
+									switch(_this417.l) {
+									case 0:
+										_this417.s0 = v119;
+										break;
+									case 1:
+										_this417.s1 = v119;
+										break;
+									case 2:
+										_this417.s2 = v119;
+										break;
+									case 3:
+										_this417.s3 = v119;
+										break;
+									case 4:
+										_this417.s4 = v119;
+										break;
+									case 5:
+										_this417.s5 = v119;
+										break;
+									default:
+										if(_this417.s6 == null) {
+											_this417.s6 = new justPath_StoreF6();
+										}
+										_this417.s6.push(v119);
+									}
+									_this417.l++;
+								}
+								_this416.l++;
+							}
+							temp17 = "";
+						}
+						this.pos--;
+						exit17 = true;
+					}
+					if(exit17) {
+						break;
+					}
+					this.c = this.str.charCodeAt(this.pos++);
+				}
+				if(this.store.l == 1) {
+					this.lastY += this.store.s0;
+					var x_10 = this.lastX;
+					var y_10 = this.lastY;
+					this.pathContext.lineTo(x_10,y_10);
+					this.px = x_10;
+					this.py = y_10;
+				} else if(this.store.l > 1) {
+					while(this.store.l > 0) {
+						var tmp3 = this.lastY;
+						var _this418 = this.store;
+						var out160 = _this418.s0;
+						if(_this418.l != 0) {
+							_this418.s0 = _this418.s1;
+							_this418.s1 = _this418.s2;
+							_this418.s2 = _this418.s3;
+							_this418.s3 = _this418.s4;
+							_this418.s4 = _this418.s5;
+							_this418.s5 = null;
+							if(_this418.s6 != null) {
+								var _this419 = _this418.s6;
+								var out161 = _this419.s0;
+								if(_this419.l != 0) {
+									_this419.s0 = _this419.s1;
+									_this419.s1 = _this419.s2;
+									_this419.s2 = _this419.s3;
+									_this419.s3 = _this419.s4;
+									_this419.s4 = _this419.s5;
+									_this419.s5 = null;
+									if(_this419.s6 != null) {
+										_this419.s5 = _this419.s6.shift();
+									}
+									_this419.l--;
+								}
+								_this418.s5 = out161;
+							}
+							_this418.l--;
+						}
+						this.lastY = tmp3 + out160;
+						var x_11 = this.lastX;
+						var y_11 = this.lastY;
+						this.pathContext.lineTo(x_11,y_11);
+						this.px = x_11;
+						this.py = y_11;
+					}
+				}
+				break;
+			case 90:case 122:
+				this.lastX = 0;
+				this.lastY = 0;
+				break;
+			default:
+				++count;
+			}
+			this.c = this.str.charCodeAt(this.pos++);
+		}
+		return str_;
+	}
+	,__class__: justPath_SvgLinePath
+};
 var pixelimage_DemoUse = function() {
 	this.canvasSetup = new htmlHelper_canvas_CanvasSetup();
 	haxe_Log.trace("Pixelimage example on Canvas",{ fileName : "src/pixelimage/DemoUse.hx", lineNumber : 19, className : "pixelimage.DemoUse", methodName : "new"});
@@ -1251,18 +13045,12 @@ var pixelimage_DemoUse = function() {
 	p.transparent = true;
 	pixelimage_Pixelimage.setRelativePosition(p,0,0);
 	var count = 0;
-	var _g = 0;
-	var _g1 = pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr();
-	while(_g < _g1.length) {
-		var aShape = _g1[_g];
-		++_g;
-		var aShape1 = pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr()[3];
-		haxe_Log.trace(aShape1,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 14, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
-		var xml = Xml.parse("<node>" + aShape1 + "</node>").firstElement();
-		haxe_Log.trace(xml,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 16, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
-		new pixelimage_shapeStruct_XMLshape(p,xml);
-		++count;
-	}
+	var aShape = pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr()[6];
+	haxe_Log.trace(aShape,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 14, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
+	var xml = Xml.parse("<node>" + aShape + "</node>").firstElement();
+	haxe_Log.trace(xml,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 16, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
+	new pixelimage_shapeStruct_XMLshape(p,xml);
+	++count;
 	var ctx = g.me;
 	if(p.useMask && p.mask != null) {
 		var w = p.width;
@@ -5259,7 +17047,7 @@ pixelimage_shapeStruct_LineGradient.prototype = $extend(pixelimage_shapeStruct_B
 		var colorC = this.cornerColors[2];
 		var colorD = this.cornerColors[3];
 		var o = this.y2 - py;
-		var a = this.x2 - py;
+		var a = this.x2 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
 		var debugCorners = false;
@@ -6168,7 +17956,19 @@ pixelimage_shapeStruct_LineShape.prototype = $extend(pixelimage_shapeStruct_Basi
 	}
 	,__class__: pixelimage_shapeStruct_LineShape
 });
-var pixelimage_shapeStruct_PathElementShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,pathData) {
+var pixelimage_shapeStruct_PathElementShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,pathData,translateX,translateY,scaleX,scaleY) {
+	if(scaleY == null) {
+		scaleY = 1.;
+	}
+	if(scaleX == null) {
+		scaleX = 1.;
+	}
+	if(translateY == null) {
+		translateY = 0.;
+	}
+	if(translateX == null) {
+		translateX = 0.;
+	}
 	if(pathData == null) {
 		pathData = "";
 	}
@@ -6187,22 +17987,542 @@ var pixelimage_shapeStruct_PathElementShape = function(opacity,visibility,stroke
 	if(opacity == null) {
 		opacity = 1.;
 	}
+	this.y0 = 0.;
+	this.x0 = 0.;
 	pixelimage_shapeStruct_FillShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill);
 	this.pathData = pathData;
+	this.translateX = translateX;
+	this.translateY = translateY;
+	this.scaleX = scaleX;
+	this.scaleY = scaleY;
 };
 pixelimage_shapeStruct_PathElementShape.__name__ = "pixelimage.shapeStruct.PathElementShape";
+pixelimage_shapeStruct_PathElementShape.__interfaces__ = [justPath_ILinePathContext];
 pixelimage_shapeStruct_PathElementShape.__super__ = pixelimage_shapeStruct_FillShape;
 pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStruct_FillShape.prototype,{
 	setParameter: function(name,value) {
-		if(name == "pathData") {
+		switch(name) {
+		case "pathData":
 			this.pathData = value;
-		} else {
+			break;
+		case "scaleX":
+			this.scaleX = parseFloat(value);
+			break;
+		case "scaleY":
+			this.scaleY = parseFloat(value);
+			break;
+		case "translateX":
+			this.translateX = parseFloat(value);
+			break;
+		case "translateY":
+			this.translateY = parseFloat(value);
+			break;
+		default:
 			pixelimage_shapeStruct_FillShape.prototype.setParameter.call(this,name,value);
 		}
 	}
 	,render: function(pixelImage) {
-		haxe_Log.trace("Not implemented Yet",{ fileName : "src/pixelimage/shapeStruct/PathElementShape.hx", lineNumber : 30, className : "pixelimage.shapeStruct.PathElementShape", methodName : "render"});
+		haxe_Log.trace("render pathData " + this.pathData,{ fileName : "src/pixelimage/shapeStruct/PathElementShape.hx", lineNumber : 57, className : "pixelimage.shapeStruct.PathElementShape", methodName : "render"});
+		var w = Math.ceil(pixelImage.width);
+		var h = Math.ceil(pixelImage.height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		this.temp = this2;
+		this.temp.transparent = true;
+		var sp = new justPath_SvgLinePath(this);
+		sp.parse(this.pathData);
+		var pixelImage1 = this.temp;
+		var _g = 0;
+		var _g1 = pixelImage1.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = pixelImage1.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = pixelImage1.image[pixelImage1.useVirtualPos ? (dy - pixelImage1.virtualY) * pixelImage1.width + dx - pixelImage1.virtualX | 0 : dy * pixelImage1.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(pixelImage1.useMask && pixelImage1.mask != null) {
+					var this1 = pixelImage1.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x = dx;
+					var y = dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		this.temp = null;
 		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
+	}
+	,lineTo: function(x2,y2) {
+		var this1 = this.temp;
+		var px = this.x0 * this.scaleX + this.translateX;
+		var py = this.y0 * this.scaleY + this.translateY;
+		var color = this.strokeColor;
+		var o = y2 * this.scaleY + this.translateY - py;
+		var a = x2 * this.scaleX + this.translateX - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -65536;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16711936;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16776961;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -1048336;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 240;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 240;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var ii = ay > by1 ? ay > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(ay)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(ay > cy1 ? Math.floor(cy1) : Math.ceil(ay),Math.ceil(by1)) : new IntIterator(Math.floor(ay),Math.ceil(cy1));
+		var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+		var yIter3 = this2;
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var _g = ax > bx1 ? ax > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(ax)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(ax > cx1 ? Math.floor(cx1) : Math.ceil(ax),Math.ceil(bx1)) : new IntIterator(Math.floor(ax),Math.ceil(cx1));
+		while(_g.min < _g.max) {
+			var x = _g.min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min = yIter3.start;
+			var _g_max = yIter3.max;
+			while(_g_min < _g_max) {
+				var y = _g_min++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var this2 = color;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx = dx;
+		var cy = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx;
+			by1 = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var s0 = by * cx - bx * cy;
+		var sx = cy - by;
+		var sy = bx - cx;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+		var yIter3 = this2;
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		while(_g.min < _g.max) {
+			var x = _g.min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min = yIter3.start;
+			var _g_max = yIter3.max;
+			while(_g_min < _g_max) {
+				var y = _g_min++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var this2 = color;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		this.x0 = x2;
+		this.y0 = y2;
+	}
+	,moveTo: function(x1,y1) {
+		this.x0 = x1;
+		this.y0 = y1;
 	}
 	,__class__: pixelimage_shapeStruct_PathElementShape
 });
@@ -6323,7 +18643,7 @@ pixelimage_shapeStruct_PolyLineGradient.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 			var o = nextY - y;
-			var a = nextX - y;
+			var a = nextX - x;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
 			var debugCorners = false;
@@ -11113,7 +23433,7 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 	,__class__: pixelimage_shapeStruct_XMLshape
 };
 function pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr() {
-	return [pixelimage_shapeStruct_XMLshapeSamples_arcTest,pixelimage_shapeStruct_XMLshapeSamples_circleTest,pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest,pixelimage_shapeStruct_XMLshapeSamples_ellipseTest,pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_quadCurveTest,pixelimage_shapeStruct_XMLshapeSamples_quadShape,pixelimage_shapeStruct_XMLshapeSamples_rectangleShape,pixelimage_shapeStruct_XMLshapeSamples_squareShape,pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest,pixelimage_shapeStruct_XMLshapeSamples_triangleShape];
+	return [pixelimage_shapeStruct_XMLshapeSamples_arcTest,pixelimage_shapeStruct_XMLshapeSamples_circleTest,pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest,pixelimage_shapeStruct_XMLshapeSamples_ellipseTest,pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementQuadTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementCubicTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_quadCurveTest,pixelimage_shapeStruct_XMLshapeSamples_quadShape,pixelimage_shapeStruct_XMLshapeSamples_rectangleShape,pixelimage_shapeStruct_XMLshapeSamples_squareShape,pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest,pixelimage_shapeStruct_XMLshapeSamples_triangleShape];
 }
 var vision_ds_Line2D = function(start,end) {
 	this.end = new vision_ds_Point2D(0,0);
@@ -11187,6 +23507,7 @@ haxe_xml_Parser.escapes = (function($this) {
 	$r = h;
 	return $r;
 }(this));
+var justPath_CurveMath_quadStep = 0.03;
 var pixelimage_Endian_isLittleEndian = (function($this) {
 	var $r;
 	var a8 = new Uint8Array(4);
@@ -11200,7 +23521,11 @@ var pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest = "<CubicCurveShape \n
 var pixelimage_shapeStruct_XMLshapeSamples_ellipseTest = "<EllipseShape \n                        top=\"100\" \n                        width=\"200\" \n                        height=\"50\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </EllipseShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest = "<LineGradient \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        strokewidth=\"1\" \n                        colorA=\"0xFF0000\" colorB=\"0xa00cc0\" colorC=\"0x0fa00f\" colorD=\"0x000fff\">\n                    </LineGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest = "<LineShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </LineShape>";
-var pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest = "<PolyLineGradient \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        colorDirection=\"longways\" \n                        cornerColors=\"[ 0xFF0000, 0x0f00ff, 0xaaaa00, 0xcc00cc ]\">\n                    </PolyLineGradient>";
+var pixelimage_shapeStruct_XMLshapeSamples_quadtest_d = "M200,300 Q400,50 600,300 T1000,300";
+var pixelimage_shapeStruct_XMLshapeSamples_cubictest_d = "M100,200 C100,100 250,100 250,200S400,300 400,200";
+var pixelimage_shapeStruct_XMLshapeSamples_pathElementQuadTest = "<PathElementShape \n                        pathData=\"" + pixelimage_shapeStruct_XMLshapeSamples_quadtest_d + "\" \n                        strokeWidth=\"10\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0x0000ff\">\n                    </PathElementShape>";
+var pixelimage_shapeStruct_XMLshapeSamples_pathElementCubicTest = "<PathElementShape \n                        pathData=\"" + pixelimage_shapeStruct_XMLshapeSamples_cubictest_d + "\" \n                        translateX=\"0\"\n                        translateY=\"0\"\n                        strokeWidth=\"30\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0xff0000ff\">\n                    </PathElementShape>";
+var pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest = "<PolyLineGradient \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        colorDirection=\"longways\" \n                        cornerColors=\"[ 0xFF0000, 0xb1afcc, 0xaaaa00, 0xcc00cc ]\">\n                    </PolyLineGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest = "<PolyLineShape \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </PolyLineShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_quadCurveTest = "<QuadCurveShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        x3=\"130\" y3=\"220\" \n                        x4=\"500\" y4=\"500\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\">\n                    </QuadCurveShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_quadShape = "<QuadShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        x3=\"130\" y3=\"220\" \n                        x4=\"500\" y4=\"500\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </QuadShape>";
