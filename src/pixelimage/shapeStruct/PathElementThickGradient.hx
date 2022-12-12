@@ -6,8 +6,10 @@ import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
 
 @:structInit
-class PathElementShape extends FillShape implements ILinePathContext {
+class PathElementThickGradient extends FillShape implements ILinePathContext {
     public var pathData: String;
+    public var strokeTopColor: Int;
+    public var strokeBottomColor: Int;
     public var translateX: Float;
     public var translateY: Float;
     public var scaleX: Float;
@@ -17,8 +19,9 @@ class PathElementShape extends FillShape implements ILinePathContext {
     var temp: Pixelimage;
     public function new(  opacity            = 1.
                         , visibility          = true
-                        , strokeColor        = 0x000000
-                        , strokeWidth        = 1.
+                        , strokeTopColor        = 0xFF000000
+                        , strokeBottomColor     = 0xFFFFFFFF
+                        , strokeWidth         = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
@@ -29,8 +32,11 @@ class PathElementShape extends FillShape implements ILinePathContext {
                         , scaleX = 1.
                         , scaleY = 1.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
+        super( opacity, visibility, 0xFF000000, 1., strokeDashGapArray, fill );
         this.pathData = pathData;
+        this.strokeTopColor = strokeTopColor;
+        this.strokeBottomColor = strokeBottomColor;
+        this.strokeWidth = strokeWidth;
         this.translateX = translateX;
         this.translateY = translateY;
         this.scaleX     = scaleX;
@@ -40,6 +46,12 @@ class PathElementShape extends FillShape implements ILinePathContext {
         switch( name ){
             case 'pathData':
                 pathData =value;
+            case 'strokeTopColor':
+                strokeTopColor = Std.parseInt( value );
+            case 'strokeBottomColor':
+                strokeBottomColor = Std.parseInt( value );
+            case 'strokeWidth':
+                strokeWidth = Std.parseFloat( value );
             case 'translateX':
                 translateX = Std.parseFloat( value );
             case 'translateY':
@@ -71,32 +83,35 @@ class PathElementShape extends FillShape implements ILinePathContext {
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
             var oldInfo = info;
-            info = temp.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
+            info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor );
+                     , strokeWidth
+                     , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor );
             if( info != null && oldInfo != null ){
-                temp.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor );
+                temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+                                , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
+                                , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
+                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor );
             }
         } else {
             
         }
         toggleDraw = !toggleDraw;
-        //temp.fillGradLine( 3*x0, 3*y0, 3*x2, 3*y2, strokeWidth, strokeColor, strokeColor, 0xFF00FF00, 0xFF00FF00 );
-        //temp.fillGradLine( x0, y0, x2, y2, strokeWidth,strokeColor, strokeColor, 0xFF00FF00, 0xFF00FF00  );
-        //temp.fillGradLine( x0, y0, x2+0.5, y2+0.5, strokeWidth, strokeColor, strokeColor, 0xFF00FF00, 0xFF00FF00 );
-        //temp.fillSquare( x2, y2, strokeWidth/2, strokeColor );
-        //strokeColor = Std.random(0xFFFFFF) + 0xFF000000;
         x0 = x2;
         y0 = y2;
     }
     public
     function lineTo( x2: Float, y2: Float ){
         var oldInfo = info;
-        info = temp.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
-                     , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor );
+        info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
+            , x2*scaleX + translateX, y2*scaleY + translateY 
+            , strokeWidth
+            , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor );
         if( info != null && oldInfo != null ){
-            temp.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor );
+            temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+                , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
+                , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
+                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor );
         }
         x0 = x2;
         y0 = y2;

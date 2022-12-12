@@ -287,6 +287,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // tri f - b c d
         fillTri( ax, ay, bx, by, dx, dy, color );
         fillTri( bx, by, cx, cy, dx, dy, color );
+        return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
     }
     /**
         creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
@@ -353,6 +354,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , bx, y,  colorB
                     , bx, cy, colorC
                     , x,  cy, colorD );
+        return { ax: x, ay: y, bx: bx, by: y, cx: bx, cy: cy, dx: x, dy: cy };
     }
     /**
         uses two triangle to form a quad with clockwise coordinates a,b,c,d
@@ -370,6 +372,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // tri f - b c d
         fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
         fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
+        return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
     }
     /**
         provides a thick line using two triangles vector p, q
@@ -382,7 +385,8 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        rotateLine( this, px, py, thick, h, theta, color, debugCorners );
+        var info = rotateLine( this, px, py, thick, h, theta, color, debugCorners );
+        return info;
     }
     /**
         provides a thick line using two gradient triangle vector p,q
@@ -398,7 +402,8 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
+        var info = rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
+        return info;
     }
     /**
         this is used for drawing a filled ellipse or circle ( using triangles ), it uses more sides when larger and can be tweaked with targetError

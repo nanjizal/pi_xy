@@ -40,6 +40,14 @@ import pixelimage.pixel.PixelChannel;
                     if( (s + t) < A ) {
                         // store first hit
                         pixelimage.setARGB( x, y, color );
+                        //pixelimage.setARGB( x+1, y, color );//
+                        //pixelimage.setARGB( x-1, y, color );
+                        //pixelimage.setARGB( x, y+1, color );//
+                        //pixelimage.setARGB( x, y-1, color );
+                        //pixelimage.setARGB( x-1, y-1, color );
+                        //pixelimage.setARGB( x+1, y+1, color );//
+                        //pixelimage.setARGB( x-1, y+1, color );
+                        //pixelimage.setARGB( x+1, y-1, color );
                         foundY = true;
                     } else {
                         // after filling break

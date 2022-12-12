@@ -2875,10 +2875,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove) {
 						this.pathContext.moveTo(tempArr[0],tempArr[1]);
 					} else {
-						this.pathContext.lineTo(tempArr[0],tempArr[1]);
+						this.pathContext.lineSegmentTo(tempArr[0],tempArr[1]);
 					}
 					while(i < l1) {
-						this.pathContext.lineTo(tempArr[i],tempArr[i + 1]);
+						this.pathContext.lineSegmentTo(tempArr[i],tempArr[i + 1]);
 						i += 2;
 					}
 					tempArr = [];
@@ -3101,10 +3101,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove1) {
 							this.pathContext.moveTo(tempArr1[0],tempArr1[1]);
 						} else {
-							this.pathContext.lineTo(tempArr1[0],tempArr1[1]);
+							this.pathContext.lineSegmentTo(tempArr1[0],tempArr1[1]);
 						}
 						while(i1 < l3) {
-							this.pathContext.lineTo(tempArr1[i1],tempArr1[i1 + 1]);
+							this.pathContext.lineSegmentTo(tempArr1[i1],tempArr1[i1 + 1]);
 							i1 += 2;
 						}
 						tempArr1 = [];
@@ -5205,10 +5205,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove2) {
 						this.pathContext.moveTo(tempArr2[0],tempArr2[1]);
 					} else {
-						this.pathContext.lineTo(tempArr2[0],tempArr2[1]);
+						this.pathContext.lineSegmentTo(tempArr2[0],tempArr2[1]);
 					}
 					while(i2 < l5) {
-						this.pathContext.lineTo(tempArr2[i2],tempArr2[i2 + 1]);
+						this.pathContext.lineSegmentTo(tempArr2[i2],tempArr2[i2 + 1]);
 						i2 += 2;
 					}
 					tempArr2 = [];
@@ -5371,10 +5371,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove3) {
 							this.pathContext.moveTo(tempArr3[0],tempArr3[1]);
 						} else {
-							this.pathContext.lineTo(tempArr3[0],tempArr3[1]);
+							this.pathContext.lineSegmentTo(tempArr3[0],tempArr3[1]);
 						}
 						while(i3 < l7) {
-							this.pathContext.lineTo(tempArr3[i3],tempArr3[i3 + 1]);
+							this.pathContext.lineSegmentTo(tempArr3[i3],tempArr3[i3 + 1]);
 							i3 += 2;
 						}
 						tempArr3 = [];
@@ -5832,10 +5832,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove4) {
 						this.pathContext.moveTo(tempArr4[0],tempArr4[1]);
 					} else {
-						this.pathContext.lineTo(tempArr4[0],tempArr4[1]);
+						this.pathContext.lineSegmentTo(tempArr4[0],tempArr4[1]);
 					}
 					while(i4 < l9) {
-						this.pathContext.lineTo(tempArr4[i4],tempArr4[i4 + 1]);
+						this.pathContext.lineSegmentTo(tempArr4[i4],tempArr4[i4 + 1]);
 						i4 += 2;
 					}
 					tempArr4 = [];
@@ -6006,10 +6006,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove5) {
 							this.pathContext.moveTo(tempArr5[0],tempArr5[1]);
 						} else {
-							this.pathContext.lineTo(tempArr5[0],tempArr5[1]);
+							this.pathContext.lineSegmentTo(tempArr5[0],tempArr5[1]);
 						}
 						while(i5 < l11) {
-							this.pathContext.lineTo(tempArr5[i5],tempArr5[i5 + 1]);
+							this.pathContext.lineSegmentTo(tempArr5[i5],tempArr5[i5 + 1]);
 							i5 += 2;
 						}
 						tempArr5 = [];
@@ -6467,10 +6467,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove6) {
 						this.pathContext.moveTo(tempArr6[0],tempArr6[1]);
 					} else {
-						this.pathContext.lineTo(tempArr6[0],tempArr6[1]);
+						this.pathContext.lineSegmentTo(tempArr6[0],tempArr6[1]);
 					}
 					while(i6 < l13) {
-						this.pathContext.lineTo(tempArr6[i6],tempArr6[i6 + 1]);
+						this.pathContext.lineSegmentTo(tempArr6[i6],tempArr6[i6 + 1]);
 						i6 += 2;
 					}
 					tempArr6 = [];
@@ -6577,10 +6577,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove7) {
 							this.pathContext.moveTo(tempArr7[0],tempArr7[1]);
 						} else {
-							this.pathContext.lineTo(tempArr7[0],tempArr7[1]);
+							this.pathContext.lineSegmentTo(tempArr7[0],tempArr7[1]);
 						}
 						while(i7 < l15) {
-							this.pathContext.lineTo(tempArr7[i7],tempArr7[i7 + 1]);
+							this.pathContext.lineSegmentTo(tempArr7[i7],tempArr7[i7 + 1]);
 							i7 += 2;
 						}
 						tempArr7 = [];
@@ -8703,10 +8703,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove8) {
 						this.pathContext.moveTo(tempArr8[0],tempArr8[1]);
 					} else {
-						this.pathContext.lineTo(tempArr8[0],tempArr8[1]);
+						this.pathContext.lineSegmentTo(tempArr8[0],tempArr8[1]);
 					}
 					while(i8 < l17) {
-						this.pathContext.lineTo(tempArr8[i8],tempArr8[i8 + 1]);
+						this.pathContext.lineSegmentTo(tempArr8[i8],tempArr8[i8 + 1]);
 						i8 += 2;
 					}
 					tempArr8 = [];
@@ -8929,10 +8929,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove9) {
 							this.pathContext.moveTo(tempArr9[0],tempArr9[1]);
 						} else {
-							this.pathContext.lineTo(tempArr9[0],tempArr9[1]);
+							this.pathContext.lineSegmentTo(tempArr9[0],tempArr9[1]);
 						}
 						while(i9 < l19) {
-							this.pathContext.lineTo(tempArr9[i9],tempArr9[i9 + 1]);
+							this.pathContext.lineSegmentTo(tempArr9[i9],tempArr9[i9 + 1]);
 							i9 += 2;
 						}
 						tempArr9 = [];
@@ -11010,10 +11010,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove10) {
 						this.pathContext.moveTo(tempArr10[0],tempArr10[1]);
 					} else {
-						this.pathContext.lineTo(tempArr10[0],tempArr10[1]);
+						this.pathContext.lineSegmentTo(tempArr10[0],tempArr10[1]);
 					}
 					while(i10 < l21) {
-						this.pathContext.lineTo(tempArr10[i10],tempArr10[i10 + 1]);
+						this.pathContext.lineSegmentTo(tempArr10[i10],tempArr10[i10 + 1]);
 						i10 += 2;
 					}
 					tempArr10 = [];
@@ -11178,10 +11178,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove11) {
 							this.pathContext.moveTo(tempArr11[0],tempArr11[1]);
 						} else {
-							this.pathContext.lineTo(tempArr11[0],tempArr11[1]);
+							this.pathContext.lineSegmentTo(tempArr11[0],tempArr11[1]);
 						}
 						while(i11 < l23) {
-							this.pathContext.lineTo(tempArr11[i11],tempArr11[i11 + 1]);
+							this.pathContext.lineSegmentTo(tempArr11[i11],tempArr11[i11 + 1]);
 							i11 += 2;
 						}
 						tempArr11 = [];
@@ -11641,10 +11641,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove12) {
 						this.pathContext.moveTo(tempArr12[0],tempArr12[1]);
 					} else {
-						this.pathContext.lineTo(tempArr12[0],tempArr12[1]);
+						this.pathContext.lineSegmentTo(tempArr12[0],tempArr12[1]);
 					}
 					while(i12 < l25) {
-						this.pathContext.lineTo(tempArr12[i12],tempArr12[i12 + 1]);
+						this.pathContext.lineSegmentTo(tempArr12[i12],tempArr12[i12 + 1]);
 						i12 += 2;
 					}
 					tempArr12 = [];
@@ -11813,10 +11813,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove13) {
 							this.pathContext.moveTo(tempArr13[0],tempArr13[1]);
 						} else {
-							this.pathContext.lineTo(tempArr13[0],tempArr13[1]);
+							this.pathContext.lineSegmentTo(tempArr13[0],tempArr13[1]);
 						}
 						while(i13 < l27) {
-							this.pathContext.lineTo(tempArr13[i13],tempArr13[i13 + 1]);
+							this.pathContext.lineSegmentTo(tempArr13[i13],tempArr13[i13 + 1]);
 							i13 += 2;
 						}
 						tempArr13 = [];
@@ -12274,10 +12274,10 @@ justPath_SvgLinePath.prototype = {
 					if(withMove14) {
 						this.pathContext.moveTo(tempArr14[0],tempArr14[1]);
 					} else {
-						this.pathContext.lineTo(tempArr14[0],tempArr14[1]);
+						this.pathContext.lineSegmentTo(tempArr14[0],tempArr14[1]);
 					}
 					while(i14 < l29) {
-						this.pathContext.lineTo(tempArr14[i14],tempArr14[i14 + 1]);
+						this.pathContext.lineSegmentTo(tempArr14[i14],tempArr14[i14 + 1]);
 						i14 += 2;
 					}
 					tempArr14 = [];
@@ -12384,10 +12384,10 @@ justPath_SvgLinePath.prototype = {
 						if(withMove15) {
 							this.pathContext.moveTo(tempArr15[0],tempArr15[1]);
 						} else {
-							this.pathContext.lineTo(tempArr15[0],tempArr15[1]);
+							this.pathContext.lineSegmentTo(tempArr15[0],tempArr15[1]);
 						}
 						while(i15 < l31) {
-							this.pathContext.lineTo(tempArr15[i15],tempArr15[i15 + 1]);
+							this.pathContext.lineSegmentTo(tempArr15[i15],tempArr15[i15 + 1]);
 							i15 += 2;
 						}
 						tempArr15 = [];
@@ -13045,7 +13045,7 @@ var pixelimage_DemoUse = function() {
 	p.transparent = true;
 	pixelimage_Pixelimage.setRelativePosition(p,0,0);
 	var count = 0;
-	var aShape = pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr()[6];
+	var aShape = pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr()[8];
 	haxe_Log.trace(aShape,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 14, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
 	var xml = Xml.parse("<node>" + aShape + "</node>").firstElement();
 	haxe_Log.trace(xml,{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 16, className : "pixelimage.shapeStruct.XMLshape", methodName : "withString"});
@@ -14267,6 +14267,15 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 					}
 				}
 			}
+			var inlobj_ax = ax;
+			var inlobj_ay = ay;
+			var inlobj_bx = bx;
+			var inlobj_by = by;
+			var inlobj_cx = cx1;
+			var inlobj_cy = cy1;
+			var inlobj_dx = dx;
+			var inlobj_dy = dy;
+			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx1, cy : cy1, dx : dx, dy : dy};
 		}
 	}
 	,ellipse: function(temp) {
@@ -15012,25 +15021,25 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 		}
 		var bx1 = cx1;
 		var by1 = cy1;
-		var cx1 = dx;
-		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var cx2 = dx;
+		var cy2 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy2 - cx2 * by1) + (cx2 * by - bx * cy2) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+			bx1 = cx2;
+			by1 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
+		var s0 = by * cx2 - bx * cy2;
+		var sx = cy2 - by;
+		var sy = bx - cx2;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
-		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
+		var A = -by1 * cx2 + by * (-bx1 + cx2) + bx * (by1 - cy2) + bx1 * cy2;
+		var ii = by > by1 ? by > cy2 ? new IntIterator(by1 > cy2 ? Math.floor(cy2) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy2)) : by1 > cy2 ? new IntIterator(by > cy2 ? Math.floor(cy2) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy2));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -15038,7 +15047,7 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
+		var _g = bx > bx1 ? bx > cx2 ? new IntIterator(bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx2)) : bx1 > cx2 ? new IntIterator(bx > cx2 ? Math.floor(cx2) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx2));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -15094,6 +15103,22 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx1;
+		var inlobj_cy = cy1;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx1;
+		var info_cy = cy1;
+		var info_dx = dx;
+		var info_dy = dy;
 		var px = this.rx;
 		var py = this.ry;
 		var color = this.strokeColor;
@@ -15417,25 +15442,25 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -15443,7 +15468,7 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -15499,6 +15524,22 @@ pixelimage_shapeStruct_ArcShape.prototype = $extend(pixelimage_shapeStruct_FillS
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 	}
 	,__class__: pixelimage_shapeStruct_ArcShape
 });
@@ -17490,6 +17531,22 @@ pixelimage_shapeStruct_LineGradient.prototype = $extend(pixelimage_shapeStruct_B
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 		return pixelimage_shapeStruct_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_LineGradient
@@ -17870,25 +17927,25 @@ pixelimage_shapeStruct_LineShape.prototype = $extend(pixelimage_shapeStruct_Basi
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -17896,7 +17953,7 @@ pixelimage_shapeStruct_LineShape.prototype = $extend(pixelimage_shapeStruct_Basi
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -17952,6 +18009,22 @@ pixelimage_shapeStruct_LineShape.prototype = $extend(pixelimage_shapeStruct_Basi
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 		return pixelimage_shapeStruct_BasicShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_LineShape
@@ -17987,6 +18060,7 @@ var pixelimage_shapeStruct_PathElementShape = function(opacity,visibility,stroke
 	if(opacity == null) {
 		opacity = 1.;
 	}
+	this.toggleDraw = true;
 	this.y0 = 0.;
 	this.x0 = 0.;
 	pixelimage_shapeStruct_FillShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill);
@@ -18110,7 +18184,612 @@ pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStru
 		this.temp = null;
 		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
+	,lineSegmentTo: function(x2,y2) {
+		if(this.toggleDraw) {
+			var oldInfo = this.info;
+			var this1 = this.temp;
+			var px = this.x0 * this.scaleX + this.translateX;
+			var py = this.y0 * this.scaleY + this.translateY;
+			var color = this.strokeColor;
+			var o = y2 * this.scaleY + this.translateY - py;
+			var a = x2 * this.scaleX + this.translateX - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var debugCorners = false;
+			if(debugCorners == null) {
+				debugCorners = false;
+			}
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = this.strokeWidth / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp = 0.;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			if(debugCorners) {
+				var x = ax - 6.;
+				var y = ay - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -65536;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = bx - 6.;
+				var y = by - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16711936;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = cx - 6.;
+				var y = cy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16776961;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = dx - 6.;
+				var y = dy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -1048336;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 240;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 240;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var ii = ay > by1 ? ay > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(ay)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(ay > cy1 ? Math.floor(cy1) : Math.ceil(ay),Math.ceil(by1)) : new IntIterator(Math.floor(ay),Math.ceil(cy1));
+			var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+			var yIter3 = this2;
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var _g = ax > bx1 ? ax > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(ax)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(ax > cx1 ? Math.floor(cx1) : Math.ceil(ax),Math.ceil(bx1)) : new IntIterator(Math.floor(ax),Math.ceil(cx1));
+			while(_g.min < _g.max) {
+				var x = _g.min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min = yIter3.start;
+				var _g_max = yIter3.max;
+				while(_g_min < _g_max) {
+					var y = _g_min++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this2 = color;
+						var c = this2;
+						if((c >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
+			var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+			var yIter3 = this2;
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
+			while(_g.min < _g.max) {
+				var x = _g.min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min = yIter3.start;
+				var _g_max = yIter3.max;
+				while(_g_min < _g_max) {
+					var y = _g_min++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this2 = color;
+						var c = this2;
+						if((c >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var inlobj_ax = ax;
+			var inlobj_ay = ay;
+			var inlobj_bx = bx;
+			var inlobj_by = by;
+			var inlobj_cx = cx;
+			var inlobj_cy = cy;
+			var inlobj_dx = dx;
+			var inlobj_dy = dy;
+			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
+			this.info = info;
+			if(this.info != null && oldInfo != null) {
+				var this1 = this.temp;
+				var ax = oldInfo.bx * this.scaleX + this.translateX;
+				var ay = oldInfo.by * this.scaleY + this.translateY;
+				var bx = this.info.ax * this.scaleX + this.translateX;
+				var by = this.info.ay * this.scaleY + this.translateY;
+				var cx = this.info.dx * this.scaleX + this.translateX;
+				var cy = this.info.dy * this.scaleY + this.translateY;
+				var dx = oldInfo.cx * this.scaleX + this.translateX;
+				var dy = oldInfo.cy * this.scaleY + this.translateY;
+				var color = this.strokeColor;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = dx;
+				var cy1 = dy;
+				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var s0 = ay * cx1 - ax * cy1;
+				var sx = cy1 - ay;
+				var sy = ax - cx1;
+				var t0 = ax * by1 - ay * bx1;
+				var tx = ay - by1;
+				var ty = bx1 - ax;
+				var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				var ii = ay > by1 ? ay > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(ay)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(ay > cy1 ? Math.floor(cy1) : Math.ceil(ay),Math.ceil(by1)) : new IntIterator(Math.floor(ay),Math.ceil(cy1));
+				var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+				var yIter3 = this2;
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var _g = ax > bx1 ? ax > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(ax)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(ax > cx1 ? Math.floor(cx1) : Math.ceil(ax),Math.ceil(bx1)) : new IntIterator(Math.floor(ax),Math.ceil(cx1));
+				while(_g.min < _g.max) {
+					var x = _g.min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min = yIter3.start;
+					var _g_max = yIter3.max;
+					while(_g_min < _g_max) {
+						var y = _g_min++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var this2 = color;
+							var c = this2;
+							if((c >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				var bx1 = cx;
+				var by1 = cy;
+				var cx = dx;
+				var cy = dy;
+				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx;
+					by1 = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var s0 = by * cx - bx * cy;
+				var sx = cy - by;
+				var sy = bx - cx;
+				var t0 = bx * by1 - by * bx1;
+				var tx = by - by1;
+				var ty = bx1 - bx;
+				var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+				var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+				var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+				var yIter3 = this2;
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+				while(_g.min < _g.max) {
+					var x = _g.min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min = yIter3.start;
+					var _g_max = yIter3.max;
+					while(_g_min < _g_max) {
+						var y = _g_min++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var this2 = color;
+							var c = this2;
+							if((c >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+			}
+		}
+		this.toggleDraw = !this.toggleDraw;
+		this.x0 = x2;
+		this.y0 = y2;
+	}
 	,lineTo: function(x2,y2) {
+		var oldInfo = this.info;
 		var this1 = this.temp;
 		var px = this.x0 * this.scaleX + this.translateX;
 		var py = this.y0 * this.scaleY + this.translateY;
@@ -18435,25 +19114,25 @@ pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStru
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this2;
 		var foundY = false;
@@ -18461,7 +19140,7 @@ pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStru
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -18517,14 +19196,1771 @@ pixelimage_shapeStruct_PathElementShape.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
+		this.info = info;
+		if(this.info != null && oldInfo != null) {
+			var this1 = this.temp;
+			var ax = oldInfo.bx * this.scaleX + this.translateX;
+			var ay = oldInfo.by * this.scaleY + this.translateY;
+			var bx = this.info.ax * this.scaleX + this.translateX;
+			var by = this.info.ay * this.scaleY + this.translateY;
+			var cx = this.info.dx * this.scaleX + this.translateX;
+			var cy = this.info.dy * this.scaleY + this.translateY;
+			var dx = oldInfo.cx * this.scaleX + this.translateX;
+			var dy = oldInfo.cy * this.scaleY + this.translateY;
+			var color = this.strokeColor;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var ii = ay > by1 ? ay > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(ay)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(ay > cy1 ? Math.floor(cy1) : Math.ceil(ay),Math.ceil(by1)) : new IntIterator(Math.floor(ay),Math.ceil(cy1));
+			var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+			var yIter3 = this2;
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var _g = ax > bx1 ? ax > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(ax)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(ax > cx1 ? Math.floor(cx1) : Math.ceil(ax),Math.ceil(bx1)) : new IntIterator(Math.floor(ax),Math.ceil(cx1));
+			while(_g.min < _g.max) {
+				var x = _g.min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min = yIter3.start;
+				var _g_max = yIter3.max;
+				while(_g_min < _g_max) {
+					var y = _g_min++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this2 = color;
+						var c = this2;
+						if((c >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx = dx;
+			var cy = dy;
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx;
+				by1 = cy;
+				cx = bx_;
+				cy = by_;
+			}
+			var s0 = by * cx - bx * cy;
+			var sx = cy - by;
+			var sy = bx - cx;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+			var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+			var this2 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
+			var yIter3 = this2;
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+			while(_g.min < _g.max) {
+				var x = _g.min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min = yIter3.start;
+				var _g_max = yIter3.max;
+				while(_g_min < _g_max) {
+					var y = _g_min++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this2 = color;
+						var c = this2;
+						if((c >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+		}
 		this.x0 = x2;
 		this.y0 = y2;
+		this.toggleDraw = true;
 	}
 	,moveTo: function(x1,y1) {
 		this.x0 = x1;
 		this.y0 = y1;
+		this.info = null;
+		this.toggleDraw = true;
 	}
 	,__class__: pixelimage_shapeStruct_PathElementShape
+});
+var pixelimage_shapeStruct_PathElementThickGradient = function(opacity,visibility,strokeTopColor,strokeBottomColor,strokeWidth,strokeDashGapArray,fill,pathData,translateX,translateY,scaleX,scaleY) {
+	if(scaleY == null) {
+		scaleY = 1.;
+	}
+	if(scaleX == null) {
+		scaleX = 1.;
+	}
+	if(translateY == null) {
+		translateY = 0.;
+	}
+	if(translateX == null) {
+		translateX = 0.;
+	}
+	if(pathData == null) {
+		pathData = "";
+	}
+	if(fill == null) {
+		fill = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeBottomColor == null) {
+		strokeBottomColor = -1;
+	}
+	if(strokeTopColor == null) {
+		strokeTopColor = -16777216;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	this.toggleDraw = true;
+	this.y0 = 0.;
+	this.x0 = 0.;
+	pixelimage_shapeStruct_FillShape.call(this,opacity,visibility,-16777216,1.,strokeDashGapArray,fill);
+	this.pathData = pathData;
+	this.strokeTopColor = strokeTopColor;
+	this.strokeBottomColor = strokeBottomColor;
+	this.strokeWidth = strokeWidth;
+	this.translateX = translateX;
+	this.translateY = translateY;
+	this.scaleX = scaleX;
+	this.scaleY = scaleY;
+};
+pixelimage_shapeStruct_PathElementThickGradient.__name__ = "pixelimage.shapeStruct.PathElementThickGradient";
+pixelimage_shapeStruct_PathElementThickGradient.__interfaces__ = [justPath_ILinePathContext];
+pixelimage_shapeStruct_PathElementThickGradient.__super__ = pixelimage_shapeStruct_FillShape;
+pixelimage_shapeStruct_PathElementThickGradient.prototype = $extend(pixelimage_shapeStruct_FillShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "pathData":
+			this.pathData = value;
+			break;
+		case "scaleX":
+			this.scaleX = parseFloat(value);
+			break;
+		case "scaleY":
+			this.scaleY = parseFloat(value);
+			break;
+		case "strokeBottomColor":
+			this.strokeBottomColor = Std.parseInt(value);
+			break;
+		case "strokeTopColor":
+			this.strokeTopColor = Std.parseInt(value);
+			break;
+		case "strokeWidth":
+			this.strokeWidth = parseFloat(value);
+			break;
+		case "translateX":
+			this.translateX = parseFloat(value);
+			break;
+		case "translateY":
+			this.translateY = parseFloat(value);
+			break;
+		default:
+			pixelimage_shapeStruct_FillShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		haxe_Log.trace("render pathData " + this.pathData,{ fileName : "src/pixelimage/shapeStruct/PathElementThickGradient.hx", lineNumber : 69, className : "pixelimage.shapeStruct.PathElementThickGradient", methodName : "render"});
+		var w = Math.ceil(pixelImage.width);
+		var h = Math.ceil(pixelImage.height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		this.temp = this2;
+		this.temp.transparent = true;
+		var sp = new justPath_SvgLinePath(this);
+		sp.parse(this.pathData);
+		var pixelImage1 = this.temp;
+		var _g = 0;
+		var _g1 = pixelImage1.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = pixelImage1.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = pixelImage1.image[pixelImage1.useVirtualPos ? (dy - pixelImage1.virtualY) * pixelImage1.width + dx - pixelImage1.virtualX | 0 : dy * pixelImage1.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(pixelImage1.useMask && pixelImage1.mask != null) {
+					var this1 = pixelImage1.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x = dx;
+					var y = dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		this.temp = null;
+		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
+	}
+	,lineSegmentTo: function(x2,y2) {
+		if(this.toggleDraw) {
+			var oldInfo = this.info;
+			var this1 = this.temp;
+			var px = this.x0 * this.scaleX + this.translateX;
+			var py = this.y0 * this.scaleY + this.translateY;
+			var colorA = this.strokeTopColor;
+			var colorB = this.strokeTopColor;
+			var colorC = this.strokeBottomColor;
+			var colorD = this.strokeBottomColor;
+			var o = y2 * this.scaleY + this.translateY - py;
+			var a = x2 * this.scaleX + this.translateX - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var debugCorners = false;
+			if(debugCorners == null) {
+				debugCorners = false;
+			}
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = this.strokeWidth / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp = 0.;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			if(debugCorners) {
+				var x = ax - 6.;
+				var y = ay - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = colorA;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = colorA >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = colorA >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = colorA >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = colorA & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = bx - 6.;
+				var y = by - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = colorB;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = colorB >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = colorB >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = colorB >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = colorB & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = cx - 6.;
+				var y = cy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = colorC;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = colorC >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = colorC >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = colorC >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = colorC & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = dx - 6.;
+				var y = dy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = colorD;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = colorD >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = colorD >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = colorD >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = colorD & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var aA = colorB >> 24 & 255;
+			var rA = colorB >> 16 & 255;
+			var gA = colorB >> 8 & 255;
+			var bA = colorB & 255;
+			var aB = colorA >> 24 & 255;
+			var rB = colorA >> 16 & 255;
+			var gB = colorA >> 8 & 255;
+			var bB = colorA & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = bx - dx;
+			var bcy = by - dy;
+			var acx = ax - dx;
+			var acy = ay - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var _g = dx > bx ? dx > ax ? new IntIterator(bx > ax ? Math.floor(ax) : Math.floor(bx),Math.ceil(dx)) : new IntIterator(Math.floor(bx),Math.ceil(ax)) : bx > ax ? new IntIterator(dx > ax ? Math.floor(ax) : Math.ceil(dx),Math.ceil(bx)) : new IntIterator(Math.floor(dx),Math.ceil(ax));
+			while(_g.min < _g.max) {
+				var px = _g.min++;
+				var pcx = px - dx;
+				var _g1 = dy > by ? dy > ay ? new IntIterator(by > ay ? Math.floor(ay) : Math.floor(by),Math.ceil(dy)) : new IntIterator(Math.floor(by),Math.ceil(ay)) : by > ay ? new IntIterator(dy > ay ? Math.floor(ay) : Math.ceil(dy),Math.ceil(by)) : new IntIterator(Math.floor(dy),Math.ceil(ay));
+				while(_g1.min < _g1.max) {
+					var py = _g1.min++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this2 = i;
+						var a = this2;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this3 = i1;
+						var r = this3;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this4 = i2;
+						var g = this4;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this5 = i3;
+						var b = this5;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this6 = this1.image[location];
+							var this7 = this6;
+							var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this8 = old >> 24 & 255;
+							var a1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = old >> 16 & 255;
+							var r1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = old >> 8 & 255;
+							var g1 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = old & 255;
+							var b1 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = rhs >> 24 & 255;
+							var a2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = rhs >> 16 & 255;
+							var r2 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = rhs >> 8 & 255;
+							var g2 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = rhs & 255;
+							var b2 = this15 == 0 ? 0. : this15 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var aA = colorC >> 24 & 255;
+			var rA = colorC >> 16 & 255;
+			var gA = colorC >> 8 & 255;
+			var bA = colorC & 255;
+			var aB = colorB >> 24 & 255;
+			var rB = colorB >> 16 & 255;
+			var gB = colorB >> 8 & 255;
+			var bB = colorB & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = cx - dx;
+			var bcy = cy - dy;
+			var acx = bx - dx;
+			var acy = by - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var _g = dx > cx ? dx > bx ? new IntIterator(cx > bx ? Math.floor(bx) : Math.floor(cx),Math.ceil(dx)) : new IntIterator(Math.floor(cx),Math.ceil(bx)) : cx > bx ? new IntIterator(dx > bx ? Math.floor(bx) : Math.ceil(dx),Math.ceil(cx)) : new IntIterator(Math.floor(dx),Math.ceil(bx));
+			while(_g.min < _g.max) {
+				var px = _g.min++;
+				var pcx = px - dx;
+				var _g1 = dy > cy ? dy > by ? new IntIterator(cy > by ? Math.floor(by) : Math.floor(cy),Math.ceil(dy)) : new IntIterator(Math.floor(cy),Math.ceil(by)) : cy > by ? new IntIterator(dy > by ? Math.floor(by) : Math.ceil(dy),Math.ceil(cy)) : new IntIterator(Math.floor(dy),Math.ceil(by));
+				while(_g1.min < _g1.max) {
+					var py = _g1.min++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this2 = i;
+						var a = this2;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this3 = i1;
+						var r = this3;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this4 = i2;
+						var g = this4;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this5 = i3;
+						var b = this5;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this6 = this1.image[location];
+							var this7 = this6;
+							var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this8 = old >> 24 & 255;
+							var a1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = old >> 16 & 255;
+							var r1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = old >> 8 & 255;
+							var g1 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = old & 255;
+							var b1 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = rhs >> 24 & 255;
+							var a2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = rhs >> 16 & 255;
+							var r2 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = rhs >> 8 & 255;
+							var g2 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = rhs & 255;
+							var b2 = this15 == 0 ? 0. : this15 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var inlobj_ax = ax;
+			var inlobj_ay = ay;
+			var inlobj_bx = bx;
+			var inlobj_by = by;
+			var inlobj_cx = cx;
+			var inlobj_cy = cy;
+			var inlobj_dx = dx;
+			var inlobj_dy = dy;
+			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
+			this.info = info;
+			if(this.info != null && oldInfo != null) {
+				var this1 = this.temp;
+				var ax = oldInfo.bx * this.scaleX + this.translateX;
+				var ay = oldInfo.by * this.scaleY + this.translateY;
+				var colorA = this.strokeTopColor;
+				var bx = this.info.ax * this.scaleX + this.translateX;
+				var by = this.info.ay * this.scaleY + this.translateY;
+				var colorB = this.strokeTopColor;
+				var cx = this.info.dx * this.scaleX + this.translateX;
+				var cy = this.info.dy * this.scaleY + this.translateY;
+				var colorC = this.strokeBottomColor;
+				var dx = oldInfo.cx * this.scaleX + this.translateX;
+				var dy = oldInfo.cy * this.scaleY + this.translateY;
+				var colorD = this.strokeBottomColor;
+				var aA = colorB >> 24 & 255;
+				var rA = colorB >> 16 & 255;
+				var gA = colorB >> 8 & 255;
+				var bA = colorB & 255;
+				var aB = colorA >> 24 & 255;
+				var rB = colorA >> 16 & 255;
+				var gB = colorA >> 8 & 255;
+				var bB = colorA & 255;
+				var aC = colorD >> 24 & 255;
+				var rC = colorD >> 16 & 255;
+				var gC = colorD >> 8 & 255;
+				var bC = colorD & 255;
+				var bcx = bx - dx;
+				var bcy = by - dy;
+				var acx = ax - dx;
+				var acy = ay - dy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var _g = dx > bx ? dx > ax ? new IntIterator(bx > ax ? Math.floor(ax) : Math.floor(bx),Math.ceil(dx)) : new IntIterator(Math.floor(bx),Math.ceil(ax)) : bx > ax ? new IntIterator(dx > ax ? Math.floor(ax) : Math.ceil(dx),Math.ceil(bx)) : new IntIterator(Math.floor(dx),Math.ceil(ax));
+				while(_g.min < _g.max) {
+					var px = _g.min++;
+					var pcx = px - dx;
+					var _g1 = dy > by ? dy > ay ? new IntIterator(by > ay ? Math.floor(ay) : Math.floor(by),Math.ceil(dy)) : new IntIterator(Math.floor(by),Math.ceil(ay)) : by > ay ? new IntIterator(dy > ay ? Math.floor(ay) : Math.ceil(dy),Math.ceil(by)) : new IntIterator(Math.floor(dy),Math.ceil(ay));
+					while(_g1.min < _g1.max) {
+						var py = _g1.min++;
+						var pcy = py - dy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this2 = i;
+							var a = this2;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this3 = i1;
+							var r = this3;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this4 = i2;
+							var g = this4;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this5 = i3;
+							var b = this5;
+							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+							if(this1.transparent && a < 254) {
+								var this6 = this1.image[location];
+								var this7 = this6;
+								var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this8 = old >> 24 & 255;
+								var a1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = old >> 16 & 255;
+								var r1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = old >> 8 & 255;
+								var g1 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = old & 255;
+								var b1 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = rhs >> 24 & 255;
+								var a2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = rhs >> 16 & 255;
+								var r2 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = rhs >> 8 & 255;
+								var g2 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = rhs & 255;
+								var b2 = this15 == 0 ? 0. : this15 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var aA = colorC >> 24 & 255;
+				var rA = colorC >> 16 & 255;
+				var gA = colorC >> 8 & 255;
+				var bA = colorC & 255;
+				var aB = colorB >> 24 & 255;
+				var rB = colorB >> 16 & 255;
+				var gB = colorB >> 8 & 255;
+				var bB = colorB & 255;
+				var aC = colorD >> 24 & 255;
+				var rC = colorD >> 16 & 255;
+				var gC = colorD >> 8 & 255;
+				var bC = colorD & 255;
+				var bcx = cx - dx;
+				var bcy = cy - dy;
+				var acx = bx - dx;
+				var acy = by - dy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var _g = dx > cx ? dx > bx ? new IntIterator(cx > bx ? Math.floor(bx) : Math.floor(cx),Math.ceil(dx)) : new IntIterator(Math.floor(cx),Math.ceil(bx)) : cx > bx ? new IntIterator(dx > bx ? Math.floor(bx) : Math.ceil(dx),Math.ceil(cx)) : new IntIterator(Math.floor(dx),Math.ceil(bx));
+				while(_g.min < _g.max) {
+					var px = _g.min++;
+					var pcx = px - dx;
+					var _g1 = dy > cy ? dy > by ? new IntIterator(cy > by ? Math.floor(by) : Math.floor(cy),Math.ceil(dy)) : new IntIterator(Math.floor(cy),Math.ceil(by)) : cy > by ? new IntIterator(dy > by ? Math.floor(by) : Math.ceil(dy),Math.ceil(cy)) : new IntIterator(Math.floor(dy),Math.ceil(by));
+					while(_g1.min < _g1.max) {
+						var py = _g1.min++;
+						var pcy = py - dy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this2 = i;
+							var a = this2;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this3 = i1;
+							var r = this3;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this4 = i2;
+							var g = this4;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this5 = i3;
+							var b = this5;
+							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+							if(this1.transparent && a < 254) {
+								var this6 = this1.image[location];
+								var this7 = this6;
+								var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this8 = old >> 24 & 255;
+								var a1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = old >> 16 & 255;
+								var r1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = old >> 8 & 255;
+								var g1 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = old & 255;
+								var b1 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = rhs >> 24 & 255;
+								var a2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = rhs >> 16 & 255;
+								var r2 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = rhs >> 8 & 255;
+								var g2 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = rhs & 255;
+								var b2 = this15 == 0 ? 0. : this15 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+			}
+		}
+		this.toggleDraw = !this.toggleDraw;
+		this.x0 = x2;
+		this.y0 = y2;
+	}
+	,lineTo: function(x2,y2) {
+		var oldInfo = this.info;
+		var this1 = this.temp;
+		var px = this.x0 * this.scaleX + this.translateX;
+		var py = this.y0 * this.scaleY + this.translateY;
+		var colorA = this.strokeTopColor;
+		var colorB = this.strokeTopColor;
+		var colorC = this.strokeBottomColor;
+		var colorD = this.strokeBottomColor;
+		var o = y2 * this.scaleY + this.translateY - py;
+		var a = x2 * this.scaleX + this.translateX - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorA;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorA >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorA >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorA >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorA & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorB;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorB >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorB >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorB >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorB & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorC;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorC >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorC >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorC >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorC & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorD;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorD >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorD >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorD >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorD & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var aA = colorB >> 24 & 255;
+		var rA = colorB >> 16 & 255;
+		var gA = colorB >> 8 & 255;
+		var bA = colorB & 255;
+		var aB = colorA >> 24 & 255;
+		var rB = colorA >> 16 & 255;
+		var gB = colorA >> 8 & 255;
+		var bB = colorA & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = bx - dx;
+		var bcy = by - dy;
+		var acx = ax - dx;
+		var acy = ay - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var _g = dx > bx ? dx > ax ? new IntIterator(bx > ax ? Math.floor(ax) : Math.floor(bx),Math.ceil(dx)) : new IntIterator(Math.floor(bx),Math.ceil(ax)) : bx > ax ? new IntIterator(dx > ax ? Math.floor(ax) : Math.ceil(dx),Math.ceil(bx)) : new IntIterator(Math.floor(dx),Math.ceil(ax));
+		while(_g.min < _g.max) {
+			var px = _g.min++;
+			var pcx = px - dx;
+			var _g1 = dy > by ? dy > ay ? new IntIterator(by > ay ? Math.floor(ay) : Math.floor(by),Math.ceil(dy)) : new IntIterator(Math.floor(by),Math.ceil(ay)) : by > ay ? new IntIterator(dy > ay ? Math.floor(ay) : Math.ceil(dy),Math.ceil(by)) : new IntIterator(Math.floor(dy),Math.ceil(ay));
+			while(_g1.min < _g1.max) {
+				var py = _g1.min++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this2 = i;
+					var a = this2;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this3 = i1;
+					var r = this3;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this4 = i2;
+					var g = this4;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this5 = i3;
+					var b = this5;
+					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+					if(this1.transparent && a < 254) {
+						var this6 = this1.image[location];
+						var this7 = this6;
+						var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this8 = old >> 24 & 255;
+						var a1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = old >> 16 & 255;
+						var r1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = old >> 8 & 255;
+						var g1 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = old & 255;
+						var b1 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = rhs >> 24 & 255;
+						var a2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = rhs >> 16 & 255;
+						var r2 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = rhs >> 8 & 255;
+						var g2 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = rhs & 255;
+						var b2 = this15 == 0 ? 0. : this15 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		var aA = colorC >> 24 & 255;
+		var rA = colorC >> 16 & 255;
+		var gA = colorC >> 8 & 255;
+		var bA = colorC & 255;
+		var aB = colorB >> 24 & 255;
+		var rB = colorB >> 16 & 255;
+		var gB = colorB >> 8 & 255;
+		var bB = colorB & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = cx - dx;
+		var bcy = cy - dy;
+		var acx = bx - dx;
+		var acy = by - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var _g = dx > cx ? dx > bx ? new IntIterator(cx > bx ? Math.floor(bx) : Math.floor(cx),Math.ceil(dx)) : new IntIterator(Math.floor(cx),Math.ceil(bx)) : cx > bx ? new IntIterator(dx > bx ? Math.floor(bx) : Math.ceil(dx),Math.ceil(cx)) : new IntIterator(Math.floor(dx),Math.ceil(bx));
+		while(_g.min < _g.max) {
+			var px = _g.min++;
+			var pcx = px - dx;
+			var _g1 = dy > cy ? dy > by ? new IntIterator(cy > by ? Math.floor(by) : Math.floor(cy),Math.ceil(dy)) : new IntIterator(Math.floor(cy),Math.ceil(by)) : cy > by ? new IntIterator(dy > by ? Math.floor(by) : Math.ceil(dy),Math.ceil(cy)) : new IntIterator(Math.floor(dy),Math.ceil(by));
+			while(_g1.min < _g1.max) {
+				var py = _g1.min++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this2 = i;
+					var a = this2;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this3 = i1;
+					var r = this3;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this4 = i2;
+					var g = this4;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this5 = i3;
+					var b = this5;
+					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+					if(this1.transparent && a < 254) {
+						var this6 = this1.image[location];
+						var this7 = this6;
+						var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this8 = old >> 24 & 255;
+						var a1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = old >> 16 & 255;
+						var r1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = old >> 8 & 255;
+						var g1 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = old & 255;
+						var b1 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = rhs >> 24 & 255;
+						var a2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = rhs >> 16 & 255;
+						var r2 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = rhs >> 8 & 255;
+						var g2 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = rhs & 255;
+						var b2 = this15 == 0 ? 0. : this15 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
+		this.info = info;
+		if(this.info != null && oldInfo != null) {
+			var this1 = this.temp;
+			var ax = oldInfo.bx * this.scaleX + this.translateX;
+			var ay = oldInfo.by * this.scaleY + this.translateY;
+			var colorA = this.strokeTopColor;
+			var bx = this.info.ax * this.scaleX + this.translateX;
+			var by = this.info.ay * this.scaleY + this.translateY;
+			var colorB = this.strokeTopColor;
+			var cx = this.info.dx * this.scaleX + this.translateX;
+			var cy = this.info.dy * this.scaleY + this.translateY;
+			var colorC = this.strokeBottomColor;
+			var dx = oldInfo.cx * this.scaleX + this.translateX;
+			var dy = oldInfo.cy * this.scaleY + this.translateY;
+			var colorD = this.strokeBottomColor;
+			var aA = colorB >> 24 & 255;
+			var rA = colorB >> 16 & 255;
+			var gA = colorB >> 8 & 255;
+			var bA = colorB & 255;
+			var aB = colorA >> 24 & 255;
+			var rB = colorA >> 16 & 255;
+			var gB = colorA >> 8 & 255;
+			var bB = colorA & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = bx - dx;
+			var bcy = by - dy;
+			var acx = ax - dx;
+			var acy = ay - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var _g = dx > bx ? dx > ax ? new IntIterator(bx > ax ? Math.floor(ax) : Math.floor(bx),Math.ceil(dx)) : new IntIterator(Math.floor(bx),Math.ceil(ax)) : bx > ax ? new IntIterator(dx > ax ? Math.floor(ax) : Math.ceil(dx),Math.ceil(bx)) : new IntIterator(Math.floor(dx),Math.ceil(ax));
+			while(_g.min < _g.max) {
+				var px = _g.min++;
+				var pcx = px - dx;
+				var _g1 = dy > by ? dy > ay ? new IntIterator(by > ay ? Math.floor(ay) : Math.floor(by),Math.ceil(dy)) : new IntIterator(Math.floor(by),Math.ceil(ay)) : by > ay ? new IntIterator(dy > ay ? Math.floor(ay) : Math.ceil(dy),Math.ceil(by)) : new IntIterator(Math.floor(dy),Math.ceil(ay));
+				while(_g1.min < _g1.max) {
+					var py = _g1.min++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this2 = i;
+						var a = this2;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this3 = i1;
+						var r = this3;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this4 = i2;
+						var g = this4;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this5 = i3;
+						var b = this5;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this6 = this1.image[location];
+							var this7 = this6;
+							var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this8 = old >> 24 & 255;
+							var a1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = old >> 16 & 255;
+							var r1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = old >> 8 & 255;
+							var g1 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = old & 255;
+							var b1 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = rhs >> 24 & 255;
+							var a2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = rhs >> 16 & 255;
+							var r2 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = rhs >> 8 & 255;
+							var g2 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = rhs & 255;
+							var b2 = this15 == 0 ? 0. : this15 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var aA = colorC >> 24 & 255;
+			var rA = colorC >> 16 & 255;
+			var gA = colorC >> 8 & 255;
+			var bA = colorC & 255;
+			var aB = colorB >> 24 & 255;
+			var rB = colorB >> 16 & 255;
+			var gB = colorB >> 8 & 255;
+			var bB = colorB & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = cx - dx;
+			var bcy = cy - dy;
+			var acx = bx - dx;
+			var acy = by - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var _g = dx > cx ? dx > bx ? new IntIterator(cx > bx ? Math.floor(bx) : Math.floor(cx),Math.ceil(dx)) : new IntIterator(Math.floor(cx),Math.ceil(bx)) : cx > bx ? new IntIterator(dx > bx ? Math.floor(bx) : Math.ceil(dx),Math.ceil(cx)) : new IntIterator(Math.floor(dx),Math.ceil(bx));
+			while(_g.min < _g.max) {
+				var px = _g.min++;
+				var pcx = px - dx;
+				var _g1 = dy > cy ? dy > by ? new IntIterator(cy > by ? Math.floor(by) : Math.floor(cy),Math.ceil(dy)) : new IntIterator(Math.floor(cy),Math.ceil(by)) : cy > by ? new IntIterator(dy > by ? Math.floor(by) : Math.ceil(dy),Math.ceil(cy)) : new IntIterator(Math.floor(dy),Math.ceil(by));
+				while(_g1.min < _g1.max) {
+					var py = _g1.min++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this2 = i;
+						var a = this2;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this3 = i1;
+						var r = this3;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this4 = i2;
+						var g = this4;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this5 = i3;
+						var b = this5;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this6 = this1.image[location];
+							var this7 = this6;
+							var old = pixelimage_Endian_isLittleEndian ? (this7 >> 24 & 255) << 24 | (this7 & 255) << 16 | (this7 >> 8 & 255) << 8 | this7 >> 16 & 255 : this7;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this8 = old >> 24 & 255;
+							var a1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = old >> 16 & 255;
+							var r1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = old >> 8 & 255;
+							var g1 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = old & 255;
+							var b1 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = rhs >> 24 & 255;
+							var a2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = rhs >> 16 & 255;
+							var r2 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = rhs >> 8 & 255;
+							var g2 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = rhs & 255;
+							var b2 = this15 == 0 ? 0. : this15 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+		}
+		this.x0 = x2;
+		this.y0 = y2;
+		this.toggleDraw = true;
+	}
+	,moveTo: function(x1,y1) {
+		this.x0 = x1;
+		this.y0 = y1;
+		this.info = null;
+		this.toggleDraw = true;
+	}
+	,__class__: pixelimage_shapeStruct_PathElementThickGradient
 });
 var pixelimage_shapeStruct_PolyLineGradient = function(opacity,visibility,strokeWidth,points,colorDirection,colors) {
 	if(colorDirection == null) {
@@ -19086,6 +21522,15 @@ pixelimage_shapeStruct_PolyLineGradient.prototype = $extend(pixelimage_shapeStru
 					}
 				}
 			}
+			var inlobj_ax = ax;
+			var inlobj_ay = ay;
+			var inlobj_bx = bx;
+			var inlobj_by = by;
+			var inlobj_cx = cx;
+			var inlobj_cy = cy;
+			var inlobj_dx = dx;
+			var inlobj_dy = dy;
+			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
 		}
 		return pixelimage_shapeStruct_BasicGradient.prototype.render.call(this,pixelImage);
 	}
@@ -19556,6 +22001,15 @@ pixelimage_shapeStruct_PolyLineShape.prototype = $extend(pixelimage_shapeStruct_
 					}
 				}
 			}
+			var inlobj_ax = ax;
+			var inlobj_ay = ay;
+			var inlobj_bx = bx;
+			var inlobj_by = by;
+			var inlobj_cx = cx;
+			var inlobj_cy = cy;
+			var inlobj_dx = dx;
+			var inlobj_dy = dy;
+			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
 		}
 		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
@@ -19832,25 +22286,25 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -19858,7 +22312,7 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -19914,6 +22368,14 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
 		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_QuadShape
@@ -22454,25 +24916,25 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -22480,7 +24942,7 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -22536,6 +24998,22 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 		var px = this.x2;
 		var py = this.y2;
 		var color = this.strokeColor;
@@ -22859,25 +25337,25 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -22885,7 +25363,7 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -22941,6 +25419,22 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 		var px = this.x3;
 		var py = this.y3;
 		var color = this.strokeColor;
@@ -23264,25 +25758,25 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		}
 		var bx1 = cx;
 		var by1 = cy;
-		var cx = dx;
-		var cy = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
-			bx1 = cx;
-			by1 = cy;
-			cx = bx_;
-			cy = by_;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
 		}
-		var s0 = by * cx - bx * cy;
-		var sx = cy - by;
-		var sy = bx - cx;
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
 		var t0 = bx * by1 - by * bx1;
 		var tx = by - by1;
 		var ty = bx1 - bx;
-		var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
-		var ii = by > by1 ? by > cy ? new IntIterator(by1 > cy ? Math.floor(cy) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy)) : by1 > cy ? new IntIterator(by > cy ? Math.floor(cy) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy));
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var ii = by > by1 ? by > cy1 ? new IntIterator(by1 > cy1 ? Math.floor(cy1) : Math.floor(by1),Math.ceil(by)) : new IntIterator(Math.floor(by1),Math.ceil(cy1)) : by1 > cy1 ? new IntIterator(by > cy1 ? Math.floor(cy1) : Math.ceil(by),Math.ceil(by1)) : new IntIterator(Math.floor(by),Math.ceil(cy1));
 		var this1 = new pixelimage_iter_IntIterStart(ii.min,ii.max);
 		var yIter3 = this1;
 		var foundY = false;
@@ -23290,7 +25784,7 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 		var t = 0.;
 		var sxx = 0.;
 		var txx = 0.;
-		var _g = bx > bx1 ? bx > cx ? new IntIterator(bx1 > cx ? Math.floor(cx) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx)) : bx1 > cx ? new IntIterator(bx > cx ? Math.floor(cx) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx));
+		var _g = bx > bx1 ? bx > cx1 ? new IntIterator(bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1),Math.ceil(bx)) : new IntIterator(Math.floor(bx1),Math.ceil(cx1)) : bx1 > cx1 ? new IntIterator(bx > cx1 ? Math.floor(cx1) : Math.ceil(bx),Math.ceil(bx1)) : new IntIterator(Math.floor(bx),Math.ceil(cx1));
 		while(_g.min < _g.max) {
 			var x = _g.min++;
 			sxx = sx * x;
@@ -23346,6 +25840,22 @@ pixelimage_shapeStruct_TriangleShape.prototype = $extend(pixelimage_shapeStruct_
 				}
 			}
 		}
+		var inlobj_ax = ax;
+		var inlobj_ay = ay;
+		var inlobj_bx = bx;
+		var inlobj_by = by;
+		var inlobj_cx = cx;
+		var inlobj_cy = cy;
+		var inlobj_dx = dx;
+		var inlobj_dy = dy;
+		var info_ax = ax;
+		var info_ay = ay;
+		var info_bx = bx;
+		var info_by = by;
+		var info_cx = cx;
+		var info_cy = cy;
+		var info_dx = dx;
+		var info_dy = dy;
 		return pixelimage_shapeStruct_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_TriangleShape
@@ -23394,6 +25904,9 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 		case "PathElementShape":
 			s = new pixelimage_shapeStruct_PathElementShape();
 			break;
+		case "PathElementThickGradient":
+			s = new pixelimage_shapeStruct_PathElementThickGradient();
+			break;
 		case "PolyLineGradient":
 			s = new pixelimage_shapeStruct_PolyLineGradient();
 			break;
@@ -23413,7 +25926,7 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 			s = new pixelimage_shapeStruct_SquareShape();
 			break;
 		case "TriangleGradient":
-			haxe_Log.trace("triangle gradient",{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 54, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
+			haxe_Log.trace("triangle gradient",{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 56, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
 			s = new pixelimage_shapeStruct_TriangleGradient();
 			break;
 		case "TriangleShape":
@@ -23425,7 +25938,7 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 		var att = x.attributes();
 		while(att.hasNext()) {
 			var att1 = att.next();
-			haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 65, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
+			haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/shapeStruct/XMLshape.hx", lineNumber : 67, className : "pixelimage.shapeStruct.XMLshape", methodName : "processShape"});
 			s.setParameter(att1,x.get(att1));
 		}
 		s.render(this.pixelImage);
@@ -23433,7 +25946,7 @@ pixelimage_shapeStruct_XMLshape.prototype = {
 	,__class__: pixelimage_shapeStruct_XMLshape
 };
 function pixelimage_shapeStruct_XMLshapeSamples_shapeTestArr() {
-	return [pixelimage_shapeStruct_XMLshapeSamples_arcTest,pixelimage_shapeStruct_XMLshapeSamples_circleTest,pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest,pixelimage_shapeStruct_XMLshapeSamples_ellipseTest,pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementQuadTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementCubicTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_quadCurveTest,pixelimage_shapeStruct_XMLshapeSamples_quadShape,pixelimage_shapeStruct_XMLshapeSamples_rectangleShape,pixelimage_shapeStruct_XMLshapeSamples_squareShape,pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest,pixelimage_shapeStruct_XMLshapeSamples_triangleShape];
+	return [pixelimage_shapeStruct_XMLshapeSamples_arcTest,pixelimage_shapeStruct_XMLshapeSamples_circleTest,pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest,pixelimage_shapeStruct_XMLshapeSamples_ellipseTest,pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementQuadTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementCubicTest,pixelimage_shapeStruct_XMLshapeSamples_pathElementThickGradTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest,pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest,pixelimage_shapeStruct_XMLshapeSamples_quadCurveTest,pixelimage_shapeStruct_XMLshapeSamples_quadShape,pixelimage_shapeStruct_XMLshapeSamples_rectangleShape,pixelimage_shapeStruct_XMLshapeSamples_squareShape,pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest,pixelimage_shapeStruct_XMLshapeSamples_triangleShape];
 }
 var vision_ds_Line2D = function(start,end) {
 	this.end = new vision_ds_Point2D(0,0);
@@ -23521,9 +26034,10 @@ var pixelimage_shapeStruct_XMLshapeSamples_cubicCurveTest = "<CubicCurveShape \n
 var pixelimage_shapeStruct_XMLshapeSamples_ellipseTest = "<EllipseShape \n                        top=\"100\" \n                        width=\"200\" \n                        height=\"50\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </EllipseShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_lineGradientTest = "<LineGradient \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        strokewidth=\"1\" \n                        colorA=\"0xFF0000\" colorB=\"0xa00cc0\" colorC=\"0x0fa00f\" colorD=\"0x000fff\">\n                    </LineGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_lineShapeTest = "<LineShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </LineShape>";
-var pixelimage_shapeStruct_XMLshapeSamples_quadtest_d = "M200,300 Q400,50 600,300 T1000,300";
+var pixelimage_shapeStruct_XMLshapeSamples_quadtest_d = "M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_shapeStruct_XMLshapeSamples_cubictest_d = "M100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_shapeStruct_XMLshapeSamples_pathElementQuadTest = "<PathElementShape \n                        pathData=\"" + pixelimage_shapeStruct_XMLshapeSamples_quadtest_d + "\" \n                        strokeWidth=\"10\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0x0000ff\">\n                    </PathElementShape>";
+var pixelimage_shapeStruct_XMLshapeSamples_pathElementThickGradTest = "<PathElementThickGradient\n                        pathData=\"" + pixelimage_shapeStruct_XMLshapeSamples_quadtest_d + "\" \n                        strokeWidth=\"25\" strokeTopColor=\"0xFFFF0000\" strokeBottomColor=\"0xFF00FFBB\" \n                        fill=\"0x0000ff\">\n                    </PathElementThickGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_pathElementCubicTest = "<PathElementShape \n                        pathData=\"" + pixelimage_shapeStruct_XMLshapeSamples_cubictest_d + "\" \n                        translateX=\"0\"\n                        translateY=\"0\"\n                        strokeWidth=\"30\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0xff0000ff\">\n                    </PathElementShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_polyLineGradientTest = "<PolyLineGradient \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        colorDirection=\"longways\" \n                        cornerColors=\"[ 0xFF0000, 0xb1afcc, 0xaaaa00, 0xcc00cc ]\">\n                    </PolyLineGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_polyLineShapeTest = "<PolyLineShape \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </PolyLineShape>";

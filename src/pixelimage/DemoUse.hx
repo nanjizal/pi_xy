@@ -40,7 +40,7 @@ class DemoUse {
         
         //for( aShape in shapeTestArr() ){
             //if( count > 3 ) break;
-            var aShape = shapeTestArr()[6];
+            var aShape = shapeTestArr()[8];
             /*
             var data = aShape.split('\n');
             for( i in 0...data.length ) data[ i ] = StringTools.trim(data[ i ]);

@@ -9,6 +9,7 @@ function shapeTestArr():Array<String>{
             ,   lineShapeTest
             ,   pathElementQuadTest
             ,   pathElementCubicTest
+            ,   pathElementThickGradTest
             ,   polyLineGradientTest
             ,   polyLineShapeTest 
             ,   quadCurveTest 
@@ -89,7 +90,8 @@ var lineShapeTest: String =
                         x2="360" y2="120" 
                         strokeWidth="30" strokeColor="0xffFF0000">
                     </LineShape>';
-var quadtest_d      = 'M200,300 Q400,50 600,300 T1000,300';
+//var quadtest_d      = 'M200,300 Q400,50 600,300 T1000,300';
+var quadtest_d      = 'M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200';
 var cubictest_d     = 'M100,200 C100,100 250,100 250,200S400,300 400,200';
 // needs justPath to implement..?
 var pathElementQuadTest =
@@ -98,6 +100,12 @@ var pathElementQuadTest =
                         strokeWidth="10" strokeColor="0xFFFF0000" 
                         fill="0x0000ff">
                     </PathElementShape>';
+var pathElementThickGradTest =
+                    '<PathElementThickGradient
+                        pathData="$quadtest_d" 
+                        strokeWidth="25" strokeTopColor="0xFFFF0000" strokeBottomColor="0xFF00FFBB" 
+                        fill="0x0000ff">
+                    </PathElementThickGradient>';                    
 var pathElementCubicTest =
                     '<PathElementShape 
                         pathData="$cubictest_d" 

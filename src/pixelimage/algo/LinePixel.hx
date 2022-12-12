@@ -50,6 +50,7 @@ function rotateLine( pixelimage: Pixelimage
         pixelimage.fillSquare( dx, dy, 12, 0xFFF000F0 );
     }
     pixelimage.fillQuad( ax, ay, bx, by, cx, cy, dx, dy, color );
+    return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
 }
 
 inline
@@ -99,4 +100,6 @@ function rotateGradLine( pixelimage: Pixelimage
         pixelimage.fillSquare( dx, dy, 12, colorD );
     }
     pixelimage.fillGradQuad( ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
+    return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+
 }

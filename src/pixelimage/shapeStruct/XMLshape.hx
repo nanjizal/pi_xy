@@ -38,6 +38,8 @@ class XMLshape {
                 new LineShape();
             case 'PathElementShape':
                 new PathElementShape();
+            case 'PathElementThickGradient':
+                new PathElementThickGradient();
             case 'PolyLineGradient':
                 new PolyLineGradient();
             case 'PolyLineShape':
