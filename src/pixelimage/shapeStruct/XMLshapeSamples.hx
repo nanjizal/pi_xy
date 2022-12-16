@@ -180,19 +180,19 @@ var star6Shape =
 var tileRectangleTest = 
                     '<RectanglePattern 
                         left="100" top="100" 
-                        width="200" height="50" 
+                        width="600" height="400" 
                         rounded="true" 
                         strokeColor="0xFFFF0000" 
-                        strokeWidth="8" 
+                        strokeWidth="12" 
                         foreFill="0xFF1912F9"
                         backFill="0xFF5CC7B3"
                         foreStroke="0xFFF1FF33"
                         backStroke="0xFFF7287B" 
-                        forePatternFill="[false,false,true]"
+                        forePatternFill="[false,false,false,false,false,true,true,true]"
                         forePatternWidth="8"
                         forePatternHeight="4"
                         forePatternAcross="true"
-                        backPatternFill="[true,true,false,false]"
+                        backPatternFill="[true,true,true,true,false,false,false,false]"
                         backPatternWidth="8"
                         backPatternHeight="4"
                         backPatternAcross="true">
