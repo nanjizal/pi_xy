@@ -40,14 +40,50 @@ import pixelimage.pixel.PixelChannel;
                     if( (s + t) < A ) {
                         // store first hit
                         pixelimage.setARGB( x, y, color );
-                        //pixelimage.setARGB( x+1, y, color );//
-                        //pixelimage.setARGB( x-1, y, color );
-                        //pixelimage.setARGB( x, y+1, color );//
-                        //pixelimage.setARGB( x, y-1, color );
-                        //pixelimage.setARGB( x-1, y-1, color );
-                        //pixelimage.setARGB( x+1, y+1, color );//
-                        //pixelimage.setARGB( x-1, y+1, color );
-                        //pixelimage.setARGB( x+1, y-1, color );
+                        foundY = true;
+                    } else {
+                        // after filling break
+                        if( foundY ) break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                    }
+                }
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                
+        }
+    }
+
+    inline 
+    function tileTriUnsafe( pixelimage: Pixelimage
+                          , ax: Float, ay: Float
+                          , bx: Float, by: Float
+                          , cx: Float, cy: Float
+                          , srcImage: Pixelimage ){
+        var s0 = ay*cx - ax*cy;
+        var sx = cy - ay;
+        var sy = ax - cx;
+        var t0 = ax*by - ay*bx;
+        var tx = ay - by;
+        var ty = bx - ax;
+        var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var foundY = false;
+        var s = 0.;
+        var t = 0.;
+        var sxx = 0.;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+        var txx = 0.;
+        for( x in boundIterator3( ax, bx, cx ) ){
+            sxx = sx*x;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            txx = tx*x;
+            foundY = false;
+            for( y in yIter3 ){
+                s = s0 + sxx + sy*y;
+                t = t0 + txx + ty*y;
+                if( s <= 0 || t <= 0 ){
+                    // after filling break
+                    if( foundY ) break;
+                } else {
+                    if( (s + t) < A ) {
+                        // store first hit
+                        var color = srcImage.getARGB( x % srcImage.width, y % srcImage.height );
+                        pixelimage.setARGB( x, y, color );
                         foundY = true;
                     } else {
                         // after filling break

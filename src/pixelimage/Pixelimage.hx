@@ -204,6 +204,58 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             if( q > maxY ) break;
         }
     }
+    inline public 
+    function patternRect( foreColor: Int, backColor: Int, patternFill: Array<Bool> ){
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var count = 0;
+        var useFore = true;
+        while( true ){
+            // use pattern while in range and then repeat
+            if( count < patternFill.length ){
+                useFore = patternFill[ count ];
+                count++;
+            } else {
+                count = 0;
+                useFore = patternFill[ count ];
+            }
+            setARGB( p++, q, (useFore)?forColor: backColor );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+    }
+    inline public 
+    function patternRectDown( foreColor: Int, backColor: Int, patternFill: Array<Bool> ){
+        var p = Std.int( x );
+        var q = Std.int( y );
+        var yy = q;
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var count = 0;
+        var useFore = true;
+        while( true ){
+            // use pattern while in range and then repeat
+            if( count < patternFill.length ){
+                useFore = patternFill[ count ];
+                count++;
+            } else {
+                count = 0;
+                useFore = patternFill[ count ];
+            }
+            setARGB( p, q++, (useFore)?forColor: backColor );
+            if( q > maxY ){
+                q = yy;
+                q++;
+            } 
+            if( p > maxX ) break;
+        }
+    }
     /**
         provides a simple filled square a short cut 
         @see simpleRect
