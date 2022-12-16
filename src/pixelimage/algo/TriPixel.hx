@@ -82,7 +82,7 @@ import pixelimage.pixel.PixelChannel;
                 } else {
                     if( (s + t) < A ) {
                         // store first hit
-                        var color = srcImage.getARGB( x % srcImage.width, y % srcImage.height );
+                        var color = srcImage.getARGB( x % (srcImage.width), y % (srcImage.height) );
                         pixelimage.setARGB( x, y, color );
                         foundY = true;
                     } else {

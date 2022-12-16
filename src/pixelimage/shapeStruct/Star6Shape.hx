@@ -22,7 +22,7 @@ class Star6Shape extends FillShape {
                         , left = 0.
                         , top = 0.
                         , diameter = 1.
-                        , rotation = 0.;
+                        , rotation = 0.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.left      = left;
@@ -51,9 +51,9 @@ class Star6Shape extends FillShape {
         // outer radius
         var r_ = diameter/2;
         // inner radius
-        var _r = radius - strokeWidth;
-        var px = left + radius;
-        var py = top + radius;
+        var _r = r_ - strokeWidth;
+        var px = left + r_;
+        var py = top + r_;
         var pi = Math.PI;
         var omega: Float = -pi + rotation;
 

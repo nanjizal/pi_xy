@@ -42,7 +42,7 @@ class RectangleShape extends FillShape {
             case 'height':
                 height = Std.parseFloat( value );
             case 'rounded':
-                rounded =  ( value.toLowerCase() == 'true' )? true: false;
+                rounded =  ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
             case _:
                 super.setParameter( name, value );
         }

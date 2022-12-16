@@ -16,7 +16,8 @@ function shapeTestArr():Array<String>{
             ,   quadShape
             ,   rectangleShape
             ,   squareShape
-            ,   starShape
+            ,   star6Shape
+            ,   tileRectangleTest
             ,   triangleGradientTest
             ,   triangleShape ];
     }
@@ -119,13 +120,13 @@ var polyLineGradientTest =
                     '<PolyLineGradient 
                         points= "[ 100, 100, 50, 50, 30, 30, 70, 200 ]" 
                         colorDirection="longways" 
-                        cornerColors="[ 0xFF0000, 0xb1afcc, 0xaaaa00, 0xcc00cc ]">
+                        cornerColors="[ 0xFFFF0000, 0xFFb1afcc, 0xFFaaaa00, 0xFFcc00cc ]">
                     </PolyLineGradient>';
 
 var polyLineShapeTest = 
                     '<PolyLineShape 
                         points= "[ 100, 100, 50, 50, 30, 30, 70, 200 ]" 
-                        strokeColor="0xFF0000" strokeWidth="1" 
+                        strokeColor="0xFFFF0000" strokeWidth="1" 
                         fill="0xFF00FF00">
                     </PolyLineShape>'; // no fill yet!
 
@@ -135,7 +136,7 @@ var quadCurveTest =
                         x2="300" y2="120" 
                         x3="130" y3="220" 
                         x4="500" y4="500" 
-                        strokeColor="0xFF0000" strokeWidth="1">
+                        strokeColor="0xFFFF0000" strokeWidth="1">
                     </QuadCurveShape>';
 
 // rethink coordinates for tests!
@@ -145,7 +146,7 @@ var quadShape =
                         x2="300" y2="120" 
                         x3="130" y3="220" 
                         x4="500" y4="500" 
-                        strokeColor="0xFF0000" strokeWidth="1" 
+                        strokeColor="0xFFFF0000" strokeWidth="1" 
                         fill="0xFF00FF00">
                     </QuadShape>';
 
@@ -154,7 +155,7 @@ var rectangleShape =
                         left="100" top="100" 
                         width="200" height="50" 
                         rounded="true" 
-                        strokeColor="0xFF0000" 
+                        strokeColor="0xFFFF0000" 
                         strokeWidth="1" 
                         fill="0xFF00FF00">
                     </RectangleShape>';
@@ -164,17 +165,38 @@ var squareShape =
                     '<SquareShape 
                         left="100" top="100" 
                         diameter="90" 
-                        strokeColor="0xFF0000" strokeWidth="1" 
+                        strokeColor="0xFFFF0000" strokeWidth="1" 
                         fill="0xFF00FF00">
                     </SquareShape>';
 var star6Shape = 
                     '<SquareShape 
                         left="100" top="100" 
                         diameter="90" 
-                        strokeColor="0xFF0000" strokeWidth="1" 
+                        strokeColor="0xFFFF0000" strokeWidth="1" 
                         rotation = "0"
                         fill="0xFF00FF00">
                     </SquareShape>';
+// no border pattern
+var tileRectangleTest = 
+                    '<RectanglePattern 
+                        left="100" top="100" 
+                        width="200" height="50" 
+                        rounded="true" 
+                        strokeColor="0xFFFF0000" 
+                        strokeWidth="8" 
+                        foreFill="0xFF1912F9"
+                        backFill="0xFF5CC7B3"
+                        foreStroke="0xFFF1FF33"
+                        backStroke="0xFFF7287B" 
+                        forePatternFill="[false,false,true]"
+                        forePatternWidth="8"
+                        forePatternHeight="4"
+                        forePatternAcross="true"
+                        backPatternFill="[true,true,false,false]"
+                        backPatternWidth="8"
+                        backPatternHeight="4"
+                        backPatternAcross="true">
+                    </RectanglePattern>';
 var triangleGradientTest: String = 
                     '<TriangleGradient 
                         aX="100" aY="100" 

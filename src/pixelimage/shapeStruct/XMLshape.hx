@@ -48,6 +48,8 @@ class XMLshape {
                 new QuadCurveShape();
             case 'QuadShape':
                 new QuadShape();
+            case 'RectanglePattern':
+                new RectanglePattern();
             case 'RectangleShape':
                 new RectangleShape();
             case 'SquareShape':
