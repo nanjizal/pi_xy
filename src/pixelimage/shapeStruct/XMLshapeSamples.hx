@@ -16,6 +16,7 @@ function shapeTestArr():Array<String>{
             ,   quadShape
             ,   rectangleShape
             ,   squareShape
+            ,   starShape
             ,   triangleGradientTest
             ,   triangleShape ];
     }
@@ -166,7 +167,14 @@ var squareShape =
                         strokeColor="0xFF0000" strokeWidth="1" 
                         fill="0xFF00FF00">
                     </SquareShape>';
-
+var star6Shape = 
+                    '<SquareShape 
+                        left="100" top="100" 
+                        diameter="90" 
+                        strokeColor="0xFF0000" strokeWidth="1" 
+                        rotation = "0"
+                        fill="0xFF00FF00">
+                    </SquareShape>';
 var triangleGradientTest: String = 
                     '<TriangleGradient 
                         aX="100" aY="100" 

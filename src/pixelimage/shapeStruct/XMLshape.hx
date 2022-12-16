@@ -52,6 +52,8 @@ class XMLshape {
                 new RectangleShape();
             case 'SquareShape':
                 new SquareShape();
+            case 'Star6Shape':
+                new Star6Shape();
             case 'TriangleGradient':
                 trace('triangle gradient');
                 new TriangleGradient();
