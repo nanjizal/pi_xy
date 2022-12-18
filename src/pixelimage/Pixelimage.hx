@@ -204,6 +204,31 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             if( q > maxY ) break;
         }
     }
+    inline public
+    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2, transparent: Bool = false ): Pixelimage {
+        var p = 0;
+        var xx = p;
+        var q = 0;
+        var wNew = Std.int( width*scaleW );
+        var hNew = Std.int( height*scaleH );
+        var pixelImage = new Pixelimage( wNew, hNew );
+        var maxX = wNew;
+        var maxY = hNew;
+        while( true ){
+            // 1 = 0.5 = 1
+            // 2 = 1 = 1
+            // 3 = 1.5 = 2
+
+            var color = getARGB( Std.int( p/scaleW ), Std.int( q/scaleH ) );
+            pixelImage.setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        return pixelImage;
+    }
     inline public 
     function patternRect( x: Float, y: Float
                         , w: Float, h: Float

@@ -188,14 +188,16 @@ var tileRectangleTest =
                         backFill="0xFF5CC7B3"
                         foreStroke="0xFFF1FF33"
                         backStroke="0xFFF7287B" 
-                        forePatternFill="[false,false,false,false,false,true,true,true]"
-                        forePatternWidth="8"
-                        forePatternHeight="4"
+                        forePatternFill="[false,true]"
+                        forePatternWidth="2"
+                        forePatternHeight="2"
                         forePatternAcross="true"
+                        forePatternScale="8"
                         backPatternFill="[true,true,true,true,false,false,false,false]"
                         backPatternWidth="8"
-                        backPatternHeight="4"
-                        backPatternAcross="true">
+                        backPatternHeight="8"
+                        backPatternAcross="true"
+                        backPatternScale="8">
                     </RectanglePattern>';
 var triangleGradientTest: String = 
                     '<TriangleGradient 

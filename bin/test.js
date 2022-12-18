@@ -20962,7 +20962,10 @@ pixelimage_shapeStruct_PathElementThickGradient.prototype = $extend(pixelimage_s
 	}
 	,__class__: pixelimage_shapeStruct_PathElementThickGradient
 });
-var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross) {
+var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale) {
+	if(backPatternScale == null) {
+		backPatternScale = 1;
+	}
 	if(backPatternAcross == null) {
 		backPatternAcross = true;
 	}
@@ -20971,6 +20974,9 @@ var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColo
 	}
 	if(backPatternWidth == null) {
 		backPatternWidth = 16;
+	}
+	if(forePatternScale == null) {
+		forePatternScale = 1;
 	}
 	if(forePatternAcross == null) {
 		forePatternAcross = true;
@@ -21008,6 +21014,7 @@ var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColo
 	this.forePatternWidth = forePatternWidth;
 	this.forePatternHeight = forePatternHeight;
 	this.forePatternAcross = forePatternAcross;
+	this.forePatternScale = forePatternScale;
 	if(backPatternFill == null) {
 		this.backPatternFill = [true,true,false,false];
 	} else {
@@ -21016,6 +21023,7 @@ var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColo
 	this.backPatternWidth = backPatternWidth;
 	this.backPatternHeight = backPatternHeight;
 	this.backPatternAcross = backPatternAcross;
+	this.backPatternScale = backPatternScale;
 };
 pixelimage_shapeStruct_PatternShape.__name__ = "pixelimage.shapeStruct.PatternShape";
 pixelimage_shapeStruct_PatternShape.__super__ = pixelimage_shapeStruct_BasicShape;
@@ -21045,6 +21053,9 @@ pixelimage_shapeStruct_PatternShape.prototype = $extend(pixelimage_shapeStruct_B
 		case "backPatternHeight":
 			this.backPatternHeight = Std.parseInt(value);
 			break;
+		case "backPatternScale":
+			this.backPatternScale = Std.parseInt(value);
+			break;
 		case "backPatternWidth":
 			this.backPatternWidth = Std.parseInt(value);
 			break;
@@ -21073,6 +21084,9 @@ pixelimage_shapeStruct_PatternShape.prototype = $extend(pixelimage_shapeStruct_B
 			break;
 		case "forePatternHeight":
 			this.forePatternHeight = Std.parseInt(value);
+			break;
+		case "forePatternScale":
+			this.forePatternScale = Std.parseInt(value);
 			break;
 		case "forePatternWidth":
 			this.forePatternWidth = Std.parseInt(value);
@@ -22504,7 +22518,7 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 	}
 	,__class__: pixelimage_shapeStruct_QuadShape
 });
-var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,left,top,width,height,rounded) {
+var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale,left,top,width,height,rounded) {
 	if(rounded == null) {
 		rounded = false;
 	}
@@ -22520,6 +22534,9 @@ var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,stroke
 	if(left == null) {
 		left = 0.;
 	}
+	if(backPatternScale == null) {
+		backPatternScale = 1;
+	}
 	if(backPatternAcross == null) {
 		backPatternAcross = true;
 	}
@@ -22528,6 +22545,9 @@ var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,stroke
 	}
 	if(backPatternWidth == null) {
 		backPatternWidth = 16;
+	}
+	if(forePatternScale == null) {
+		forePatternScale = 1;
 	}
 	if(forePatternAcross == null) {
 		forePatternAcross = true;
@@ -22556,7 +22576,7 @@ var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,stroke
 	if(opacity == null) {
 		opacity = 1.;
 	}
-	pixelimage_shapeStruct_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross);
+	pixelimage_shapeStruct_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale);
 	this.left = left;
 	this.top = top;
 	this.width = width;
@@ -22665,8 +22685,8 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				var backColor = this.backStroke;
 				var patternFill = this.forePatternFill;
 				var p = 0;
+				var xx = p;
 				var q = 0;
-				var yy = q;
 				var maxX = this.forePatternWidth | 0;
 				var maxY = this.forePatternHeight | 0;
 				var count = 0;
@@ -22681,11 +22701,11 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 						++count;
 					}
 					var color = useFore ? foreColor : backColor;
-					var y = q++;
+					var x = p++;
 					var this1 = color;
 					var c = this1;
 					if((c >> 24 & 255) < 254 && srcImageFore.transparent) {
-						var location = srcImageFore.useVirtualPos ? (y - srcImageFore.virtualY) * srcImageFore.width + p - srcImageFore.virtualX | 0 : y * srcImageFore.width + p | 0;
+						var location = srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0;
 						var this2 = srcImageFore.image[location];
 						var this3 = this2;
 						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
@@ -22713,16 +22733,84 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 						var blended = a << 24 | r << 16 | g << 8 | b;
 						srcImageFore.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 					} else {
-						srcImageFore.image[srcImageFore.useVirtualPos ? (y - srcImageFore.virtualY) * srcImageFore.width + p - srcImageFore.virtualX | 0 : y * srcImageFore.width + p | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(q > maxY) {
-						q = yy;
-						++q;
+						srcImageFore.image[srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 					}
 					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
 						break;
 					}
 				}
+			}
+			if(this.forePatternScale > 1) {
+				var scaleW = this.forePatternScale;
+				var scaleH = this.forePatternScale;
+				if(scaleH == null) {
+					scaleH = 2;
+				}
+				if(scaleW == null) {
+					scaleW = 2;
+				}
+				var p = 0;
+				var xx = p;
+				var q = 0;
+				var wNew = srcImageFore.width * scaleW | 0;
+				var hNew = srcImageFore.height * scaleH | 0;
+				var this1 = new Uint32Array(wNew * hNew | 0);
+				var this2 = new pixelimage_ImageStruct(wNew,hNew,this1);
+				var pixelImage1 = this2;
+				var maxX = wNew;
+				var maxY = hNew;
+				while(true) {
+					var x = p / scaleW | 0;
+					var y = q / scaleH | 0;
+					var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : y * srcImageFore.width + x | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var x1 = p++;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage1.transparent) {
+						var location = pixelImage1.useVirtualPos ? (q - pixelImage1.virtualY) * pixelImage1.width + x1 - pixelImage1.virtualX | 0 : q * pixelImage1.width + x1 | 0;
+						var this2 = pixelImage1.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage1.image[pixelImage1.useVirtualPos ? (q - pixelImage1.virtualY) * pixelImage1.width + x1 - pixelImage1.virtualX | 0 : q * pixelImage1.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				srcImageFore = pixelImage1;
 			}
 		}
 		var w = this.backPatternWidth;
@@ -22857,6 +22945,74 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					break;
 				}
 			}
+		}
+		if(this.backPatternScale > 1) {
+			var scaleW = this.backPatternScale;
+			var scaleH = this.backPatternScale;
+			if(scaleH == null) {
+				scaleH = 2;
+			}
+			if(scaleW == null) {
+				scaleW = 2;
+			}
+			var p = 0;
+			var xx = p;
+			var q = 0;
+			var wNew = srcImageBack.width * scaleW | 0;
+			var hNew = srcImageBack.height * scaleH | 0;
+			var this1 = new Uint32Array(wNew * hNew | 0);
+			var this2 = new pixelimage_ImageStruct(wNew,hNew,this1);
+			var pixelImage1 = this2;
+			var maxX = wNew;
+			var maxY = hNew;
+			while(true) {
+				var x = p / scaleW | 0;
+				var y = q / scaleH | 0;
+				var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y - srcImageBack.virtualY) * srcImageBack.width + x - srcImageBack.virtualX | 0 : y * srcImageBack.width + x | 0];
+				var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				var x1 = p++;
+				var this1 = color;
+				var c1 = this1;
+				if((c1 >> 24 & 255) < 254 && pixelImage1.transparent) {
+					var location = pixelImage1.useVirtualPos ? (q - pixelImage1.virtualY) * pixelImage1.width + x1 - pixelImage1.virtualX | 0 : q * pixelImage1.width + x1 | 0;
+					var this2 = pixelImage1.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = color >> 24 & 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = color >> 16 & 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = color >> 8 & 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = color & 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage1.image[pixelImage1.useVirtualPos ? (q - pixelImage1.virtualY) * pixelImage1.width + x1 - pixelImage1.virtualX | 0 : q * pixelImage1.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			srcImageBack = pixelImage1;
 		}
 		var w = Math.ceil(this.width);
 		var h = Math.ceil(this.height);
@@ -30415,7 +30571,7 @@ var pixelimage_shapeStruct_XMLshapeSamples_quadShape = "<QuadShape \n           
 var pixelimage_shapeStruct_XMLshapeSamples_rectangleShape = "<RectangleShape \n                        left=\"100\" top=\"100\" \n                        width=\"200\" height=\"50\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </RectangleShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_squareShape = "<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </SquareShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_star6Shape = "<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        rotation = \"0\"\n                        fill=\"0xFF00FF00\">\n                    </SquareShape>";
-var pixelimage_shapeStruct_XMLshapeSamples_tileRectangleTest = "<RectanglePattern \n                        left=\"100\" top=\"100\" \n                        width=\"600\" height=\"400\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"12\" \n                        foreFill=\"0xFF1912F9\"\n                        backFill=\"0xFF5CC7B3\"\n                        foreStroke=\"0xFFF1FF33\"\n                        backStroke=\"0xFFF7287B\" \n                        forePatternFill=\"[false,false,false,false,false,true,true,true]\"\n                        forePatternWidth=\"8\"\n                        forePatternHeight=\"4\"\n                        forePatternAcross=\"true\"\n                        backPatternFill=\"[true,true,true,true,false,false,false,false]\"\n                        backPatternWidth=\"8\"\n                        backPatternHeight=\"4\"\n                        backPatternAcross=\"true\">\n                    </RectanglePattern>";
+var pixelimage_shapeStruct_XMLshapeSamples_tileRectangleTest = "<RectanglePattern \n                        left=\"100\" top=\"100\" \n                        width=\"600\" height=\"400\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"12\" \n                        foreFill=\"0xFF1912F9\"\n                        backFill=\"0xFF5CC7B3\"\n                        foreStroke=\"0xFFF1FF33\"\n                        backStroke=\"0xFFF7287B\" \n                        forePatternFill=\"[false,true]\"\n                        forePatternWidth=\"2\"\n                        forePatternHeight=\"2\"\n                        forePatternAcross=\"true\"\n                        forePatternScale=\"8\"\n                        backPatternFill=\"[true,true,true,true,false,false,false,false]\"\n                        backPatternWidth=\"8\"\n                        backPatternHeight=\"8\"\n                        backPatternAcross=\"true\"\n                        backPatternScale=\"8\">\n                    </RectanglePattern>";
 var pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest = "<TriangleGradient \n                        aX=\"100\" aY=\"100\" \n                        bX=\"200\" bY=\"150\" \n                        cX=\"130\" cY=\"220\" \n                        colorA=\"0xffFF0000\" colorB=\"0xff0f00ff\" colorC=\"0xffcc00cc\">\n                    </TriangleGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_triangleShape = "<TriangleShape \n                        x1=\"100\" y1=\"100\" \n                        x2=\"200\" y2=\"150\" \n                        x3=\"130\" y3=\"220\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </TriangleShape>";
 pixelimage_DemoUse_main();

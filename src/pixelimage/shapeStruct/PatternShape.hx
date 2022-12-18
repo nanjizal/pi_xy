@@ -13,11 +13,12 @@ class PatternShape extends BasicShape {
     public var forePatternWidth: Int;
     public var forePatternHeight: Int;
     public var forePatternAcross: Bool;
-
+    public var forePatternScale: Int;
     public var backPatternFill: Null< Array<Bool> >;
     public var backPatternWidth: Int;
     public var backPatternHeight: Int;
     public var backPatternAcross: Bool;
+    public var backPatternScale: Int;
 
     public function new(  opacity            = 1.
                         , visibility          = true
@@ -35,11 +36,13 @@ class PatternShape extends BasicShape {
                         , forePatternWidth = null
                         , forePatternHeight = null
                         , forePatternAcross = true
+                        , forePatternScale = 1
                         
                         , backPatternFill = null
                         , backPatternWidth = 16
                         , backPatternHeight = 16
                         , backPatternAcross = true
+                        , backPatternScale = 1
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray );
         this.foreStroke = foreStroke;
@@ -52,6 +55,7 @@ class PatternShape extends BasicShape {
         this.forePatternWidth = forePatternWidth;
         this.forePatternHeight = forePatternHeight;
         this.forePatternAcross = forePatternAcross;
+        this.forePatternScale  = forePatternScale;
 
         if( backPatternFill == null ){
             // default test pattern fill, may remove on more testing
@@ -63,6 +67,7 @@ class PatternShape extends BasicShape {
         this.backPatternWidth = backPatternWidth;
         this.backPatternHeight = backPatternHeight;
         this.backPatternAcross = backPatternAcross;
+        this.backPatternScale = backPatternScale;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -88,7 +93,9 @@ class PatternShape extends BasicShape {
                 forePatternWidth = Std.parseInt( value );
             case 'forePatternHeight':
                 forePatternHeight = Std.parseInt( value );
-             
+            case 'forePatternScale':
+                forePatternScale = Std.parseInt( value );
+
             case 'backPatternFill':
                 value = value.split('[')[1].split(']')[0];
                 backPatternFill = [ for( v in value.split(',') ){
@@ -102,7 +109,9 @@ class PatternShape extends BasicShape {
                 backPatternWidth = Std.parseInt( value );
             case 'backPatternHeight':
                 backPatternHeight = Std.parseInt( value ); 
-            
+            case 'backPatternScale':
+               backPatternScale = Std.parseInt( value );
+
             case _:
                 super.setParameter( name, value );
         }

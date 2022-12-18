@@ -25,17 +25,19 @@ class RectanglePattern extends PatternShape {
                         , forePatternWidth = null
                         , forePatternHeight = null
                         , forePatternAcross = true
+                        , forePatternScale = 1
                         , backPatternFill = null
                         , backPatternWidth = 16
                         , backPatternHeight = 16
                         , backPatternAcross = true
+                        , backPatternScale = 1
                         , left = 0.
                         , top = 0.
                         , width = 1.
                         , height = 1.
                         , rounded = false
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, foreStroke, backStroke, foreFill, backFill, forePatternFill, forePatternWidth, forePatternHeight, forePatternAcross, backPatternFill, backPatternWidth, backPatternHeight, backPatternAcross );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, foreStroke, backStroke, foreFill, backFill, forePatternFill, forePatternWidth, forePatternHeight, forePatternAcross, forePatternScale, backPatternFill, backPatternWidth, backPatternHeight, backPatternAcross, backPatternScale );
         this.left   = left;
         this.top    = top;
         this.width  = width;
@@ -70,9 +72,10 @@ class RectanglePattern extends PatternShape {
                 // draws pattern as a tile
                 srcImageFore.patternRect( 0, 0, forePatternWidth, forePatternHeight, foreStroke, backStroke, forePatternFill );
             } else {
-                // if pattern is defined to draw y first ( allow some shorter patterns )
-                srcImageFore.patternRectDown( 0, 0, forePatternWidth, forePatternHeight, foreStroke, backStroke, forePatternFill );
+                // if pattern is defined to draw y first ( allow some shorter patterns );
+                srcImageFore.patternRect( 0, 0, forePatternWidth, forePatternHeight, foreStroke, backStroke, forePatternFill );
             }
+            if( forePatternScale > 1 ) srcImageFore = srcImageFore.scaleUpInt( forePatternScale, forePatternScale );
         }
         // fill tile image
         var srcImageBack = new Pixelimage( backPatternWidth, backPatternHeight );
@@ -85,20 +88,20 @@ class RectanglePattern extends PatternShape {
             // if pattern is defined to draw y first ( allow some shorter patterns )
             srcImageBack.patternRectDown( 0, 0, backPatternWidth, backPatternHeight, foreFill, backFill, backPatternFill );
         }
-
+        if( backPatternScale > 1 ) srcImageBack = srcImageBack.scaleUpInt( backPatternScale, backPatternScale );
         var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
         
         if( rounded == false ){
-           
             if( tiledBorder ){
                 temp.tileRect( 0, 0, width, height, srcImageFore );
             } else { // simple rectangle
                 temp.simpleRect( 0, 0, width, height, strokeColor );
             }
-            
             temp.tileRect( strokeWidth, strokeWidth,width-2*strokeWidth, height-2*strokeWidth, srcImageBack );
+            
         } else {
+
             if( tiledBorder ){
                 tileRoundRectangle( cast temp, 0, 0, width, height, srcImageFore );
             } else {
