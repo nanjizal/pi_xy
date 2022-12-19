@@ -20962,36 +20962,36 @@ pixelimage_shapeStruct_PathElementThickGradient.prototype = $extend(pixelimage_s
 	}
 	,__class__: pixelimage_shapeStruct_PathElementThickGradient
 });
-var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale) {
-	if(backPatternScale == null) {
-		backPatternScale = 1;
+var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale) {
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
 	}
-	if(backPatternAcross == null) {
-		backPatternAcross = true;
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
 	}
-	if(backPatternHeight == null) {
-		backPatternHeight = 16;
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
 	}
-	if(backPatternWidth == null) {
-		backPatternWidth = 16;
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
 	}
-	if(forePatternScale == null) {
-		forePatternScale = 1;
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
 	}
-	if(forePatternAcross == null) {
-		forePatternAcross = true;
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
 	}
-	if(backFill == null) {
-		backFill = 0;
+	if(fillColor1 == null) {
+		fillColor1 = 0;
 	}
-	if(foreFill == null) {
-		foreFill = 0;
+	if(fillColor0 == null) {
+		fillColor0 = 0;
 	}
-	if(backStroke == null) {
-		backStroke = 0;
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
 	}
-	if(foreStroke == null) {
-		foreStroke = 0;
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
 	}
 	if(strokeWidth == null) {
 		strokeWidth = 1.;
@@ -21006,38 +21006,38 @@ var pixelimage_shapeStruct_PatternShape = function(opacity,visibility,strokeColo
 		opacity = 1.;
 	}
 	pixelimage_shapeStruct_BasicShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray);
-	this.foreStroke = foreStroke;
-	this.backStroke = backStroke;
-	this.foreFill = foreFill;
-	this.backFill = backFill;
-	this.forePatternFill = forePatternFill;
-	this.forePatternWidth = forePatternWidth;
-	this.forePatternHeight = forePatternHeight;
-	this.forePatternAcross = forePatternAcross;
-	this.forePatternScale = forePatternScale;
-	if(backPatternFill == null) {
-		this.backPatternFill = [true,true,false,false];
+	this.strokeColor0 = strokeColor0;
+	this.strokeColor1 = strokeColor1;
+	this.fillColor0 = fillColor0;
+	this.fillColor1 = fillColor1;
+	this.strokePatternFill = strokePatternFill;
+	this.strokePatternWidth = strokePatternWidth;
+	this.strokePatternHeight = strokePatternHeight;
+	this.strokePatternAcross = strokePatternAcross;
+	this.strokePatternScale = strokePatternScale;
+	if(fillPatternFill == null) {
+		this.fillPatternFill = [true,true,false,false];
 	} else {
-		this.backPatternFill = backPatternFill;
+		this.fillPatternFill = fillPatternFill;
 	}
-	this.backPatternWidth = backPatternWidth;
-	this.backPatternHeight = backPatternHeight;
-	this.backPatternAcross = backPatternAcross;
-	this.backPatternScale = backPatternScale;
+	this.fillPatternWidth = fillPatternWidth;
+	this.fillPatternHeight = fillPatternHeight;
+	this.fillPatternAcross = fillPatternAcross;
+	this.fillPatternScale = fillPatternScale;
 };
 pixelimage_shapeStruct_PatternShape.__name__ = "pixelimage.shapeStruct.PatternShape";
 pixelimage_shapeStruct_PatternShape.__super__ = pixelimage_shapeStruct_BasicShape;
 pixelimage_shapeStruct_PatternShape.prototype = $extend(pixelimage_shapeStruct_BasicShape.prototype,{
 	setParameter: function(name,value) {
 		switch(name) {
-		case "backFill":
-			this.backFill = Std.parseInt(value);
+		case "fillColor1":
+			this.fillColor1 = Std.parseInt(value);
 			break;
-		case "backPatternAcross":
+		case "fillPatternAcross":
 			var bools = StringTools.trim(value).toLowerCase();
-			this.backPatternAcross = bools == "true" || bools == "1";
+			this.fillPatternAcross = bools == "true" || bools == "1";
 			break;
-		case "backPatternFill":
+		case "fillPatternFill":
 			value = value.split("[")[1].split("]")[0];
 			var _g = [];
 			var _g1 = 0;
@@ -21048,28 +21048,28 @@ pixelimage_shapeStruct_PatternShape.prototype = $extend(pixelimage_shapeStruct_B
 				var bools = StringTools.trim(v).toLowerCase();
 				_g.push(bools == "true" || bools == "1");
 			}
-			this.backPatternFill = _g;
+			this.fillPatternFill = _g;
 			break;
-		case "backPatternHeight":
-			this.backPatternHeight = Std.parseInt(value);
+		case "fillPatternHeight":
+			this.fillPatternHeight = Std.parseInt(value);
 			break;
-		case "backPatternScale":
-			this.backPatternScale = Std.parseInt(value);
+		case "fillPatternScale":
+			this.fillPatternScale = Std.parseInt(value);
 			break;
-		case "backPatternWidth":
-			this.backPatternWidth = Std.parseInt(value);
+		case "fillPatternWidth":
+			this.fillPatternWidth = Std.parseInt(value);
 			break;
-		case "backStroke":
-			this.backStroke = Std.parseInt(value);
+		case "strokeColor1":
+			this.strokeColor1 = Std.parseInt(value);
 			break;
-		case "foreFill":
-			this.foreFill = Std.parseInt(value);
+		case "fillColor0":
+			this.fillColor0 = Std.parseInt(value);
 			break;
-		case "forePatternAcross":
+		case "strokePatternAcross":
 			var bools = StringTools.trim(value).toLowerCase();
-			this.forePatternAcross = bools == "true" || bools == "1";
+			this.strokePatternAcross = bools == "true" || bools == "1";
 			break;
-		case "forePatternFill":
+		case "strokePatternFill":
 			value = value.split("[")[1].split("]")[0];
 			var _g = [];
 			var _g1 = 0;
@@ -21080,19 +21080,19 @@ pixelimage_shapeStruct_PatternShape.prototype = $extend(pixelimage_shapeStruct_B
 				var bools = StringTools.trim(v).toLowerCase();
 				_g.push(bools == "true" || bools == "1");
 			}
-			this.forePatternFill = _g;
+			this.strokePatternFill = _g;
 			break;
-		case "forePatternHeight":
-			this.forePatternHeight = Std.parseInt(value);
+		case "strokePatternHeight":
+			this.strokePatternHeight = Std.parseInt(value);
 			break;
-		case "forePatternScale":
-			this.forePatternScale = Std.parseInt(value);
+		case "strokePatternScale":
+			this.strokePatternScale = Std.parseInt(value);
 			break;
-		case "forePatternWidth":
-			this.forePatternWidth = Std.parseInt(value);
+		case "strokePatternWidth":
+			this.strokePatternWidth = Std.parseInt(value);
 			break;
-		case "foreStroke":
-			this.foreStroke = Std.parseInt(value);
+		case "strokeColor0":
+			this.strokeColor0 = Std.parseInt(value);
 			break;
 		default:
 			pixelimage_shapeStruct_BasicShape.prototype.setParameter.call(this,name,value);
@@ -22518,7 +22518,7 @@ pixelimage_shapeStruct_QuadShape.prototype = $extend(pixelimage_shapeStruct_Fill
 	}
 	,__class__: pixelimage_shapeStruct_QuadShape
 });
-var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale,left,top,width,height,rounded) {
+var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,width,height,rounded) {
 	if(rounded == null) {
 		rounded = false;
 	}
@@ -22534,35 +22534,35 @@ var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,stroke
 	if(left == null) {
 		left = 0.;
 	}
-	if(backPatternScale == null) {
-		backPatternScale = 1;
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
 	}
-	if(backPatternAcross == null) {
-		backPatternAcross = true;
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
 	}
-	if(backPatternHeight == null) {
-		backPatternHeight = 16;
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
 	}
-	if(backPatternWidth == null) {
-		backPatternWidth = 16;
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
 	}
-	if(forePatternScale == null) {
-		forePatternScale = 1;
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
 	}
-	if(forePatternAcross == null) {
-		forePatternAcross = true;
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
 	}
-	if(backFill == null) {
-		backFill = 0;
+	if(fillColor1 == null) {
+		fillColor1 = 0;
 	}
-	if(foreFill == null) {
-		foreFill = 0;
+	if(fillColor0 == null) {
+		fillColor0 = 0;
 	}
-	if(backStroke == null) {
-		backStroke = 0;
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
 	}
-	if(foreStroke == null) {
-		foreStroke = 0;
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
 	}
 	if(strokeWidth == null) {
 		strokeWidth = 1.;
@@ -22576,7 +22576,7 @@ var pixelimage_shapeStruct_RectanglePattern = function(opacity,visibility,stroke
 	if(opacity == null) {
 		opacity = 1.;
 	}
-	pixelimage_shapeStruct_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,foreStroke,backStroke,foreFill,backFill,forePatternFill,forePatternWidth,forePatternHeight,forePatternAcross,forePatternScale,backPatternFill,backPatternWidth,backPatternHeight,backPatternAcross,backPatternScale);
+	pixelimage_shapeStruct_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
 	this.left = left;
 	this.top = top;
 	this.width = width;
@@ -22608,24 +22608,24 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 		}
 	}
 	,render: function(pixelImage) {
-		var srcImageFore = null;
-		var tiledBorder = this.forePatternFill != null;
+		var tileImageStroke = null;
+		var tiledBorder = this.strokePatternFill != null;
 		if(tiledBorder) {
-			var w = this.forePatternWidth;
-			var h = this.forePatternHeight;
+			var w = this.strokePatternWidth;
+			var h = this.strokePatternHeight;
 			var this1 = new Uint32Array(w * h | 0);
 			var this2 = new pixelimage_ImageStruct(w,h,this1);
-			srcImageFore = this2;
-			srcImageFore.transparent = false;
-			if(this.forePatternAcross) {
-				var foreColor = this.foreStroke;
-				var backColor = this.backStroke;
-				var patternFill = this.forePatternFill;
+			tileImageStroke = this2;
+			tileImageStroke.transparent = false;
+			if(this.strokePatternAcross) {
+				var foreColor = this.strokeColor0;
+				var backColor = this.strokeColor1;
+				var patternFill = this.strokePatternFill;
 				var p = 0;
 				var xx = p;
 				var q = 0;
-				var maxX = this.forePatternWidth | 0;
-				var maxY = this.forePatternHeight | 0;
+				var maxX = this.strokePatternWidth | 0;
+				var maxY = this.strokePatternHeight | 0;
 				var count = 0;
 				var useFore = true;
 				while(true) {
@@ -22641,9 +22641,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					var x = p++;
 					var this1 = color;
 					var c = this1;
-					if((c >> 24 & 255) < 254 && srcImageFore.transparent) {
-						var location = srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0;
-						var this2 = srcImageFore.image[location];
+					if((c >> 24 & 255) < 254 && tileImageStroke.transparent) {
+						var location = tileImageStroke.useVirtualPos ? (q - tileImageStroke.virtualY) * tileImageStroke.width + x - tileImageStroke.virtualX | 0 : q * tileImageStroke.width + x | 0;
+						var this2 = tileImageStroke.image[location];
 						var this3 = this2;
 						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
 						var this5 = this4 >> 24 & 255;
@@ -22668,9 +22668,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 						var b = 255 * (b1 * a3 + b2 * a2) | 0;
 						var a = 255 * (a3 + a2) | 0;
 						var blended = a << 24 | r << 16 | g << 8 | b;
-						srcImageFore.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						tileImageStroke.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 					} else {
-						srcImageFore.image[srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						tileImageStroke.image[tileImageStroke.useVirtualPos ? (q - tileImageStroke.virtualY) * tileImageStroke.width + x - tileImageStroke.virtualX | 0 : q * tileImageStroke.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 					}
 					if(p > maxX) {
 						p = xx;
@@ -22681,14 +22681,14 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					}
 				}
 			} else {
-				var foreColor = this.foreStroke;
-				var backColor = this.backStroke;
-				var patternFill = this.forePatternFill;
+				var foreColor = this.strokeColor0;
+				var backColor = this.strokeColor1;
+				var patternFill = this.strokePatternFill;
 				var p = 0;
 				var xx = p;
 				var q = 0;
-				var maxX = this.forePatternWidth | 0;
-				var maxY = this.forePatternHeight | 0;
+				var maxX = this.strokePatternWidth | 0;
+				var maxY = this.strokePatternHeight | 0;
 				var count = 0;
 				var useFore = true;
 				while(true) {
@@ -22704,9 +22704,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					var x = p++;
 					var this1 = color;
 					var c = this1;
-					if((c >> 24 & 255) < 254 && srcImageFore.transparent) {
-						var location = srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0;
-						var this2 = srcImageFore.image[location];
+					if((c >> 24 & 255) < 254 && tileImageStroke.transparent) {
+						var location = tileImageStroke.useVirtualPos ? (q - tileImageStroke.virtualY) * tileImageStroke.width + x - tileImageStroke.virtualX | 0 : q * tileImageStroke.width + x | 0;
+						var this2 = tileImageStroke.image[location];
 						var this3 = this2;
 						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
 						var this5 = this4 >> 24 & 255;
@@ -22731,9 +22731,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 						var b = 255 * (b1 * a3 + b2 * a2) | 0;
 						var a = 255 * (a3 + a2) | 0;
 						var blended = a << 24 | r << 16 | g << 8 | b;
-						srcImageFore.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						tileImageStroke.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 					} else {
-						srcImageFore.image[srcImageFore.useVirtualPos ? (q - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : q * srcImageFore.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						tileImageStroke.image[tileImageStroke.useVirtualPos ? (q - tileImageStroke.virtualY) * tileImageStroke.width + x - tileImageStroke.virtualX | 0 : q * tileImageStroke.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 					}
 					if(p > maxX) {
 						p = xx;
@@ -22744,9 +22744,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					}
 				}
 			}
-			if(this.forePatternScale > 1) {
-				var scaleW = this.forePatternScale;
-				var scaleH = this.forePatternScale;
+			if(this.strokePatternScale > 1) {
+				var scaleW = this.strokePatternScale;
+				var scaleH = this.strokePatternScale;
 				if(scaleH == null) {
 					scaleH = 2;
 				}
@@ -22756,8 +22756,8 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				var p = 0;
 				var xx = p;
 				var q = 0;
-				var wNew = srcImageFore.width * scaleW | 0;
-				var hNew = srcImageFore.height * scaleH | 0;
+				var wNew = tileImageStroke.width * scaleW | 0;
+				var hNew = tileImageStroke.height * scaleH | 0;
 				var this1 = new Uint32Array(wNew * hNew | 0);
 				var this2 = new pixelimage_ImageStruct(wNew,hNew,this1);
 				var pixelImage1 = this2;
@@ -22766,7 +22766,7 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				while(true) {
 					var x = p / scaleW | 0;
 					var y = q / scaleH | 0;
-					var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y - srcImageFore.virtualY) * srcImageFore.width + x - srcImageFore.virtualX | 0 : y * srcImageFore.width + x | 0];
+					var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y - tileImageStroke.virtualY) * tileImageStroke.width + x - tileImageStroke.virtualX | 0 : y * tileImageStroke.width + x | 0];
 					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 					var x1 = p++;
 					var this1 = color;
@@ -22810,24 +22810,24 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 						break;
 					}
 				}
-				srcImageFore = pixelImage1;
+				tileImageStroke = pixelImage1;
 			}
 		}
-		var w = this.backPatternWidth;
-		var h = this.backPatternHeight;
+		var w = this.fillPatternWidth;
+		var h = this.fillPatternHeight;
 		var this1 = new Uint32Array(w * h | 0);
 		var this2 = new pixelimage_ImageStruct(w,h,this1);
-		var srcImageBack = this2;
-		srcImageBack.transparent = false;
-		if(this.backPatternAcross) {
-			var foreColor = this.foreFill;
-			var backColor = this.backFill;
-			var patternFill = this.backPatternFill;
+		var tileImageFill = this2;
+		tileImageFill.transparent = false;
+		if(this.fillPatternAcross) {
+			var foreColor = this.fillColor0;
+			var backColor = this.fillColor1;
+			var patternFill = this.fillPatternFill;
 			var p = 0;
 			var xx = p;
 			var q = 0;
-			var maxX = this.backPatternWidth | 0;
-			var maxY = this.backPatternHeight | 0;
+			var maxX = this.fillPatternWidth | 0;
+			var maxY = this.fillPatternHeight | 0;
 			var count = 0;
 			var useFore = true;
 			while(true) {
@@ -22843,9 +22843,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				var x = p++;
 				var this1 = color;
 				var c = this1;
-				if((c >> 24 & 255) < 254 && srcImageBack.transparent) {
-					var location = srcImageBack.useVirtualPos ? (q - srcImageBack.virtualY) * srcImageBack.width + x - srcImageBack.virtualX | 0 : q * srcImageBack.width + x | 0;
-					var this2 = srcImageBack.image[location];
+				if((c >> 24 & 255) < 254 && tileImageFill.transparent) {
+					var location = tileImageFill.useVirtualPos ? (q - tileImageFill.virtualY) * tileImageFill.width + x - tileImageFill.virtualX | 0 : q * tileImageFill.width + x | 0;
+					var this2 = tileImageFill.image[location];
 					var this3 = this2;
 					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
 					var this5 = this4 >> 24 & 255;
@@ -22870,9 +22870,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					var b = 255 * (b1 * a3 + b2 * a2) | 0;
 					var a = 255 * (a3 + a2) | 0;
 					var blended = a << 24 | r << 16 | g << 8 | b;
-					srcImageBack.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					tileImageFill.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 				} else {
-					srcImageBack.image[srcImageBack.useVirtualPos ? (q - srcImageBack.virtualY) * srcImageBack.width + x - srcImageBack.virtualX | 0 : q * srcImageBack.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					tileImageFill.image[tileImageFill.useVirtualPos ? (q - tileImageFill.virtualY) * tileImageFill.width + x - tileImageFill.virtualX | 0 : q * tileImageFill.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 				}
 				if(p > maxX) {
 					p = xx;
@@ -22883,14 +22883,14 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 		} else {
-			var foreColor = this.foreFill;
-			var backColor = this.backFill;
-			var patternFill = this.backPatternFill;
+			var foreColor = this.fillColor0;
+			var backColor = this.fillColor1;
+			var patternFill = this.fillPatternFill;
 			var p = 0;
 			var q = 0;
 			var yy = q;
-			var maxX = this.backPatternWidth | 0;
-			var maxY = this.backPatternHeight | 0;
+			var maxX = this.fillPatternWidth | 0;
+			var maxY = this.fillPatternHeight | 0;
 			var count = 0;
 			var useFore = true;
 			while(true) {
@@ -22906,9 +22906,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				var y = q++;
 				var this1 = color;
 				var c = this1;
-				if((c >> 24 & 255) < 254 && srcImageBack.transparent) {
-					var location = srcImageBack.useVirtualPos ? (y - srcImageBack.virtualY) * srcImageBack.width + p - srcImageBack.virtualX | 0 : y * srcImageBack.width + p | 0;
-					var this2 = srcImageBack.image[location];
+				if((c >> 24 & 255) < 254 && tileImageFill.transparent) {
+					var location = tileImageFill.useVirtualPos ? (y - tileImageFill.virtualY) * tileImageFill.width + p - tileImageFill.virtualX | 0 : y * tileImageFill.width + p | 0;
+					var this2 = tileImageFill.image[location];
 					var this3 = this2;
 					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
 					var this5 = this4 >> 24 & 255;
@@ -22933,9 +22933,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					var b = 255 * (b1 * a3 + b2 * a2) | 0;
 					var a = 255 * (a3 + a2) | 0;
 					var blended = a << 24 | r << 16 | g << 8 | b;
-					srcImageBack.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					tileImageFill.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 				} else {
-					srcImageBack.image[srcImageBack.useVirtualPos ? (y - srcImageBack.virtualY) * srcImageBack.width + p - srcImageBack.virtualX | 0 : y * srcImageBack.width + p | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					tileImageFill.image[tileImageFill.useVirtualPos ? (y - tileImageFill.virtualY) * tileImageFill.width + p - tileImageFill.virtualX | 0 : y * tileImageFill.width + p | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 				}
 				if(q > maxY) {
 					q = yy;
@@ -22946,9 +22946,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 				}
 			}
 		}
-		if(this.backPatternScale > 1) {
-			var scaleW = this.backPatternScale;
-			var scaleH = this.backPatternScale;
+		if(this.fillPatternScale > 1) {
+			var scaleW = this.fillPatternScale;
+			var scaleH = this.fillPatternScale;
 			if(scaleH == null) {
 				scaleH = 2;
 			}
@@ -22958,8 +22958,8 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 			var p = 0;
 			var xx = p;
 			var q = 0;
-			var wNew = srcImageBack.width * scaleW | 0;
-			var hNew = srcImageBack.height * scaleH | 0;
+			var wNew = tileImageFill.width * scaleW | 0;
+			var hNew = tileImageFill.height * scaleH | 0;
 			var this1 = new Uint32Array(wNew * hNew | 0);
 			var this2 = new pixelimage_ImageStruct(wNew,hNew,this1);
 			var pixelImage1 = this2;
@@ -22968,7 +22968,7 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 			while(true) {
 				var x = p / scaleW | 0;
 				var y = q / scaleH | 0;
-				var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y - srcImageBack.virtualY) * srcImageBack.width + x - srcImageBack.virtualX | 0 : y * srcImageBack.width + x | 0];
+				var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y - tileImageFill.virtualY) * tileImageFill.width + x - tileImageFill.virtualX | 0 : y * tileImageFill.width + x | 0];
 				var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 				var x1 = p++;
 				var this1 = color;
@@ -23012,7 +23012,7 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 					break;
 				}
 			}
-			srcImageBack = pixelImage1;
+			tileImageFill = pixelImage1;
 		}
 		var w = Math.ceil(this.width);
 		var h = Math.ceil(this.height);
@@ -23069,9 +23069,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x1 = x % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+							var x1 = x % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -23157,9 +23157,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x1 = x % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+							var x1 = x % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -23308,9 +23308,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x1 % srcImageBack.width;
-						var y2 = y1 % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+						var x2 = x1 % tileImageFill.width;
+						var y2 = y1 % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -23396,9 +23396,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x1 % srcImageBack.width;
-						var y2 = y1 % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+						var x2 = x1 % tileImageFill.width;
+						var y2 = y1 % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -23550,9 +23550,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 									break;
 								}
 							} else if(s + t < A) {
-								var x1 = x % srcImageFore.width;
-								var y1 = y % srcImageFore.height;
-								var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+								var x1 = x % tileImageStroke.width;
+								var y1 = y % tileImageStroke.height;
+								var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 								var this2 = color;
 								var c1 = this2;
@@ -23644,9 +23644,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x2 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x2 | 0];
+							var x2 = x1 % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x2 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -23732,9 +23732,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x2 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x2 | 0];
+							var x2 = x1 % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x2 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -23866,9 +23866,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 									break;
 								}
 							} else if(s + t < A) {
-								var x1 = x % srcImageFore.width;
-								var y1 = y % srcImageFore.height;
-								var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+								var x1 = x % tileImageStroke.width;
+								var y1 = y % tileImageStroke.height;
+								var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 								var this2 = color;
 								var c1 = this2;
@@ -23960,9 +23960,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x1 = x % srcImageFore.width;
-							var y2 = y1 % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y2 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y2 * srcImageFore.width + x1 | 0];
+							var x1 = x % tileImageStroke.width;
+							var y2 = y1 % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y2 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y2 * tileImageStroke.width + x1 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -24048,9 +24048,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x1 = x % srcImageFore.width;
-							var y2 = y1 % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y2 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y2 * srcImageFore.width + x1 | 0];
+							var x1 = x % tileImageStroke.width;
+							var y2 = y1 % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y2 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y2 * tileImageStroke.width + x1 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -24182,9 +24182,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 									break;
 								}
 							} else if(s + t < A) {
-								var x1 = x % srcImageFore.width;
-								var y1 = y % srcImageFore.height;
-								var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+								var x1 = x % tileImageStroke.width;
+								var y1 = y % tileImageStroke.height;
+								var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 								var this2 = color;
 								var c1 = this2;
@@ -24276,9 +24276,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x2 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x2 | 0];
+							var x2 = x1 % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x2 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -24364,9 +24364,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageFore.width;
-							var y1 = y % srcImageFore.height;
-							var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x2 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x2 | 0];
+							var x2 = x1 % tileImageStroke.width;
+							var y1 = y % tileImageStroke.height;
+							var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x2 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this1 = color;
 							var c1 = this1;
@@ -24497,9 +24497,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 									break;
 								}
 							} else if(s + t < A) {
-								var x1 = x % srcImageFore.width;
-								var y1 = y % srcImageFore.height;
-								var c = srcImageFore.image[srcImageFore.useVirtualPos ? (y1 - srcImageFore.virtualY) * srcImageFore.width + x1 - srcImageFore.virtualX | 0 : y1 * srcImageFore.width + x1 | 0];
+								var x1 = x % tileImageStroke.width;
+								var y1 = y % tileImageStroke.height;
+								var c = tileImageStroke.image[tileImageStroke.useVirtualPos ? (y1 - tileImageStroke.virtualY) * tileImageStroke.width + x1 - tileImageStroke.virtualX | 0 : y1 * tileImageStroke.width + x1 | 0];
 								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 								var this2 = color;
 								var c1 = this2;
@@ -25289,9 +25289,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageBack.width;
-							var y2 = y1 % srcImageBack.height;
-							var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+							var x2 = x1 % tileImageFill.width;
+							var y2 = y1 % tileImageFill.height;
+							var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this2 = color;
 							var c1 = this2;
@@ -25383,9 +25383,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x3 = x2 % srcImageBack.width;
-						var y2 = y1 % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x3 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x3 | 0];
+						var x3 = x2 % tileImageFill.width;
+						var y2 = y1 % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x3 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x3 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -25471,9 +25471,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x3 = x2 % srcImageBack.width;
-						var y2 = y1 % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x3 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x3 | 0];
+						var x3 = x2 % tileImageFill.width;
+						var y2 = y1 % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x3 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x3 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -25605,9 +25605,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageBack.width;
-							var y2 = y1 % srcImageBack.height;
-							var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+							var x2 = x1 % tileImageFill.width;
+							var y2 = y1 % tileImageFill.height;
+							var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this2 = color;
 							var c1 = this2;
@@ -25699,9 +25699,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x1 % srcImageBack.width;
-						var y2 = y % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+						var x2 = x1 % tileImageFill.width;
+						var y2 = y % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -25787,9 +25787,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x1 % srcImageBack.width;
-						var y2 = y % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y2 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y2 * srcImageBack.width + x2 | 0];
+						var x2 = x1 % tileImageFill.width;
+						var y2 = y % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y2 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y2 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -25921,9 +25921,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x2 = x1 % srcImageBack.width;
-							var y1 = y % srcImageBack.height;
-							var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y1 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y1 * srcImageBack.width + x2 | 0];
+							var x2 = x1 % tileImageFill.width;
+							var y1 = y % tileImageFill.height;
+							var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y1 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y1 * tileImageFill.width + x2 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this2 = color;
 							var c1 = this2;
@@ -26015,9 +26015,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x % srcImageBack.width;
-						var y1 = y % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y1 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y1 * srcImageBack.width + x2 | 0];
+						var x2 = x % tileImageFill.width;
+						var y1 = y % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y1 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y1 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -26103,9 +26103,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 							break;
 						}
 					} else if(s + t < A) {
-						var x2 = x % srcImageBack.width;
-						var y1 = y % srcImageBack.height;
-						var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y1 - srcImageBack.virtualY) * srcImageBack.width + x2 - srcImageBack.virtualX | 0 : y1 * srcImageBack.width + x2 | 0];
+						var x2 = x % tileImageFill.width;
+						var y1 = y % tileImageFill.height;
+						var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y1 - tileImageFill.virtualY) * tileImageFill.width + x2 - tileImageFill.virtualX | 0 : y1 * tileImageFill.width + x2 | 0];
 						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 						var this1 = color;
 						var c1 = this1;
@@ -26236,9 +26236,9 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 								break;
 							}
 						} else if(s + t < A) {
-							var x1 = x % srcImageBack.width;
-							var y1 = y % srcImageBack.height;
-							var c = srcImageBack.image[srcImageBack.useVirtualPos ? (y1 - srcImageBack.virtualY) * srcImageBack.width + x1 - srcImageBack.virtualX | 0 : y1 * srcImageBack.width + x1 | 0];
+							var x1 = x % tileImageFill.width;
+							var y1 = y % tileImageFill.height;
+							var c = tileImageFill.image[tileImageFill.useVirtualPos ? (y1 - tileImageFill.virtualY) * tileImageFill.width + x1 - tileImageFill.virtualX | 0 : y1 * tileImageFill.width + x1 | 0];
 							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 							var this2 = color;
 							var c1 = this2;
@@ -26361,8 +26361,8 @@ pixelimage_shapeStruct_RectanglePattern.prototype = $extend(pixelimage_shapeStru
 			}
 		}
 		temp = null;
-		srcImageFore = null;
-		srcImageBack = null;
+		tileImageStroke = null;
+		tileImageFill = null;
 		return pixelimage_shapeStruct_PatternShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_shapeStruct_RectanglePattern
@@ -30571,7 +30571,7 @@ var pixelimage_shapeStruct_XMLshapeSamples_quadShape = "<QuadShape \n           
 var pixelimage_shapeStruct_XMLshapeSamples_rectangleShape = "<RectangleShape \n                        left=\"100\" top=\"100\" \n                        width=\"200\" height=\"50\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </RectangleShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_squareShape = "<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </SquareShape>";
 var pixelimage_shapeStruct_XMLshapeSamples_star6Shape = "<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        rotation = \"0\"\n                        fill=\"0xFF00FF00\">\n                    </SquareShape>";
-var pixelimage_shapeStruct_XMLshapeSamples_tileRectangleTest = "<RectanglePattern \n                        left=\"100\" top=\"100\" \n                        width=\"600\" height=\"400\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"12\" \n                        foreFill=\"0xFF1912F9\"\n                        backFill=\"0xFF5CC7B3\"\n                        foreStroke=\"0xFFF1FF33\"\n                        backStroke=\"0xFFF7287B\" \n                        forePatternFill=\"[false,true]\"\n                        forePatternWidth=\"2\"\n                        forePatternHeight=\"2\"\n                        forePatternAcross=\"true\"\n                        forePatternScale=\"8\"\n                        backPatternFill=\"[true,true,true,true,false,false,false,false]\"\n                        backPatternWidth=\"8\"\n                        backPatternHeight=\"8\"\n                        backPatternAcross=\"true\"\n                        backPatternScale=\"8\">\n                    </RectanglePattern>";
+var pixelimage_shapeStruct_XMLshapeSamples_tileRectangleTest = "<RectanglePattern \n                        left=\"100\" top=\"100\" \n                        width=\"600\" height=\"400\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"12\" \n                        fillColor0=\"0xFF1912F9\"\n                        fillColor1=\"0xFF5CC7B3\"\n                        strokeColor0=\"0xFFF1FF33\"\n                        strokeColor1=\"0xFFF7287B\" \n                        strokePatternFill=\"[false,true]\"\n                        strokePatternWidth=\"2\"\n                        strokePatternHeight=\"2\"\n                        strokePatternAcross=\"true\"\n                        strokePatternScale=\"8\"\n                        fillPatternFill=\"[true,true,true,true,false,false,false,false]\"\n                        fillPatternWidth=\"8\"\n                        fillPatternHeight=\"8\"\n                        fillPatternAcross=\"true\"\n                        fillPatternScale=\"8\">\n                    </RectanglePattern>";
 var pixelimage_shapeStruct_XMLshapeSamples_triangleGradientTest = "<TriangleGradient \n                        aX=\"100\" aY=\"100\" \n                        bX=\"200\" bY=\"150\" \n                        cX=\"130\" cY=\"220\" \n                        colorA=\"0xffFF0000\" colorB=\"0xff0f00ff\" colorC=\"0xffcc00cc\">\n                    </TriangleGradient>";
 var pixelimage_shapeStruct_XMLshapeSamples_triangleShape = "<TriangleShape \n                        x1=\"100\" y1=\"100\" \n                        x2=\"200\" y2=\"150\" \n                        x3=\"130\" y3=\"220\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </TriangleShape>";
 pixelimage_DemoUse_main();

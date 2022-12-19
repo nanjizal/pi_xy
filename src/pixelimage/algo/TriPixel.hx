@@ -55,7 +55,7 @@ import pixelimage.pixel.PixelChannel;
                           , ax: Float, ay: Float
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
-                          , srcImage: Pixelimage ){
+                          , tileImage: Pixelimage ){
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -82,7 +82,7 @@ import pixelimage.pixel.PixelChannel;
                 } else {
                     if( (s + t) < A ) {
                         // store first hit
-                        var color = srcImage.getARGB( x % (srcImage.width), y % (srcImage.height) );
+                        var color = tileImage.getARGB( x % (tileImage.width), y % (tileImage.height) );
                         pixelimage.setARGB( x, y, color );
                         foundY = true;
                     } else {

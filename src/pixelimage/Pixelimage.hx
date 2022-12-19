@@ -326,7 +326,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     function tileTri( ax: Float, ay: Float
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
-                    , srcImage: Pixelimage ){
+                    , tileImage: Pixelimage ){
         var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
         if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
             // swap b and c
@@ -338,7 +338,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             cx = bx_;
             cy = by_;
         }
-        tileTriUnsafe( this, ax, ay, bx, by, cx, cy, srcImage );
+        tileTriUnsafe( this, ax, ay, bx, by, cx, cy, tileImage );
     }
     public inline
     function sweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32 ){
@@ -352,7 +352,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         fillTri( ax, ay, bx, by, cx, cy, color );
     }
     public inline
-    function tileSweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, srcImage: Pixelimage ){
+    function tileSweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, tileImage: Pixelimage ){
         var currAngle = startRadian;
         var bx = rx * Math.cos( currAngle ) + ax;
         var by = ry * Math.sin( currAngle ) + ay;
@@ -360,7 +360,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         var cx = rx * Math.cos( currAngle ) + ax;
         var cy = ry * Math.sin( currAngle ) + ay;
-        tileTri( ax, ay, bx, by, cx, cy, srcImage );
+        tileTri( ax, ay, bx, by, cx, cy, tileImage );
     }
     public inline
     function fillPie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32, ?targetError: Float = 1.05 ){
@@ -390,7 +390,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         fillTri( ax, ay, bx, by, cx, cy, color );
     }
     public inline
-    function tilePie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, srcImage: Pixelimage, ?targetError: Float = 1.05 ){
+    function tilePie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, tileImage: Pixelimage, ?targetError: Float = 1.05 ){
         var rSmall = ( rx > ry )? ry: rx;
         var noSides = circleError( rSmall, targetError );
         var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
@@ -406,7 +406,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             currAngle = startRadian + i*theta;
             cx = rx * Math.cos( currAngle ) + ax;
             cy = ry * Math.sin( currAngle ) + ay;
-            tileTri( ax, ay, bx, by, cx, cy, srcImage );
+            tileTri( ax, ay, bx, by, cx, cy, tileImage );
             bx = cx;
             by = cy;
         }
@@ -414,7 +414,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         cx = rx * Math.cos( currAngle ) + ax;
         cy = ry * Math.sin( currAngle ) + ay;
-        tileTri( ax, ay, bx, by, cx, cy, srcImage );
+        tileTri( ax, ay, bx, by, cx, cy, tileImage );
     }
     /**
         uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
@@ -436,11 +436,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                      , bx: Float, by: Float
                      , cx: Float, cy: Float
                      , dx: Float, dy: Float 
-                     , srcImage: Pixelimage ){
+                     , tileImage: Pixelimage ){
         // tri e - a b d
         // tri f - b c d
-        tileTri( ax, ay, bx, by, dx, dy, srcImage );
-        tileTri( bx, by, cx, cy, dx, dy, srcImage );
+        tileTri( ax, ay, bx, by, dx, dy, tileImage );
+        tileTri( bx, by, cx, cy, dx, dy, tileImage );
         return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
     }
     /**
@@ -498,10 +498,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     public inline 
     function tileRect( x:   Float, y: Float
                          , wid: Float, hi: Float
-                         , srcImage: Pixelimage ){
+                         , tileImage: Pixelimage ){
         var bx = x + wid;
         var cy = y + hi;
-        tileQuad( x,  y, bx, y, bx, cy, x,  cy, srcImage );
+        tileQuad( x,  y, bx, y, bx, cy, x,  cy, tileImage );
         return { ax: x, ay: y, bx: bx, by: y, cx: bx, cy: cy, dx: x, dy: cy };
     }
     /**
@@ -557,12 +557,12 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     public inline 
     function tileLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, srcImage: Pixelimage, ?debugCorners = false ){
+                     , thick: Float, tileImage: Pixelimage, ?debugCorners = false ){
         var o = qy-py;
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        var info = rotateTileLine( this, px, py, thick, h, theta, srcImage, debugCorners );
+        var info = rotateTileLine( this, px, py, thick, h, theta, tileImage, debugCorners );
         return info;
     }
     /**
@@ -731,8 +731,8 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
      function tileQuadrant( cx: Float, cy: Float
                           , rx: Float, ry: Float
                           , startAngle: Float 
-                          , srcImage:  Pixelimage, ?phi:   Float, ?targetError: Float = 1.05 ){
-        tileSolidQuadrant( this, cx, cy, rx, ry, startAngle, srcImage, phi, targetError );
+                          , tileImage:  Pixelimage, ?phi:   Float, ?targetError: Float = 1.05 ){
+        tileSolidQuadrant( this, cx, cy, rx, ry, startAngle, tileImage, phi, targetError );
      }   
     /**
         this provides building block for regular polygons,ellipses and circles
@@ -760,9 +760,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     inline public
     function tilePolyBuild( cx: Float,  cy: Float
                           , rx: Float,  ry: Float
-                          , srcImage: Pixelimage, ?phi: Float = 0.
+                          , tileImage: Pixelimage, ?phi: Float = 0.
                           , ?sides: Int = 36, cornerUp: Bool = true ){
-        tilePolygonBuild( this, cx, cy, rx, ry, srcImage, phi, sides, cornerUp );
+        tilePolygonBuild( this, cx, cy, rx, ry, tileImage, phi, sides, cornerUp );
     }
     
     /**

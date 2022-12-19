@@ -1,4 +1,4 @@
-package pixelimage.shapeStruct;
+package pixelimage.shapeStruct.pattern;
 import pixelimage.Pixelimage;
 import pixelimage.shapeStruct.FillShape;
 import justPath.SvgLinePath;
@@ -6,7 +6,7 @@ import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
 
 @:structInit
-class PathElementShape extends FillShape implements ILinePathContext {
+class PathElementShape extends PatternShape implements ILinePathContext {
     public var pathData: String;
     public var translateX: Float;
     public var translateY: Float;
@@ -26,14 +26,32 @@ class PathElementShape extends FillShape implements ILinePathContext {
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
-                        , fill = 0x000000
+                        
+                        , strokeColor0 = 0x00000000
+                        , strokeColor1 = 0x00000000
+                        , fillColor0   = 0x00000000
+                        , fillColor1   = 0x00000000
+                        , strokePatternFill = null
+                        , strokePatternWidth = null
+                        , strokePatternHeight = null
+                        , strokePatternAcross = true
+                        , strokePatternScale = 1
+                        , fillPatternFill = null
+                        , fillPatternWidth = 16
+                        , fillPatternHeight = 16
+                        , fillPatternAcross = true
+                        , fillPatternScale = 1
+
                         , pathData = ''
                         , translateX = 0.
                         , translateY = 0.
                         , scaleX = 1.
                         , scaleY = 1.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray
+            , strokeColor0, strokeColor1, fillColor0, fillColor1
+            , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale
+            , fillPatternFill, fillPatternWidth, fillPatternHeight, fillPatternAcross, fillPatternScale );
         this.pathData = pathData;
         this.translateX = translateX;
         this.translateY = translateY;
@@ -61,6 +79,7 @@ class PathElementShape extends FillShape implements ILinePathContext {
         temp = new Pixelimage( Math.ceil( pixelImage.width ), Math.ceil( pixelImage.height ) );
         temp.transparent = true;
 
+        buildPatternTemplates();
         var sp = new SvgLinePath( this );
         sp.parse( pathData );
 
@@ -75,11 +94,11 @@ class PathElementShape extends FillShape implements ILinePathContext {
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
             var oldInfo = info;
-            info = temp.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
+            info = temp.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor );
+                     , strokeWidth, tileImageStroke );
             if( info != null && oldInfo != null ){
-                temp.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor );
+                temp.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke );
             }
         } else {
             
@@ -91,11 +110,11 @@ class PathElementShape extends FillShape implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         var oldInfo = info;
-        info = temp.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = temp.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor );
+                     , strokeWidth, tileImageStroke );
         if( info != null && oldInfo != null ){
-            temp.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor );
+            temp.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke );
         }
         x0 = x2;
         y0 = y2;

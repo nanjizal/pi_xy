@@ -58,7 +58,7 @@ import pixelimage.algo.CirclePixel;
                            , cx:    Float, cy: Float
                            , rx:    Float, ry: Float
                            , startAngle:   Float 
-                           , srcImage: Pixelimage, ?phi: Float, ?targetError: Float = 1.05 ){
+                           , tileImage: Pixelimage, ?phi: Float, ?targetError: Float = 1.05 ){
          var sides = getSidesDivisible4( rx, ry, targetError );
          var theta = 2*Math.PI/sides;
          var omega = startAngle;
@@ -80,7 +80,7 @@ import pixelimage.algo.CirclePixel;
                  var ctheta = Math.cos( i*theta+0.0001 + omega );
                  var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                  var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, srcImage );
+                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                  lastX = nextX;
                  lastY = nextY;
              }
@@ -88,7 +88,7 @@ import pixelimage.algo.CirclePixel;
              for( i in 0...quarter+1 ){
                  var nextX = cx + rx*Math.cos( i*theta + 0.0001 + omega );
                  var nextY = cy + ry*Math.sin( i*theta + 0.0001 + omega );
-                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, srcImage );
+                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                  lastX = nextX;
                  lastY = nextY;
              }

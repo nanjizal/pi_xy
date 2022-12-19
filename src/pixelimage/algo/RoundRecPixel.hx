@@ -54,7 +54,7 @@ import pixelimage.pixel.Pixel32;
     function tileRoundRectangle( pixelshape: Pixelshape
                           , x:     Float,        y:     Float
                           , wid:    Float,       hi:   Float
-                          , srcImage: Pixelimage
+                          , tileImage: Pixelimage
                           , ?dx:   Float = -1.,  ?dy: Float = -1.
                           , ?fat:  Float = -1.,  ?tall:  Float = -1. 
                           ){ // phi not implemented
@@ -74,15 +74,15 @@ import pixelimage.pixel.Pixel32;
         var farX = x + dx + fat;
         var lowerY = y + dy + tall;
         // top row
-        pixelshape.tileQuadrantII( x + dx, y + dy, dx, dy, srcImage );
-        pixelshape.tileRect(  x + dx, y, fat, dy, srcImage );
-        pixelshape.tileQuadrantI(  farX, y + dy, rightRadius, dy, srcImage );
+        pixelshape.tileQuadrantII( x + dx, y + dy, dx, dy, tileImage );
+        pixelshape.tileRect(  x + dx, y, fat, dy, tileImage );
+        pixelshape.tileQuadrantI(  farX, y + dy, rightRadius, dy, tileImage );
         // middle row  ( will need more splitting with gradient )
-        pixelshape.tileRect(  x, y + dy, wid, tall, srcImage );
+        pixelshape.tileRect(  x, y + dy, wid, tall, tileImage );
         // bottom row
-        pixelshape.tileQuadrantIII( x + dx, lowerY, dx, bottomRadius, srcImage );
-        pixelshape.tileRect(   x + dx, lowerY, fat, bottomRadius, srcImage );
-        pixelshape.tileQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, srcImage );
+        pixelshape.tileQuadrantIII( x + dx, lowerY, dx, bottomRadius, tileImage );
+        pixelshape.tileRect(   x + dx, lowerY, fat, bottomRadius, tileImage );
+        pixelshape.tileQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, tileImage );
     }
         /**
         x, y      - position

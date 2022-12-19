@@ -1,10 +1,10 @@
-package pixelimage.shapeStruct;
+package pixelimage.shapeStruct.pattern;
 import pixelimage.Pixelimage;
-import pixelimage.shapeStruct.FillShape;
+import pixelimage.shapeStruct.pattern.PatternShape;
 import pixelimage.iter.BoundIterator;
 
 @:structInit
-class QuadShape extends FillShape {
+class QuadPattern extends PatternShape {
     public var x1:      Float;
     public var y1:      Float;
     public var x2:      Float;
@@ -20,7 +20,22 @@ class QuadShape extends FillShape {
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
-                        , fill = 0x000000
+                        
+                        , strokeColor0 = 0x00000000
+                        , strokeColor1 = 0x00000000
+                        , fillColor0   = 0x00000000
+                        , fillColor1   = 0x00000000
+                        , strokePatternFill = null
+                        , strokePatternWidth = null
+                        , strokePatternHeight = null
+                        , strokePatternAcross = true
+                        , strokePatternScale = 1
+                        , fillPatternFill = null
+                        , fillPatternWidth = 16
+                        , fillPatternHeight = 16
+                        , fillPatternAcross = true
+                        , fillPatternScale = 1                       
+
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
@@ -30,7 +45,10 @@ class QuadShape extends FillShape {
                         , x4 = 0.
                         , y4 = 0.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray
+             , strokeColor0, strokeColor1, fillColor0, fillColor1
+             , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale
+             , fillPatternFill, fillPatternWidth, fillPatternHeight, fillPatternAcross, fillPatternScale );
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -71,6 +89,8 @@ class QuadShape extends FillShape {
         var height = iterY.max - top;
         var temp   = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
+
+        buildPatternTemplates();
         var rx = width/2;
         var ry = height/2;
 
@@ -85,7 +105,7 @@ class QuadShape extends FillShape {
         var y4_ = y4 - top;
 
         // slight round error
-        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, strokeColor );
+        temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageStroke );
 
         x1_ += strokeWidth;
         x2_ += strokeWidth;
@@ -98,20 +118,12 @@ class QuadShape extends FillShape {
         y4_ += strokeWidth;
 
         // slight round error
-        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, fill );
+        temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageFill );
 
         pixelImage.putPixelImage( temp, left, top );
         temp = null;
 
         return super.render( pixelImage );
     }
-    function inline smaller( v, centre ){
-        return if( v < centre ){
-            v - strokeWidth;
-        } else if( v > centre ){
-            v - strokeWidth;
-        } else {
-            v + strokeWidth;v;
-        }
-    }
+    
 }

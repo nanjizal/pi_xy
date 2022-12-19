@@ -1,10 +1,10 @@
-package pixelimage.shapeStruct;
+package pixelimage.shapeStruct.pattern;
 
 import pixelimage.Pixelimage;
-import pixelimage.shapeStruct.FillShape;
+import pixelimage.shapeStruct.PatternShape;
 
 @:structInit
-class SquareShape extends FillShape {
+class SquarePattern extends PatternShape {
     public var left:    Float;
     public var top:     Float;
     public var width:   Float;
@@ -17,12 +17,30 @@ class SquareShape extends FillShape {
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
-                        , fill = 0x000000
+                        
+                        , strokeColor0 = 0x00000000
+                        , strokeColor1 = 0x00000000
+                        , fillColor0   = 0x00000000
+                        , fillColor1   = 0x00000000
+                        , strokePatternFill = null
+                        , strokePatternWidth = null
+                        , strokePatternHeight = null
+                        , strokePatternAcross = true
+                        , strokePatternScale = 1
+                        , fillPatternFill = null
+                        , fillPatternWidth = 16
+                        , fillPatternHeight = 16
+                        , fillPatternAcross = true
+                        , fillPatternScale = 1
+
                         , left = 0.
                         , top = 0.
                         , diameter = 1.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray
+            , strokeColor0, strokeColor1, fillColor0, fillColor1
+            , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale
+            , fillPatternFill, fillPatternWidth, fillPatternHeight, fillPatternAcross, fillPatternScale );
         this.left      = left;
         this.top       = top;
         this.diameter  = diameter;
@@ -43,6 +61,7 @@ class SquareShape extends FillShape {
         var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
 
+        buildPatternTemplates();
         buildSquare( temp );
 
         pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
@@ -50,7 +69,7 @@ class SquareShape extends FillShape {
         return super.render( pixelImage );
     }
     function buildSquare( temp ){
-        temp.simpleRect( 0, 0, diameter, diameter, strokeColor );
-        temp.simpleRect( strokeWidth, strokeWidth, diameter-2*strokeWidth, diameter-2*strokeWidth, fill );
+        temp.simpleRect( 0, 0, diameter, diameter, tileImageStroke );
+        temp.simpleRect( strokeWidth, strokeWidth, diameter-2*strokeWidth, diameter-2*strokeWidth, tileImageFill );
     }
 }

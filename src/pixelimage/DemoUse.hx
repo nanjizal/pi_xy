@@ -7,6 +7,7 @@ import vision.Vision;
 import vision.ds.Kernal2D;
 import pixelimage.aVision.ImageBytes;
 import pixelimage.shapeStruct.*;
+import pixelimage.shapeStruct.pattern.*;
 import pixelimage.shapeStruct.XMLshape;
 import pixelimage.shapeStruct.XMLshapeSamples;
 

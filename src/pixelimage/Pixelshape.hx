@@ -127,10 +127,10 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     public inline
     function tileQuadrantI( cx:    Float, cy:   Float
                           , rx:    Float, ry:   Float
-                          , srcImage: Pixelimage,   ?phi: Float = 0.
+                          , tileImage: Pixelimage,   ?phi: Float = 0.
                           ){
         // positive positive plane I  + + , simon says RED
-        this.tileQuadrant( cx, cy, rx, ry, 3*Math.PI/2, srcImage, phi );
+        this.tileQuadrant( cx, cy, rx, ry, 3*Math.PI/2, tileImage, phi );
     }
     public inline 
     function fillQuadrantII( cx:    Float, cy:   Float
@@ -142,9 +142,9 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     public inline 
     function tileQuadrantII( cx:    Float, cy:   Float
                            , rx:    Float, ry:   Float
-                           , srcImage: Pixelimage,   ?phi: Float = 0. ){
+                           , tileImage: Pixelimage,   ?phi: Float = 0. ){
         // plane II  - + , simon says GREEN
-        this.tileQuadrant( cx, cy, rx, ry, Math.PI, srcImage, phi );
+        this.tileQuadrant( cx, cy, rx, ry, Math.PI, tileImage, phi );
     }
     public inline
     function fillQuadrantIII( cx:    Float, cy:   Float
@@ -156,9 +156,9 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     public inline
     function tileQuadrantIII( cx:    Float, cy:   Float
                             , rx:    Float, ry:   Float
-                            , srcImage: Pixelimage,   ?phi: Float = 0. ){
+                            , tileImage: Pixelimage,   ?phi: Float = 0. ){
         // negative negative plane III - - , simon says YELLOW
-        this.tileQuadrant( cx, cy, rx, ry, Math.PI/2, srcImage, phi );
+        this.tileQuadrant( cx, cy, rx, ry, Math.PI/2, tileImage, phi );
     }
     public inline
     function fillQuadrantIV( cx:    Float, cy:   Float
@@ -170,9 +170,9 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     public inline
     function tileQuadrantIV( cx:    Float, cy:   Float
                            , rx:    Float, ry:   Float
-                           , srcImage: Pixelimage,   ?phi: Float = 0. ){
+                           , tileImage: Pixelimage,   ?phi: Float = 0. ){
         // plane IV  + - , simon says BLUE
-        this.tileQuadrant( cx, cy, rx, ry, 0, srcImage, phi );
+        this.tileQuadrant( cx, cy, rx, ry, 0, tileImage, phi );
     }
     @:access( pixelimage.Pixelimage.fillEllipseTri )
     public inline

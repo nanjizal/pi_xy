@@ -66,7 +66,7 @@ import pixelimage.Pixelimage;
     function tilePolygonBuild( pixelimage: Pixelimage
                             , cx: Float,  cy: Float
                             , rx: Float,  ry: Float
-                            , srcImage: Pixelimage, ?phi: Float = 0.
+                            , tileImage: Pixelimage, ?phi: Float = 0.
                             , ?sides: Int = 36, cornerUp: Bool = true ){
         var theta = 2*Math.PI/sides;
         var omega = if( cornerUp ){
@@ -103,7 +103,7 @@ import pixelimage.Pixelimage;
                 var ctheta = Math.cos( i*theta + omega );
                 var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                 var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, srcImage );
+                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                 lastX = nextX;
                 lastY = nextY;
             }
@@ -111,7 +111,7 @@ import pixelimage.Pixelimage;
             for( i in 0...sides + 1 ){
                 var nextX = cx + rx*Math.cos( i*theta + omega );
                 var nextY = cy + ry*Math.sin( i*theta + omega );
-                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, srcImage );
+                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                 lastX = nextX;
                 lastY = nextY;
             }

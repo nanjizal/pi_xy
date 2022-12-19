@@ -57,7 +57,7 @@ inline
 function rotateTileLine( pixelimage: Pixelimage
                    , px: Float, py: Float
                    , thick: Float, h: Float
-                   , theta: Float, srcImage: Pixelimage
+                   , theta: Float, tileImage: Pixelimage
                    , ?debugCorners: Bool = false ){
     var sin = Math.sin( theta );
     var cos = Math.cos( theta );
@@ -98,7 +98,7 @@ function rotateTileLine( pixelimage: Pixelimage
         pixelimage.fillSquare( cx, cy, 12, 0xFF0000ff );
         pixelimage.fillSquare( dx, dy, 12, 0xFFF000F0 );
     }
-    pixelimage.tileQuad( ax, ay, bx, by, cx, cy, dx, dy, srcImage );
+    pixelimage.tileQuad( ax, ay, bx, by, cx, cy, dx, dy, tileImage );
     return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
 }
 
