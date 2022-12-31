@@ -1,4 +1,7 @@
-    /*
+
+package pixelimage.algo;
+
+/*
     // NOT WORKING YET!!
     // inverse bilinear interpolation
     public inline 

@@ -1,4 +1,4 @@
-package imagepixel.formats;
+package pixelimage.formats;
 
 /**
  Allows injection of Bytes data directly into the Image and direct extraction

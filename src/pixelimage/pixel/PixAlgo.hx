@@ -1,5 +1,5 @@
 
-import pixelimage.pixel;
+package pixelimage.pixel;
 
 inline function boundChannel( f: Float ): Int {
     var i = Std.int( f );

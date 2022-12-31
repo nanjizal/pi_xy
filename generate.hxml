@@ -1,0 +1,13 @@
+-lib pixelimage
+-lib htmlHelper
+-lib justPath
+-lib vision
+-lib format
+-D pixelimageDoc
+-D doc-gen
+--macro include('pixelimage')
+-cp src
+-main pixelimage.PixelimageDoc
+--no-output
+-xml output.xml
+-js foo

@@ -115,6 +115,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }
+    inline
+    public function setPixel( x: Int, y: Int, color: Int ): Int {
+        return setARGB( x, y, color );
+    }
     /**
         The main way is set the pixel color at x, y
         applies an alpha blend if pixel is semi-transparent and if the pixelimage is transparent true
@@ -128,6 +132,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             this.image[ position( x, y ) ] = c.transferColor();
         }
         return color;
+    }
+    inline 
+    public function getPixel( x: Int, y: Int ): Int {
+        return getARGB( x, y );
     }
     /**
         returns the current pixel colour, since canvas context is ABGR on little endian this will correct
@@ -215,10 +223,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var maxX = wNew;
         var maxY = hNew;
         while( true ){
-            // 1 = 0.5 = 1
-            // 2 = 1 = 1
-            // 3 = 1.5 = 2
-
             var color = getARGB( Std.int( p/scaleW ), Std.int( q/scaleH ) );
             pixelImage.setARGB( p++, q, color );
             if( p > maxX ){
@@ -595,6 +599,15 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var noSides = circleError( rSmall, targetError );
         if( printSides ) trace( noSides );
         fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
+    }
+    public inline
+    function tileEllipseTri( cx: Float, cy: Float
+                           , rx: Float, ry: Float
+                           , tileImage: Pixelimage, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        if( printSides ) trace( noSides );
+        tilePolyBuild( cx, cy, rx, ry, tileImage, phi, noSides );
     }
     /**
         this is provides a thick outline ellipse or circle ( using triangles ), large ones have more sides.
