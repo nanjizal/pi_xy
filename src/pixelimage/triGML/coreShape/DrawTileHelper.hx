@@ -71,4 +71,16 @@ class DrawTileHelper implements ILinePathContext {
         info = null;
         toggleDraw = true;
     }
+    public
+    function quadTo( x2: Float, y2: Float, x3: Float, y3: Float ){
+        svgLinePath.quadTo( x2, y2, x3, y3 );
+    }
+    public
+    function curveTo( x2: Float, y2: Float, x3: Float, y3: Float, x4: Float, y4: Float ){
+        svgLinePath.curveTo( x2, y2, x3, y3, x4, y4 );
+    }
+    public
+    function quadThru( x2: Float, y2: Float, x3: Float, y3: Float ){
+        svgLinePath.quadThru( x2, y2, x3, y3 );
+    }
 }
