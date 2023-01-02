@@ -61,6 +61,10 @@ abstract IteratorRange( IntIterStart ) from IntIterStart {
         return ( v > ( this.start - 1 ) && ( v < this.max + 1 ) );
     }
     inline
+    public function containsF( v: Float ): Bool {
+        return ( v > ( this.start - 1 ) && ( v < this.max + 1 ) );
+    }
+    inline
     public function isWithin( ir: IteratorRange ): Bool {
         return contains( ir.start ) && contains( ir.max );
     }

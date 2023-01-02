@@ -13130,6 +13130,84 @@ pixelimage_Pixelimage.setRelativePosition = function(this1,x,y,update) {
 	this1.virtualX = x;
 	this1.virtualY = y;
 };
+var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy) {
+	var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+	if(!adjustWinding) {
+		var bx_ = bx;
+		var by_ = by;
+		bx = cx;
+		by = cy;
+		cx = bx_;
+		cy = by_;
+	}
+	this.ax = ax;
+	this.ay = ay;
+	this.bx = bx;
+	this.by = by;
+	this.cx = cx;
+	this.cy = cy;
+	this.s0 = ay * cx - ax * cy;
+	this.sx = cy - ay;
+	this.sy = ax - cx;
+	this.t0 = ax * by - ay * bx;
+	this.tx = ay - by;
+	this.ty = bx - ax;
+	this.A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
+	var tmp;
+	if(ax > bx) {
+		if(ax > cx) {
+			var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+			var ii_max = Math.ceil(ax);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			tmp = this1;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			tmp = this1;
+		}
+	} else if(bx > cx) {
+		var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
+		var ii_max = Math.ceil(bx);
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		tmp = this1;
+	} else {
+		var ii_min = Math.floor(ax);
+		var ii_max = Math.ceil(cx);
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		tmp = this1;
+	}
+	this.xIter3 = tmp;
+	var tmp;
+	if(ay > by) {
+		if(ay > cy) {
+			var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+			var ii_max = Math.ceil(ay);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			tmp = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			tmp = this1;
+		}
+	} else if(by > cy) {
+		var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
+		var ii_max = Math.ceil(by);
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		tmp = this1;
+	} else {
+		var ii_min = Math.floor(ay);
+		var ii_max = Math.ceil(cy);
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		tmp = this1;
+	}
+	this.yIter3 = tmp;
+};
+pixelimage_algo_HitTri.__name__ = "pixelimage.algo.HitTri";
+pixelimage_algo_HitTri.prototype = {
+	__class__: pixelimage_algo_HitTri
+};
 var pixelimage_iter_IntIterStart = function(min_,max_) {
 	this.start = min_;
 	this.max = max_;
@@ -13757,6 +13835,82 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -13886,6 +14040,82 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -14490,6 +14720,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
@@ -14619,6 +14925,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = ax;
 			var inlobj_ay = ay;
@@ -14771,6 +15153,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax1 = ax;
+				var ay1 = ay;
+				var bx2 = bx1;
+				var by2 = by1;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by2;
+					bx2 = cx2;
+					by2 = cy2;
+					cx2 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax1;
+				var v_ay = ay1;
+				var v_bx = bx2;
+				var v_by = by2;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay1 * cx2 - ax1 * cy2;
+				var v_sx = cy2 - ay1;
+				var v_sy = ax1 - cx2;
+				var v_t0 = ax1 * by2 - ay1 * bx2;
+				var v_tx = ay1 - by2;
+				var v_ty = bx2 - ax1;
+				var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+				if(ax1 > bx2) {
+					if(ax1 > cx2) {
+						var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx2);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					}
+				} else if(bx2 > cx2) {
+					var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+					var ii_max = Math.ceil(bx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ax1);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+				if(ay1 > by2) {
+					if(ay1 > cy2) {
+						var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+						var ii_max = Math.ceil(ay1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by2);
+						var ii_max = Math.ceil(cy2);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					}
+				} else if(by2 > cy2) {
+					var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+					var ii_max = Math.ceil(by2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ay1);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
 				var bx1 = cx;
 				var by1 = cy;
 				var cx = dx;
@@ -14900,6 +15358,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var ay = by;
+				var bx = bx1;
+				var by = by1;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx;
+				var v_by = by;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by - ay * bx;
+				var v_tx = ay - by;
+				var v_ty = bx - ax;
+				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+				if(ax > bx) {
+					if(ax > cx1) {
+						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by) {
+					if(ay > cy1) {
+						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by);
+						var ii_max = Math.ceil(cy1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 			}
 		}
@@ -15277,6 +15811,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -15406,6 +16016,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -15558,6 +16244,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx = dx;
@@ -15687,6 +16449,82 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = by;
+			var bx = bx1;
+			var by = by1;
+			var cx1 = cx;
+			var cy1 = cy;
+			var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx;
+				var by_ = by;
+				bx = cx1;
+				by = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx;
+			var v_by = by;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay * cx1 - ax * cy1;
+			var v_sx = cy1 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by - ay * bx;
+			var v_tx = ay - by;
+			var v_ty = bx - ax;
+			var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+			if(ax > bx) {
+				if(ax > cx1) {
+					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by) {
+				if(ay > cy1) {
+					var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 		}
 		this.x0 = x2;
@@ -17014,6 +17852,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var aA = colorC >> 24 & 255;
 			var rA = colorC >> 16 & 255;
 			var gA = colorC >> 8 & 255;
@@ -17168,6 +18082,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 						}
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = ax;
 			var inlobj_ay = ay;
@@ -17348,6 +18338,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax1 = ax;
+				var ay1 = ay;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = dx;
+				var cy1 = dy;
+				var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax1;
+				var v_ay = ay1;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay1 * cx1 - ax1 * cy1;
+				var v_sx = cy1 - ay1;
+				var v_sy = ax1 - cx1;
+				var v_t0 = ax1 * by1 - ay1 * bx1;
+				var v_tx = ay1 - by1;
+				var v_ty = bx1 - ax1;
+				var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+				if(ax1 > bx1) {
+					if(ax1 > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+					var ii_max = Math.ceil(bx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ax1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+				if(ay1 > by1) {
+					if(ay1 > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+					var ii_max = Math.ceil(by1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ay1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
 				var aA = colorC >> 24 & 255;
 				var rA = colorC >> 16 & 255;
 				var gA = colorC >> 8 & 255;
@@ -17502,6 +18568,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 							}
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var ay = by;
+				var bx = cx;
+				var by = cy;
+				var cx = dx;
+				var cy = dy;
+				var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx;
+					by = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx;
+				var v_by = by;
+				var v_cx = cx;
+				var v_cy = cy;
+				var v_s0 = ay * cx - ax * cy;
+				var v_sx = cy - ay;
+				var v_sy = ax - cx;
+				var v_t0 = ax * by - ay * bx;
+				var v_tx = ay - by;
+				var v_ty = bx - ax;
+				var v_A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
+				if(ax > bx) {
+					if(ax > cx) {
+						var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(cx);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx > cx) {
+					var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by) {
+					if(ay > cy) {
+						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by);
+						var ii_max = Math.ceil(cy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by > cy) {
+					var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 			}
 		}
@@ -17907,6 +19049,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		}
 		var aA = colorC >> 24 & 255;
 		var rA = colorC >> 16 & 255;
 		var gA = colorC >> 8 & 255;
@@ -18061,6 +19279,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -18241,6 +19535,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var aA = colorC >> 24 & 255;
 			var rA = colorC >> 16 & 255;
 			var gA = colorC >> 8 & 255;
@@ -18395,6 +19765,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 						}
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = by;
+			var bx = cx;
+			var by = cy;
+			var cx = dx;
+			var cy = dy;
+			var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx;
+				var by_ = by;
+				bx = cx;
+				by = cy;
+				cx = bx_;
+				cy = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx;
+			var v_by = by;
+			var v_cx = cx;
+			var v_cy = cy;
+			var v_s0 = ay * cx - ax * cy;
+			var v_sx = cy - ay;
+			var v_sy = ax - cx;
+			var v_t0 = ax * by - ay * bx;
+			var v_tx = ay - by;
+			var v_ty = bx - ax;
+			var v_A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
+			if(ax > bx) {
+				if(ax > cx) {
+					var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx > cx) {
+				var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by) {
+				if(ay > cy) {
+					var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by > cy) {
+				var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 		}
 		this.x0 = x2;
@@ -18651,6 +20097,82 @@ pixelimage_triGML_gradient_TriangleGradient.prototype = $extend(pixelimage_triGM
 					}
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
 	}
@@ -19142,6 +20664,82 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var aA = colorC >> 24 & 255;
 		var rA = colorC >> 16 & 255;
 		var gA = colorC >> 8 & 255;
@@ -19296,6 +20894,82 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 					}
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -19822,6 +21496,82 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max8 = Math.ceil(ax1);
+					var this73 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+					v_xIter3 = this73;
+				} else {
+					var ii_min9 = Math.floor(bx1);
+					var ii_max9 = Math.ceil(cx1);
+					var this74 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+					v_xIter3 = this74;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min10 = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max10 = Math.ceil(bx1);
+				var this75 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+				v_xIter3 = this75;
+			} else {
+				var ii_min11 = Math.floor(ax1);
+				var ii_max11 = Math.ceil(cx1);
+				var this76 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+				v_xIter3 = this76;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max12 = Math.ceil(ay1);
+					var this77 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+					v_yIter3 = this77;
+				} else {
+					var ii_min13 = Math.floor(by1);
+					var ii_max13 = Math.ceil(cy1);
+					var this78 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+					v_yIter3 = this78;
+				}
+			} else if(by1 > cy1) {
+				var ii_min14 = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max14 = Math.ceil(by1);
+				var this79 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+				v_yIter3 = this79;
+			} else {
+				var ii_min15 = Math.floor(ay1);
+				var ii_max15 = Math.ceil(cy1);
+				var this80 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+				v_yIter3 = this80;
+			}
 			var aA1 = colorC >> 24 & 255;
 			var rA1 = colorC >> 16 & 255;
 			var gA1 = colorC >> 8 & 255;
@@ -19842,61 +21592,61 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 			var dot121 = bcx1 * acx1 + bcy1 * acy1;
 			var dot221 = acx1 * acx1 + acy1 * acy1;
 			var denom11 = 1 / (dot111 * dot221 - dot121 * dot121);
-			var this73;
+			var this81;
 			if(dx > cx) {
 				if(dx > bx) {
-					var ii_min8 = cx > bx ? Math.floor(bx) : Math.floor(cx);
-					var ii_max8 = Math.ceil(dx);
-					var this74 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-					this73 = this74;
+					var ii_min16 = cx > bx ? Math.floor(bx) : Math.floor(cx);
+					var ii_max16 = Math.ceil(dx);
+					var this82 = new pixelimage_iter_IntIterStart(ii_min16,ii_max16);
+					this81 = this82;
 				} else {
-					var ii_min9 = Math.floor(cx);
-					var ii_max9 = Math.ceil(bx);
-					var this75 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-					this73 = this75;
+					var ii_min17 = Math.floor(cx);
+					var ii_max17 = Math.ceil(bx);
+					var this83 = new pixelimage_iter_IntIterStart(ii_min17,ii_max17);
+					this81 = this83;
 				}
 			} else if(cx > bx) {
-				var ii_min10 = dx > bx ? Math.floor(bx) : Math.ceil(dx);
-				var ii_max10 = Math.ceil(cx);
-				var this76 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-				this73 = this76;
+				var ii_min18 = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+				var ii_max18 = Math.ceil(cx);
+				var this84 = new pixelimage_iter_IntIterStart(ii_min18,ii_max18);
+				this81 = this84;
 			} else {
-				var ii_min11 = Math.floor(dx);
-				var ii_max11 = Math.ceil(bx);
-				var this77 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-				this73 = this77;
+				var ii_min19 = Math.floor(dx);
+				var ii_max19 = Math.ceil(bx);
+				var this85 = new pixelimage_iter_IntIterStart(ii_min19,ii_max19);
+				this81 = this85;
 			}
-			var _g_min2 = this73.start;
-			var _g_max2 = this73.max;
+			var _g_min2 = this81.start;
+			var _g_max2 = this81.max;
 			while(_g_min2 < _g_max2) {
 				var px1 = _g_min2++;
 				var pcx1 = px1 - dx;
-				var this78;
+				var this86;
 				if(dy > cy) {
 					if(dy > by) {
-						var ii_min12 = cy > by ? Math.floor(by) : Math.floor(cy);
-						var ii_max12 = Math.ceil(dy);
-						var this79 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						this78 = this79;
+						var ii_min20 = cy > by ? Math.floor(by) : Math.floor(cy);
+						var ii_max20 = Math.ceil(dy);
+						var this87 = new pixelimage_iter_IntIterStart(ii_min20,ii_max20);
+						this86 = this87;
 					} else {
-						var ii_min13 = Math.floor(cy);
-						var ii_max13 = Math.ceil(by);
-						var this80 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						this78 = this80;
+						var ii_min21 = Math.floor(cy);
+						var ii_max21 = Math.ceil(by);
+						var this88 = new pixelimage_iter_IntIterStart(ii_min21,ii_max21);
+						this86 = this88;
 					}
 				} else if(cy > by) {
-					var ii_min14 = dy > by ? Math.floor(by) : Math.ceil(dy);
-					var ii_max14 = Math.ceil(cy);
-					var this81 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					this78 = this81;
+					var ii_min22 = dy > by ? Math.floor(by) : Math.ceil(dy);
+					var ii_max22 = Math.ceil(cy);
+					var this89 = new pixelimage_iter_IntIterStart(ii_min22,ii_max22);
+					this86 = this89;
 				} else {
-					var ii_min15 = Math.floor(dy);
-					var ii_max15 = Math.ceil(by);
-					var this82 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					this78 = this82;
+					var ii_min23 = Math.floor(dy);
+					var ii_max23 = Math.ceil(by);
+					var this90 = new pixelimage_iter_IntIterStart(ii_min23,ii_max23);
+					this86 = this90;
 				}
-				var _g_min3 = this78.start;
-				var _g_max3 = this78.max;
+				var _g_min3 = this86.start;
+				var _g_max3 = this86.max;
 				while(_g_min3 < _g_max3) {
 					var py1 = _g_min3++;
 					var pcy1 = py1 - dy;
@@ -19913,8 +21663,8 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 						if(i5 < 0) {
 							i5 = 0;
 						}
-						var this83 = i5;
-						var a10 = this83;
+						var this91 = i5;
+						var a10 = this91;
 						var i6 = rA1 * ratioA1 + rB1 * ratioB1 + rC1 * ratioC1 | 0;
 						if(i6 > 255) {
 							i6 = 255;
@@ -19922,8 +21672,8 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 						if(i6 < 0) {
 							i6 = 0;
 						}
-						var this84 = i6;
-						var r8 = this84;
+						var this92 = i6;
+						var r8 = this92;
 						var i7 = gA1 * ratioA1 + gB1 * ratioB1 + gC1 * ratioC1 | 0;
 						if(i7 > 255) {
 							i7 = 255;
@@ -19931,8 +21681,8 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 						if(i7 < 0) {
 							i7 = 0;
 						}
-						var this85 = i7;
-						var g8 = this85;
+						var this93 = i7;
+						var g8 = this93;
 						var i8 = bA1 * ratioA1 + bB1 * ratioB1 + bC1 * ratioC1 | 0;
 						if(i8 > 255) {
 							i8 = 255;
@@ -19940,30 +21690,30 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 						if(i8 < 0) {
 							i8 = 0;
 						}
-						var this86 = i8;
-						var b8 = this86;
+						var this94 = i8;
+						var b8 = this94;
 						var location5 = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
 						if(pixelImage.transparent && a10 < 254) {
-							var this87 = pixelImage.image[location5];
-							var this88 = this87;
-							var old1 = pixelimage_Endian_isLittleEndian ? (this88 >> 24 & 255) << 24 | (this88 & 255) << 16 | (this88 >> 8 & 255) << 8 | this88 >> 16 & 255 : this88;
+							var this95 = pixelImage.image[location5];
+							var this96 = this95;
+							var old1 = pixelimage_Endian_isLittleEndian ? (this96 >> 24 & 255) << 24 | (this96 & 255) << 16 | (this96 >> 8 & 255) << 8 | this96 >> 16 & 255 : this96;
 							var rhs1 = a10 << 24 | r8 << 16 | g8 << 8 | b8;
-							var this89 = old1 >> 24 & 255;
-							var a15 = this89 == 0 ? 0. : this89 / 255;
-							var this90 = old1 >> 16 & 255;
-							var r15 = this90 == 0 ? 0. : this90 / 255;
-							var this91 = old1 >> 8 & 255;
-							var g15 = this91 == 0 ? 0. : this91 / 255;
-							var this92 = old1 & 255;
-							var b15 = this92 == 0 ? 0. : this92 / 255;
-							var this93 = rhs1 >> 24 & 255;
-							var a25 = this93 == 0 ? 0. : this93 / 255;
-							var this94 = rhs1 >> 16 & 255;
-							var r25 = this94 == 0 ? 0. : this94 / 255;
-							var this95 = rhs1 >> 8 & 255;
-							var g25 = this95 == 0 ? 0. : this95 / 255;
-							var this96 = rhs1 & 255;
-							var b25 = this96 == 0 ? 0. : this96 / 255;
+							var this97 = old1 >> 24 & 255;
+							var a15 = this97 == 0 ? 0. : this97 / 255;
+							var this98 = old1 >> 16 & 255;
+							var r15 = this98 == 0 ? 0. : this98 / 255;
+							var this99 = old1 >> 8 & 255;
+							var g15 = this99 == 0 ? 0. : this99 / 255;
+							var this100 = old1 & 255;
+							var b15 = this100 == 0 ? 0. : this100 / 255;
+							var this101 = rhs1 >> 24 & 255;
+							var a25 = this101 == 0 ? 0. : this101 / 255;
+							var this102 = rhs1 >> 16 & 255;
+							var r25 = this102 == 0 ? 0. : this102 / 255;
+							var this103 = rhs1 >> 8 & 255;
+							var g25 = this103 == 0 ? 0. : this103 / 255;
+							var this104 = rhs1 & 255;
+							var b25 = this104 == 0 ? 0. : this104 / 255;
 							var a35 = a15 * (1 - a25);
 							var r9 = 255 * (r15 * a35 + r25 * a25) | 0;
 							var g9 = 255 * (g15 * a35 + g25 * a25) | 0;
@@ -19976,6 +21726,82 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 						}
 					}
 				}
+			}
+			var v_yIter31;
+			var v_xIter31;
+			var ax2 = bx;
+			var ay2 = by;
+			var bx2 = cx;
+			var by2 = cy;
+			var cx2 = dx;
+			var cy2 = dy;
+			var adjustWinding1 = ax2 * by2 - bx2 * ay2 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay2 - ax2 * cy2) > 0;
+			if(!adjustWinding1) {
+				var bx_1 = bx2;
+				var by_1 = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_1;
+				cy2 = by_1;
+			}
+			var v_ax1 = ax2;
+			var v_ay1 = ay2;
+			var v_bx1 = bx2;
+			var v_by1 = by2;
+			var v_cx1 = cx2;
+			var v_cy1 = cy2;
+			var v_s01 = ay2 * cx2 - ax2 * cy2;
+			var v_sx1 = cy2 - ay2;
+			var v_sy1 = ax2 - cx2;
+			var v_t01 = ax2 * by2 - ay2 * bx2;
+			var v_tx1 = ay2 - by2;
+			var v_ty1 = bx2 - ax2;
+			var v_A1 = -by2 * cx2 + ay2 * (-bx2 + cx2) + ax2 * (by2 - cy2) + bx2 * cy2;
+			if(ax2 > bx2) {
+				if(ax2 > cx2) {
+					var ii_min24 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max24 = Math.ceil(ax2);
+					var this105 = new pixelimage_iter_IntIterStart(ii_min24,ii_max24);
+					v_xIter31 = this105;
+				} else {
+					var ii_min25 = Math.floor(bx2);
+					var ii_max25 = Math.ceil(cx2);
+					var this106 = new pixelimage_iter_IntIterStart(ii_min25,ii_max25);
+					v_xIter31 = this106;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min26 = ax2 > cx2 ? Math.floor(cx2) : Math.ceil(ax2);
+				var ii_max26 = Math.ceil(bx2);
+				var this107 = new pixelimage_iter_IntIterStart(ii_min26,ii_max26);
+				v_xIter31 = this107;
+			} else {
+				var ii_min27 = Math.floor(ax2);
+				var ii_max27 = Math.ceil(cx2);
+				var this108 = new pixelimage_iter_IntIterStart(ii_min27,ii_max27);
+				v_xIter31 = this108;
+			}
+			if(ay2 > by2) {
+				if(ay2 > cy2) {
+					var ii_min28 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max28 = Math.ceil(ay2);
+					var this109 = new pixelimage_iter_IntIterStart(ii_min28,ii_max28);
+					v_yIter31 = this109;
+				} else {
+					var ii_min29 = Math.floor(by2);
+					var ii_max29 = Math.ceil(cy2);
+					var this110 = new pixelimage_iter_IntIterStart(ii_min29,ii_max29);
+					v_yIter31 = this110;
+				}
+			} else if(by2 > cy2) {
+				var ii_min30 = ay2 > cy2 ? Math.floor(cy2) : Math.ceil(ay2);
+				var ii_max30 = Math.ceil(by2);
+				var this111 = new pixelimage_iter_IntIterStart(ii_min30,ii_max30);
+				v_yIter31 = this111;
+			} else {
+				var ii_min31 = Math.floor(ay2);
+				var ii_max31 = Math.ceil(cy2);
+				var this112 = new pixelimage_iter_IntIterStart(ii_min31,ii_max31);
+				v_yIter31 = this112;
 			}
 			var inlobj_ax = ax;
 			var inlobj_ay = ay;
@@ -20309,6 +22135,80 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = 0 * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - 0 * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = 0;
+				var v_ay = 0;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = 0 * cx1 - 0 * cy2;
+				var v_sx = cy2;
+				var v_sy = 0 - cx1;
+				var v_t0 = 0 * by1 - 0 * bx2;
+				var v_tx = 0 - by1;
+				var v_ty = bx2;
+				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + 0 * (by1 - cy2) + bx2 * cy2;
+				if(0 > bx2) {
+					if(0 > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = 0 > cx1 ? Math.floor(cx1) : Math.ceil(0);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(0 > by1) {
+					if(0 > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = 0;
@@ -20442,6 +22342,81 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = 0;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = 0 * cx1 - ax * cy2;
+				var v_sx = cy2;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - 0 * bx2;
+				var v_tx = 0 - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(0 > by1) {
+					if(0 > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 				var inlobj_ax = 0;
 				var inlobj_ay = 0;
@@ -20641,6 +22616,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = x;
+			var ay = y;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x;
@@ -20774,6 +22825,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = y;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = x;
 			var inlobj_ay = y;
@@ -20976,6 +23103,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = cx;
+					var ay = cy;
+					var bx1 = bx;
+					var by1 = by;
+					var cx2 = cx1;
+					var cy2 = cy1;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx2;
+						by1 = cy2;
+						cx2 = bx_1;
+						cy2 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx2;
+					var v_cy = cy2;
+					var v_s0 = ay * cx2 - ax * cy2;
+					var v_sx = cy2 - ay;
+					var v_sy = ax - cx2;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+					if(ax > bx1) {
+						if(ax > cx2) {
+							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx2);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx2) {
+						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx2);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy2) {
+							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy2);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy2) {
+						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy2);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -21116,6 +23319,81 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = x;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = 0;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = 0 * cx1 - ax * cy2;
+				var v_sx = cy2;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - 0 * bx2;
+				var v_tx = 0 - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(0 > by1) {
+					if(0 > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = x;
@@ -21249,6 +23527,81 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = 0;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = 0 * cx1 - ax * cy2;
+				var v_sx = cy2;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - 0 * bx2;
+				var v_tx = 0 - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(0 > by1) {
+					if(0 > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 				var inlobj_ax = x;
 				var inlobj_ay = 0;
@@ -21430,6 +23783,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = farX;
+					var ay = cy;
+					var bx1 = bx;
+					var by1 = by;
+					var cx1 = cx;
+					var cy2 = cy1;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx1;
+						by1 = cy2;
+						cx1 = bx_1;
+						cy2 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy2;
+					var v_s0 = ay * cx1 - ax * cy2;
+					var v_sx = cy2 - ay;
+					var v_sy = ax - cx1;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
+					if(ax > bx1) {
+						if(ax > cx1) {
+							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx1);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx1);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy2) {
+							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy2);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy2) {
+						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy2);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -21570,6 +23999,81 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ay = y;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = 0 * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - 0 * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = 0;
+				var v_ay = ay;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - 0 * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = 0 - cx1;
+				var v_t0 = 0 * by1 - ay * bx2;
+				var v_tx = ay - by1;
+				var v_ty = bx2;
+				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + 0 * (by1 - cy2) + bx2 * cy2;
+				if(0 > bx2) {
+					if(0 > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(0);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = 0 > cx1 ? Math.floor(cx1) : Math.ceil(0);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(0);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = 0;
@@ -21703,6 +24207,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var ay = y;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx2;
+				var v_tx = ay - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 				var inlobj_ax = 0;
 				var inlobj_ay = y;
@@ -21884,6 +24464,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = cx;
+					var ay = lowerY;
+					var bx1 = bx;
+					var by1 = by;
+					var cx2 = cx1;
+					var cy1 = cy;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx2;
+						by1 = cy1;
+						cx2 = bx_1;
+						cy1 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx2;
+					var v_cy = cy1;
+					var v_s0 = ay * cx2 - ax * cy1;
+					var v_sx = cy1 - ay;
+					var v_sy = ax - cx2;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
+					if(ax > bx1) {
+						if(ax > cx2) {
+							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx2);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx2) {
+						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx2);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy1) {
+							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy1);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy1) {
+						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy1);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -22024,6 +24680,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = x;
+				var ay = lowerY;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx2;
+				var v_tx = ay - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = x;
@@ -22157,6 +24889,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var ay = lowerY;
+				var bx2 = bx1;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by1;
+					bx2 = cx1;
+					by1 = cy2;
+					cx1 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx2;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx2;
+				var v_tx = ay - by1;
+				var v_ty = bx2 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+				if(ax > bx2) {
+					if(ax > cx1) {
+						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx2 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy2);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy2) {
+					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 				var inlobj_ax = x;
 				var inlobj_ay = lowerY;
@@ -22336,6 +25144,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 								break;
 							}
 						}
+					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = farX;
+					var ay = lowerY;
+					var bx1 = bx;
+					var by1 = by;
+					var cx1 = cx;
+					var cy1 = cy;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx1;
+						by1 = cy1;
+						cx1 = bx_1;
+						cy1 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy1;
+					var v_s0 = ay * cx1 - ax * cy1;
+					var v_sx = cy1 - ay;
+					var v_sy = ax - cx1;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+					if(ax > bx1) {
+						if(ax > cx1) {
+							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx1);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx1);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy1) {
+							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy1);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy1) {
+						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy1);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -22527,6 +25411,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 								break;
 							}
 						}
+					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = cx;
+					var ay = cy;
+					var bx1 = bx;
+					var by1 = by;
+					var cx2 = cx1;
+					var cy2 = cy1;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx2;
+						by1 = cy2;
+						cx2 = bx_1;
+						cy2 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx2;
+					var v_cy = cy2;
+					var v_s0 = ay * cx2 - ax * cy2;
+					var v_sx = cy2 - ay;
+					var v_sy = ax - cx2;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+					if(ax > bx1) {
+						if(ax > cx2) {
+							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx2);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx2) {
+						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx2);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy2) {
+							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy2);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy2) {
+						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy2);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -22740,6 +25700,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = farX;
+					var ay = cy;
+					var bx1 = bx;
+					var by1 = by;
+					var cx1 = cx;
+					var cy2 = cy1;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx1;
+						by1 = cy2;
+						cx1 = bx_1;
+						cy2 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy2;
+					var v_s0 = ay * cx1 - ax * cy2;
+					var v_sx = cy2 - ay;
+					var v_sy = ax - cx1;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
+					if(ax > bx1) {
+						if(ax > cx1) {
+							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx1);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx1);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy2) {
+							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy2);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy2) {
+						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy2);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -22952,6 +25988,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = cx;
+					var ay = lowerY;
+					var bx1 = bx;
+					var by1 = by;
+					var cx2 = cx1;
+					var cy1 = cy;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx2;
+						by1 = cy1;
+						cx2 = bx_1;
+						cy1 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx2;
+					var v_cy = cy1;
+					var v_s0 = ay * cx2 - ax * cy1;
+					var v_sx = cy1 - ay;
+					var v_sy = ax - cx2;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
+					if(ax > bx1) {
+						if(ax > cx2) {
+							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx2);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx2) {
+						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx2);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy1) {
+							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy1);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy1) {
+						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy1);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -23163,6 +26275,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax = farX;
+					var ay = lowerY;
+					var bx1 = bx;
+					var by1 = by;
+					var cx1 = cx;
+					var cy1 = cy;
+					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+					if(!adjustWinding1) {
+						var bx_1 = bx1;
+						var by_1 = by1;
+						bx1 = cx1;
+						by1 = cy1;
+						cx1 = bx_1;
+						cy1 = by_1;
+					}
+					var v_ax = ax;
+					var v_ay = ay;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy1;
+					var v_s0 = ay * cx1 - ax * cy1;
+					var v_sx = cy1 - ay;
+					var v_sy = ax - cx1;
+					var v_t0 = ax * by1 - ay * bx1;
+					var v_tx = ay - by1;
+					var v_ty = bx1 - ax;
+					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+					if(ax > bx1) {
+						if(ax > cx1) {
+							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max8 = Math.ceil(ax);
+							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+							v_xIter3 = this22;
+						} else {
+							var ii_min9 = Math.floor(bx1);
+							var ii_max9 = Math.ceil(cx1);
+							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+							v_xIter3 = this23;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+						var ii_max10 = Math.ceil(bx1);
+						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+						v_xIter3 = this24;
+					} else {
+						var ii_min11 = Math.floor(ax);
+						var ii_max11 = Math.ceil(cx1);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+						v_xIter3 = this25;
+					}
+					if(ay > by1) {
+						if(ay > cy1) {
+							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max12 = Math.ceil(ay);
+							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+							v_yIter3 = this26;
+						} else {
+							var ii_min13 = Math.floor(by1);
+							var ii_max13 = Math.ceil(cy1);
+							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+							v_yIter3 = this27;
+						}
+					} else if(by1 > cy1) {
+						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+						var ii_max14 = Math.ceil(by1);
+						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+						v_yIter3 = this28;
+					} else {
+						var ii_min15 = Math.floor(ay);
+						var ii_max15 = Math.ceil(cy1);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+						v_yIter3 = this29;
+					}
 					lastX = nextX;
 					lastY = nextY;
 				}
@@ -23360,6 +26548,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -23500,6 +26764,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = x1;
+			var ay = y;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x1;
@@ -23633,6 +26973,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = y;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = x1;
 			var inlobj_ay = y;
@@ -23814,6 +27230,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy2;
+					cx1 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -23954,6 +27446,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = x;
+			var ay = y1;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x;
@@ -24087,6 +27655,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = y1;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = x;
 			var inlobj_ay = y1;
@@ -24268,6 +27912,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy1;
+					cx2 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy1;
+				var v_s0 = ay * cx2 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -24408,6 +28128,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = x1;
+			var ay = lowerY;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x1;
@@ -24541,6 +28337,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = lowerY;
+			var bx2 = bx1;
+			var by1 = by;
+			var cx1 = cx;
+			var cy2 = cy1;
+			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by1;
+				bx2 = cx1;
+				by1 = cy2;
+				cx1 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx2;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy2;
+			var v_s0 = ay * cx1 - ax * cy2;
+			var v_sx = cy2 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by1 - ay * bx2;
+			var v_tx = ay - by1;
+			var v_ty = bx2 - ax;
+			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
+			if(ax > bx2) {
+				if(ax > cx1) {
+					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by1) {
+				if(ay > cy2) {
+					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = x1;
 			var inlobj_ay = lowerY;
@@ -24720,6 +28592,82 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -25104,6 +29052,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var ax = this.rx;
 			var ay = this.ry;
 			var bx1 = bxS;
@@ -25236,6 +29260,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		} else {
 			var ax = this.rx;
 			var ay = this.ry;
@@ -25378,6 +29403,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx1 = bx2;
+			var by1 = by2;
+			var cx1 = cx2;
+			var cy1 = cy2;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var ax = this.rx;
 			var ay = this.ry;
 			var rx = this.rx - this.strokeWidth;
@@ -25518,6 +29619,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx1 = bx2;
+			var by1 = by2;
+			var cx1 = cx2;
+			var cy1 = cy2;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var color = this.strokeColor;
 			var o = by - cy;
@@ -25884,6 +30061,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx;
+			var cy2 = cy;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
 			var bx1 = cx1;
 			var by1 = cy1;
 			var cx = dx;
@@ -26013,6 +30266,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx;
+			var cy2 = cy;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = ax;
 			var inlobj_ay = ay;
@@ -26186,6 +30515,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding1 = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding1) {
+				var bx_1 = bx2;
+				var by_1 = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_1;
+				cy2 = by_1;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min8 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max8 = Math.ceil(ax1);
+					var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+					v_xIter3 = this22;
+				} else {
+					var ii_min9 = Math.floor(bx2);
+					var ii_max9 = Math.ceil(cx2);
+					var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+					v_xIter3 = this23;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min10 = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max10 = Math.ceil(bx2);
+				var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+				v_xIter3 = this24;
+			} else {
+				var ii_min11 = Math.floor(ax1);
+				var ii_max11 = Math.ceil(cx2);
+				var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+				v_xIter3 = this25;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min12 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max12 = Math.ceil(ay1);
+					var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+					v_yIter3 = this26;
+				} else {
+					var ii_min13 = Math.floor(by2);
+					var ii_max13 = Math.ceil(cy2);
+					var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+					v_yIter3 = this27;
+				}
+			} else if(by2 > cy2) {
+				var ii_min14 = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max14 = Math.ceil(by2);
+				var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+				v_yIter3 = this28;
+			} else {
+				var ii_min15 = Math.floor(ay1);
+				var ii_max15 = Math.ceil(cy2);
+				var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+				v_yIter3 = this29;
+			}
 			bx = cx;
 			by = cy;
 		}
@@ -26321,6 +30726,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx = bx1;
+		var by = by1;
+		var cx = cx1;
+		var cy = cy1;
+		var adjustWinding = ax1 * by - bx * ay1 + (bx * cy - cx * by) + (cx * ay1 - ax1 * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx;
+		var v_by = by;
+		var v_cx = cx;
+		var v_cy = cy;
+		var v_s0 = ay1 * cx - ax1 * cy;
+		var v_sx = cy - ay1;
+		var v_sy = ax1 - cx;
+		var v_t0 = ax1 * by - ay1 * bx;
+		var v_tx = ay1 - by;
+		var v_ty = bx - ax1;
+		var v_A = -by * cx + ay1 * (-bx + cx) + ax1 * (by - cy) + bx * cy;
+		if(ax1 > bx) {
+			if(ax1 > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx > cx) {
+			var ii_min = ax1 > cx ? Math.floor(cx) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by) {
+			if(ay1 > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = ay1 > cy ? Math.floor(cy) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var ax = this.rx;
 		var ay = this.ry;
@@ -26482,6 +30963,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding1 = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding1) {
+				var bx_1 = bx2;
+				var by_1 = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_1;
+				cy2 = by_1;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min8 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max8 = Math.ceil(ax1);
+					var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+					v_xIter3 = this22;
+				} else {
+					var ii_min9 = Math.floor(bx2);
+					var ii_max9 = Math.ceil(cx2);
+					var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+					v_xIter3 = this23;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min10 = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max10 = Math.ceil(bx2);
+				var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+				v_xIter3 = this24;
+			} else {
+				var ii_min11 = Math.floor(ax1);
+				var ii_max11 = Math.ceil(cx2);
+				var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+				v_xIter3 = this25;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min12 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max12 = Math.ceil(ay1);
+					var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+					v_yIter3 = this26;
+				} else {
+					var ii_min13 = Math.floor(by2);
+					var ii_max13 = Math.ceil(cy2);
+					var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+					v_yIter3 = this27;
+				}
+			} else if(by2 > cy2) {
+				var ii_min14 = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max14 = Math.ceil(by2);
+				var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+				v_yIter3 = this28;
+			} else {
+				var ii_min15 = Math.floor(ay1);
+				var ii_max15 = Math.ceil(cy2);
+				var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+				v_yIter3 = this29;
+			}
 			bx = cx;
 			by = cy;
 		}
@@ -26617,6 +31174,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx = bx1;
+		var by = by1;
+		var cx = cx1;
+		var cy = cy1;
+		var adjustWinding = ax1 * by - bx * ay1 + (bx * cy - cx * by) + (cx * ay1 - ax1 * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx;
+		var v_by = by;
+		var v_cx = cx;
+		var v_cy = cy;
+		var v_s0 = ay1 * cx - ax1 * cy;
+		var v_sx = cy - ay1;
+		var v_sy = ax1 - cx;
+		var v_t0 = ax1 * by - ay1 * bx;
+		var v_tx = ay1 - by;
+		var v_ty = bx - ax1;
+		var v_A = -by * cx + ay1 * (-bx + cx) + ax1 * (by - cy) + bx * cy;
+		if(ax1 > bx) {
+			if(ax1 > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx > cx) {
+			var ii_min = ax1 > cx ? Math.floor(cx) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by) {
+			if(ay1 > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = ay1 > cy ? Math.floor(cy) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 	}
 	,pie: function(temp) {
@@ -26996,6 +31629,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx3 = cx2;
+		var cy3 = cy2;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy3 - cx3 * by2) + (cx3 * ay1 - ax1 * cy3) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx3;
+			by2 = cy3;
+			cx3 = bx_;
+			cy3 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx3;
+		var v_cy = cy3;
+		var v_s0 = ay1 * cx3 - ax1 * cy3;
+		var v_sx = cy3 - ay1;
+		var v_sy = ax1 - cx3;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx3 + ay1 * (-bx2 + cx3) + ax1 * (by2 - cy3) + bx2 * cy3;
+		if(ax1 > bx2) {
+			if(ax1 > cx3) {
+				var ii_min = bx2 > cx3 ? Math.floor(cx3) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx3);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx3) {
+			var ii_min = ax1 > cx3 ? Math.floor(cx3) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx3);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy3) {
+				var ii_min = by2 > cy3 ? Math.floor(cy3) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy3);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy3) {
+			var ii_min = ay1 > cy3 ? Math.floor(cy3) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy3);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx1;
 		var by1 = cy1;
 		var cx2 = dx;
@@ -27125,6 +31834,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx3 = cx2;
+		var cy3 = cy2;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy3 - cx3 * by2) + (cx3 * ay1 - ax1 * cy3) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx3;
+			by2 = cy3;
+			cx3 = bx_;
+			cy3 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx3;
+		var v_cy = cy3;
+		var v_s0 = ay1 * cx3 - ax1 * cy3;
+		var v_sx = cy3 - ay1;
+		var v_sy = ax1 - cx3;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx3 + ay1 * (-bx2 + cx3) + ax1 * (by2 - cy3) + bx2 * cy3;
+		if(ax1 > bx2) {
+			if(ax1 > cx3) {
+				var ii_min = bx2 > cx3 ? Math.floor(cx3) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx3);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx3) {
+			var ii_min = ax1 > cx3 ? Math.floor(cx3) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx3);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy3) {
+				var ii_min = by2 > cy3 ? Math.floor(cy3) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy3);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy3) {
+			var ii_min = ay1 > cy3 ? Math.floor(cy3) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy3);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -27509,6 +32294,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -27638,6 +32499,82 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -27995,6 +32932,82 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -28134,6 +33147,82 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -28331,6 +33420,82 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = innerCx;
+				var ay = innerCy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -28470,6 +33635,82 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = innerCx;
+				var ay = innerCy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -28741,6 +33982,82 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -28880,6 +34197,82 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -29077,6 +34470,82 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = innerCx;
+				var ay = innerCy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -29216,6 +34685,82 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = innerCx;
+				var ay = innerCy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -29834,6 +35379,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
@@ -29963,6 +35584,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 			var inlobj_ax = ax;
 			var inlobj_ay = ay;
@@ -30115,6 +35812,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax1 = ax;
+				var ay1 = ay;
+				var bx2 = bx1;
+				var by2 = by1;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx2;
+					var by_ = by2;
+					bx2 = cx2;
+					by2 = cy2;
+					cx2 = bx_;
+					cy2 = by_;
+				}
+				var v_ax = ax1;
+				var v_ay = ay1;
+				var v_bx = bx2;
+				var v_by = by2;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay1 * cx2 - ax1 * cy2;
+				var v_sx = cy2 - ay1;
+				var v_sy = ax1 - cx2;
+				var v_t0 = ax1 * by2 - ay1 * bx2;
+				var v_tx = ay1 - by2;
+				var v_ty = bx2 - ax1;
+				var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+				if(ax1 > bx2) {
+					if(ax1 > cx2) {
+						var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+						var ii_max = Math.ceil(ax1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					} else {
+						var ii_min = Math.floor(bx2);
+						var ii_max = Math.ceil(cx2);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this2;
+					}
+				} else if(bx2 > cx2) {
+					var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+					var ii_max = Math.ceil(bx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ax1);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+				if(ay1 > by2) {
+					if(ay1 > cy2) {
+						var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+						var ii_max = Math.ceil(ay1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by2);
+						var ii_max = Math.ceil(cy2);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this2;
+					}
+				} else if(by2 > cy2) {
+					var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+					var ii_max = Math.ceil(by2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ay1);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
 				var bx1 = cx;
 				var by1 = cy;
 				var cx = dx;
@@ -30244,6 +36017,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = bx;
+				var ay = by;
+				var bx = bx1;
+				var by = by1;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx;
+				var v_by = by;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by - ay * bx;
+				var v_tx = ay - by;
+				var v_ty = bx - ax;
+				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+				if(ax > bx) {
+					if(ax > cx1) {
+						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max = Math.ceil(ax);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay > by) {
+					if(ay > cy1) {
+						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max = Math.ceil(ay);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by);
+						var ii_max = Math.ceil(cy1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
 				}
 			}
 		}
@@ -30621,6 +36470,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this2;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this2;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -30750,6 +36675,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -30902,6 +36903,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = ax;
+			var ay1 = ay;
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx2;
+			var v_by = by2;
+			var v_cx = cx2;
+			var v_cy = cy2;
+			var v_s0 = ay1 * cx2 - ax1 * cy2;
+			var v_sx = cy2 - ay1;
+			var v_sy = ax1 - cx2;
+			var v_t0 = ax1 * by2 - ay1 * bx2;
+			var v_tx = ay1 - by2;
+			var v_ty = bx2 - ax1;
+			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+			if(ax1 > bx2) {
+				if(ax1 > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this2;
+			}
+			if(ay1 > by2) {
+				if(ay1 > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this2;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this2;
+			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx = dx;
@@ -31031,6 +37108,82 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						break;
 					}
 				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax = bx;
+			var ay = by;
+			var bx = bx1;
+			var by = by1;
+			var cx1 = cx;
+			var cy1 = cy;
+			var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx;
+				var by_ = by;
+				bx = cx1;
+				by = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax;
+			var v_ay = ay;
+			var v_bx = bx;
+			var v_by = by;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay * cx1 - ax * cy1;
+			var v_sx = cy1 - ay;
+			var v_sy = ax - cx1;
+			var v_t0 = ax * by - ay * bx;
+			var v_tx = ay - by;
+			var v_ty = bx - ax;
+			var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+			if(ax > bx) {
+				if(ax > cx1) {
+					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay > by) {
+				if(ay > cy1) {
+					var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
 			}
 		}
 		this.x0 = x2;
@@ -31330,6 +37483,82 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = x1_;
+		var ay = y1_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx = x3_;
 		var by = y3_;
 		var cx = x4_;
@@ -31459,6 +37688,82 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = x2_;
+		var ay = y2_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = x1_;
 		var inlobj_ay = y1_;
@@ -31607,6 +37912,82 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = x1_;
+		var ay = y1_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx = x3_;
 		var by = y3_;
 		var cx = x4_;
@@ -31736,6 +38117,82 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = x2_;
+		var ay = y2_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = x1_;
 		var inlobj_ay = y1_;
@@ -32267,6 +38724,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -32478,6 +39011,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy2;
+					cx1 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -32691,6 +39300,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy1;
+					cx2 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy1;
+				var v_s0 = ay * cx2 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -32902,6 +39587,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -33093,6 +39854,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy2;
+					cx2 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy2;
+				var v_s0 = ay * cx2 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -33306,6 +40143,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = cy;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy2 = cy1;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy2;
+					cx1 = bx_1;
+					cy2 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy2;
+				var v_s0 = ay * cx1 - ax * cy2;
+				var v_sx = cy2 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy2) {
+						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy2);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy2) {
+					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy2);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -33518,6 +40431,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = cx;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx2 = cx1;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx2;
+					by1 = cy1;
+					cx2 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx2;
+				var v_cy = cy1;
+				var v_s0 = ay * cx2 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx2;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx2) {
+						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx2);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx2) {
+					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx2);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
+				}
 				lastX = nextX;
 				lastY = nextY;
 			}
@@ -33728,6 +40717,82 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 							break;
 						}
 					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = farX;
+				var ay = lowerY;
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = cx;
+				var cy1 = cy;
+				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding1) {
+					var bx_1 = bx1;
+					var by_1 = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_1;
+					cy1 = by_1;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by1 - ay * bx1;
+				var v_tx = ay - by1;
+				var v_ty = bx1 - ax;
+				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max8 = Math.ceil(ax);
+						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this22;
+					} else {
+						var ii_min9 = Math.floor(bx1);
+						var ii_max9 = Math.ceil(cx1);
+						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this23;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx1);
+					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this24;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this25;
+				}
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max12 = Math.ceil(ay);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this26;
+					} else {
+						var ii_min13 = Math.floor(by1);
+						var ii_max13 = Math.ceil(cy1);
+						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this27;
+					}
+				} else if(by1 > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this28;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this29;
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -34296,6 +41361,82 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = a0x_;
+		var ay = a0y_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx = b1x_;
 		var by = b1y_;
 		var cx = c1x_;
@@ -34426,6 +41567,82 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = a1x_;
+		var ay = a1y_;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var bx = _b0x;
 		var by = _b0y;
@@ -34558,6 +41775,82 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = _a0x;
+		var ay = _a0y;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx = _b1x;
 		var by = _b1y;
 		var cx = _c1x;
@@ -34688,6 +41981,82 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax = _a1x;
+		var ay = _a1y;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax;
+		var v_ay = ay;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay * cx1 - ax * cy1;
+		var v_sx = cy1 - ay;
+		var v_sy = ax - cx1;
+		var v_t0 = ax * by1 - ay * bx1;
+		var v_tx = ay - by1;
+		var v_ty = bx1 - ax;
+		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var x = this.left | 0;
 		var y = this.top | 0;
@@ -34973,6 +42342,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var px = this.x1;
 		var py = this.y1;
@@ -35341,6 +42786,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -35470,6 +42991,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -35854,6 +43451,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -35983,6 +43656,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;
@@ -36367,6 +44116,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = ax;
+		var ay1 = ay;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
@@ -36496,6 +44321,82 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 					break;
 				}
 			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx2 = bx1;
+		var by2 = by1;
+		var cx2 = cx1;
+		var cy2 = cy1;
+		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx2;
+			var by_ = by2;
+			bx2 = cx2;
+			by2 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx2;
+		var v_by = by2;
+		var v_cx = cx2;
+		var v_cy = cy2;
+		var v_s0 = ay1 * cx2 - ax1 * cy2;
+		var v_sx = cy2 - ay1;
+		var v_sy = ax1 - cx2;
+		var v_t0 = ax1 * by2 - ay1 * bx2;
+		var v_tx = ay1 - by2;
+		var v_ty = bx2 - ax1;
+		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
+		if(ax1 > bx2) {
+			if(ax1 > cx2) {
+				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx2);
+				var ii_max = Math.ceil(cx2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx2 > cx2) {
+			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by2) {
+			if(ay1 > cy2) {
+				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by2);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by2 > cy2) {
+			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
 		}
 		var inlobj_ax = ax;
 		var inlobj_ay = ay;

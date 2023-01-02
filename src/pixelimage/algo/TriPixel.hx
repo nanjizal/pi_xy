@@ -4,6 +4,7 @@ import pixelimage.iter.IteratorRange;
 import pixelimage.algo.GeomPix;
 import pixelimage.pixel.Pixel32;
 import pixelimage.pixel.PixelChannel;
+import pixelimage.algo.HitTri;
 
 // TriPixel module
 
@@ -12,7 +13,8 @@ import pixelimage.pixel.PixelChannel;
                           , ax: Float, ay: Float
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
-                          , color: Pixel32 ){
+                          , color: Pixel32
+                          , hasHit: Bool = false ): Null<HitTri>{
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -48,6 +50,12 @@ import pixelimage.pixel.PixelChannel;
                 }
             }                                                                                                                                                                                                                                                                                                                                                                                                                                
         }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
+        }
     }
 
     inline 
@@ -55,7 +63,8 @@ import pixelimage.pixel.PixelChannel;
                           , ax: Float, ay: Float
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
-                          , tileImage: Pixelimage ){
+                          , tileImage: Pixelimage
+                          , hasHit: Bool = false ): Null<HitTri>{
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -92,13 +101,20 @@ import pixelimage.pixel.PixelChannel;
                 }
             }                                                                                                                                                                                                                                                                                                                                                                                                                                
         }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
+        }
     }
 
     inline
     function fillGradTriangle( pixelimage: Pixelimage
                         , ax: Float, ay: Float, colA: Pixel32
                         , bx: Float, by: Float, colB: Pixel32
-                        , cx: Float, cy: Float, colC: Pixel32 ){
+                        , cx: Float, cy: Float, colC: Pixel32
+                        , hasHit: Bool = false ): Null<HitTri>{
         var aA = ( colB >> 24 ) & 0xFF;
         var rA = ( colB >> 16 ) & 0xFF;
         var gA = ( colB >> 8 ) & 0xFF;
@@ -137,5 +153,11 @@ import pixelimage.pixel.PixelChannel;
                     pixelimage.set_argbPixel( a, r, g, b, pixelimage.position( px, py ) );
                 }
             }
+        }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
         }
     }

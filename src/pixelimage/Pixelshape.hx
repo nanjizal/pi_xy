@@ -39,6 +39,17 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
             this.simpleRect( x, y + i* delta - thick/2, w_, thick, color );
         }
     }
+    public inline
+    function lineGridWH( x: Float, y: Float, w: Float, h: Float, deltaW: Float, deltaH:Float, thick: Float, color: Int ){
+        var h_ = Math.floor( h/deltaH )*deltaH;
+        var w_ = Math.floor( w/deltaW )*deltaW;
+        for( i in 0...Math.floor( w/deltaW )+1 ){
+            this.simpleRect( x + i*deltaW -thick/2, y, thick, h_, color );
+        }
+        for( i in 0...Math.floor( h/deltaH )+1 ){
+            this.simpleRect( x, y + i* deltaH - thick/2, w_, thick, color );
+        }
+    }
     /*
     public inline
     function fillDavidStar(x: Float, y: Float
