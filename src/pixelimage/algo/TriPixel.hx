@@ -7,9 +7,32 @@ import pixelimage.pixel.PixelChannel;
 import pixelimage.algo.HitTri;
 
 // TriPixel module
+    /**
+        provides a filled triangle give a,b,c coordinates
+        automagically rearranges coordinates so it always renders
+    **/
+    inline
+    function fillTriangle( pixelImage: Pixelimage, ax: Float, ay: Float
+                    , bx: Float, by: Float
+                    , cx: Float, cy: Float
+                    , color: Pixel32
+                    , hasHit: Bool = false ){
+        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
+        if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
+            // swap b and c
+            // probably wrong way as y is down?
+            var bx_ = bx;
+            var by_ = by;
+            bx = cx;
+            by = cy;
+            cx = bx_;
+            cy = by_;
+        }
+        return fillTriUnsafe( pixelImage, ax, ay, bx, by, cx, cy, color, hasHit );
+    }
 
     inline 
-    function fillTriUnsafe( pixelimage: Pixelimage
+    function fillTriUnsafe( pixelImage: Pixelimage
                           , ax: Float, ay: Float
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
@@ -41,7 +64,7 @@ import pixelimage.algo.HitTri;
                 } else {
                     if( (s + t) < A ) {
                         // store first hit
-                        pixelimage.setARGB( x, y, color );
+                        pixelImage.setARGB( x, y, color );
                         foundY = true;
                     } else {
                         // after filling break
@@ -56,6 +79,27 @@ import pixelimage.algo.HitTri;
         } else {
             null;
         }
+    }
+
+    inline
+    function tileTriangle( pixelImage: Pixelimage
+                    , ax: Float, ay: Float
+                    , bx: Float, by: Float
+                    , cx: Float, cy: Float
+                    , tileImage: Pixelimage
+                    , hasHit:    Bool = false ):Null<HitTri>{
+        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
+        if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
+            // swap b and c
+            // probably wrong way as y is down?
+            var bx_ = bx;
+            var by_ = by;
+            bx = cx;
+            by = cy;
+            cx = bx_;
+            cy = by_;
+        }
+        return tileTriUnsafe( pixelImage, ax, ay, bx, by, cx, cy, tileImage, hasHit );
     }
 
     inline 
@@ -159,5 +203,37 @@ import pixelimage.algo.HitTri;
             v;
         } else {
             null;
-        }
+        }   
     }
+
+class TriPixel{
+    /**
+       <font color="LightPink" font-weight:"Bold">fillTriUnsafe</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _fillTriUnsafe: ( pixelimage: Pixelimage
+                        , ax: Float, ay: Float
+                        , bx: Float, by: Float
+                        , cx: Float, cy: Float
+                        , color: Pixel32
+                        , hasHit: Bool ) -> Null<HitTri> = fillTriUnsafe;
+    /**
+       <font color="LightPink" font-weight:"Bold">tileTriUnsafe</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _tileTriUnsafe:(  pixelimage: Pixelimage
+                        , ax: Float, ay: Float
+                        , bx: Float, by: Float
+                        , cx: Float, cy: Float
+                        , tileImage: Pixelimage
+                        , hasHit: Bool ) -> Null<HitTri> = tileTriUnsafe;
+    /**
+       <font color="LightPink" font-weight:"Bold">fillGradTriangle</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/          
+    public var _fillGradTriangle:( pixelimage: Pixelimage
+                        , ax: Float, ay: Float, colA: Pixel32
+                        , bx: Float, by: Float, colB: Pixel32
+                        , cx: Float, cy: Float, colC: Pixel32
+                        , hasHit: Bool ) -> Null<HitTri> = fillGradTriangle;
+}

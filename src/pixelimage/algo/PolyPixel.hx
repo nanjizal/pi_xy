@@ -184,3 +184,33 @@ import pixelimage.Pixelimage;
             }
         }
     }
+
+class PolyPixel {
+    /**
+       <font color="LightPink" font-weight:"Bold">fillPolygonBuild</font> module level field
+    **/
+    public var _fillPolygonBuild:( pixelimage: Pixelimage
+        , cx: Float,  cy: Float
+        , rx: Float,  ry: Float
+        , color: Int, ?phi: Float
+        , ?sides: Int, cornerUp: Bool )->Void = fillPolygonBuild;
+    /**
+       <font color="LightPink" font-weight:"Bold">tilePolygonBuild</font> module level field
+    **/
+    public var _tilePolygonBuild:( pixelimage: Pixelimage
+        , cx: Float,  cy: Float
+        , rx: Float,  ry: Float
+        , tileImage: Pixelimage, ?phi: Float
+        , ?sides: Int, cornerUp: Bool ) -> Void = tilePolygonBuild;
+    /**
+       <font color="LightPink" font-weight:"Bold">fillRadialPolyBuild</font> module level field
+    **/
+    public var _fillRadialPolyBuild:( pixelimage: Pixelimage
+        , cx: Float,  cy: Float
+        , rx: Float,  ry: Float
+        , colorIn: Int, colorOut: Int
+        , ?gx: Float,  ?gy: Float// gradient centre
+        , ?phi: Float
+        , ?sides: Int, cornerUp: Bool )-> Void = fillRadialPolyBuild;
+
+}

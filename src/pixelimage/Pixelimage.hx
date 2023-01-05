@@ -17,6 +17,10 @@ import pixelimage.algo.PolyPixel;
 import pixelimage.algo.QuadrantPixel;
 import pixelimage.algo.RoundRecPixel;
 import pixelimage.algo.RectanglePixel;
+import pixelimage.algo.HitTri;
+import pixelimage.algo.HitQuad;
+import pixelimage.algo.HitTriArray;
+import pixelimage.algo.QuadPixel;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -312,40 +316,24 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     function fillTri( ax: Float, ay: Float
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
-                    , color: Pixel32 ){
-        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
-        if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
-            // swap b and c
-            // probably wrong way as y is down?
-            var bx_ = bx;
-            var by_ = by;
-            bx = cx;
-            by = cy;
-            cx = bx_;
-            cy = by_;
-        }
-        fillTriUnsafe( this, ax, ay, bx, by, cx, cy, color );
+                    , color: Pixel32
+                    , hasHit: Bool = false ): Null<HitTri> {
+        return fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit );
     }
     public inline
     function tileTri( ax: Float, ay: Float
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
-                    , tileImage: Pixelimage ){
-        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
-        if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
-            // swap b and c
-            // probably wrong way as y is down?
-            var bx_ = bx;
-            var by_ = by;
-            bx = cx;
-            by = cy;
-            cx = bx_;
-            cy = by_;
-        }
-        tileTriUnsafe( this, ax, ay, bx, by, cx, cy, tileImage );
+                    , tileImage: Pixelimage
+                    , hasHit: Bool = false ): Null<HitTri> {
+        return tileTriangle( this, ax, ay, bx, by, cx, cy, tileImage, hasHit );
     }
     public inline
-    function sweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32 ){
+    function sweepTri( ax: Float, ay: Float
+                     , rx: Float, ry: Float
+                     , startRadian: Float, sweepRadian: Float
+                     , color: Pixel32
+                     , hasHit: Bool = false ): Null<HitTri> {
         var currAngle = startRadian;
         var bx = rx * Math.cos( currAngle ) + ax;
         var by = ry * Math.sin( currAngle ) + ay;
@@ -353,10 +341,14 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         var cx = rx * Math.cos( currAngle ) + ax;
         var cy = ry * Math.sin( currAngle ) + ay;
-        fillTri( ax, ay, bx, by, cx, cy, color );
+        return fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
     }
     public inline
-    function tileSweepTri( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, tileImage: Pixelimage ){
+    function tileSweepTri( ax: Float, ay: Float
+                         , rx: Float, ry: Float
+                         , startRadian: Float, sweepRadian: Float
+                         , tileImage: Pixelimage
+                         , hasHit: Bool = false ): HitTri {
         var currAngle = startRadian;
         var bx = rx * Math.cos( currAngle ) + ax;
         var by = ry * Math.sin( currAngle ) + ay;
@@ -364,10 +356,15 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         var cx = rx * Math.cos( currAngle ) + ax;
         var cy = ry * Math.sin( currAngle ) + ay;
-        tileTri( ax, ay, bx, by, cx, cy, tileImage );
+        return tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
     }
     public inline
-    function fillPie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, color: Pixel32, ?targetError: Float = 1.05 ){
+    function fillPie( ax: Float, ay: Float
+                    , rx: Float, ry: Float
+                    , startRadian: Float, sweepRadian: Float
+                    , color: Pixel32
+                    , hasHit: Bool = false
+                    , ?targetError: Float = 1.05 ): Null<HitTriArray> {
         var rSmall = ( rx > ry )? ry: rx;
         var noSides = circleError( rSmall, targetError );
         var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
@@ -379,11 +376,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var by = ry * Math.sin( currAngle ) + ay;
         var cx = 0.;
         var cy = 0.;
+        var arrTri: Array<HitTri> = [];
         for( i in 1...tot+1){
             currAngle = startRadian + i*theta;
             cx = rx * Math.cos( currAngle ) + ax;
             cy = ry * Math.sin( currAngle ) + ay;
-            fillTri( ax, ay, bx, by, cx, cy, color );
+            var triHit = fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
+            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
             bx = cx;
             by = cy;
         }
@@ -391,10 +390,22 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         cx = rx * Math.cos( currAngle ) + ax;
         cy = ry * Math.sin( currAngle ) + ay;
-        fillTri( ax, ay, bx, by, cx, cy, color );
+        var triHit = fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
+        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
+        return if( hasHit ){
+            return new HitTriArray( arrTri );
+        } else {
+            arrTri = null;
+            null;
+        }
     }
     public inline
-    function tilePie( ax: Float, ay: Float, rx: Float, ry: Float, startRadian: Float, sweepRadian: Float, tileImage: Pixelimage, ?targetError: Float = 1.05 ){
+    function tilePie( ax: Float, ay: Float
+                    , rx: Float, ry: Float
+                    , startRadian: Float, sweepRadian: Float
+                    , tileImage: Pixelimage
+                    , hasHit: Bool = false
+                    , ?targetError: Float = 1.05 ): Null<HitTriArray> {
         var rSmall = ( rx > ry )? ry: rx;
         var noSides = circleError( rSmall, targetError );
         var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
@@ -406,11 +417,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var by = ry * Math.sin( currAngle ) + ay;
         var cx = 0.;
         var cy = 0.;
+        var arrTri: Array<HitTri> = [];
         for( i in 1...tot+1){
             currAngle = startRadian + i*theta;
             cx = rx * Math.cos( currAngle ) + ax;
             cy = ry * Math.sin( currAngle ) + ay;
-            tileTri( ax, ay, bx, by, cx, cy, tileImage );
+            var triHit = tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
+            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
             bx = cx;
             by = cy;
         }
@@ -418,7 +431,14 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         cx = rx * Math.cos( currAngle ) + ax;
         cy = ry * Math.sin( currAngle ) + ay;
-        tileTri( ax, ay, bx, by, cx, cy, tileImage );
+        var triHit = tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
+        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
+        return if( hasHit ){
+            return new HitTriArray( arrTri );
+        } else {
+            arrTri = null;
+            null;
+        }
     }
     /**
         uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
@@ -428,24 +448,22 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                      , bx: Float, by: Float
                      , cx: Float, cy: Float
                      , dx: Float, dy: Float 
-                     , color: Int ){
+                     , color: Int
+                     , hasHit: Bool = false ): HitQuad {
         // tri e - a b d
         // tri f - b c d
-        fillTri( ax, ay, bx, by, dx, dy, color );
-        fillTri( bx, by, cx, cy, dx, dy, color );
-        return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        return fillQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
     }
     public inline
     function tileQuad( ax: Float, ay: Float
                      , bx: Float, by: Float
                      , cx: Float, cy: Float
                      , dx: Float, dy: Float 
-                     , tileImage: Pixelimage ){
+                     , tileImage: Pixelimage
+                     , hasHit: Bool = false ): HitQuad {
         // tri e - a b d
         // tri f - b c d
-        tileTri( ax, ay, bx, by, dx, dy, tileImage );
-        tileTri( bx, by, cx, cy, dx, dy, tileImage );
-        return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        return tileQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
     }
     /**
         creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
@@ -454,13 +472,15 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     public inline
     function fillGradTri( ax: Float, ay: Float, colA: Pixel32
                         , bx: Float, by: Float, colB: Pixel32
-                        , cx: Float, cy: Float, colC: Pixel32 ){
-        fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
+                        , cx: Float, cy: Float, colC: Pixel32
+                        , hasHit: Bool = true ): Null<HitTri> {
+        return fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     public inline
     function sweepGradTri( ax: Float, ay: Float, rx: Float, ry: Float
                         , startRadian: Float, sweepRadian: Float
-                        , colA: Pixel32, colB: Pixel32, colC: Pixel32 ){
+                        , colA: Pixel32, colB: Pixel32, colC: Pixel32
+                        , hasHit: Bool = false ): Null<HitTri>{
         var currAngle = startRadian;
         var bx = rx * Math.cos( currAngle ) + ax;
         var by = ry * Math.sin( currAngle ) + ay;
@@ -468,13 +488,14 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         var cx = rx * Math.cos( currAngle ) + ax;
         var cy = ry * Math.sin( currAngle ) + ay;
-        fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
+        return fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     public inline
     function fillRadialPie( ax: Float, ay: Float
                           , rx: Float, ry: Float
                           , startRadian: Float, sweepRadian: Float
-                          , centreColor: Pixel32, outerColor: Pixel32, ?targetError: Float = 1.05 ){
+                          , centreColor: Pixel32, outerColor: Pixel32
+                          , hasHit: Bool = false, ?targetError: Float = 1.05 ): Null<HitTriArray> {
         var rSmall = ( rx > ry )? ry: rx;
         var noSides = circleError( rSmall, targetError );
         var theta = Math.PI/noSides; // *2 but make it smaller
@@ -485,11 +506,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var by = ry * Math.sin( currAngle ) + ay;
         var cx = 0.;
         var cy = 0.;
+        var arrTri: Array<HitTri> = [];
         for( i in 1...tot+1 ){
             currAngle = startRadian + i*theta;
             cx = rx * Math.cos( currAngle ) + ax;
             cy = ry * Math.sin( currAngle ) + ay;
-            fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
+            var triHit = fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
+            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
             bx = cx;
             by = cy;
         }
@@ -497,16 +520,23 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         currAngle = startRadian + sweepRadian;
         cx = rx * Math.cos( currAngle ) + ax;
         cy = ry * Math.sin( currAngle ) + ay;
-        fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
+        var triHit = fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
+        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
+        return if( hasHit ){
+            return new HitTriArray( arrTri );
+        } else {
+            arrTri = null;
+            null;
+        }
     }
     public inline 
     function tileRect( x:   Float, y: Float
                          , wid: Float, hi: Float
-                         , tileImage: Pixelimage ){
+                         , tileImage: Pixelimage
+                         , hasHit: Bool = false ): HitQuad {
         var bx = x + wid;
         var cy = y + hi;
-        tileQuad( x,  y, bx, y, bx, cy, x,  cy, tileImage );
-        return { ax: x, ay: y, bx: bx, by: y, cx: bx, cy: cy, dx: x, dy: cy };
+        return tileQuad( x,  y, bx, y, bx, cy, x,  cy, tileImage, hasHit );
     }
     /**
         uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours
@@ -534,12 +564,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     function fillGradQuad( ax: Float, ay: Float, colorA: Pixel32
                          , bx: Float, by: Float, colorB: Pixel32
                          , cx: Float, cy: Float, colorC: Pixel32 
-                         , dx: Float, dy: Float, colorD: Pixel32 ){
+                         , dx: Float, dy: Float, colorD: Pixel32
+                         , hasHit: Bool = false ): Null<HitQuad> {
         // tri e - a b d
         // tri f - b c d
-        fillGradTri( ax, ay, colorA, bx, by, colorB, dx, dy, colorD );
-        fillGradTri( bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
-        return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
     }
     /**
         provides a thick line using two triangles vector p, q
@@ -547,13 +576,12 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     public inline 
     function fillLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, color: Int, ?debugCorners = false ){
+                     , thick: Float, color: Int, hasHit: Bool = true, ?debugCorners = false ): Null<HitQuad> {
         var o = qy-py;
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        var info = rotateLine( this, px, py, thick, h, theta, color, debugCorners );
-        return info;
+        return rotateLine( this, px, py, thick, h, theta, color, debugCorners );
     }
         /**
         tiles a thick line using two triangles vector p, q
@@ -561,13 +589,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     public inline 
     function tileLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, tileImage: Pixelimage, ?debugCorners = false ){
+                     , thick: Float, tileImage: Pixelimage
+                     , hasHit: Bool = false, ?debugCorners = false ): Null<HitQuad>{
         var o = qy-py;
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        var info = rotateTileLine( this, px, py, thick, h, theta, tileImage, debugCorners );
-        return info;
+        return rotateTileLine( this, px, py, thick, h, theta, tileImage, hasHit, debugCorners );
     }
     /**
         provides a thick line using two gradient triangle vector p,q
@@ -578,13 +606,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     function fillGradLine( px: Float, py: Float, qx: Float, qy: Float
                          , thick: Float
                          , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
-                         , ?debugCorners = false ){
+                         , hasHit: Bool = false
+                         , ?debugCorners = false ): Null<HitQuad>{
         var o = qy-py;
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        var info = rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, debugCorners );
-        return info;
+        return rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, hasHit, debugCorners );
     }
     /**
         this is used for drawing a filled ellipse or circle ( using triangles ), it uses more sides when larger and can be tweaked with targetError

@@ -3,13 +3,15 @@ package pixelimage.algo;
 import pixelimage.Pixelimage;
 import pixelimage.pixel.Pixel32;
 import pixelimage.algo.GeomPix;
+import pixelimage.algo.QuadPixel;
 
 inline
-function rotateLine( pixelimage: Pixelimage
+function rotateLine( pixelImage: Pixelimage
                    , px: Float, py: Float
                    , thick: Float, h: Float
                    , theta: Float, color: Int
-                   , ?debugCorners: Bool = false ){
+                   , hasHit: Bool = false
+                   , ?debugCorners: Bool = false ): Null<HitQuad> {
     var sin = Math.sin( theta );
     var cos = Math.cos( theta );
     var radius = thick/2;
@@ -44,21 +46,21 @@ function rotateLine( pixelimage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelimage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelimage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelimage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelimage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
     }
-    pixelimage.fillQuad( ax, ay, bx, by, cx, cy, dx, dy, color );
-    return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+    return fillQuadrilateral( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
 }
 
 inline
-function rotateTileLine( pixelimage: Pixelimage
+function rotateTileLine( pixelImage: Pixelimage
                    , px: Float, py: Float
                    , thick: Float, h: Float
                    , theta: Float, tileImage: Pixelimage
-                   , ?debugCorners: Bool = false ){
+                   , hasHit: Bool = false
+                   , ?debugCorners: Bool = false ): Null<HitQuad>{
     var sin = Math.sin( theta );
     var cos = Math.cos( theta );
     var radius = thick/2;
@@ -93,21 +95,21 @@ function rotateTileLine( pixelimage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelimage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelimage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelimage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelimage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
     }
-    pixelimage.tileQuad( ax, ay, bx, by, cx, cy, dx, dy, tileImage );
-    return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+    return tileQuadrilateral( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
 }
 
 inline
-function rotateGradLine( pixelimage: Pixelimage
+function rotateGradLine( pixelImage: Pixelimage
                        , px: Float, py: Float
                        , thick: Float, h: Float
                        , theta: Float
                        , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+                       , hasHit: Bool = false
                        , ?debugCorners: Bool = false ){
     var sin = Math.sin( theta );
     var cos = Math.cos( theta );
@@ -143,12 +145,46 @@ function rotateGradLine( pixelimage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelimage.fillSquare( ax, ay, 12, colorA );
-        pixelimage.fillSquare( bx, by, 12, colorB );
-        pixelimage.fillSquare( cx, cy, 12, colorC );
-        pixelimage.fillSquare( dx, dy, 12, colorD );
+        pixelImage.fillSquare( ax, ay, 12, colorA );
+        pixelImage.fillSquare( bx, by, 12, colorB );
+        pixelImage.fillSquare( cx, cy, 12, colorC );
+        pixelImage.fillSquare( dx, dy, 12, colorD );
     }
-    pixelimage.fillGradQuad( ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
-    return { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+    return fillGradQuadrilateral( pixelImage, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
+}
 
+class LinePixel {
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _rotateLine:( pixelImage: Pixelimage
+        , px: Float, py: Float
+        , thick: Float, h: Float
+        , theta: Float, color: Int
+        , hasHit: Bool
+        , debugCorners: Bool ) -> Null<HitQuad> = rotateLine;
+
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateTileLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _rotateTileLine:( pixelImage: Pixelimage
+        , px: Float, py: Float
+        , thick: Float, h: Float
+        , theta: Float, tileImage: Pixelimage
+        , hasHit: Bool
+        , ?debugCorners: Bool ) -> Null<HitQuad> = rotateTileLine;
+
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _rotateGradLine:( pixelImage: Pixelimage
+        , px: Float, py: Float
+        , thick: Float, h: Float
+        , theta: Float
+        , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+        , hasHit: Bool
+        , ?debugCorners: Bool )->Null<HitQuad> = rotateGradLine;
 }

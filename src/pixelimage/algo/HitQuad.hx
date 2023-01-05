@@ -5,7 +5,7 @@ import pixelimage.iter.IteratorRange;
 import pixelimage.algo.HitTri;
 
 @:structInit
-class HitQuad {
+class HitQuad implements IhitObj {
     public var ax: Float;
     public var ay: Float;
     public var bx: Float;
@@ -15,10 +15,10 @@ class HitQuad {
     public var dx: Float;
     public var dy: Float;
 
-    var triABD: HitTri;
-    var triBCD: HitTri;
-    var xIter4: IteratorRange;
-    var yIter4: IteratorRange;
+    public var triABD: HitTri;
+    public var triBCD: HitTri;
+    public var xIter4: IteratorRange;
+    public var yIter4: IteratorRange;
     inline
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float
@@ -38,7 +38,7 @@ class HitQuad {
         yIter4 = boundIterator4( ay, by, cy, dy );
     }
     inline 
-    public function hit( x: Float, y: Float ){
+    public function hit( x: Float, y: Float ): Bool {
         return if( xIter4.containsF( x ) && yIter4.containsF( y ) ){
             if( triABD.hit( x, y ) ){
                 true;
@@ -50,5 +50,11 @@ class HitQuad {
         } else {
             false;
         }
+    }
+    inline 
+    public function pushTriangles( arrTri: Array<HitTri> ){
+        arrTri[ arrTri.length ] = triABD;
+        arrTri[ arrTri.length ] = triBCD;
+        return arrTri;
     }
 }

@@ -3,7 +3,7 @@ import pixelimage.Pixelimage;
 import pixelimage.triGML.coreShape.PatternShape;
 
 @:structInit
-class CircleSPattern extends PatternShape {
+class CirclePattern extends PatternShape {
     public var left:    Float;
     public var top:     Float;
     public var diameter:   Float;

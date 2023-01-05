@@ -4,7 +4,7 @@ import pixelimage.iter.BoundIterator;
 import pixelimage.iter.IteratorRange;
 
 @:structInit
-class HitTri {
+class HitTri implements IhitObj {
     public var ax: Float;
     public var ay: Float;
     public var bx: Float;
@@ -19,8 +19,8 @@ class HitTri {
     var tx: Float;
     var ty: Float;
     var A:  Float;
-    var xIter3: IteratorRange;
-    var yIter3: IteratorRange;
+    public var xIter3: IteratorRange;
+    public var yIter3: IteratorRange;
 
     inline
     public function new( ax: Float, ay: Float

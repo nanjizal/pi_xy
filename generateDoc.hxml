@@ -1,4 +1,4 @@
 #-cmd haxe generate.hxml
--cmd haxelib run dox -i output.xml --title "pixelimage API documentation" -D themeColor 0xe6ffe6 --toplevel-package pixelimage
+-cmd haxelib run dox -i output.xml --title "pixelimage API documentation" -D themeColor 0xe6ffe6 --toplevel-package pixelimage -D source-path https://github.com/nanjizal/pixelimage/blob/main/src/
 -cmd cd pages
 -cmd firefox index.html

@@ -78,3 +78,15 @@ function fillRadialRect( pixelimage: Pixelimage
     pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, x, y, colorOut );
     
 }
+
+class RectanglePixel{
+    /**
+       <font color="LightPink" font-weight:"Bold">fillRadialRect</font> module level field
+    **/
+    public var _fillRadialRect:( pixelimage: Pixelimage
+        , x:   Float, y: Float
+        , wid: Float, hi: Float 
+        , colorIn: Pixel32, colorOut: Pixel32
+        , ?gx: Float,  ?gy: Float
+        , ?edgePoints: Int ) -> Void = fillRadialRect;
+}

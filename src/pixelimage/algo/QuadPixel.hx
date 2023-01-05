@@ -1,5 +1,98 @@
 
 package pixelimage.algo;
+import pixelimage.pixel.Pixel32;
+import pixelimage.algo.TriPixel;
+import pixelimage.algo.HitTri;
+
+inline
+function fillQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
+                 , bx: Float, by: Float
+                 , cx: Float, cy: Float
+                 , dx: Float, dy: Float 
+                 , color: Int
+                 , hasHit: Bool = true ): Null<HitQuad>{
+    // tri e - a b d
+    // tri f - b c d
+    fillTriangle( pixelImage, ax, ay, bx, by, dx, dy, color, hasHit );
+    fillTriangle( pixelImage, ax, ay, cx, cy, dx, dy, color, hasHit );
+    return if( hasHit == false ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
+inline
+function tileQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
+                 , bx: Float, by: Float
+                 , cx: Float, cy: Float
+                 , dx: Float, dy: Float 
+                 , tileImage: Pixelimage
+                 , hasHit: Bool = true ): Null<HitQuad>{
+    // tri e - a b d
+    // tri f - b c d
+    tileTriangle( pixelImage, ax, ay, bx, by, dx, dy, tileImage, hasHit );
+    tileTriangle( pixelImage, ax, ay, cx, cy, dx, dy, tileImage, hasHit );
+    return if( hasHit == false ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
+inline
+function fillGradQuadrilateral( pixelImage: Pixelimage
+                                , ax: Float, ay: Float, colorA: Pixel32
+                                , bx: Float, by: Float, colorB: Pixel32
+                                , cx: Float, cy: Float, colorC: Pixel32 
+                                , dx: Float, dy: Float, colorD: Pixel32
+                                , hasHit: Bool = true ): Null<HitQuad>{
+    // tri e - a b d
+    // tri f - b c d
+    fillGradTriangle( pixelImage, ax, ay, colorA, bx, by, colorB, dx, dy, colorD, hasHit );
+    fillGradTriangle( pixelImage, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
+    return if( hasHit == false ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
+class QuadPixel {
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _fillQuadrilateral:( pixelImage: Pixelimage, ax: Float, ay: Float
+        , bx: Float, by: Float
+        , cx: Float, cy: Float
+        , dx: Float, dy: Float 
+        , color: Int
+        , hasHit: Bool ) -> Null<HitQuad> = fillQuadrilateral;
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _tileQuadrilateral:( pixelImage: Pixelimage, ax: Float, ay: Float
+        , bx: Float, by: Float
+        , cx: Float, cy: Float
+        , dx: Float, dy: Float 
+        , tileImage: Pixelimage
+        , hasHit: Bool ) -> Null<HitQuad> = tileQuadrilateral;
+    /**
+       <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
+       @param hasHit defaults false, since a HitTri has runtime overhead.
+    **/
+    public var _fillGradQuadrilateral:( pixelImage: Pixelimage
+        , ax: Float, ay: Float, colorA: Pixel32
+        , bx: Float, by: Float, colorB: Pixel32
+        , cx: Float, cy: Float, colorC: Pixel32 
+        , dx: Float, dy: Float, colorD: Pixel32
+        , hasHit: Bool ) -> Null<HitQuad> = fillGradQuadrilateral;
+}
 
 /*
     // NOT WORKING YET!!

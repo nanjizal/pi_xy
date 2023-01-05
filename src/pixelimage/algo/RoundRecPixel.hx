@@ -126,3 +126,38 @@ import pixelimage.pixel.Pixel32;
         pixelshape.fillGradRect(   x + dx, lowerY, fat, bottomRadius, colorD, colorC, colorC, colorD );
         pixelshape.fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, colorC );
     }
+
+class RoundRecPixel {
+    /**
+       <font color="LightPink" font-weight:"Bold">fillRoundRectangle</font> module level field
+    **/
+    public var _fillRoundRectangle:( pixelshape: Pixelshape
+        , x:     Float,        y:     Float
+        , wid:    Float,       hi:   Float
+        , color: Int
+        , ?dx:   Float,  ?dy: Float
+        , ?fat:  Float,  ?tall:  Float 
+        ) -> Void = fillRoundRectangle;
+
+    /**
+       <font color="LightPink" font-weight:"Bold">tileRoundRectangle</font> module level field
+    **/
+    public var _tileRoundRectangle:( pixelshape: Pixelshape
+        , x:     Float,        y:     Float
+        , wid:    Float,       hi:   Float
+        , tileImage: Pixelimage
+        , ?dx:   Float,  ?dy: Float
+        , ?fat:  Float,  ?tall:  Float 
+        ) -> Void = tileRoundRectangle;
+
+    /**
+       <font color="LightPink" font-weight:"Bold">fillGrad4RoundRectangle</font> module level field
+    **/
+    public var _fillGrad4RoundRectangle:( pixelshape: Pixelshape
+        , x:     Float,        y:     Float
+        , hi:    Float,        wid:   Float
+        , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+        , ?dx:   Float,  ?dy: Float
+        , ?fat:  Float,  ?tall:  Float 
+        ) -> Void = fillGrad4RoundRectangle;
+}

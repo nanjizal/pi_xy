@@ -13130,6 +13130,68 @@ pixelimage_Pixelimage.setRelativePosition = function(this1,x,y,update) {
 	this1.virtualX = x;
 	this1.virtualY = y;
 };
+var pixelimage_algo_IhitObj = function() { };
+pixelimage_algo_IhitObj.__name__ = "pixelimage.algo.IhitObj";
+pixelimage_algo_IhitObj.__isInterface__ = true;
+var pixelimage_algo_HitQuad = function(ax,ay,bx,by,cx,cy,dx,dy) {
+	this.ax = ax;
+	this.ay = ay;
+	this.bx = bx;
+	this.by = by;
+	this.cx = cx;
+	this.cy = cy;
+	this.dx = dx;
+	this.dy = dy;
+	this.triABD = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+	this.triBCD = new pixelimage_algo_HitTri(bx,by,cx,cy,dx,dy);
+	var min = Math.floor(ax);
+	var max = Math.ceil(ax);
+	if(bx < min) {
+		min = Math.floor(bx);
+	} else if(bx > max) {
+		max = Math.ceil(bx);
+	}
+	if(cx < min) {
+		min = Math.floor(cx);
+	} else if(cx > max) {
+		max = Math.ceil(cx);
+	}
+	if(dx < min) {
+		min = Math.floor(dx);
+	} else if(dx > max) {
+		max = Math.ceil(dx);
+	}
+	var ii_min = min;
+	var ii_max = max;
+	var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+	this.xIter4 = this1;
+	var min = Math.floor(ay);
+	var max = Math.ceil(ay);
+	if(by < min) {
+		min = Math.floor(by);
+	} else if(by > max) {
+		max = Math.ceil(by);
+	}
+	if(cy < min) {
+		min = Math.floor(cy);
+	} else if(cy > max) {
+		max = Math.ceil(cy);
+	}
+	if(dy < min) {
+		min = Math.floor(dy);
+	} else if(dy > max) {
+		max = Math.ceil(dy);
+	}
+	var ii_min = min;
+	var ii_max = max;
+	var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+	this.yIter4 = this1;
+};
+pixelimage_algo_HitQuad.__name__ = "pixelimage.algo.HitQuad";
+pixelimage_algo_HitQuad.__interfaces__ = [pixelimage_algo_IhitObj];
+pixelimage_algo_HitQuad.prototype = {
+	__class__: pixelimage_algo_HitQuad
+};
 var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy) {
 	var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
 	if(!adjustWinding) {
@@ -13205,9 +13267,13 @@ var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy) {
 	this.yIter3 = tmp;
 };
 pixelimage_algo_HitTri.__name__ = "pixelimage.algo.HitTri";
+pixelimage_algo_HitTri.__interfaces__ = [pixelimage_algo_IhitObj];
 pixelimage_algo_HitTri.prototype = {
 	__class__: pixelimage_algo_HitTri
 };
+var pixelimage_algo_HitTriArray = function() { };
+pixelimage_algo_HitTriArray.__name__ = "pixelimage.algo.HitTriArray";
+pixelimage_algo_HitTriArray.__interfaces__ = [pixelimage_algo_IhitObj];
 var pixelimage_iter_IntIterStart = function(min_,max_) {
 	this.start = min_;
 	this.max = max_;
@@ -13475,9 +13541,9 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 		var a = this.x2 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -13503,212 +13569,18 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -13717,6 +13589,10 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -13835,87 +13711,18 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -13924,18 +13731,22 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -13945,12 +13756,12 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				yIter3 = this1;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -13961,10 +13772,10 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -13974,12 +13785,12 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				this1 = this2;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -14041,98 +13852,12 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
 		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_triGML_contour_LineShape
@@ -14360,9 +14085,9 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			var a = x2 * this.scaleX + this.translateX - px;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
-			var debugCorners = false;
-			if(debugCorners == null) {
-				debugCorners = false;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -14388,212 +14113,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			temp = px + (dx * cos - dy * sin);
 			dy = py + (dy * cos + dx * sin);
 			dx = temp;
-			if(debugCorners) {
-				var x = ax - 6.;
-				var y = ay - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -65536;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 255;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 0;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = bx - 6.;
-				var y = by - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -16711936;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 255;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 0;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = cx - 6.;
-				var y = cy - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -16776961;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 255;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = dx - 6.;
-				var y = dy - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -1048336;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 240;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 240;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -14602,6 +14133,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -14720,87 +14255,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
-			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by1;
@@ -14809,18 +14275,22 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var s0 = by * cx1 - bx * cy1;
-			var sx = cy1 - by;
-			var sy = bx - cx1;
-			var t0 = bx * by1 - by * bx1;
-			var tx = by - by1;
-			var ty = bx1 - bx;
-			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 			var yIter3;
-			if(by > by1) {
-				if(by > cy1) {
+			if(ay > by1) {
+				if(ay > cy1) {
 					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(by);
+					var ii_max = Math.ceil(ay);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
@@ -14830,12 +14300,12 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					yIter3 = this2;
 				}
 			} else if(by1 > cy1) {
-				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 				var ii_max = Math.ceil(by1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
-				var ii_min = Math.floor(by);
+				var ii_min = Math.floor(ay);
 				var ii_max = Math.ceil(cy1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
@@ -14846,10 +14316,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			var sxx = 0.;
 			var txx = 0.;
 			var this2;
-			if(bx > bx1) {
-				if(bx > cx1) {
+			if(ax > bx1) {
+				if(ax > cx1) {
 					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(ax);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
@@ -14859,12 +14329,12 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					this2 = this3;
 				}
 			} else if(bx1 > cx1) {
-				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 				var ii_max = Math.ceil(bx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(ax);
 				var ii_max = Math.ceil(cx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
@@ -14926,92 +14396,17 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = bx;
-			var ay1 = by;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			var tmp;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
 			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+				tmp = null;
 			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = ax;
-			var inlobj_ay = ay;
-			var inlobj_bx = bx;
-			var inlobj_by = by;
-			var inlobj_cx = cx;
-			var inlobj_cy = cy;
-			var inlobj_dx = dx;
-			var inlobj_dy = dy;
-			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-			this.info = info;
+			this.info = tmp;
 			if(this.info != null && oldInfo != null) {
 				var this1 = this.pixelImage;
 				var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -15023,10 +14418,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				var dx = oldInfo.cx * this.scaleX + this.translateX;
 				var dy = oldInfo.cy * this.scaleY + this.translateY;
 				var color = this.strokeColor;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = true;
+				}
 				var bx1 = bx;
 				var by1 = by;
 				var cx1 = dx;
 				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
 				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -15035,6 +14438,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					by1 = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = ay * cx1 - ax * cy1;
 				var sx = cy1 - ay;
@@ -15153,123 +14560,58 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax1 = ax;
-				var ay1 = ay;
-				var bx2 = bx1;
-				var by2 = by1;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by2;
-					bx2 = cx2;
-					by2 = cy2;
-					cx2 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = ax1;
-				var v_ay = ay1;
-				var v_bx = bx2;
-				var v_by = by2;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay1 * cx2 - ax1 * cy2;
-				var v_sx = cy2 - ay1;
-				var v_sy = ax1 - cx2;
-				var v_t0 = ax1 * by2 - ay1 * bx2;
-				var v_tx = ay1 - by2;
-				var v_ty = bx2 - ax1;
-				var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-				if(ax1 > bx2) {
-					if(ax1 > cx2) {
-						var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx2);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					}
-				} else if(bx2 > cx2) {
-					var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-					var ii_max = Math.ceil(bx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ax1);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-				if(ay1 > by2) {
-					if(ay1 > cy2) {
-						var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-						var ii_max = Math.ceil(ay1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					} else {
-						var ii_min = Math.floor(by2);
-						var ii_max = Math.ceil(cy2);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					}
-				} else if(by2 > cy2) {
-					var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-					var ii_max = Math.ceil(by2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ay1);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
 				var bx1 = cx;
 				var by1 = cy;
-				var cx = dx;
-				var cy = dy;
-				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by1;
-					bx1 = cx;
-					by1 = cy;
-					cx = bx_;
-					cy = by_;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
 				}
-				var s0 = by * cx - bx * cy;
-				var sx = cy - by;
-				var sy = bx - cx;
-				var t0 = bx * by1 - by * bx1;
-				var tx = by - by1;
-				var ty = bx1 - bx;
-				var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = ay * cx1 - ax * cy1;
+				var sx = cy1 - ay;
+				var sy = ax - cx1;
+				var t0 = ax * by1 - ay * bx1;
+				var tx = ay - by1;
+				var ty = bx1 - ax;
+				var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 				var yIter3;
-				if(by > by1) {
-					if(by > cy) {
-						var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
-						var ii_max = Math.ceil(by);
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						yIter3 = this2;
 					} else {
 						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy);
+						var ii_max = Math.ceil(cy1);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						yIter3 = this2;
 					}
-				} else if(by1 > cy) {
-					var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+				} else if(by1 > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 					var ii_max = Math.ceil(by1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
-					var ii_min = Math.floor(by);
-					var ii_max = Math.ceil(cy);
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				}
@@ -15279,26 +14621,26 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				var sxx = 0.;
 				var txx = 0.;
 				var this2;
-				if(bx > bx1) {
-					if(bx > cx) {
-						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax);
 						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this2 = this3;
 					} else {
 						var ii_min = Math.floor(bx1);
-						var ii_max = Math.ceil(cx);
+						var ii_max = Math.ceil(cx1);
 						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this2 = this3;
 					}
-				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				} else if(bx1 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 					var ii_max = Math.ceil(bx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(cx);
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				}
@@ -15359,81 +14701,11 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var ay = by;
-				var bx = bx1;
-				var by = by1;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx;
-					var by_ = by;
-					bx = cx1;
-					by = cy1;
-					cx1 = bx_;
-					cy1 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx;
-				var v_by = by;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by - ay * bx;
-				var v_tx = ay - by;
-				var v_ty = bx - ax;
-				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
-				if(ax > bx) {
-					if(ax > cx1) {
-						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(ay > by) {
-					if(ay > cy1) {
-						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by > cy1) {
-					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max = Math.ceil(by);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit == false) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
 		}
@@ -15451,9 +14723,9 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 		var a = x2 * this.scaleX + this.translateX - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -15479,212 +14751,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -65536;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 0;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -16711936;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 0;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -16776961;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -1048336;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 240;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 240;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -15693,6 +14771,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -15811,87 +14893,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -15900,18 +14913,22 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
@@ -15921,12 +14938,12 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				yIter3 = this2;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this2;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this2;
@@ -15937,10 +14954,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 		var sxx = 0.;
 		var txx = 0.;
 		var this2;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
@@ -15950,12 +14967,12 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				this2 = this3;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this2 = this3;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this2 = this3;
@@ -16017,92 +15034,17 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		var tmp;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
 		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+			tmp = null;
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-		this.info = info;
+		this.info = tmp;
 		if(this.info != null && oldInfo != null) {
 			var this1 = this.pixelImage;
 			var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -16114,10 +15056,18 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var color = this.strokeColor;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = true;
+			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -16126,6 +15076,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -16244,123 +15198,58 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
-			var cx = dx;
-			var cy = dy;
-			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by1;
-				bx1 = cx;
-				by1 = cy;
-				cx = bx_;
-				cy = by_;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
 			}
-			var s0 = by * cx - bx * cy;
-			var sx = cy - by;
-			var sy = bx - cx;
-			var t0 = bx * by1 - by * bx1;
-			var tx = by - by1;
-			var ty = bx1 - bx;
-			var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 			var yIter3;
-			if(by > by1) {
-				if(by > cy) {
-					var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
-					var ii_max = Math.ceil(by);
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
 					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy);
+					var ii_max = Math.ceil(cy1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				}
-			} else if(by1 > cy) {
-				var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 				var ii_max = Math.ceil(by1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
-				var ii_min = Math.floor(by);
-				var ii_max = Math.ceil(cy);
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			}
@@ -16370,26 +15259,26 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			var sxx = 0.;
 			var txx = 0.;
 			var this2;
-			if(bx > bx1) {
-				if(bx > cx) {
-					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
 					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx);
+					var ii_max = Math.ceil(cx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				}
-			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 				var ii_max = Math.ceil(bx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
-				var ii_min = Math.floor(bx);
-				var ii_max = Math.ceil(cx);
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			}
@@ -16450,81 +15339,11 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = by;
-			var bx = bx1;
-			var by = by1;
-			var cx1 = cx;
-			var cy1 = cy;
-			var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx;
-				var by_ = by;
-				bx = cx1;
-				by = cy1;
-				cx1 = bx_;
-				cy1 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx;
-			var v_by = by;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay * cx1 - ax * cy1;
-			var v_sx = cy1 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by - ay * bx;
-			var v_tx = ay - by;
-			var v_ty = bx - ax;
-			var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
-			if(ax > bx) {
-				if(ax > cx1) {
-					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by) {
-				if(ay > cy1) {
-					var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by > cy1) {
-				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-				var ii_max = Math.ceil(by);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
 		this.x0 = x2;
@@ -17467,9 +16286,13 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 			var a = x2 * this.scaleX + this.translateX - px;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
+			var hasHit = false;
 			var debugCorners = false;
 			if(debugCorners == null) {
 				debugCorners = false;
+			}
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -17697,6 +16520,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var aA = colorB >> 24 & 255;
 			var rA = colorB >> 16 & 255;
 			var gA = colorB >> 8 & 255;
@@ -17852,81 +16683,8 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx1 = bx;
-			var by1 = by;
-			var cx1 = dx;
-			var cy1 = dy;
-			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx1;
-				var by_ = by1;
-				bx1 = cx1;
-				by1 = cy1;
-				cx1 = bx_;
-				cy1 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx1;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay1 * cx1 - ax1 * cy1;
-			var v_sx = cy1 - ay1;
-			var v_sy = ax1 - cx1;
-			var v_t0 = ax1 * by1 - ay1 * bx1;
-			var v_tx = ay1 - by1;
-			var v_ty = bx1 - ax1;
-			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-			if(ax1 > bx1) {
-				if(ax1 > cx1) {
-					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx1 > cx1) {
-				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by1) {
-				if(ay1 > cy1) {
-					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by1 > cy1) {
-				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
 			}
 			var aA = colorC >> 24 & 255;
 			var rA = colorC >> 16 & 255;
@@ -18159,16 +16917,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_yIter3 = this1;
 			}
-			var inlobj_ax = ax;
-			var inlobj_ay = ay;
-			var inlobj_bx = bx;
-			var inlobj_by = by;
-			var inlobj_cx = cx;
-			var inlobj_cy = cy;
-			var inlobj_dx = dx;
-			var inlobj_dy = dy;
-			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-			this.info = info;
+			var tmp;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
+			} else {
+				tmp = null;
+			}
+			this.info = tmp;
 			if(this.info != null && oldInfo != null) {
 				var this1 = this.temp;
 				var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -18183,6 +16939,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				var dx = oldInfo.cx * this.scaleX + this.translateX;
 				var dy = oldInfo.cy * this.scaleY + this.translateY;
 				var colorD = this.strokeBottomColor;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = true;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
 				var aA = colorB >> 24 & 255;
 				var rA = colorB >> 16 & 255;
 				var gA = colorB >> 8 & 255;
@@ -18338,81 +17102,8 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax1 = ax;
-				var ay1 = ay;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = dx;
-				var cy1 = dy;
-				var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx1;
-					var by_ = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_;
-					cy1 = by_;
-				}
-				var v_ax = ax1;
-				var v_ay = ay1;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay1 * cx1 - ax1 * cy1;
-				var v_sx = cy1 - ay1;
-				var v_sy = ax1 - cx1;
-				var v_t0 = ax1 * by1 - ay1 * bx1;
-				var v_tx = ay1 - by1;
-				var v_ty = bx1 - ax1;
-				var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-				if(ax1 > bx1) {
-					if(ax1 > cx1) {
-						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max = Math.ceil(ax1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					} else {
-						var ii_min = Math.floor(bx1);
-						var ii_max = Math.ceil(cx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-					var ii_max = Math.ceil(bx1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ax1);
-					var ii_max = Math.ceil(cx1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-				if(ay1 > by1) {
-					if(ay1 > cy1) {
-						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max = Math.ceil(ay1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					}
-				} else if(by1 > cy1) {
-					var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-					var ii_max = Math.ceil(by1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ay1);
-					var ii_max = Math.ceil(cy1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
 				}
 				var aA = colorC >> 24 & 255;
 				var rA = colorC >> 16 & 255;
@@ -18571,79 +17262,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				}
 				var v_yIter3;
 				var v_xIter3;
-				var ax = bx;
-				var ay = by;
-				var bx = cx;
-				var by = cy;
-				var cx = dx;
-				var cy = dy;
-				var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+				var ax1 = bx;
+				var ay1 = by;
+				var bx1 = cx;
+				var by1 = cy;
+				var cx1 = dx;
+				var cy1 = dy;
+				var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
 				if(!adjustWinding) {
-					var bx_ = bx;
-					var by_ = by;
-					bx = cx;
-					by = cy;
-					cx = bx_;
-					cy = by_;
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
 				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx;
-				var v_by = by;
-				var v_cx = cx;
-				var v_cy = cy;
-				var v_s0 = ay * cx - ax * cy;
-				var v_sx = cy - ay;
-				var v_sy = ax - cx;
-				var v_t0 = ax * by - ay * bx;
-				var v_tx = ay - by;
-				var v_ty = bx - ax;
-				var v_A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
-				if(ax > bx) {
-					if(ax > cx) {
-						var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-						var ii_max = Math.ceil(ax);
+				var v_ax = ax1;
+				var v_ay = ay1;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay1 * cx1 - ax1 * cy1;
+				var v_sx = cy1 - ay1;
+				var v_sy = ax1 - cx1;
+				var v_t0 = ax1 * by1 - ay1 * bx1;
+				var v_tx = ay1 - by1;
+				var v_ty = bx1 - ax1;
+				var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+				if(ax1 > bx1) {
+					if(ax1 > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax1);
 						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						v_xIter3 = this1;
 					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(cx);
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
 						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						v_xIter3 = this1;
 					}
-				} else if(bx > cx) {
-					var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx);
+				} else if(bx1 > cx1) {
+					var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+					var ii_max = Math.ceil(bx1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_xIter3 = this1;
 				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx);
+					var ii_min = Math.floor(ax1);
+					var ii_max = Math.ceil(cx1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_xIter3 = this1;
 				}
-				if(ay > by) {
-					if(ay > cy) {
-						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-						var ii_max = Math.ceil(ay);
+				if(ay1 > by1) {
+					if(ay1 > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay1);
 						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						v_yIter3 = this1;
 					} else {
-						var ii_min = Math.floor(by);
-						var ii_max = Math.ceil(cy);
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
 						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						v_yIter3 = this1;
 					}
-				} else if(by > cy) {
-					var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
-					var ii_max = Math.ceil(by);
+				} else if(by1 > cy1) {
+					var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+					var ii_max = Math.ceil(by1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_yIter3 = this1;
 				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy);
+					var ii_min = Math.floor(ay1);
+					var ii_max = Math.ceil(cy1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_yIter3 = this1;
+				}
+				if(hasHit == false) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
 		}
@@ -18664,9 +17358,13 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 		var a = x2 * this.scaleX + this.translateX - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
+		var hasHit = false;
 		var debugCorners = false;
 		if(debugCorners == null) {
 			debugCorners = false;
+		}
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -18894,6 +17592,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				}
 			}
 		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var aA = colorB >> 24 & 255;
 		var rA = colorB >> 16 & 255;
 		var gA = colorB >> 8 & 255;
@@ -19049,81 +17755,8 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = dx;
-		var cy1 = dy;
-		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay1 * cx1 - ax1 * cy1;
-		var v_sx = cy1 - ay1;
-		var v_sy = ax1 - cx1;
-		var v_t0 = ax1 * by1 - ay1 * bx1;
-		var v_tx = ay1 - by1;
-		var v_ty = bx1 - ax1;
-		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-		if(ax1 > bx1) {
-			if(ax1 > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx1);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx1);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		}
-		if(ay1 > by1) {
-			if(ay1 > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by1);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy1);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
 		}
 		var aA = colorC >> 24 & 255;
 		var rA = colorC >> 16 & 255;
@@ -19356,16 +17989,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			v_yIter3 = this1;
 		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-		this.info = info;
+		var tmp;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
+		} else {
+			tmp = null;
+		}
+		this.info = tmp;
 		if(this.info != null && oldInfo != null) {
 			var this1 = this.temp;
 			var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -19380,6 +18011,14 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var colorD = this.strokeBottomColor;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = true;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var aA = colorB >> 24 & 255;
 			var rA = colorB >> 16 & 255;
 			var gA = colorB >> 8 & 255;
@@ -19535,81 +18174,8 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx1 = bx;
-			var by1 = by;
-			var cx1 = dx;
-			var cy1 = dy;
-			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx1;
-				var by_ = by1;
-				bx1 = cx1;
-				by1 = cy1;
-				cx1 = bx_;
-				cy1 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx1;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay1 * cx1 - ax1 * cy1;
-			var v_sx = cy1 - ay1;
-			var v_sy = ax1 - cx1;
-			var v_t0 = ax1 * by1 - ay1 * bx1;
-			var v_tx = ay1 - by1;
-			var v_ty = bx1 - ax1;
-			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-			if(ax1 > bx1) {
-				if(ax1 > cx1) {
-					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx1 > cx1) {
-				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by1) {
-				if(ay1 > cy1) {
-					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by1 > cy1) {
-				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
 			}
 			var aA = colorC >> 24 & 255;
 			var rA = colorC >> 16 & 255;
@@ -19768,79 +18334,82 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 			}
 			var v_yIter3;
 			var v_xIter3;
-			var ax = bx;
-			var ay = by;
-			var bx = cx;
-			var by = cy;
-			var cx = dx;
-			var cy = dy;
-			var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
 			if(!adjustWinding) {
-				var bx_ = bx;
-				var by_ = by;
-				bx = cx;
-				by = cy;
-				cx = bx_;
-				cy = by_;
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx;
-			var v_by = by;
-			var v_cx = cx;
-			var v_cy = cy;
-			var v_s0 = ay * cx - ax * cy;
-			var v_sx = cy - ay;
-			var v_sy = ax - cx;
-			var v_t0 = ax * by - ay * bx;
-			var v_tx = ay - by;
-			var v_ty = bx - ax;
-			var v_A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
-			if(ax > bx) {
-				if(ax > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-					var ii_max = Math.ceil(ax);
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_xIter3 = this1;
 				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(cx);
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_xIter3 = this1;
 				}
-			} else if(bx > cx) {
-				var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx);
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_xIter3 = this1;
 			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx);
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_xIter3 = this1;
 			}
-			if(ay > by) {
-				if(ay > cy) {
-					var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-					var ii_max = Math.ceil(ay);
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_yIter3 = this1;
 				} else {
-					var ii_min = Math.floor(by);
-					var ii_max = Math.ceil(cy);
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					v_yIter3 = this1;
 				}
-			} else if(by > cy) {
-				var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
-				var ii_max = Math.ceil(by);
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_yIter3 = this1;
 			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy);
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_yIter3 = this1;
+			}
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
 		this.x0 = x2;
@@ -20279,9 +18848,13 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 		var a = this.x2 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
+		var hasHit = false;
 		var debugCorners = false;
 		if(debugCorners == null) {
 			debugCorners = false;
+		}
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -20509,6 +19082,14 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 				}
 			}
 		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var aA = colorB >> 24 & 255;
 		var rA = colorB >> 16 & 255;
 		var gA = colorB >> 8 & 255;
@@ -20664,81 +19245,8 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = dx;
-		var cy1 = dy;
-		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay1 * cx1 - ax1 * cy1;
-		var v_sx = cy1 - ay1;
-		var v_sy = ax1 - cx1;
-		var v_t0 = ax1 * by1 - ay1 * bx1;
-		var v_tx = ay1 - by1;
-		var v_ty = bx1 - ax1;
-		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-		if(ax1 > bx1) {
-			if(ax1 > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by1) {
-			if(ay1 > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
 		}
 		var aA = colorC >> 24 & 255;
 		var rA = colorC >> 16 & 255;
@@ -20971,22 +19479,9 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			v_yIter3 = this1;
 		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
 		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_triGML_gradientContour_LineGradient
@@ -21111,9 +19606,13 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 			var a = nextX - x;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
+			var hasHit = false;
 			var debugCorners = false;
 			if(debugCorners == null) {
 				debugCorners = false;
+			}
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -21341,6 +19840,14 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 					}
 				}
 			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
 			var aA = colorB >> 24 & 255;
 			var rA = colorB >> 16 & 255;
 			var gA = colorB >> 8 & 255;
@@ -21496,12 +20003,170 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 					}
 				}
 			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+			}
+			var aA1 = colorC >> 24 & 255;
+			var rA1 = colorC >> 16 & 255;
+			var gA1 = colorC >> 8 & 255;
+			var bA1 = colorC & 255;
+			var aB1 = colorB >> 24 & 255;
+			var rB1 = colorB >> 16 & 255;
+			var gB1 = colorB >> 8 & 255;
+			var bB1 = colorB & 255;
+			var aC1 = colorD >> 24 & 255;
+			var rC1 = colorD >> 16 & 255;
+			var gC1 = colorD >> 8 & 255;
+			var bC1 = colorD & 255;
+			var bcx1 = cx - dx;
+			var bcy1 = cy - dy;
+			var acx1 = bx - dx;
+			var acy1 = by - dy;
+			var dot111 = bcx1 * bcx1 + bcy1 * bcy1;
+			var dot121 = bcx1 * acx1 + bcy1 * acy1;
+			var dot221 = acx1 * acx1 + acy1 * acy1;
+			var denom11 = 1 / (dot111 * dot221 - dot121 * dot121);
+			var this73;
+			if(dx > cx) {
+				if(dx > bx) {
+					var ii_min8 = cx > bx ? Math.floor(bx) : Math.floor(cx);
+					var ii_max8 = Math.ceil(dx);
+					var this74 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+					this73 = this74;
+				} else {
+					var ii_min9 = Math.floor(cx);
+					var ii_max9 = Math.ceil(bx);
+					var this75 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+					this73 = this75;
+				}
+			} else if(cx > bx) {
+				var ii_min10 = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+				var ii_max10 = Math.ceil(cx);
+				var this76 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+				this73 = this76;
+			} else {
+				var ii_min11 = Math.floor(dx);
+				var ii_max11 = Math.ceil(bx);
+				var this77 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+				this73 = this77;
+			}
+			var _g_min2 = this73.start;
+			var _g_max2 = this73.max;
+			while(_g_min2 < _g_max2) {
+				var px1 = _g_min2++;
+				var pcx1 = px1 - dx;
+				var this78;
+				if(dy > cy) {
+					if(dy > by) {
+						var ii_min12 = cy > by ? Math.floor(by) : Math.floor(cy);
+						var ii_max12 = Math.ceil(dy);
+						var this79 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						this78 = this79;
+					} else {
+						var ii_min13 = Math.floor(cy);
+						var ii_max13 = Math.ceil(by);
+						var this80 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						this78 = this80;
+					}
+				} else if(cy > by) {
+					var ii_min14 = dy > by ? Math.floor(by) : Math.ceil(dy);
+					var ii_max14 = Math.ceil(cy);
+					var this81 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					this78 = this81;
+				} else {
+					var ii_min15 = Math.floor(dy);
+					var ii_max15 = Math.ceil(by);
+					var this82 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					this78 = this82;
+				}
+				var _g_min3 = this78.start;
+				var _g_max3 = this78.max;
+				while(_g_min3 < _g_max3) {
+					var py1 = _g_min3++;
+					var pcy1 = py1 - dy;
+					var dot311 = pcx1 * bcx1 + pcy1 * bcy1;
+					var dot321 = pcx1 * acx1 + pcy1 * acy1;
+					var ratioA1 = (dot221 * dot311 - dot121 * dot321) * denom11;
+					var ratioB1 = (dot111 * dot321 - dot121 * dot311) * denom11;
+					var ratioC1 = 1.0 - ratioB1 - ratioA1;
+					if(ratioA1 >= 0 && ratioB1 >= 0 && ratioC1 >= 0) {
+						var i5 = aA1 * ratioA1 + aB1 * ratioB1 + aC1 * ratioC1 | 0;
+						if(i5 > 255) {
+							i5 = 255;
+						}
+						if(i5 < 0) {
+							i5 = 0;
+						}
+						var this83 = i5;
+						var a10 = this83;
+						var i6 = rA1 * ratioA1 + rB1 * ratioB1 + rC1 * ratioC1 | 0;
+						if(i6 > 255) {
+							i6 = 255;
+						}
+						if(i6 < 0) {
+							i6 = 0;
+						}
+						var this84 = i6;
+						var r8 = this84;
+						var i7 = gA1 * ratioA1 + gB1 * ratioB1 + gC1 * ratioC1 | 0;
+						if(i7 > 255) {
+							i7 = 255;
+						}
+						if(i7 < 0) {
+							i7 = 0;
+						}
+						var this85 = i7;
+						var g8 = this85;
+						var i8 = bA1 * ratioA1 + bB1 * ratioB1 + bC1 * ratioC1 | 0;
+						if(i8 > 255) {
+							i8 = 255;
+						}
+						if(i8 < 0) {
+							i8 = 0;
+						}
+						var this86 = i8;
+						var b8 = this86;
+						var location5 = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a10 < 254) {
+							var this87 = pixelImage.image[location5];
+							var this88 = this87;
+							var old1 = pixelimage_Endian_isLittleEndian ? (this88 >> 24 & 255) << 24 | (this88 & 255) << 16 | (this88 >> 8 & 255) << 8 | this88 >> 16 & 255 : this88;
+							var rhs1 = a10 << 24 | r8 << 16 | g8 << 8 | b8;
+							var this89 = old1 >> 24 & 255;
+							var a15 = this89 == 0 ? 0. : this89 / 255;
+							var this90 = old1 >> 16 & 255;
+							var r15 = this90 == 0 ? 0. : this90 / 255;
+							var this91 = old1 >> 8 & 255;
+							var g15 = this91 == 0 ? 0. : this91 / 255;
+							var this92 = old1 & 255;
+							var b15 = this92 == 0 ? 0. : this92 / 255;
+							var this93 = rhs1 >> 24 & 255;
+							var a25 = this93 == 0 ? 0. : this93 / 255;
+							var this94 = rhs1 >> 16 & 255;
+							var r25 = this94 == 0 ? 0. : this94 / 255;
+							var this95 = rhs1 >> 8 & 255;
+							var g25 = this95 == 0 ? 0. : this95 / 255;
+							var this96 = rhs1 & 255;
+							var b25 = this96 == 0 ? 0. : this96 / 255;
+							var a35 = a15 * (1 - a25);
+							var r9 = 255 * (r15 * a35 + r25 * a25) | 0;
+							var g9 = 255 * (g15 * a35 + g25 * a25) | 0;
+							var b9 = 255 * (b15 * a35 + b25 * a25) | 0;
+							var a16 = 255 * (a35 + a25) | 0;
+							var blended5 = a16 << 24 | r9 << 16 | g9 << 8 | b9;
+							pixelImage.image[location5] = pixelimage_Endian_isLittleEndian ? (blended5 >> 24 & 255) << 24 | (blended5 & 255) << 16 | (blended5 >> 8 & 255) << 8 | blended5 >> 16 & 255 : blended5;
+						} else {
+							pixelImage.image[location5] = pixelImage.isLittle ? a10 << 24 | b8 << 16 | g8 << 8 | r8 : a10 << 24 | r8 << 16 | g8 << 8 | b8;
+						}
+					}
+				}
+			}
 			var v_yIter3;
 			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx1 = bx;
-			var by1 = by;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
 			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
@@ -21528,290 +20193,53 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
 			if(ax1 > bx1) {
 				if(ax1 > cx1) {
-					var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max8 = Math.ceil(ax1);
-					var this73 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-					v_xIter3 = this73;
+					var ii_min16 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max16 = Math.ceil(ax1);
+					var this97 = new pixelimage_iter_IntIterStart(ii_min16,ii_max16);
+					v_xIter3 = this97;
 				} else {
-					var ii_min9 = Math.floor(bx1);
-					var ii_max9 = Math.ceil(cx1);
-					var this74 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-					v_xIter3 = this74;
+					var ii_min17 = Math.floor(bx1);
+					var ii_max17 = Math.ceil(cx1);
+					var this98 = new pixelimage_iter_IntIterStart(ii_min17,ii_max17);
+					v_xIter3 = this98;
 				}
 			} else if(bx1 > cx1) {
-				var ii_min10 = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max10 = Math.ceil(bx1);
-				var this75 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-				v_xIter3 = this75;
+				var ii_min18 = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max18 = Math.ceil(bx1);
+				var this99 = new pixelimage_iter_IntIterStart(ii_min18,ii_max18);
+				v_xIter3 = this99;
 			} else {
-				var ii_min11 = Math.floor(ax1);
-				var ii_max11 = Math.ceil(cx1);
-				var this76 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-				v_xIter3 = this76;
+				var ii_min19 = Math.floor(ax1);
+				var ii_max19 = Math.ceil(cx1);
+				var this100 = new pixelimage_iter_IntIterStart(ii_min19,ii_max19);
+				v_xIter3 = this100;
 			}
 			if(ay1 > by1) {
 				if(ay1 > cy1) {
-					var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max12 = Math.ceil(ay1);
-					var this77 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-					v_yIter3 = this77;
+					var ii_min20 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max20 = Math.ceil(ay1);
+					var this101 = new pixelimage_iter_IntIterStart(ii_min20,ii_max20);
+					v_yIter3 = this101;
 				} else {
-					var ii_min13 = Math.floor(by1);
-					var ii_max13 = Math.ceil(cy1);
-					var this78 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-					v_yIter3 = this78;
+					var ii_min21 = Math.floor(by1);
+					var ii_max21 = Math.ceil(cy1);
+					var this102 = new pixelimage_iter_IntIterStart(ii_min21,ii_max21);
+					v_yIter3 = this102;
 				}
 			} else if(by1 > cy1) {
-				var ii_min14 = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max14 = Math.ceil(by1);
-				var this79 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-				v_yIter3 = this79;
+				var ii_min22 = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max22 = Math.ceil(by1);
+				var this103 = new pixelimage_iter_IntIterStart(ii_min22,ii_max22);
+				v_yIter3 = this103;
 			} else {
-				var ii_min15 = Math.floor(ay1);
-				var ii_max15 = Math.ceil(cy1);
-				var this80 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-				v_yIter3 = this80;
+				var ii_min23 = Math.floor(ay1);
+				var ii_max23 = Math.ceil(cy1);
+				var this104 = new pixelimage_iter_IntIterStart(ii_min23,ii_max23);
+				v_yIter3 = this104;
 			}
-			var aA1 = colorC >> 24 & 255;
-			var rA1 = colorC >> 16 & 255;
-			var gA1 = colorC >> 8 & 255;
-			var bA1 = colorC & 255;
-			var aB1 = colorB >> 24 & 255;
-			var rB1 = colorB >> 16 & 255;
-			var gB1 = colorB >> 8 & 255;
-			var bB1 = colorB & 255;
-			var aC1 = colorD >> 24 & 255;
-			var rC1 = colorD >> 16 & 255;
-			var gC1 = colorD >> 8 & 255;
-			var bC1 = colorD & 255;
-			var bcx1 = cx - dx;
-			var bcy1 = cy - dy;
-			var acx1 = bx - dx;
-			var acy1 = by - dy;
-			var dot111 = bcx1 * bcx1 + bcy1 * bcy1;
-			var dot121 = bcx1 * acx1 + bcy1 * acy1;
-			var dot221 = acx1 * acx1 + acy1 * acy1;
-			var denom11 = 1 / (dot111 * dot221 - dot121 * dot121);
-			var this81;
-			if(dx > cx) {
-				if(dx > bx) {
-					var ii_min16 = cx > bx ? Math.floor(bx) : Math.floor(cx);
-					var ii_max16 = Math.ceil(dx);
-					var this82 = new pixelimage_iter_IntIterStart(ii_min16,ii_max16);
-					this81 = this82;
-				} else {
-					var ii_min17 = Math.floor(cx);
-					var ii_max17 = Math.ceil(bx);
-					var this83 = new pixelimage_iter_IntIterStart(ii_min17,ii_max17);
-					this81 = this83;
-				}
-			} else if(cx > bx) {
-				var ii_min18 = dx > bx ? Math.floor(bx) : Math.ceil(dx);
-				var ii_max18 = Math.ceil(cx);
-				var this84 = new pixelimage_iter_IntIterStart(ii_min18,ii_max18);
-				this81 = this84;
-			} else {
-				var ii_min19 = Math.floor(dx);
-				var ii_max19 = Math.ceil(bx);
-				var this85 = new pixelimage_iter_IntIterStart(ii_min19,ii_max19);
-				this81 = this85;
+			if(hasHit1 == false) {
+				var v1 = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
-			var _g_min2 = this81.start;
-			var _g_max2 = this81.max;
-			while(_g_min2 < _g_max2) {
-				var px1 = _g_min2++;
-				var pcx1 = px1 - dx;
-				var this86;
-				if(dy > cy) {
-					if(dy > by) {
-						var ii_min20 = cy > by ? Math.floor(by) : Math.floor(cy);
-						var ii_max20 = Math.ceil(dy);
-						var this87 = new pixelimage_iter_IntIterStart(ii_min20,ii_max20);
-						this86 = this87;
-					} else {
-						var ii_min21 = Math.floor(cy);
-						var ii_max21 = Math.ceil(by);
-						var this88 = new pixelimage_iter_IntIterStart(ii_min21,ii_max21);
-						this86 = this88;
-					}
-				} else if(cy > by) {
-					var ii_min22 = dy > by ? Math.floor(by) : Math.ceil(dy);
-					var ii_max22 = Math.ceil(cy);
-					var this89 = new pixelimage_iter_IntIterStart(ii_min22,ii_max22);
-					this86 = this89;
-				} else {
-					var ii_min23 = Math.floor(dy);
-					var ii_max23 = Math.ceil(by);
-					var this90 = new pixelimage_iter_IntIterStart(ii_min23,ii_max23);
-					this86 = this90;
-				}
-				var _g_min3 = this86.start;
-				var _g_max3 = this86.max;
-				while(_g_min3 < _g_max3) {
-					var py1 = _g_min3++;
-					var pcy1 = py1 - dy;
-					var dot311 = pcx1 * bcx1 + pcy1 * bcy1;
-					var dot321 = pcx1 * acx1 + pcy1 * acy1;
-					var ratioA1 = (dot221 * dot311 - dot121 * dot321) * denom11;
-					var ratioB1 = (dot111 * dot321 - dot121 * dot311) * denom11;
-					var ratioC1 = 1.0 - ratioB1 - ratioA1;
-					if(ratioA1 >= 0 && ratioB1 >= 0 && ratioC1 >= 0) {
-						var i5 = aA1 * ratioA1 + aB1 * ratioB1 + aC1 * ratioC1 | 0;
-						if(i5 > 255) {
-							i5 = 255;
-						}
-						if(i5 < 0) {
-							i5 = 0;
-						}
-						var this91 = i5;
-						var a10 = this91;
-						var i6 = rA1 * ratioA1 + rB1 * ratioB1 + rC1 * ratioC1 | 0;
-						if(i6 > 255) {
-							i6 = 255;
-						}
-						if(i6 < 0) {
-							i6 = 0;
-						}
-						var this92 = i6;
-						var r8 = this92;
-						var i7 = gA1 * ratioA1 + gB1 * ratioB1 + gC1 * ratioC1 | 0;
-						if(i7 > 255) {
-							i7 = 255;
-						}
-						if(i7 < 0) {
-							i7 = 0;
-						}
-						var this93 = i7;
-						var g8 = this93;
-						var i8 = bA1 * ratioA1 + bB1 * ratioB1 + bC1 * ratioC1 | 0;
-						if(i8 > 255) {
-							i8 = 255;
-						}
-						if(i8 < 0) {
-							i8 = 0;
-						}
-						var this94 = i8;
-						var b8 = this94;
-						var location5 = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
-						if(pixelImage.transparent && a10 < 254) {
-							var this95 = pixelImage.image[location5];
-							var this96 = this95;
-							var old1 = pixelimage_Endian_isLittleEndian ? (this96 >> 24 & 255) << 24 | (this96 & 255) << 16 | (this96 >> 8 & 255) << 8 | this96 >> 16 & 255 : this96;
-							var rhs1 = a10 << 24 | r8 << 16 | g8 << 8 | b8;
-							var this97 = old1 >> 24 & 255;
-							var a15 = this97 == 0 ? 0. : this97 / 255;
-							var this98 = old1 >> 16 & 255;
-							var r15 = this98 == 0 ? 0. : this98 / 255;
-							var this99 = old1 >> 8 & 255;
-							var g15 = this99 == 0 ? 0. : this99 / 255;
-							var this100 = old1 & 255;
-							var b15 = this100 == 0 ? 0. : this100 / 255;
-							var this101 = rhs1 >> 24 & 255;
-							var a25 = this101 == 0 ? 0. : this101 / 255;
-							var this102 = rhs1 >> 16 & 255;
-							var r25 = this102 == 0 ? 0. : this102 / 255;
-							var this103 = rhs1 >> 8 & 255;
-							var g25 = this103 == 0 ? 0. : this103 / 255;
-							var this104 = rhs1 & 255;
-							var b25 = this104 == 0 ? 0. : this104 / 255;
-							var a35 = a15 * (1 - a25);
-							var r9 = 255 * (r15 * a35 + r25 * a25) | 0;
-							var g9 = 255 * (g15 * a35 + g25 * a25) | 0;
-							var b9 = 255 * (b15 * a35 + b25 * a25) | 0;
-							var a16 = 255 * (a35 + a25) | 0;
-							var blended5 = a16 << 24 | r9 << 16 | g9 << 8 | b9;
-							pixelImage.image[location5] = pixelimage_Endian_isLittleEndian ? (blended5 >> 24 & 255) << 24 | (blended5 & 255) << 16 | (blended5 >> 8 & 255) << 8 | blended5 >> 16 & 255 : blended5;
-						} else {
-							pixelImage.image[location5] = pixelImage.isLittle ? a10 << 24 | b8 << 16 | g8 << 8 | r8 : a10 << 24 | r8 << 16 | g8 << 8 | b8;
-						}
-					}
-				}
-			}
-			var v_yIter31;
-			var v_xIter31;
-			var ax2 = bx;
-			var ay2 = by;
-			var bx2 = cx;
-			var by2 = cy;
-			var cx2 = dx;
-			var cy2 = dy;
-			var adjustWinding1 = ax2 * by2 - bx2 * ay2 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay2 - ax2 * cy2) > 0;
-			if(!adjustWinding1) {
-				var bx_1 = bx2;
-				var by_1 = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_1;
-				cy2 = by_1;
-			}
-			var v_ax1 = ax2;
-			var v_ay1 = ay2;
-			var v_bx1 = bx2;
-			var v_by1 = by2;
-			var v_cx1 = cx2;
-			var v_cy1 = cy2;
-			var v_s01 = ay2 * cx2 - ax2 * cy2;
-			var v_sx1 = cy2 - ay2;
-			var v_sy1 = ax2 - cx2;
-			var v_t01 = ax2 * by2 - ay2 * bx2;
-			var v_tx1 = ay2 - by2;
-			var v_ty1 = bx2 - ax2;
-			var v_A1 = -by2 * cx2 + ay2 * (-bx2 + cx2) + ax2 * (by2 - cy2) + bx2 * cy2;
-			if(ax2 > bx2) {
-				if(ax2 > cx2) {
-					var ii_min24 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max24 = Math.ceil(ax2);
-					var this105 = new pixelimage_iter_IntIterStart(ii_min24,ii_max24);
-					v_xIter31 = this105;
-				} else {
-					var ii_min25 = Math.floor(bx2);
-					var ii_max25 = Math.ceil(cx2);
-					var this106 = new pixelimage_iter_IntIterStart(ii_min25,ii_max25);
-					v_xIter31 = this106;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min26 = ax2 > cx2 ? Math.floor(cx2) : Math.ceil(ax2);
-				var ii_max26 = Math.ceil(bx2);
-				var this107 = new pixelimage_iter_IntIterStart(ii_min26,ii_max26);
-				v_xIter31 = this107;
-			} else {
-				var ii_min27 = Math.floor(ax2);
-				var ii_max27 = Math.ceil(cx2);
-				var this108 = new pixelimage_iter_IntIterStart(ii_min27,ii_max27);
-				v_xIter31 = this108;
-			}
-			if(ay2 > by2) {
-				if(ay2 > cy2) {
-					var ii_min28 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max28 = Math.ceil(ay2);
-					var this109 = new pixelimage_iter_IntIterStart(ii_min28,ii_max28);
-					v_yIter31 = this109;
-				} else {
-					var ii_min29 = Math.floor(by2);
-					var ii_max29 = Math.ceil(cy2);
-					var this110 = new pixelimage_iter_IntIterStart(ii_min29,ii_max29);
-					v_yIter31 = this110;
-				}
-			} else if(by2 > cy2) {
-				var ii_min30 = ay2 > cy2 ? Math.floor(cy2) : Math.ceil(ay2);
-				var ii_max30 = Math.ceil(by2);
-				var this111 = new pixelimage_iter_IntIterStart(ii_min30,ii_max30);
-				v_yIter31 = this111;
-			} else {
-				var ii_min31 = Math.floor(ay2);
-				var ii_max31 = Math.ceil(cy2);
-				var this112 = new pixelimage_iter_IntIterStart(ii_min31,ii_max31);
-				v_yIter31 = this112;
-			}
-			var inlobj_ax = ax;
-			var inlobj_ay = ay;
-			var inlobj_bx = bx;
-			var inlobj_by = by;
-			var inlobj_cx = cx;
-			var inlobj_cy = cy;
-			var inlobj_dx = dx;
-			var inlobj_dy = dy;
-			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
 		}
 		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
 	}
@@ -22001,10 +20429,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var tileImage = this.tileImageStroke;
 				var bx = this.width;
 				var cy = this.height;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = true;
+				}
 				var bx1 = bx;
 				var by = 0;
 				var cx = 0;
 				var cy1 = cy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = 0 * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - 0 * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -22013,6 +20453,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = 0 * cx - 0 * cy1;
 				var sx = cy1;
@@ -22135,85 +20579,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = 0 * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - 0 * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = 0;
-				var v_ay = 0;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = 0 * cx1 - 0 * cy2;
-				var v_sx = cy2;
-				var v_sy = 0 - cx1;
-				var v_t0 = 0 * by1 - 0 * bx2;
-				var v_tx = 0 - by1;
-				var v_ty = bx2;
-				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + 0 * (by1 - cy2) + bx2 * cy2;
-				if(0 > bx2) {
-					if(0 > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = 0 > cx1 ? Math.floor(cx1) : Math.ceil(0);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(0 > by1) {
-					if(0 > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(0,0,bx1,by,cx,cy1);
 				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = 0;
 				var cy1 = cy;
-				var adjustWinding = bx * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - bx * cy1) > 0;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = 0 * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - 0 * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by;
@@ -22222,13 +20599,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					cx = bx_;
 					cy1 = by_;
 				}
-				var s0 = 0 * cx - bx * cy1;
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = 0 * cx - 0 * cy1;
 				var sx = cy1;
-				var sy = bx - cx;
-				var t0 = bx * by - 0 * bx1;
+				var sy = 0 - cx;
+				var t0 = 0 * by - 0 * bx1;
 				var tx = 0 - by;
-				var ty = bx1 - bx;
-				var A = -by * cx + 0 * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+				var ty = bx1;
+				var A = -by * cx + 0 * (-bx1 + cx) + 0 * (by - cy1) + bx1 * cy1;
 				var yIter3;
 				if(0 > by) {
 					if(0 > cy1) {
@@ -22259,10 +20640,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var sxx = 0.;
 				var txx = 0.;
 				var this1;
-				if(bx > bx1) {
-					if(bx > cx) {
+				if(0 > bx1) {
+					if(0 > cx) {
 						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+						var ii_max = Math.ceil(0);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this1 = this2;
 					} else {
@@ -22272,12 +20653,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						this1 = this2;
 					}
 				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+					var ii_min = 0 > cx ? Math.floor(cx) : Math.ceil(0);
 					var ii_max = Math.ceil(bx1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
-					var ii_min = Math.floor(bx);
+					var ii_min = Math.floor(0);
 					var ii_max = Math.ceil(cx);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
@@ -22343,89 +20724,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(0,0,bx1,by,cx,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = 0;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = 0 * cx1 - ax * cy2;
-				var v_sx = cy2;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - 0 * bx2;
-				var v_tx = 0 - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitQuad(0,0,bx,0,bx,cy,0,cy);
 				}
-				if(0 > by1) {
-					if(0 > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-				var inlobj_ax = 0;
-				var inlobj_ay = 0;
-				var inlobj_bx = bx;
-				var inlobj_by = 0;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = 0;
-				var inlobj_dy = cy;
 			} else {
 				var color = this.strokeColor;
 				var p = 0;
@@ -22482,10 +20786,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var tileImage = this.tileImageFill;
 			var bx = x + (this.width - 2 * this.strokeWidth);
 			var cy = y + (this.height - 2 * this.strokeWidth);
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
 			var bx1 = bx;
 			var by = y;
 			var cx = x;
 			var cy1 = cy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = x * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - x * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -22494,6 +20810,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				by = cy1;
 				cx = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = y * cx - x * cy1;
 			var sx = cy1 - y;
@@ -22616,87 +20936,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = x;
-			var ay = y;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x,y,bx1,by,cx,cy1);
 			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x;
 			var cy1 = cy;
-			var adjustWinding = bx * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = x * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - x * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by;
@@ -22705,13 +20956,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				cx = bx_;
 				cy1 = by_;
 			}
-			var s0 = y * cx - bx * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = y * cx - x * cy1;
 			var sx = cy1 - y;
-			var sy = bx - cx;
-			var t0 = bx * by - y * bx1;
+			var sy = x - cx;
+			var t0 = x * by - y * bx1;
 			var tx = y - by;
-			var ty = bx1 - bx;
-			var A = -by * cx + y * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+			var ty = bx1 - x;
+			var A = -by * cx + y * (-bx1 + cx) + x * (by - cy1) + bx1 * cy1;
 			var yIter3;
 			if(y > by) {
 				if(y > cy1) {
@@ -22742,10 +20997,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var sxx = 0.;
 			var txx = 0.;
 			var this1;
-			if(bx > bx1) {
-				if(bx > cx) {
+			if(x > bx1) {
+				if(x > cx) {
 					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(x);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
@@ -22755,12 +21010,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					this1 = this2;
 				}
 			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_min = x > cx ? Math.floor(cx) : Math.ceil(x);
 				var ii_max = Math.ceil(bx1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(x);
 				var ii_max = Math.ceil(cx);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
@@ -22826,90 +21081,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = y;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x,y,bx1,by,cx,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(x,y,bx,y,bx,cy,x,cy);
 			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = x;
-			var inlobj_ay = y;
-			var inlobj_bx = bx;
-			var inlobj_by = y;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x;
-			var inlobj_dy = cy;
 		} else {
 			if(this.tiledBorder) {
 				var pixelshape = temp;
@@ -22973,6 +21150,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx1 = nextX;
 					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -22981,6 +21162,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy1;
 						cx1 = bx_;
 						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = cy * cx1 - cx * cy1;
 					var sx = cy1 - cy;
@@ -23103,81 +21288,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = cx;
-					var ay = cy;
-					var bx1 = bx;
-					var by1 = by;
-					var cx2 = cx1;
-					var cy2 = cy1;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx2;
-						by1 = cy2;
-						cx2 = bx_1;
-						cy2 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx2;
-					var v_cy = cy2;
-					var v_s0 = ay * cx2 - ax * cy2;
-					var v_sx = cy2 - ay;
-					var v_sy = ax - cx2;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-					if(ax > bx1) {
-						if(ax > cx2) {
-							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx2);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx2) {
-						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx2);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy2) {
-							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy2);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy2) {
-						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy2);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -23185,10 +21297,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var x = dx;
 				var bx = x + fat;
 				var cy = dy;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = true;
+				}
 				var bx1 = bx;
 				var by = 0;
 				var cx = x;
 				var cy1 = cy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = x * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - x * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -23197,6 +21321,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = 0 * cx - x * cy1;
 				var sx = cy1;
@@ -23319,86 +21447,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = x;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = ax;
-				var v_ay = 0;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = 0 * cx1 - ax * cy2;
-				var v_sx = cy2;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - 0 * bx2;
-				var v_tx = 0 - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(0 > by1) {
-					if(0 > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(x,0,bx1,by,cx,cy1);
 				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = x;
 				var cy1 = cy;
-				var adjustWinding = bx * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - bx * cy1) > 0;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = x * by - bx1 * 0 + (bx1 * cy1 - cx * by) + (cx * 0 - x * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by;
@@ -23407,13 +21467,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					cx = bx_;
 					cy1 = by_;
 				}
-				var s0 = 0 * cx - bx * cy1;
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = 0 * cx - x * cy1;
 				var sx = cy1;
-				var sy = bx - cx;
-				var t0 = bx * by - 0 * bx1;
+				var sy = x - cx;
+				var t0 = x * by - 0 * bx1;
 				var tx = 0 - by;
-				var ty = bx1 - bx;
-				var A = -by * cx + 0 * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+				var ty = bx1 - x;
+				var A = -by * cx + 0 * (-bx1 + cx) + x * (by - cy1) + bx1 * cy1;
 				var yIter3;
 				if(0 > by) {
 					if(0 > cy1) {
@@ -23444,10 +21508,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var sxx = 0.;
 				var txx = 0.;
 				var this1;
-				if(bx > bx1) {
-					if(bx > cx) {
+				if(x > bx1) {
+					if(x > cx) {
 						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+						var ii_max = Math.ceil(x);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this1 = this2;
 					} else {
@@ -23457,12 +21521,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						this1 = this2;
 					}
 				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+					var ii_min = x > cx ? Math.floor(cx) : Math.ceil(x);
 					var ii_max = Math.ceil(bx1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
-					var ii_min = Math.floor(bx);
+					var ii_min = Math.floor(x);
 					var ii_max = Math.ceil(cx);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
@@ -23528,97 +21592,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * 0 + (bx2 * cy2 - cx1 * by1) + (cx1 * 0 - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(x,0,bx1,by,cx,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = 0;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = 0 * cx1 - ax * cy2;
-				var v_sx = cy2;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - 0 * bx2;
-				var v_tx = 0 - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + 0 * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitQuad(x,0,bx,0,bx,cy,x,cy);
 				}
-				if(0 > by1) {
-					if(0 > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = 0 > cy2 ? Math.floor(cy2) : Math.ceil(0);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-				var inlobj_ax = x;
-				var inlobj_ay = 0;
-				var inlobj_bx = bx;
-				var inlobj_by = 0;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = x;
-				var inlobj_dy = cy;
-				var inlobj_ax = x;
-				var inlobj_ay = 0;
-				var inlobj_bx = bx;
-				var inlobj_by = 0;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = x;
-				var inlobj_dy = cy;
 				var cy = dy;
 				var targetError = 1.05;
 				if(targetError == null) {
@@ -23653,6 +21632,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx = nextX;
 					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = farX * by - bx * cy + (bx * cy1 - cx * by) + (cx * cy - farX * cy1) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -23661,6 +21644,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy1;
 						cx = bx_;
 						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = cy * cx - farX * cy1;
 					var sx = cy1 - cy;
@@ -23783,81 +21770,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = farX;
-					var ay = cy;
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = cx;
-					var cy2 = cy1;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx1;
-						by1 = cy2;
-						cx1 = bx_1;
-						cy2 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx1;
-					var v_cy = cy2;
-					var v_s0 = ay * cx1 - ax * cy2;
-					var v_sx = cy2 - ay;
-					var v_sy = ax - cx1;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx1);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx1) {
-						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx1);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy2) {
-							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy2);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy2) {
-						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy2);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -23865,10 +21779,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var y = dy;
 				var bx = wid;
 				var cy = y + tall;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = true;
+				}
 				var bx1 = bx;
 				var by = y;
 				var cx = 0;
 				var cy1 = cy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = 0 * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - 0 * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -23877,6 +21803,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = y * cx - 0 * cy1;
 				var sx = cy1 - y;
@@ -23999,86 +21929,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ay = y;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = 0 * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - 0 * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = 0;
-				var v_ay = ay;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - 0 * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = 0 - cx1;
-				var v_t0 = 0 * by1 - ay * bx2;
-				var v_tx = ay - by1;
-				var v_ty = bx2;
-				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + 0 * (by1 - cy2) + bx2 * cy2;
-				if(0 > bx2) {
-					if(0 > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(0);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = 0 > cx1 ? Math.floor(cx1) : Math.ceil(0);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(0);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(0,y,bx1,by,cx,cy1);
 				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = 0;
 				var cy1 = cy;
-				var adjustWinding = bx * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - bx * cy1) > 0;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = 0 * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - 0 * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by;
@@ -24087,13 +21949,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					cx = bx_;
 					cy1 = by_;
 				}
-				var s0 = y * cx - bx * cy1;
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = y * cx - 0 * cy1;
 				var sx = cy1 - y;
-				var sy = bx - cx;
-				var t0 = bx * by - y * bx1;
+				var sy = 0 - cx;
+				var t0 = 0 * by - y * bx1;
 				var tx = y - by;
-				var ty = bx1 - bx;
-				var A = -by * cx + y * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+				var ty = bx1;
+				var A = -by * cx + y * (-bx1 + cx) + 0 * (by - cy1) + bx1 * cy1;
 				var yIter3;
 				if(y > by) {
 					if(y > cy1) {
@@ -24124,10 +21990,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var sxx = 0.;
 				var txx = 0.;
 				var this1;
-				if(bx > bx1) {
-					if(bx > cx) {
+				if(0 > bx1) {
+					if(0 > cx) {
 						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+						var ii_max = Math.ceil(0);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this1 = this2;
 					} else {
@@ -24137,12 +22003,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						this1 = this2;
 					}
 				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+					var ii_min = 0 > cx ? Math.floor(cx) : Math.ceil(0);
 					var ii_max = Math.ceil(bx1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
-					var ii_min = Math.floor(bx);
+					var ii_min = Math.floor(0);
 					var ii_max = Math.ceil(cx);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
@@ -24208,98 +22074,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var ay = y;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(0,y,bx1,by,cx,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx2;
-				var v_tx = ay - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitQuad(0,y,bx,y,bx,cy,0,cy);
 				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-				var inlobj_ax = 0;
-				var inlobj_ay = y;
-				var inlobj_bx = bx;
-				var inlobj_by = y;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = 0;
-				var inlobj_dy = cy;
-				var inlobj_ax = 0;
-				var inlobj_ay = y;
-				var inlobj_bx = bx;
-				var inlobj_by = y;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = 0;
-				var inlobj_dy = cy;
 				var cx = dx;
 				var targetError = 1.05;
 				if(targetError == null) {
@@ -24334,6 +22114,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx1 = nextX;
 					var cy = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = cx * by - bx * lowerY + (bx * cy - cx1 * by) + (cx1 * lowerY - cx * cy) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -24342,6 +22126,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy;
 						cx1 = bx_;
 						cy = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = lowerY * cx1 - cx * cy;
 					var sx = cy - lowerY;
@@ -24464,81 +22252,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = cx;
-					var ay = lowerY;
-					var bx1 = bx;
-					var by1 = by;
-					var cx2 = cx1;
-					var cy1 = cy;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx2;
-						by1 = cy1;
-						cx2 = bx_1;
-						cy1 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx2;
-					var v_cy = cy1;
-					var v_s0 = ay * cx2 - ax * cy1;
-					var v_sx = cy1 - ay;
-					var v_sy = ax - cx2;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
-					if(ax > bx1) {
-						if(ax > cx2) {
-							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx2);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx2) {
-						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx2);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy1);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy1) {
-						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy1);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -24546,10 +22261,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var x = dx;
 				var bx = x + fat;
 				var cy = lowerY + bottomRadius;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = true;
+				}
 				var bx1 = bx;
 				var by = lowerY;
 				var cx = x;
 				var cy1 = cy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = x * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - x * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -24558,6 +22285,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = lowerY * cx - x * cy1;
 				var sx = cy1 - lowerY;
@@ -24680,87 +22411,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = x;
-				var ay = lowerY;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx2;
-				var v_tx = ay - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(x,lowerY,bx1,by,cx,cy1);
 				}
 				var bx1 = bx;
 				var by = cy;
 				var cx = x;
 				var cy1 = cy;
-				var adjustWinding = bx * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - bx * cy1) > 0;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = x * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - x * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by;
@@ -24769,13 +22431,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					cx = bx_;
 					cy1 = by_;
 				}
-				var s0 = lowerY * cx - bx * cy1;
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = lowerY * cx - x * cy1;
 				var sx = cy1 - lowerY;
-				var sy = bx - cx;
-				var t0 = bx * by - lowerY * bx1;
+				var sy = x - cx;
+				var t0 = x * by - lowerY * bx1;
 				var tx = lowerY - by;
-				var ty = bx1 - bx;
-				var A = -by * cx + lowerY * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+				var ty = bx1 - x;
+				var A = -by * cx + lowerY * (-bx1 + cx) + x * (by - cy1) + bx1 * cy1;
 				var yIter3;
 				if(lowerY > by) {
 					if(lowerY > cy1) {
@@ -24806,10 +22472,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var sxx = 0.;
 				var txx = 0.;
 				var this1;
-				if(bx > bx1) {
-					if(bx > cx) {
+				if(x > bx1) {
+					if(x > cx) {
 						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+						var ii_max = Math.ceil(x);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this1 = this2;
 					} else {
@@ -24819,12 +22485,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						this1 = this2;
 					}
 				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+					var ii_min = x > cx ? Math.floor(cx) : Math.ceil(x);
 					var ii_max = Math.ceil(bx1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
-					var ii_min = Math.floor(bx);
+					var ii_min = Math.floor(x);
 					var ii_max = Math.ceil(cx);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
@@ -24890,98 +22556,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var ay = lowerY;
-				var bx2 = bx1;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by1;
-					bx2 = cx1;
-					by1 = cy2;
-					cx1 = bx_;
-					cy2 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(x,lowerY,bx1,by,cx,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx2;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx2;
-				var v_tx = ay - by1;
-				var v_ty = bx2 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-				if(ax > bx2) {
-					if(ax > cx1) {
-						var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx2 > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitQuad(x,lowerY,bx,lowerY,bx,cy,x,cy);
 				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy2);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy2) {
-					var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-				var inlobj_ax = x;
-				var inlobj_ay = lowerY;
-				var inlobj_bx = bx;
-				var inlobj_by = lowerY;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = x;
-				var inlobj_dy = cy;
-				var inlobj_ax = x;
-				var inlobj_ay = lowerY;
-				var inlobj_bx = bx;
-				var inlobj_by = lowerY;
-				var inlobj_cx = bx;
-				var inlobj_cy = cy;
-				var inlobj_dx = x;
-				var inlobj_dy = cy;
 				var targetError = 1.05;
 				if(targetError == null) {
 					targetError = 1.05;
@@ -25015,6 +22595,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx = nextX;
 					var cy = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = farX * by - bx * lowerY + (bx * cy - cx * by) + (cx * lowerY - farX * cy) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -25023,6 +22607,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy;
 						cx = bx_;
 						cy = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = lowerY * cx - farX * cy;
 					var sx = cy - lowerY;
@@ -25145,81 +22733,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = farX;
-					var ay = lowerY;
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = cx;
-					var cy1 = cy;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_1;
-						cy1 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx1;
-					var v_cy = cy1;
-					var v_s0 = ay * cx1 - ax * cy1;
-					var v_sx = cy1 - ay;
-					var v_sy = ax - cx1;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx1);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx1) {
-						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx1);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy1);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy1) {
-						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy1);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -25286,6 +22801,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx1 = nextX;
 					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -25294,6 +22813,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy1;
 						cx1 = bx_;
 						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = cy * cx1 - cx * cy1;
 					var sx = cy1 - cy;
@@ -25412,81 +22935,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = cx;
-					var ay = cy;
-					var bx1 = bx;
-					var by1 = by;
-					var cx2 = cx1;
-					var cy2 = cy1;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx2;
-						by1 = cy2;
-						cx2 = bx_1;
-						cy2 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx2;
-					var v_cy = cy2;
-					var v_s0 = ay * cx2 - ax * cy2;
-					var v_sx = cy2 - ay;
-					var v_sy = ax - cx2;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-					if(ax > bx1) {
-						if(ax > cx2) {
-							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx2);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx2) {
-						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx2);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy2) {
-							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy2);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy2) {
-						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy2);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -25574,6 +23024,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx = nextX;
 					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = farX * by - bx * cy + (bx * cy1 - cx * by) + (cx * cy - farX * cy1) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -25582,6 +23036,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy1;
 						cx = bx_;
 						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = cy * cx - farX * cy1;
 					var sx = cy1 - cy;
@@ -25700,81 +23158,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = farX;
-					var ay = cy;
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = cx;
-					var cy2 = cy1;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx1;
-						by1 = cy2;
-						cx1 = bx_1;
-						cy2 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx1;
-					var v_cy = cy2;
-					var v_s0 = ay * cx1 - ax * cy2;
-					var v_sx = cy2 - ay;
-					var v_sy = ax - cx1;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx1);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx1) {
-						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx1);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy2) {
-							var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy2);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy2) {
-						var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy2);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -25862,6 +23247,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx1 = nextX;
 					var cy = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = cx * by - bx * lowerY + (bx * cy - cx1 * by) + (cx1 * lowerY - cx * cy) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -25870,6 +23259,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy;
 						cx1 = bx_;
 						cy = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = lowerY * cx1 - cx * cy;
 					var sx = cy - lowerY;
@@ -25988,81 +23381,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = cx;
-					var ay = lowerY;
-					var bx1 = bx;
-					var by1 = by;
-					var cx2 = cx1;
-					var cy1 = cy;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx2;
-						by1 = cy1;
-						cx2 = bx_1;
-						cy1 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx2;
-					var v_cy = cy1;
-					var v_s0 = ay * cx2 - ax * cy1;
-					var v_sx = cy1 - ay;
-					var v_sy = ax - cx2;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
-					if(ax > bx1) {
-						if(ax > cx2) {
-							var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx2);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx2) {
-						var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx2);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy1);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy1) {
-						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy1);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -26149,6 +23469,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					var by = lastY;
 					var cx = nextX;
 					var cy = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
 					var adjustWinding = farX * by - bx * lowerY + (bx * cy - cx * by) + (cx * lowerY - farX * cy) > 0;
 					if(!adjustWinding) {
 						var bx_ = bx;
@@ -26157,6 +23481,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						by = cy;
 						cx = bx_;
 						cy = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
 					}
 					var s0 = lowerY * cx - farX * cy;
 					var sx = cy - lowerY;
@@ -26275,81 +23603,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					var v_yIter3;
-					var v_xIter3;
-					var ax = farX;
-					var ay = lowerY;
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = cx;
-					var cy1 = cy;
-					var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-					if(!adjustWinding1) {
-						var bx_1 = bx1;
-						var by_1 = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_1;
-						cy1 = by_1;
-					}
-					var v_ax = ax;
-					var v_ay = ay;
-					var v_bx = bx1;
-					var v_by = by1;
-					var v_cx = cx1;
-					var v_cy = cy1;
-					var v_s0 = ay * cx1 - ax * cy1;
-					var v_sx = cy1 - ay;
-					var v_sy = ax - cx1;
-					var v_t0 = ax * by1 - ay * bx1;
-					var v_tx = ay - by1;
-					var v_ty = bx1 - ax;
-					var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max8 = Math.ceil(ax);
-							var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-							v_xIter3 = this22;
-						} else {
-							var ii_min9 = Math.floor(bx1);
-							var ii_max9 = Math.ceil(cx1);
-							var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-							v_xIter3 = this23;
-						}
-					} else if(bx1 > cx1) {
-						var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max10 = Math.ceil(bx1);
-						var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-						v_xIter3 = this24;
-					} else {
-						var ii_min11 = Math.floor(ax);
-						var ii_max11 = Math.ceil(cx1);
-						var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-						v_xIter3 = this25;
-					}
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max12 = Math.ceil(ay);
-							var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-							v_yIter3 = this26;
-						} else {
-							var ii_min13 = Math.floor(by1);
-							var ii_max13 = Math.ceil(cy1);
-							var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-							v_yIter3 = this27;
-						}
-					} else if(by1 > cy1) {
-						var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max14 = Math.ceil(by1);
-						var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-						v_yIter3 = this28;
-					} else {
-						var ii_min15 = Math.floor(ay);
-						var ii_max15 = Math.ceil(cy1);
-						var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-						v_yIter3 = this29;
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 					}
 					lastX = nextX;
 					lastY = nextY;
@@ -26418,6 +23673,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -26426,6 +23685,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -26548,81 +23811,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -26630,10 +23820,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var x1 = x + dx;
 			var bx = x1 + fat;
 			var cy = y + dy;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
 			var bx1 = bx;
 			var by = y;
 			var cx = x1;
 			var cy1 = cy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = x1 * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - x1 * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -26642,6 +23844,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				by = cy1;
 				cx = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = y * cx - x1 * cy1;
 			var sx = cy1 - y;
@@ -26764,87 +23970,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = x1;
-			var ay = y;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x1,y,bx1,by,cx,cy1);
 			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x1;
 			var cy1 = cy;
-			var adjustWinding = bx * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = x1 * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - x1 * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by;
@@ -26853,13 +23990,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				cx = bx_;
 				cy1 = by_;
 			}
-			var s0 = y * cx - bx * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = y * cx - x1 * cy1;
 			var sx = cy1 - y;
-			var sy = bx - cx;
-			var t0 = bx * by - y * bx1;
+			var sy = x1 - cx;
+			var t0 = x1 * by - y * bx1;
 			var tx = y - by;
-			var ty = bx1 - bx;
-			var A = -by * cx + y * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+			var ty = bx1 - x1;
+			var A = -by * cx + y * (-bx1 + cx) + x1 * (by - cy1) + bx1 * cy1;
 			var yIter3;
 			if(y > by) {
 				if(y > cy1) {
@@ -26890,10 +24031,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var sxx = 0.;
 			var txx = 0.;
 			var this1;
-			if(bx > bx1) {
-				if(bx > cx) {
+			if(x1 > bx1) {
+				if(x1 > cx) {
 					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(x1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
@@ -26903,12 +24044,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					this1 = this2;
 				}
 			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_min = x1 > cx ? Math.floor(cx) : Math.ceil(x1);
 				var ii_max = Math.ceil(bx1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(x1);
 				var ii_max = Math.ceil(cx);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
@@ -26974,98 +24115,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = y;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x1,y,bx1,by,cx,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(x1,y,bx,y,bx,cy,x1,cy);
 			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = x1;
-			var inlobj_ay = y;
-			var inlobj_bx = bx;
-			var inlobj_by = y;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x1;
-			var inlobj_dy = cy;
-			var inlobj_ax = x1;
-			var inlobj_ay = y;
-			var inlobj_bx = bx;
-			var inlobj_by = y;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x1;
-			var inlobj_dy = cy;
 			var cy = y + dy;
 			var targetError = 1.05;
 			if(targetError == null) {
@@ -27100,6 +24155,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var by = lastY;
 				var cx = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * cy + (bx * cy1 - cx * by) + (cx * cy - farX * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -27108,6 +24167,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx - farX * cy1;
 				var sx = cy1 - cy;
@@ -27230,81 +24293,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy2;
-					cx1 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -27312,10 +24302,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var y1 = y + dy;
 			var bx = x + wid;
 			var cy = y1 + tall;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
 			var bx1 = bx;
 			var by = y1;
 			var cx = x;
 			var cy1 = cy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = x * by - bx1 * y1 + (bx1 * cy1 - cx * by) + (cx * y1 - x * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -27324,6 +24326,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				by = cy1;
 				cx = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = y1 * cx - x * cy1;
 			var sx = cy1 - y1;
@@ -27446,87 +24452,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = x;
-			var ay = y1;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x,y1,bx1,by,cx,cy1);
 			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x;
 			var cy1 = cy;
-			var adjustWinding = bx * by - bx1 * y1 + (bx1 * cy1 - cx * by) + (cx * y1 - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = x * by - bx1 * y1 + (bx1 * cy1 - cx * by) + (cx * y1 - x * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by;
@@ -27535,13 +24472,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				cx = bx_;
 				cy1 = by_;
 			}
-			var s0 = y1 * cx - bx * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = y1 * cx - x * cy1;
 			var sx = cy1 - y1;
-			var sy = bx - cx;
-			var t0 = bx * by - y1 * bx1;
+			var sy = x - cx;
+			var t0 = x * by - y1 * bx1;
 			var tx = y1 - by;
-			var ty = bx1 - bx;
-			var A = -by * cx + y1 * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+			var ty = bx1 - x;
+			var A = -by * cx + y1 * (-bx1 + cx) + x * (by - cy1) + bx1 * cy1;
 			var yIter3;
 			if(y1 > by) {
 				if(y1 > cy1) {
@@ -27572,10 +24513,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var sxx = 0.;
 			var txx = 0.;
 			var this1;
-			if(bx > bx1) {
-				if(bx > cx) {
+			if(x > bx1) {
+				if(x > cx) {
 					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(x);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
@@ -27585,12 +24526,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					this1 = this2;
 				}
 			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_min = x > cx ? Math.floor(cx) : Math.ceil(x);
 				var ii_max = Math.ceil(bx1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(x);
 				var ii_max = Math.ceil(cx);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
@@ -27656,98 +24597,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = y1;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x,y1,bx1,by,cx,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(x,y1,bx,y1,bx,cy,x,cy);
 			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = x;
-			var inlobj_ay = y1;
-			var inlobj_bx = bx;
-			var inlobj_by = y1;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x;
-			var inlobj_dy = cy;
-			var inlobj_ax = x;
-			var inlobj_ay = y1;
-			var inlobj_bx = bx;
-			var inlobj_by = y1;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x;
-			var inlobj_dy = cy;
 			var cx = x + dx;
 			var targetError = 1.05;
 			if(targetError == null) {
@@ -27782,6 +24637,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var by = lastY;
 				var cx1 = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * lowerY + (bx * cy - cx1 * by) + (cx1 * lowerY - cx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -27790,6 +24649,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy;
 					cx1 = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx1 - cx * cy;
 				var sx = cy - lowerY;
@@ -27912,81 +24775,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy1;
-					cx2 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy1;
-				var v_s0 = ay * cx2 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -27994,10 +24784,22 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var x1 = x + dx;
 			var bx = x1 + fat;
 			var cy = lowerY + bottomRadius;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
+			}
 			var bx1 = bx;
 			var by = lowerY;
 			var cx = x1;
 			var cy1 = cy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = x1 * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - x1 * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -28006,6 +24808,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				by = cy1;
 				cx = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = lowerY * cx - x1 * cy1;
 			var sx = cy1 - lowerY;
@@ -28128,87 +24934,18 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = x1;
-			var ay = lowerY;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x1,lowerY,bx1,by,cx,cy1);
 			}
 			var bx1 = bx;
 			var by = cy;
 			var cx = x1;
 			var cy1 = cy;
-			var adjustWinding = bx * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = x1 * by - bx1 * lowerY + (bx1 * cy1 - cx * by) + (cx * lowerY - x1 * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by;
@@ -28217,13 +24954,17 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				cx = bx_;
 				cy1 = by_;
 			}
-			var s0 = lowerY * cx - bx * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = lowerY * cx - x1 * cy1;
 			var sx = cy1 - lowerY;
-			var sy = bx - cx;
-			var t0 = bx * by - lowerY * bx1;
+			var sy = x1 - cx;
+			var t0 = x1 * by - lowerY * bx1;
 			var tx = lowerY - by;
-			var ty = bx1 - bx;
-			var A = -by * cx + lowerY * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+			var ty = bx1 - x1;
+			var A = -by * cx + lowerY * (-bx1 + cx) + x1 * (by - cy1) + bx1 * cy1;
 			var yIter3;
 			if(lowerY > by) {
 				if(lowerY > cy1) {
@@ -28254,10 +24995,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			var sxx = 0.;
 			var txx = 0.;
 			var this1;
-			if(bx > bx1) {
-				if(bx > cx) {
+			if(x1 > bx1) {
+				if(x1 > cx) {
 					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(x1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
@@ -28267,12 +25008,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					this1 = this2;
 				}
 			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_min = x1 > cx ? Math.floor(cx) : Math.ceil(x1);
 				var ii_max = Math.ceil(bx1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(x1);
 				var ii_max = Math.ceil(cx);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
@@ -28338,98 +25079,12 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = lowerY;
-			var bx2 = bx1;
-			var by1 = by;
-			var cx1 = cx;
-			var cy2 = cy1;
-			var adjustWinding = ax * by1 - bx2 * ay + (bx2 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by1;
-				bx2 = cx1;
-				by1 = cy2;
-				cx1 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(x1,lowerY,bx1,by,cx,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx2;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy2;
-			var v_s0 = ay * cx1 - ax * cy2;
-			var v_sx = cy2 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by1 - ay * bx2;
-			var v_tx = ay - by1;
-			var v_ty = bx2 - ax;
-			var v_A = -by1 * cx1 + ay * (-bx2 + cx1) + ax * (by1 - cy2) + bx2 * cy2;
-			if(ax > bx2) {
-				if(ax > cx1) {
-					var ii_min = bx2 > cx1 ? Math.floor(cx1) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(x1,lowerY,bx,lowerY,bx,cy,x1,cy);
 			}
-			if(ay > by1) {
-				if(ay > cy2) {
-					var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy2) {
-				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = x1;
-			var inlobj_ay = lowerY;
-			var inlobj_bx = bx;
-			var inlobj_by = lowerY;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x1;
-			var inlobj_dy = cy;
-			var inlobj_ax = x1;
-			var inlobj_ay = lowerY;
-			var inlobj_bx = bx;
-			var inlobj_by = lowerY;
-			var inlobj_cx = bx;
-			var inlobj_cy = cy;
-			var inlobj_dx = x1;
-			var inlobj_dy = cy;
 			var targetError = 1.05;
 			if(targetError == null) {
 				targetError = 1.05;
@@ -28463,6 +25118,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * lowerY + (bx * cy - cx * by) + (cx * lowerY - farX * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -28471,6 +25130,10 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx - farX * cy;
 				var sx = cy - lowerY;
@@ -28593,81 +25256,8 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -28921,11 +25511,15 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			}
 			var ax = this.rx;
 			var ay = this.ry;
+			var color = this.strokeColor;
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = cx;
 			var cy1 = cy;
-			var color = this.strokeColor;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -28934,6 +25528,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -29052,81 +25650,8 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var ax = this.rx;
 			var ay = this.ry;
@@ -29134,6 +25659,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			var by1 = byS;
 			var cx1 = cxS;
 			var cy1 = cyS;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -29142,6 +25671,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -29260,7 +25793,9 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
 		} else {
 			var ax = this.rx;
 			var ay = this.ry;
@@ -29273,10 +25808,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			currAngle = endAngle + (2 * Math.PI - this.sweepAngle + 0.01);
 			var cx1 = rx * Math.cos(currAngle) + ax;
 			var cy1 = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var bx2 = bx1;
 			var by2 = by1;
 			var cx2 = cx1;
 			var cy2 = cy1;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by2 - bx2 * ay + (bx2 * cy2 - cx2 * by2) + (cx2 * ay - ax * cy2) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx2;
@@ -29285,6 +25828,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by2 = cy2;
 				cx2 = bx_;
 				cy2 = by_;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var s0 = ay * cx2 - ax * cy2;
 			var sx = cy2 - ay;
@@ -29403,81 +25950,8 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx1 = bx2;
-			var by1 = by2;
-			var cx1 = cx2;
-			var cy1 = cy2;
-			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx1;
-				var by_ = by1;
-				bx1 = cx1;
-				by1 = cy1;
-				cx1 = bx_;
-				cy1 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx1;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay1 * cx1 - ax1 * cy1;
-			var v_sx = cy1 - ay1;
-			var v_sy = ax1 - cx1;
-			var v_t0 = ax1 * by1 - ay1 * bx1;
-			var v_tx = ay1 - by1;
-			var v_ty = bx1 - ax1;
-			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-			if(ax1 > bx1) {
-				if(ax1 > cx1) {
-					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx1 > cx1) {
-				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay1 > by1) {
-				if(ay1 > cy1) {
-					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy1) {
-				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
 			}
 			var ax = this.rx;
 			var ay = this.ry;
@@ -29490,10 +25964,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			currAngle = endAngle + (2 * Math.PI - this.sweepAngle + 0.01);
 			var cx1 = rx * Math.cos(currAngle) + ax;
 			var cy1 = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var bx2 = bx1;
 			var by2 = by1;
 			var cx2 = cx1;
 			var cy2 = cy1;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by2 - bx2 * ay + (bx2 * cy2 - cx2 * by2) + (cx2 * ay - ax * cy2) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx2;
@@ -29502,6 +25984,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by2 = cy2;
 				cx2 = bx_;
 				cy2 = by_;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var s0 = ay * cx2 - ax * cy2;
 			var sx = cy2 - ay;
@@ -29620,90 +26106,17 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx1 = bx2;
-			var by1 = by2;
-			var cx1 = cx2;
-			var cy1 = cy2;
-			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx1;
-				var by_ = by1;
-				bx1 = cx1;
-				by1 = cy1;
-				cx1 = bx_;
-				cy1 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx1;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay1 * cx1 - ax1 * cy1;
-			var v_sx = cy1 - ay1;
-			var v_sy = ax1 - cx1;
-			var v_t0 = ax1 * by1 - ay1 * bx1;
-			var v_tx = ay1 - by1;
-			var v_ty = bx1 - ax1;
-			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-			if(ax1 > bx1) {
-				if(ax1 > cx1) {
-					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx1 > cx1) {
-				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay1 > by1) {
-				if(ay1 > cy1) {
-					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy1) {
-				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
 			}
 			var color = this.strokeColor;
 			var o = by - cy;
 			var a = bx - cx;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
-			var debugCorners = false;
-			if(debugCorners == null) {
-				debugCorners = false;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -29729,212 +26142,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			temp1 = cx + (dx * cos - dy * sin);
 			dy = cy + (dy * cos + dx * sin);
 			dx = temp1;
-			if(debugCorners) {
-				var x = ax - 6.;
-				var y = ay - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this1 = -65536;
-					var c = this1;
-					if((c >> 24 & 255) < 254 && temp.transparent) {
-						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-						var this2 = temp.image[location];
-						var this3 = this2;
-						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-						var this5 = this4 >> 24 & 255;
-						var a1 = this5 == 0 ? 0. : this5 / 255;
-						var this6 = this4 >> 16 & 255;
-						var r1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this4 >> 8 & 255;
-						var g1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this4 & 255;
-						var b1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = 255;
-						var a2 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var r2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var g2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var b2 = this12 == 0 ? 0. : this12 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = bx - 6.;
-				var y = by - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this1 = -16711936;
-					var c = this1;
-					if((c >> 24 & 255) < 254 && temp.transparent) {
-						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-						var this2 = temp.image[location];
-						var this3 = this2;
-						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-						var this5 = this4 >> 24 & 255;
-						var a1 = this5 == 0 ? 0. : this5 / 255;
-						var this6 = this4 >> 16 & 255;
-						var r1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this4 >> 8 & 255;
-						var g1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this4 & 255;
-						var b1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = 255;
-						var a2 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 0;
-						var r2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 255;
-						var g2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var b2 = this12 == 0 ? 0. : this12 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = cx1 - 6.;
-				var y = cy1 - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this1 = -16776961;
-					var c = this1;
-					if((c >> 24 & 255) < 254 && temp.transparent) {
-						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-						var this2 = temp.image[location];
-						var this3 = this2;
-						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-						var this5 = this4 >> 24 & 255;
-						var a1 = this5 == 0 ? 0. : this5 / 255;
-						var this6 = this4 >> 16 & 255;
-						var r1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this4 >> 8 & 255;
-						var g1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this4 & 255;
-						var b1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = 255;
-						var a2 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 0;
-						var r2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var g2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 255;
-						var b2 = this12 == 0 ? 0. : this12 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = dx - 6.;
-				var y = dy - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this1 = -1048336;
-					var c = this1;
-					if((c >> 24 & 255) < 254 && temp.transparent) {
-						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-						var this2 = temp.image[location];
-						var this3 = this2;
-						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-						var this5 = this4 >> 24 & 255;
-						var a1 = this5 == 0 ? 0. : this5 / 255;
-						var this6 = this4 >> 16 & 255;
-						var r1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this4 >> 8 & 255;
-						var g1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this4 & 255;
-						var b1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = 255;
-						var a2 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 240;
-						var r2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var g2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 240;
-						var b2 = this12 == 0 ? 0. : this12 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx = dx;
 			var cy = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy - cx * by1) + (cx * ay - ax * cy) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -29943,6 +26162,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by1 = cy;
 				cx = bx_;
 				cy = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx - ax * cy;
 			var sx = cy - ay;
@@ -30061,87 +26284,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx;
-			var cy2 = cy;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx,cy);
 			}
 			var bx1 = cx1;
 			var by1 = cy1;
 			var cx = dx;
 			var cy = dy;
-			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy - cx * by1) + (cx * ay - ax * cy) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by1;
@@ -30150,18 +26304,22 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				cx = bx_;
 				cy = by_;
 			}
-			var s0 = by * cx - bx * cy;
-			var sx = cy - by;
-			var sy = bx - cx;
-			var t0 = bx * by1 - by * bx1;
-			var tx = by - by1;
-			var ty = bx1 - bx;
-			var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx - ax * cy;
+			var sx = cy - ay;
+			var sy = ax - cx;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx + ay * (-bx1 + cx) + ax * (by1 - cy) + bx1 * cy;
 			var yIter3;
-			if(by > by1) {
-				if(by > cy) {
+			if(ay > by1) {
+				if(ay > cy) {
 					var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
-					var ii_max = Math.ceil(by);
+					var ii_max = Math.ceil(ay);
 					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this1;
 				} else {
@@ -30171,12 +26329,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					yIter3 = this1;
 				}
 			} else if(by1 > cy) {
-				var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+				var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
 				var ii_max = Math.ceil(by1);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
-				var ii_min = Math.floor(by);
+				var ii_min = Math.floor(ay);
 				var ii_max = Math.ceil(cy);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
@@ -30187,10 +26345,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			var sxx = 0.;
 			var txx = 0.;
 			var this1;
-			if(bx > bx1) {
-				if(bx > cx) {
+			if(ax > bx1) {
+				if(ax > cx) {
 					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(ax);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this1 = this2;
 				} else {
@@ -30200,12 +26358,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					this1 = this2;
 				}
 			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
 				var ii_max = Math.ceil(bx1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(ax);
 				var ii_max = Math.ceil(cx);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
@@ -30267,91 +26425,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = bx;
-			var ay1 = by;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx;
-			var cy2 = cy;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx,cy);
 			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
 			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = ax;
-			var inlobj_ay = ay;
-			var inlobj_bx = bx;
-			var inlobj_by = by;
-			var inlobj_cx = cx1;
-			var inlobj_cy = cy1;
-			var inlobj_dx = dx;
-			var inlobj_dy = dy;
-			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx1, cy : cy1, dx : dx, dy : dy};
 		}
 	}
 	,ellipse: function(temp) {
@@ -30378,6 +26457,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var by = ry * Math.sin(currAngle) + ay;
 		var cx = 0.;
 		var cy = 0.;
+		var arrTri = [];
 		var _g = 1;
 		var _g1 = tot + 1;
 		while(_g < _g1) {
@@ -30385,10 +26465,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			currAngle = startRadian + i * theta;
 			cx = rx * Math.cos(currAngle) + ax;
 			cy = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = cx;
 			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -30397,6 +26485,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -30515,81 +26607,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding1 = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding1) {
-				var bx_1 = bx2;
-				var by_1 = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_1;
-				cy2 = by_1;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min8 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max8 = Math.ceil(ax1);
-					var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-					v_xIter3 = this22;
-				} else {
-					var ii_min9 = Math.floor(bx2);
-					var ii_max9 = Math.ceil(cx2);
-					var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-					v_xIter3 = this23;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min10 = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max10 = Math.ceil(bx2);
-				var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-				v_xIter3 = this24;
+			var triHit;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				triHit = v;
 			} else {
-				var ii_min11 = Math.floor(ax1);
-				var ii_max11 = Math.ceil(cx2);
-				var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-				v_xIter3 = this25;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min12 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max12 = Math.ceil(ay1);
-					var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-					v_yIter3 = this26;
-				} else {
-					var ii_min13 = Math.floor(by2);
-					var ii_max13 = Math.ceil(cy2);
-					var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-					v_yIter3 = this27;
-				}
-			} else if(by2 > cy2) {
-				var ii_min14 = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max14 = Math.ceil(by2);
-				var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-				v_yIter3 = this28;
-			} else {
-				var ii_min15 = Math.floor(ay1);
-				var ii_max15 = Math.ceil(cy2);
-				var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-				v_yIter3 = this29;
+				triHit = null;
 			}
 			bx = cx;
 			by = cy;
@@ -30597,10 +26620,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		currAngle = startRadian + sweepRadian;
 		cx = rx * Math.cos(currAngle) + ax;
 		cy = ry * Math.sin(currAngle) + ay;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = cx;
 		var cy1 = cy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -30609,6 +26640,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -30727,82 +26762,14 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx = bx1;
-		var by = by1;
-		var cx = cx1;
-		var cy = cy1;
-		var adjustWinding = ax1 * by - bx * ay1 + (bx * cy - cx * by) + (cx * ay1 - ax1 * cy) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx;
-			var by_ = by;
-			bx = cx;
-			by = cy;
-			cx = bx_;
-			cy = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx;
-		var v_by = by;
-		var v_cx = cx;
-		var v_cy = cy;
-		var v_s0 = ay1 * cx - ax1 * cy;
-		var v_sx = cy - ay1;
-		var v_sy = ax1 - cx;
-		var v_t0 = ax1 * by - ay1 * bx;
-		var v_tx = ay1 - by;
-		var v_ty = bx - ax1;
-		var v_A = -by * cx + ay1 * (-bx + cx) + ax1 * (by - cy) + bx * cy;
-		if(ax1 > bx) {
-			if(ax1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx);
-				var ii_max = Math.ceil(cx);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx > cx) {
-			var ii_min = ax1 > cx ? Math.floor(cx) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		var triHit;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			triHit = v;
 		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+			triHit = null;
 		}
-		if(ay1 > by) {
-			if(ay1 > cy) {
-				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by);
-				var ii_max = Math.ceil(cy);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by > cy) {
-			var ii_min = ay1 > cy ? Math.floor(cy) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
+		arrTri = null;
 		var ax = this.rx;
 		var ay = this.ry;
 		var rx = this.rx - this.strokeWidth;
@@ -30826,6 +26793,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var by = ry * Math.sin(currAngle) + ay;
 		var cx = 0.;
 		var cy = 0.;
+		var arrTri = [];
 		var _g = 1;
 		var _g1 = tot + 1;
 		while(_g < _g1) {
@@ -30833,10 +26801,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			currAngle = startRadian + i * theta;
 			cx = rx * Math.cos(currAngle) + ax;
 			cy = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = cx;
 			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -30845,6 +26821,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -30963,81 +26943,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding1 = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding1) {
-				var bx_1 = bx2;
-				var by_1 = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_1;
-				cy2 = by_1;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min8 = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max8 = Math.ceil(ax1);
-					var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-					v_xIter3 = this22;
-				} else {
-					var ii_min9 = Math.floor(bx2);
-					var ii_max9 = Math.ceil(cx2);
-					var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-					v_xIter3 = this23;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min10 = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max10 = Math.ceil(bx2);
-				var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-				v_xIter3 = this24;
+			var triHit;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				triHit = v;
 			} else {
-				var ii_min11 = Math.floor(ax1);
-				var ii_max11 = Math.ceil(cx2);
-				var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-				v_xIter3 = this25;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min12 = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max12 = Math.ceil(ay1);
-					var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-					v_yIter3 = this26;
-				} else {
-					var ii_min13 = Math.floor(by2);
-					var ii_max13 = Math.ceil(cy2);
-					var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-					v_yIter3 = this27;
-				}
-			} else if(by2 > cy2) {
-				var ii_min14 = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max14 = Math.ceil(by2);
-				var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-				v_yIter3 = this28;
-			} else {
-				var ii_min15 = Math.floor(ay1);
-				var ii_max15 = Math.ceil(cy2);
-				var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-				v_yIter3 = this29;
+				triHit = null;
 			}
 			bx = cx;
 			by = cy;
@@ -31045,10 +26956,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		currAngle = startRadian + sweepRadian;
 		cx = rx * Math.cos(currAngle) + ax;
 		cy = ry * Math.sin(currAngle) + ay;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = cx;
 		var cy1 = cy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -31057,6 +26976,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -31175,82 +27098,14 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx = bx1;
-		var by = by1;
-		var cx = cx1;
-		var cy = cy1;
-		var adjustWinding = ax1 * by - bx * ay1 + (bx * cy - cx * by) + (cx * ay1 - ax1 * cy) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx;
-			var by_ = by;
-			bx = cx;
-			by = cy;
-			cx = bx_;
-			cy = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx;
-		var v_by = by;
-		var v_cx = cx;
-		var v_cy = cy;
-		var v_s0 = ay1 * cx - ax1 * cy;
-		var v_sx = cy - ay1;
-		var v_sy = ax1 - cx;
-		var v_t0 = ax1 * by - ay1 * bx;
-		var v_tx = ay1 - by;
-		var v_ty = bx - ax1;
-		var v_A = -by * cx + ay1 * (-bx + cx) + ax1 * (by - cy) + bx * cy;
-		if(ax1 > bx) {
-			if(ax1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx);
-				var ii_max = Math.ceil(cx);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx > cx) {
-			var ii_min = ax1 > cx ? Math.floor(cx) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		var triHit;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			triHit = v;
 		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+			triHit = null;
 		}
-		if(ay1 > by) {
-			if(ay1 > cy) {
-				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by);
-				var ii_max = Math.ceil(cy);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by > cy) {
-			var ii_min = ay1 > cy ? Math.floor(cy) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
+		arrTri = null;
 	}
 	,pie: function(temp) {
 		this.ellipse(temp);
@@ -31269,9 +27124,9 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var a = bx - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -31297,212 +27152,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		temp1 = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp1;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx1 - 6.;
-			var y = cy1 - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx2 = dx;
 		var cy2 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -31511,6 +27172,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			by1 = cy2;
 			cx2 = bx_;
 			cy2 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx2 - ax * cy2;
 		var sx = cy2 - ay;
@@ -31629,87 +27294,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx3 = cx2;
-		var cy3 = cy2;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy3 - cx3 * by2) + (cx3 * ay1 - ax1 * cy3) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx3;
-			by2 = cy3;
-			cx3 = bx_;
-			cy3 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx3;
-		var v_cy = cy3;
-		var v_s0 = ay1 * cx3 - ax1 * cy3;
-		var v_sx = cy3 - ay1;
-		var v_sy = ax1 - cx3;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx3 + ay1 * (-bx2 + cx3) + ax1 * (by2 - cy3) + bx2 * cy3;
-		if(ax1 > bx2) {
-			if(ax1 > cx3) {
-				var ii_min = bx2 > cx3 ? Math.floor(cx3) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx3);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx3) {
-			var ii_min = ax1 > cx3 ? Math.floor(cx3) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx3);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy3) {
-				var ii_min = by2 > cy3 ? Math.floor(cy3) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy3);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy3) {
-			var ii_min = ay1 > cy3 ? Math.floor(cy3) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy3);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx2,cy2);
 		}
 		var bx1 = cx1;
 		var by1 = cy1;
 		var cx2 = dx;
 		var cy2 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy2 - cx2 * by1) + (cx2 * by - bx * cy2) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -31718,18 +27314,22 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			cx2 = bx_;
 			cy2 = by_;
 		}
-		var s0 = by * cx2 - bx * cy2;
-		var sx = cy2 - by;
-		var sy = bx - cx2;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx2 + by * (-bx1 + cx2) + bx * (by1 - cy2) + bx1 * cy2;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx2 - ax * cy2;
+		var sx = cy2 - ay;
+		var sy = ax - cx2;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy2) {
+		if(ay > by1) {
+			if(ay > cy2) {
 				var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -31739,12 +27339,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				yIter3 = this1;
 			}
 		} else if(by1 > cy2) {
-			var ii_min = by > cy2 ? Math.floor(cy2) : Math.ceil(by);
+			var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy2);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -31755,10 +27355,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx2) {
+		if(ax > bx1) {
+			if(ax > cx2) {
 				var ii_min = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -31768,12 +27368,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				this1 = this2;
 			}
 		} else if(bx1 > cx2) {
-			var ii_min = bx > cx2 ? Math.floor(cx2) : Math.ceil(bx);
+			var ii_min = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx2);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -31835,98 +27435,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx3 = cx2;
-		var cy3 = cy2;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy3 - cx3 * by2) + (cx3 * ay1 - ax1 * cy3) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx3;
-			by2 = cy3;
-			cx3 = bx_;
-			cy3 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx2,cy2);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx3;
-		var v_cy = cy3;
-		var v_s0 = ay1 * cx3 - ax1 * cy3;
-		var v_sx = cy3 - ay1;
-		var v_sy = ax1 - cx3;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx3 + ay1 * (-bx2 + cx3) + ax1 * (by2 - cy3) + bx2 * cy3;
-		if(ax1 > bx2) {
-			if(ax1 > cx3) {
-				var ii_min = bx2 > cx3 ? Math.floor(cx3) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx3);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx3) {
-			var ii_min = ax1 > cx3 ? Math.floor(cx3) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx3);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy3) {
-				var ii_min = by2 > cy3 ? Math.floor(cy3) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy3);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy3) {
-			var ii_min = ay1 > cy3 ? Math.floor(cy3) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy3);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx1;
-		var inlobj_cy = cy1;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx1;
-		var info_cy = cy1;
-		var info_dx = dx;
-		var info_dy = dy;
 		var px = this.rx;
 		var py = this.ry;
 		var color = this.strokeColor;
@@ -31934,9 +27448,9 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var a = cx - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -31962,212 +27476,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		temp1 = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp1;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && temp.transparent) {
-					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
-					var this2 = temp.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -32176,6 +27496,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -32294,87 +27618,18 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -32383,18 +27638,22 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -32404,12 +27663,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				yIter3 = this1;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -32420,10 +27679,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -32433,12 +27692,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				this1 = this2;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -32500,98 +27759,12 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
 	}
 	,__class__: pixelimage_triGML_shape_ArcShape
 });
@@ -32806,6 +27979,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -32814,6 +27991,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -32932,81 +28113,8 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -33022,6 +28130,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -33030,6 +28142,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -33148,81 +28264,8 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -33294,6 +28337,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -33302,6 +28349,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = innerCy * cx - innerCx * cy;
 				var sx = cy - innerCy;
@@ -33420,81 +28471,8 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = innerCx;
-				var ay = innerCy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -33510,6 +28488,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -33518,6 +28500,10 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = innerCy * cx - innerCx * cy;
 				var sx = cy - innerCy;
@@ -33636,81 +28622,8 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = innerCx;
-				var ay = innerCy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -33856,6 +28769,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -33864,6 +28781,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -33982,81 +28903,8 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -34072,6 +28920,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -34080,6 +28932,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -34198,81 +29054,8 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -34344,6 +29127,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -34352,6 +29139,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = innerCy * cx - innerCx * cy;
 				var sx = cy - innerCy;
@@ -34470,81 +29261,8 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = innerCx;
-				var ay = innerCy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -34560,6 +29278,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -34568,6 +29290,10 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = innerCy * cx - innerCx * cy;
 				var sx = cy - innerCy;
@@ -34686,81 +29412,8 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = innerCx;
-				var ay = innerCy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -35019,9 +29672,9 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			var a = x2 * this.scaleX + this.translateX - px;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
-			var debugCorners = false;
-			if(debugCorners == null) {
-				debugCorners = false;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -35047,212 +29700,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			temp = px + (dx * cos - dy * sin);
 			dy = py + (dy * cos + dx * sin);
 			dx = temp;
-			if(debugCorners) {
-				var x = ax - 6.;
-				var y = ay - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -65536;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 255;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 0;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = bx - 6.;
-				var y = by - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -16711936;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 255;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 0;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = cx - 6.;
-				var y = cy - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -16776961;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 0;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 255;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
-				var x = dx - 6.;
-				var y = dy - 6.;
-				var p = x | 0;
-				var xx = p;
-				var q = y | 0;
-				var maxX = x + 12 | 0;
-				var maxY = y + 12 | 0;
-				while(true) {
-					var x = p++;
-					var this2 = -1048336;
-					var c = this2;
-					if((c >> 24 & 255) < 254 && this1.transparent) {
-						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-						var this3 = this1.image[location];
-						var this4 = this3;
-						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-						var this6 = this5 >> 24 & 255;
-						var a1 = this6 == 0 ? 0. : this6 / 255;
-						var this7 = this5 >> 16 & 255;
-						var r1 = this7 == 0 ? 0. : this7 / 255;
-						var this8 = this5 >> 8 & 255;
-						var g1 = this8 == 0 ? 0. : this8 / 255;
-						var this9 = this5 & 255;
-						var b1 = this9 == 0 ? 0. : this9 / 255;
-						var this10 = 255;
-						var a2 = this10 == 0 ? 0. : this10 / 255;
-						var this11 = 240;
-						var r2 = this11 == 0 ? 0. : this11 / 255;
-						var this12 = 0;
-						var g2 = this12 == 0 ? 0. : this12 / 255;
-						var this13 = 240;
-						var b2 = this13 == 0 ? 0. : this13 / 255;
-						var a3 = a1 * (1 - a2);
-						var r = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a = 255 * (a3 + a2) | 0;
-						var blended = a << 24 | r << 16 | g << 8 | b;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-					}
-					if(p > maxX) {
-						p = xx;
-						++q;
-					}
-					if(q > maxY) {
-						break;
-					}
-				}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = true;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -35261,6 +29720,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -35379,87 +29842,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
-			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by1;
@@ -35468,18 +29862,22 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var s0 = by * cx1 - bx * cy1;
-			var sx = cy1 - by;
-			var sy = bx - cx1;
-			var t0 = bx * by1 - by * bx1;
-			var tx = by - by1;
-			var ty = bx1 - bx;
-			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 			var yIter3;
-			if(by > by1) {
-				if(by > cy1) {
+			if(ay > by1) {
+				if(ay > cy1) {
 					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(by);
+					var ii_max = Math.ceil(ay);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
@@ -35489,12 +29887,12 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					yIter3 = this2;
 				}
 			} else if(by1 > cy1) {
-				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 				var ii_max = Math.ceil(by1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
-				var ii_min = Math.floor(by);
+				var ii_min = Math.floor(ay);
 				var ii_max = Math.ceil(cy1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
@@ -35505,10 +29903,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			var sxx = 0.;
 			var txx = 0.;
 			var this2;
-			if(bx > bx1) {
-				if(bx > cx1) {
+			if(ax > bx1) {
+				if(ax > cx1) {
 					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+					var ii_max = Math.ceil(ax);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
@@ -35518,12 +29916,12 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					this2 = this3;
 				}
 			} else if(bx1 > cx1) {
-				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 				var ii_max = Math.ceil(bx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
-				var ii_min = Math.floor(bx);
+				var ii_min = Math.floor(ax);
 				var ii_max = Math.ceil(cx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
@@ -35585,92 +29983,17 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = bx;
-			var ay1 = by;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+			var tmp;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
 			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
+				tmp = null;
 			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var inlobj_ax = ax;
-			var inlobj_ay = ay;
-			var inlobj_bx = bx;
-			var inlobj_by = by;
-			var inlobj_cx = cx;
-			var inlobj_cy = cy;
-			var inlobj_dx = dx;
-			var inlobj_dy = dy;
-			var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-			this.info = info;
+			this.info = tmp;
 			if(this.info != null && oldInfo != null) {
 				var this1 = this.temp;
 				var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -35682,10 +30005,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				var dx = oldInfo.cx * this.scaleX + this.translateX;
 				var dy = oldInfo.cy * this.scaleY + this.translateY;
 				var color = this.strokeColor;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = true;
+				}
 				var bx1 = bx;
 				var by1 = by;
 				var cx1 = dx;
 				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
 				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
@@ -35694,6 +30025,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					by1 = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
 				}
 				var s0 = ay * cx1 - ax * cy1;
 				var sx = cy1 - ay;
@@ -35812,123 +30147,58 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax1 = ax;
-				var ay1 = ay;
-				var bx2 = bx1;
-				var by2 = by1;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx2;
-					var by_ = by2;
-					bx2 = cx2;
-					by2 = cy2;
-					cx2 = bx_;
-					cy2 = by_;
-				}
-				var v_ax = ax1;
-				var v_ay = ay1;
-				var v_bx = bx2;
-				var v_by = by2;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay1 * cx2 - ax1 * cy2;
-				var v_sx = cy2 - ay1;
-				var v_sy = ax1 - cx2;
-				var v_t0 = ax1 * by2 - ay1 * bx2;
-				var v_tx = ay1 - by2;
-				var v_ty = bx2 - ax1;
-				var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-				if(ax1 > bx2) {
-					if(ax1 > cx2) {
-						var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-						var ii_max = Math.ceil(ax1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					} else {
-						var ii_min = Math.floor(bx2);
-						var ii_max = Math.ceil(cx2);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this2;
-					}
-				} else if(bx2 > cx2) {
-					var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-					var ii_max = Math.ceil(bx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ax1);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-				if(ay1 > by2) {
-					if(ay1 > cy2) {
-						var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-						var ii_max = Math.ceil(ay1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					} else {
-						var ii_min = Math.floor(by2);
-						var ii_max = Math.ceil(cy2);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this2;
-					}
-				} else if(by2 > cy2) {
-					var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-					var ii_max = Math.ceil(by2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(ay1);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
 				var bx1 = cx;
 				var by1 = cy;
-				var cx = dx;
-				var cy = dy;
-				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx1;
 					var by_ = by1;
-					bx1 = cx;
-					by1 = cy;
-					cx = bx_;
-					cy = by_;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
 				}
-				var s0 = by * cx - bx * cy;
-				var sx = cy - by;
-				var sy = bx - cx;
-				var t0 = bx * by1 - by * bx1;
-				var tx = by - by1;
-				var ty = bx1 - bx;
-				var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = ay * cx1 - ax * cy1;
+				var sx = cy1 - ay;
+				var sy = ax - cx1;
+				var t0 = ax * by1 - ay * bx1;
+				var tx = ay - by1;
+				var ty = bx1 - ax;
+				var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 				var yIter3;
-				if(by > by1) {
-					if(by > cy) {
-						var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
-						var ii_max = Math.ceil(by);
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						yIter3 = this2;
 					} else {
 						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy);
+						var ii_max = Math.ceil(cy1);
 						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						yIter3 = this2;
 					}
-				} else if(by1 > cy) {
-					var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+				} else if(by1 > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 					var ii_max = Math.ceil(by1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
-					var ii_min = Math.floor(by);
-					var ii_max = Math.ceil(cy);
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				}
@@ -35938,26 +30208,26 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				var sxx = 0.;
 				var txx = 0.;
 				var this2;
-				if(bx > bx1) {
-					if(bx > cx) {
-						var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-						var ii_max = Math.ceil(bx);
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax);
 						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this2 = this3;
 					} else {
 						var ii_min = Math.floor(bx1);
-						var ii_max = Math.ceil(cx);
+						var ii_max = Math.ceil(cx1);
 						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 						this2 = this3;
 					}
-				} else if(bx1 > cx) {
-					var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				} else if(bx1 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 					var ii_max = Math.ceil(bx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(cx);
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				}
@@ -36018,81 +30288,11 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = bx;
-				var ay = by;
-				var bx = bx1;
-				var by = by1;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx;
-					var by_ = by;
-					bx = cx1;
-					by = cy1;
-					cx1 = bx_;
-					cy1 = by_;
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx;
-				var v_by = by;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by - ay * bx;
-				var v_tx = ay - by;
-				var v_ty = bx - ax;
-				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
-				if(ax > bx) {
-					if(ax > cx1) {
-						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
-						var ii_max = Math.ceil(ax);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx > cx1) {
-					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max = Math.ceil(bx);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(ay > by) {
-					if(ay > cy1) {
-						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
-						var ii_max = Math.ceil(ay);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by > cy1) {
-					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max = Math.ceil(by);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
+				if(hasHit == false) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
 		}
@@ -36110,9 +30310,9 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 		var a = x2 * this.scaleX + this.translateX - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -36138,212 +30338,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -65536;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 0;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -16711936;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 0;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -16776961;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = -1048336;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 240;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = 240;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -36352,6 +30358,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -36470,87 +30480,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this2;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this2;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -36559,18 +30500,22 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
@@ -36580,12 +30525,12 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				yIter3 = this2;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this2;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this2;
@@ -36596,10 +30541,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 		var sxx = 0.;
 		var txx = 0.;
 		var this2;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
@@ -36609,12 +30554,12 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				this2 = this3;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this2 = this3;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this2 = this3;
@@ -36676,92 +30621,17 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		var tmp;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
 		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+			tmp = null;
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info = { ax : ax, ay : ay, bx : bx, by : by, cx : cx, cy : cy, dx : dx, dy : dy};
-		this.info = info;
+		this.info = tmp;
 		if(this.info != null && oldInfo != null) {
 			var this1 = this.temp;
 			var ax = oldInfo.bx * this.scaleX + this.translateX;
@@ -36773,10 +30643,18 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var color = this.strokeColor;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = true;
+			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
@@ -36785,6 +30663,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				by1 = cy1;
 				cx1 = bx_;
 				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
 			}
 			var s0 = ay * cx1 - ax * cy1;
 			var sx = cy1 - ay;
@@ -36903,123 +30785,58 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = ax;
-			var ay1 = ay;
-			var bx2 = bx1;
-			var by2 = by1;
-			var cx2 = cx1;
-			var cy2 = cy1;
-			var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx2;
-				var by_ = by2;
-				bx2 = cx2;
-				by2 = cy2;
-				cx2 = bx_;
-				cy2 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx2;
-			var v_by = by2;
-			var v_cx = cx2;
-			var v_cy = cy2;
-			var v_s0 = ay1 * cx2 - ax1 * cy2;
-			var v_sx = cy2 - ay1;
-			var v_sy = ax1 - cx2;
-			var v_t0 = ax1 * by2 - ay1 * bx2;
-			var v_tx = ay1 - by2;
-			var v_ty = bx2 - ax1;
-			var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-			if(ax1 > bx2) {
-				if(ax1 > cx2) {
-					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-					var ii_max = Math.ceil(ax1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				} else {
-					var ii_min = Math.floor(bx2);
-					var ii_max = Math.ceil(cx2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this2;
-				}
-			} else if(bx2 > cx2) {
-				var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this2;
-			}
-			if(ay1 > by2) {
-				if(ay1 > cy2) {
-					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-					var ii_max = Math.ceil(ay1);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				} else {
-					var ii_min = Math.floor(by2);
-					var ii_max = Math.ceil(cy2);
-					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this2;
-				}
-			} else if(by2 > cy2) {
-				var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy2);
-				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this2;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
-			var cx = dx;
-			var cy = dy;
-			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
 				var bx_ = bx1;
 				var by_ = by1;
-				bx1 = cx;
-				by1 = cy;
-				cx = bx_;
-				cy = by_;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
 			}
-			var s0 = by * cx - bx * cy;
-			var sx = cy - by;
-			var sy = bx - cx;
-			var t0 = bx * by1 - by * bx1;
-			var tx = by - by1;
-			var ty = bx1 - bx;
-			var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 			var yIter3;
-			if(by > by1) {
-				if(by > cy) {
-					var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
-					var ii_max = Math.ceil(by);
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				} else {
 					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy);
+					var ii_max = Math.ceil(cy1);
 					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					yIter3 = this2;
 				}
-			} else if(by1 > cy) {
-				var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 				var ii_max = Math.ceil(by1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			} else {
-				var ii_min = Math.floor(by);
-				var ii_max = Math.ceil(cy);
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this2;
 			}
@@ -37029,26 +30846,26 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			var sxx = 0.;
 			var txx = 0.;
 			var this2;
-			if(bx > bx1) {
-				if(bx > cx) {
-					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
-					var ii_max = Math.ceil(bx);
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				} else {
 					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx);
+					var ii_max = Math.ceil(cx1);
 					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 					this2 = this3;
 				}
-			} else if(bx1 > cx) {
-				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 				var ii_max = Math.ceil(bx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			} else {
-				var ii_min = Math.floor(bx);
-				var ii_max = Math.ceil(cx);
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
 				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this2 = this3;
 			}
@@ -37109,81 +30926,11 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax = bx;
-			var ay = by;
-			var bx = bx1;
-			var by = by1;
-			var cx1 = cx;
-			var cy1 = cy;
-			var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx;
-				var by_ = by;
-				bx = cx1;
-				by = cy1;
-				cx1 = bx_;
-				cy1 = by_;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
-			var v_ax = ax;
-			var v_ay = ay;
-			var v_bx = bx;
-			var v_by = by;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay * cx1 - ax * cy1;
-			var v_sx = cy1 - ay;
-			var v_sy = ax - cx1;
-			var v_t0 = ax * by - ay * bx;
-			var v_tx = ay - by;
-			var v_ty = bx - ax;
-			var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
-			if(ax > bx) {
-				if(ax > cx1) {
-					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
-					var ii_max = Math.ceil(ax);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx > cx1) {
-				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-				var ii_max = Math.ceil(bx);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay > by) {
-				if(ay > cy1) {
-					var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
-					var ii_max = Math.ceil(ay);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by > cy1) {
-				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-				var ii_max = Math.ceil(by);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
 		this.x0 = x2;
@@ -37353,10 +31100,18 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		var y3_ = this.y3 - top;
 		var y4_ = this.y4 - top;
 		var color = this.strokeColor;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = true;
+		}
 		var bx = x2_;
 		var by = y2_;
 		var cx = x4_;
 		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
 		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -37365,6 +31120,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = y1_ * cx - x1_ * cy;
 		var sx = cy - y1_;
@@ -37483,87 +31242,18 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = x1_;
-		var ay = y1_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
 		var bx = x3_;
 		var by = y3_;
 		var cx = x4_;
 		var cy = y4_;
-		var adjustWinding = x2_ * by - bx * y2_ + (bx * cy - cx * by) + (cx * y2_ - x2_ * cy) > 0;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
 			var by_ = by;
@@ -37572,18 +31262,22 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 			cx = bx_;
 			cy = by_;
 		}
-		var s0 = y2_ * cx - x2_ * cy;
-		var sx = cy - y2_;
-		var sy = x2_ - cx;
-		var t0 = x2_ * by - y2_ * bx;
-		var tx = y2_ - by;
-		var ty = bx - x2_;
-		var A = -by * cx + y2_ * (-bx + cx) + x2_ * (by - cy) + bx * cy;
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y1_ * cx - x1_ * cy;
+		var sx = cy - y1_;
+		var sy = x1_ - cx;
+		var t0 = x1_ * by - y1_ * bx;
+		var tx = y1_ - by;
+		var ty = bx - x1_;
+		var A = -by * cx + y1_ * (-bx + cx) + x1_ * (by - cy) + bx * cy;
 		var yIter3;
-		if(y2_ > by) {
-			if(y2_ > cy) {
+		if(y1_ > by) {
+			if(y1_ > cy) {
 				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-				var ii_max = Math.ceil(y2_);
+				var ii_max = Math.ceil(y1_);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -37593,12 +31287,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				yIter3 = this1;
 			}
 		} else if(by > cy) {
-			var ii_min = y2_ > cy ? Math.floor(cy) : Math.ceil(y2_);
+			var ii_min = y1_ > cy ? Math.floor(cy) : Math.ceil(y1_);
 			var ii_max = Math.ceil(by);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(y2_);
+			var ii_min = Math.floor(y1_);
 			var ii_max = Math.ceil(cy);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -37609,10 +31303,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(x2_ > bx) {
-			if(x2_ > cx) {
+		if(x1_ > bx) {
+			if(x1_ > cx) {
 				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-				var ii_max = Math.ceil(x2_);
+				var ii_max = Math.ceil(x1_);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -37622,12 +31316,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				this1 = this2;
 			}
 		} else if(bx > cx) {
-			var ii_min = x2_ > cx ? Math.floor(cx) : Math.ceil(x2_);
+			var ii_min = x1_ > cx ? Math.floor(cx) : Math.ceil(x1_);
 			var ii_max = Math.ceil(bx);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(x2_);
+			var ii_min = Math.floor(x1_);
 			var ii_max = Math.ceil(cx);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -37689,90 +31383,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = x2_;
-		var ay = y2_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
 		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = x1_;
-		var inlobj_ay = y1_;
-		var inlobj_bx = x2_;
-		var inlobj_by = y2_;
-		var inlobj_cx = x3_;
-		var inlobj_cy = y3_;
-		var inlobj_dx = x4_;
-		var inlobj_dy = y4_;
 		x1_ += this.strokeWidth;
 		x2_ += this.strokeWidth;
 		x3_ += this.strokeWidth;
@@ -37782,10 +31398,18 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		y3_ += this.strokeWidth;
 		y4_ += this.strokeWidth;
 		var color = this.fill;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = true;
+		}
 		var bx = x2_;
 		var by = y2_;
 		var cx = x4_;
 		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
 		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -37794,6 +31418,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = y1_ * cx - x1_ * cy;
 		var sx = cy - y1_;
@@ -37912,87 +31540,18 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = x1_;
-		var ay = y1_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
 		var bx = x3_;
 		var by = y3_;
 		var cx = x4_;
 		var cy = y4_;
-		var adjustWinding = x2_ * by - bx * y2_ + (bx * cy - cx * by) + (cx * y2_ - x2_ * cy) > 0;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
 			var by_ = by;
@@ -38001,18 +31560,22 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 			cx = bx_;
 			cy = by_;
 		}
-		var s0 = y2_ * cx - x2_ * cy;
-		var sx = cy - y2_;
-		var sy = x2_ - cx;
-		var t0 = x2_ * by - y2_ * bx;
-		var tx = y2_ - by;
-		var ty = bx - x2_;
-		var A = -by * cx + y2_ * (-bx + cx) + x2_ * (by - cy) + bx * cy;
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y1_ * cx - x1_ * cy;
+		var sx = cy - y1_;
+		var sy = x1_ - cx;
+		var t0 = x1_ * by - y1_ * bx;
+		var tx = y1_ - by;
+		var ty = bx - x1_;
+		var A = -by * cx + y1_ * (-bx + cx) + x1_ * (by - cy) + bx * cy;
 		var yIter3;
-		if(y2_ > by) {
-			if(y2_ > cy) {
+		if(y1_ > by) {
+			if(y1_ > cy) {
 				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-				var ii_max = Math.ceil(y2_);
+				var ii_max = Math.ceil(y1_);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -38022,12 +31585,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				yIter3 = this1;
 			}
 		} else if(by > cy) {
-			var ii_min = y2_ > cy ? Math.floor(cy) : Math.ceil(y2_);
+			var ii_min = y1_ > cy ? Math.floor(cy) : Math.ceil(y1_);
 			var ii_max = Math.ceil(by);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(y2_);
+			var ii_min = Math.floor(y1_);
 			var ii_max = Math.ceil(cy);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -38038,10 +31601,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(x2_ > bx) {
-			if(x2_ > cx) {
+		if(x1_ > bx) {
+			if(x1_ > cx) {
 				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-				var ii_max = Math.ceil(x2_);
+				var ii_max = Math.ceil(x1_);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -38051,12 +31614,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				this1 = this2;
 			}
 		} else if(bx > cx) {
-			var ii_min = x2_ > cx ? Math.floor(cx) : Math.ceil(x2_);
+			var ii_min = x1_ > cx ? Math.floor(cx) : Math.ceil(x1_);
 			var ii_max = Math.ceil(bx);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(x2_);
+			var ii_min = Math.floor(x1_);
 			var ii_max = Math.ceil(cx);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -38118,90 +31681,12 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = x2_;
-		var ay = y2_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
 		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = x1_;
-		var inlobj_ay = y1_;
-		var inlobj_bx = x2_;
-		var inlobj_by = y2_;
-		var inlobj_cx = x3_;
-		var inlobj_cy = y3_;
-		var inlobj_dx = x4_;
-		var inlobj_dy = y4_;
 		var _g = 0;
 		var _g1 = temp.height;
 		while(_g < _g1) {
@@ -38598,6 +32083,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -38606,6 +32095,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -38724,81 +32217,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -38886,6 +32306,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * cy + (bx * cy1 - cx * by) + (cx * cy - farX * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -38894,6 +32318,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx - farX * cy1;
 				var sx = cy1 - cy;
@@ -39012,81 +32440,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy2;
-					cx1 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -39174,6 +32529,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx1 = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * lowerY + (bx * cy - cx1 * by) + (cx1 * lowerY - cx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -39182,6 +32541,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy;
 					cx1 = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx1 - cx * cy;
 				var sx = cy - lowerY;
@@ -39300,81 +32663,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy1;
-					cx2 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy1;
-				var v_s0 = ay * cx2 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -39461,6 +32751,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * lowerY + (bx * cy - cx * by) + (cx * lowerY - farX * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -39469,6 +32763,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx - farX * cy;
 				var sx = cy - lowerY;
@@ -39587,81 +32885,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -39729,6 +32954,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx1 = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -39737,6 +32966,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy1;
 					cx1 = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx1 - cx * cy1;
 				var sx = cy1 - cy;
@@ -39855,81 +33088,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy2;
-					cx2 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy2;
-				var v_s0 = ay * cx2 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -40017,6 +33177,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx = nextX;
 				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * cy + (bx * cy1 - cx * by) + (cx * cy - farX * cy1) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -40025,6 +33189,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy1;
 					cx = bx_;
 					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = cy * cx - farX * cy1;
 				var sx = cy1 - cy;
@@ -40143,81 +33311,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = cy;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy2 = cy1;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy2 - cx1 * by1) + (cx1 * ay - ax * cy2) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy2;
-					cx1 = bx_1;
-					cy2 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy2;
-				var v_s0 = ay * cx1 - ax * cy2;
-				var v_sx = cy2 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy2) + bx1 * cy2;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy2) {
-						var ii_min12 = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy2);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy2) {
-					var ii_min14 = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy2);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -40305,6 +33400,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx1 = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = cx * by - bx * lowerY + (bx * cy - cx1 * by) + (cx1 * lowerY - cx * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -40313,6 +33412,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy;
 					cx1 = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx1 - cx * cy;
 				var sx = cy - lowerY;
@@ -40431,81 +33534,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = cx;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx2 = cx1;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx2 * by1) + (cx2 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx2;
-					by1 = cy1;
-					cx2 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx2;
-				var v_cy = cy1;
-				var v_s0 = ay * cx2 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx2;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx2) {
-						var ii_min8 = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx2);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx2) {
-					var ii_min10 = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx2);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -40592,6 +33622,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 				var by = lastY;
 				var cx = nextX;
 				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
 				var adjustWinding = farX * by - bx * lowerY + (bx * cy - cx * by) + (cx * lowerY - farX * cy) > 0;
 				if(!adjustWinding) {
 					var bx_ = bx;
@@ -40600,6 +33634,10 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 					by = cy;
 					cx = bx_;
 					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var s0 = lowerY * cx - farX * cy;
 				var sx = cy - lowerY;
@@ -40718,81 +33756,8 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax = farX;
-				var ay = lowerY;
-				var bx1 = bx;
-				var by1 = by;
-				var cx1 = cx;
-				var cy1 = cy;
-				var adjustWinding1 = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-				if(!adjustWinding1) {
-					var bx_1 = bx1;
-					var by_1 = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_1;
-					cy1 = by_1;
-				}
-				var v_ax = ax;
-				var v_ay = ay;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay * cx1 - ax * cy1;
-				var v_sx = cy1 - ay;
-				var v_sy = ax - cx1;
-				var v_t0 = ax * by1 - ay * bx1;
-				var v_tx = ay - by1;
-				var v_ty = bx1 - ax;
-				var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-				if(ax > bx1) {
-					if(ax > cx1) {
-						var ii_min8 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max8 = Math.ceil(ax);
-						var this22 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
-						v_xIter3 = this22;
-					} else {
-						var ii_min9 = Math.floor(bx1);
-						var ii_max9 = Math.ceil(cx1);
-						var this23 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
-						v_xIter3 = this23;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-					var ii_max10 = Math.ceil(bx1);
-					var this24 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
-					v_xIter3 = this24;
-				} else {
-					var ii_min11 = Math.floor(ax);
-					var ii_max11 = Math.ceil(cx1);
-					var this25 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
-					v_xIter3 = this25;
-				}
-				if(ay > by1) {
-					if(ay > cy1) {
-						var ii_min12 = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max12 = Math.ceil(ay);
-						var this26 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
-						v_yIter3 = this26;
-					} else {
-						var ii_min13 = Math.floor(by1);
-						var ii_max13 = Math.ceil(cy1);
-						var this27 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
-						v_yIter3 = this27;
-					}
-				} else if(by1 > cy1) {
-					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-					var ii_max14 = Math.ceil(by1);
-					var this28 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
-					v_yIter3 = this28;
-				} else {
-					var ii_min15 = Math.floor(ay);
-					var ii_max15 = Math.ceil(cy1);
-					var this29 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
-					v_yIter3 = this29;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 				}
 				lastX = nextX;
 				lastY = nextY;
@@ -41230,11 +34195,15 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 		var c1y_ = py + r_ * c;
 		var _c1x = px + _r * s;
 		var _c1y = py + _r * c;
+		var color = this.strokeColor;
 		var bx = b0x_;
 		var by = b0y_;
 		var cx = c0x_;
 		var cy = c0y_;
-		var color = this.strokeColor;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = a0x_ * by - bx * a0y_ + (bx * cy - cx * by) + (cx * a0y_ - a0x_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -41243,6 +34212,10 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
 		}
 		var s0 = a0y_ * cx - a0x_ * cy;
 		var sx = cy - a0y_;
@@ -41361,87 +34334,18 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = a0x_;
-		var ay = a0y_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(a0x_,a0y_,bx,by,cx,cy);
 		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
+		var color = this.strokeColor;
 		var bx = b1x_;
 		var by = b1y_;
 		var cx = c1x_;
 		var cy = c1y_;
-		var color = this.strokeColor;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = a1x_ * by - bx * a1y_ + (bx * cy - cx * by) + (cx * a1y_ - a1x_ * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -41450,6 +34354,10 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
 		}
 		var s0 = a1y_ * cx - a1x_ * cy;
 		var sx = cy - a1y_;
@@ -41568,87 +34476,18 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = a1x_;
-		var ay = a1y_;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(a1x_,a1y_,bx,by,cx,cy);
 		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
+		var color = this.fill;
 		var bx = _b0x;
 		var by = _b0y;
 		var cx = _c0x;
 		var cy = _c0y;
-		var color = this.fill;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = _a0x * by - bx * _a0y + (bx * cy - cx * by) + (cx * _a0y - _a0x * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -41657,6 +34496,10 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
 		}
 		var s0 = _a0y * cx - _a0x * cy;
 		var sx = cy - _a0y;
@@ -41775,87 +34618,18 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = _a0x;
-		var ay = _a0y;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(_a0x,_a0y,bx,by,cx,cy);
 		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
+		var color = this.fill;
 		var bx = _b1x;
 		var by = _b1y;
 		var cx = _c1x;
 		var cy = _c1y;
-		var color = this.fill;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = _a1x * by - bx * _a1y + (bx * cy - cx * by) + (cx * _a1y - _a1x * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -41864,6 +34638,10 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
 		}
 		var s0 = _a1y * cx - _a1x * cy;
 		var sx = cy - _a1y;
@@ -41982,81 +34760,8 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax = _a1x;
-		var ay = _a1y;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax;
-		var v_ay = ay;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay * cx1 - ax * cy1;
-		var v_sx = cy1 - ay;
-		var v_sy = ax - cx1;
-		var v_t0 = ax * by1 - ay * bx1;
-		var v_tx = ay - by1;
-		var v_ty = bx1 - ax;
-		var v_A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-		if(ax > bx1) {
-			if(ax > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay > by1) {
-			if(ay > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(_a1x,_a1y,bx,by,cx,cy);
 		}
 		var x = this.left | 0;
 		var y = this.top | 0;
@@ -42212,11 +34917,15 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 	,render: function(pixelImage) {
 		var ax = this.x1;
 		var ay = this.y1;
+		var color = this.fill;
 		var bx = this.x2;
 		var by = this.y2;
 		var cx = this.x3;
 		var cy = this.y3;
-		var color = this.fill;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx;
@@ -42225,6 +34934,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			by = cy;
 			cx = bx_;
 			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
 		}
 		var s0 = ay * cx - ax * cy;
 		var sx = cy - ay;
@@ -42343,81 +35056,8 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx1 = bx;
-		var by1 = by;
-		var cx1 = cx;
-		var cy1 = cy;
-		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay1 * cx1 - ax1 * cy1;
-		var v_sx = cy1 - ay1;
-		var v_sy = ax1 - cx1;
-		var v_t0 = ax1 * by1 - ay1 * bx1;
-		var v_tx = ay1 - by1;
-		var v_ty = bx1 - ax1;
-		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-		if(ax1 > bx1) {
-			if(ax1 > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by1) {
-			if(ay1 > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,cx,cy);
 		}
 		var px = this.x1;
 		var py = this.y1;
@@ -42426,9 +35066,9 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var a = this.x2 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -42454,212 +35094,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -42668,6 +35114,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -42786,87 +35236,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -42875,18 +35256,22 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -42896,12 +35281,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				yIter3 = this1;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -42912,10 +35297,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -42925,12 +35310,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				this1 = this2;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -42992,98 +35377,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
 		var px = this.x2;
 		var py = this.y2;
 		var color = this.strokeColor;
@@ -43091,9 +35390,9 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var a = this.x3 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -43119,212 +35418,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -43333,6 +35438,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -43451,87 +35560,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -43540,18 +35580,22 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -43561,12 +35605,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				yIter3 = this1;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -43577,10 +35621,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -43590,12 +35634,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				this1 = this2;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -43657,98 +35701,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
 		var px = this.x3;
 		var py = this.y3;
 		var color = this.strokeColor;
@@ -43756,9 +35714,9 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var a = this.x1 - px;
 		var h = Math.pow(o * o + a * a,0.5);
 		var theta = Math.atan2(o,a);
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
 		}
 		var sin = Math.sin(theta);
 		var cos = Math.cos(theta);
@@ -43784,212 +35742,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		temp = px + (dx * cos - dy * sin);
 		dy = py + (dy * cos + dx * sin);
 		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -65536;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 255;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16711936;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 255;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 0;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -16776961;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 0;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 255;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this1 = -1048336;
-				var c = this1;
-				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
-					var this2 = pixelImage.image[location];
-					var this3 = this2;
-					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-					var this5 = this4 >> 24 & 255;
-					var a1 = this5 == 0 ? 0. : this5 / 255;
-					var this6 = this4 >> 16 & 255;
-					var r1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this4 >> 8 & 255;
-					var g1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this4 & 255;
-					var b1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = 255;
-					var a2 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = 240;
-					var r2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = 0;
-					var g2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = 240;
-					var b2 = this12 == 0 ? 0. : this12 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = true;
 		}
 		var bx1 = bx;
 		var by1 = by;
 		var cx1 = dx;
 		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
 		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
@@ -43998,6 +35762,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			by1 = cy1;
 			cx1 = bx_;
 			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
 		}
 		var s0 = ay * cx1 - ax * cy1;
 		var sx = cy1 - ay;
@@ -44116,87 +35884,18 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = ax;
-		var ay1 = ay;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
 		var by1 = cy;
 		var cx1 = dx;
 		var cy1 = dy;
-		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 		if(!adjustWinding) {
 			var bx_ = bx1;
 			var by_ = by1;
@@ -44205,18 +35904,22 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 			cx1 = bx_;
 			cy1 = by_;
 		}
-		var s0 = by * cx1 - bx * cy1;
-		var sx = cy1 - by;
-		var sy = bx - cx1;
-		var t0 = bx * by1 - by * bx1;
-		var tx = by - by1;
-		var ty = bx1 - bx;
-		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
 		var yIter3;
-		if(by > by1) {
-			if(by > cy1) {
+		if(ay > by1) {
+			if(ay > cy1) {
 				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(by);
+				var ii_max = Math.ceil(ay);
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				yIter3 = this1;
 			} else {
@@ -44226,12 +35929,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				yIter3 = this1;
 			}
 		} else if(by1 > cy1) {
-			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
 			var ii_max = Math.ceil(by1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
 		} else {
-			var ii_min = Math.floor(by);
+			var ii_min = Math.floor(ay);
 			var ii_max = Math.ceil(cy1);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			yIter3 = this1;
@@ -44242,10 +35945,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		var sxx = 0.;
 		var txx = 0.;
 		var this1;
-		if(bx > bx1) {
-			if(bx > cx1) {
+		if(ax > bx1) {
+			if(ax > cx1) {
 				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(bx);
+				var ii_max = Math.ceil(ax);
 				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				this1 = this2;
 			} else {
@@ -44255,12 +35958,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				this1 = this2;
 			}
 		} else if(bx1 > cx1) {
-			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
 			var ii_max = Math.ceil(bx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
 		} else {
-			var ii_min = Math.floor(bx);
+			var ii_min = Math.floor(ax);
 			var ii_max = Math.ceil(cx1);
 			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			this1 = this2;
@@ -44322,98 +36025,12 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx2 = bx1;
-		var by2 = by1;
-		var cx2 = cx1;
-		var cy2 = cy1;
-		var adjustWinding = ax1 * by2 - bx2 * ay1 + (bx2 * cy2 - cx2 * by2) + (cx2 * ay1 - ax1 * cy2) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx2;
-			var by_ = by2;
-			bx2 = cx2;
-			by2 = cy2;
-			cx2 = bx_;
-			cy2 = by_;
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx2;
-		var v_by = by2;
-		var v_cx = cx2;
-		var v_cy = cy2;
-		var v_s0 = ay1 * cx2 - ax1 * cy2;
-		var v_sx = cy2 - ay1;
-		var v_sy = ax1 - cx2;
-		var v_t0 = ax1 * by2 - ay1 * bx2;
-		var v_tx = ay1 - by2;
-		var v_ty = bx2 - ax1;
-		var v_A = -by2 * cx2 + ay1 * (-bx2 + cx2) + ax1 * (by2 - cy2) + bx2 * cy2;
-		if(ax1 > bx2) {
-			if(ax1 > cx2) {
-				var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx2);
-				var ii_max = Math.ceil(cx2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx2 > cx2) {
-			var ii_min = ax1 > cx2 ? Math.floor(cx2) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
-		if(ay1 > by2) {
-			if(ay1 > cy2) {
-				var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by2);
-				var ii_max = Math.ceil(cy2);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by2 > cy2) {
-			var ii_min = ay1 > cy2 ? Math.floor(cy2) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy2);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var inlobj_ax = ax;
-		var inlobj_ay = ay;
-		var inlobj_bx = bx;
-		var inlobj_by = by;
-		var inlobj_cx = cx;
-		var inlobj_cy = cy;
-		var inlobj_dx = dx;
-		var inlobj_dy = dy;
-		var info_ax = ax;
-		var info_ay = ay;
-		var info_bx = bx;
-		var info_by = by;
-		var info_cx = cx;
-		var info_cy = cy;
-		var info_dx = dx;
-		var info_dy = dy;
 		return pixelimage_triGML_coreShape_FillShape.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_triGML_shape_TriangleShape

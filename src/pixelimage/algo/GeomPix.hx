@@ -76,3 +76,43 @@ import pixelimage.pixel.PixelChannel;
     function rotY( x: Float, y: Float, sin: Float, cos: Float ){
         return y * cos + x * sin;
     }
+
+class GeomPix {
+    /**
+       <font color="LightPink" font-weight:"Bold">smoothStep</font> module level field
+    **/
+    public var _smootherStep:( t: Float ) -> Float = smootherStep;
+    /**
+       <font color="LightPink" font-weight:"Bold">lerp</font> module level field
+    **/
+    public var _lerp:( a: Float, b: Float, t: Float ) -> Float = lerp;
+    /**
+       <font color="LightPink" font-weight:"Bold">lerp4Colors</font> module level field
+       @param smooth defaults to true
+    **/
+    public var _lerp4Colors:( colorhiA: Int, colorhiB: Int, colorloC: Int, colorloD: Int, u: Float, v: Float, smooth: Bool ) -> Int = lerp4Colors;
+    /**
+       <font color="LightPink" font-weight:"Bold">cross2d</font> module level field
+    **/
+    public var _cross2d:( ax: Float, ay: Float, bx: Float, by: Float ) -> Float = cross2d;
+    /**
+       <font color="LightPink" font-weight:"Bold">dot</font> module level field
+    **/
+    public var _dot:( ax: Float, ay: Float, bx: Float, by: Float ) -> Float = dot;
+    /**
+       <font color="LightPink" font-weight:"Bold">dotSame</font> module level field
+    **/
+    public var _dotSame:( ax: Float, ay: Float ) -> Float = dotSame;
+    /**
+       <font color="LightPink" font-weight:"Bold">distanceSquarePointToSegment</font> module level field
+    **/
+    public var _distanceSquarePointToSegment:( x:  Float, y: Float, x1: Float, y1: Float, x2: Float, y2:Float ) -> Float = distanceSquarePointToSegment;
+    /**
+       <font color="LightPink" font-weight:"Bold">rotX</font> module level field
+    **/
+    public var _rotX:( x: Float, y: Float, sin: Float, cos: Float ) -> Float = rotX;
+    /**
+       <font color="LightPink" font-weight:"Bold">rotY</font> module level field
+    **/
+    public var _rotY:( x: Float, y: Float, sin: Float, cos: Float ) -> Float = rotY;
+}

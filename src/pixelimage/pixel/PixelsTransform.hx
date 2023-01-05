@@ -29,3 +29,13 @@ function pixelsTransform( imageTarget: Pixelimage, imageSource: Pixelimage
         if( q > maxY ) break;
     }
 }
+class PixelsTransform {
+    /**
+       <font color="LightPink" font-weight:"Bold">pixelsTransform</font> module level field
+    **/
+    public var _pixelsTransform:( imageTarget: Pixelimage, imageSource: Pixelimage
+        , transformFunc: ( colorTarget: Pixel32, colorSource: Pixel32 ) -> Pixel28
+        , xTarget:     Float, yTarget:     Float
+        , xSource:     Float, ySource:     Float
+        , w: Float, h: Float ) -> Void = pixelsTransform;
+}

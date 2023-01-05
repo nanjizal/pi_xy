@@ -58,7 +58,8 @@ import pixelimage.algo.CirclePixel;
                            , cx:    Float, cy: Float
                            , rx:    Float, ry: Float
                            , startAngle:   Float 
-                           , tileImage: Pixelimage, ?phi: Float, ?targetError: Float = 1.05 ){
+                           , tileImage: Pixelimage, ?phi: Float
+                           , ?targetError: Float = 1.05 ){
          var sides = getSidesDivisible4( rx, ry, targetError );
          var theta = 2*Math.PI/sides;
          var omega = startAngle;
