@@ -41,7 +41,7 @@ class DemoUse {
         
         //for( aShape in shapeTestArr() ){
             //if( count > 3 ) break;
-            var aShape = shapeTestArr()[16];
+            var aShape = shapeTestArr()[0];
             /*
             var data = aShape.split('\n');
             for( i in 0...data.length ) data[ i ] = StringTools.trim(data[ i ]);

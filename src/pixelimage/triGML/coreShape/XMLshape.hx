@@ -18,6 +18,7 @@ import pixelimage.triGML.shape.RectangleShape;
 import pixelimage.triGML.shape.SquareShape;
 import pixelimage.triGML.shape.Star6Shape;
 import pixelimage.triGML.shape.TriangleShape;
+import pixelimage.triGML.shape.VePathElementShape;
 
 import pixelimage.textureContour.*;
 import pixelimage.textureShape.*;
@@ -81,6 +82,8 @@ class XMLshape {
                 new TriangleGradient();
             case 'TriangleShape':
                 new TriangleShape();
+            case 'VePathElementShape':
+                new VePathElementShape();
             //case 'ComponentShape':
                 // this is like a default shape drawn on, if/when nesting gets setup
               //  new ComponentShape();

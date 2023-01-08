@@ -1,7 +1,8 @@
 package pixelimage.triGML.coreShape;
 
 function shapeTestArr():Array<String>{
-    return [    arcTest
+    return [    vePathElementShape
+            ,   arcTest
             ,   circleTest
             ,   cubicCurveTest
             ,   ellipseTest
@@ -116,6 +117,15 @@ var pathElementCubicTest =
                         strokeWidth="30" strokeColor="0xFFFF0000" 
                         fill="0xff0000ff">
                     </PathElementShape>';
+var vePathElementShape = 
+                    '<VePathElementShape
+                        pathData="$quadtest_d" 
+                        translateX="0"
+                        translateY="0"
+                        strokeWidths="[ 10, 20, 30, 40, 50, 60, 70 ]" 
+                        strokeColors="[ 0xFF9400D3, 0xFF4b0082, 0xFF0000FF, 0xFF00ff00, 0xFFFFFF00, 0xFFFF7F00, 0xFFFF0000 ]" 
+                        fill="0xff0000ff">
+                    </VePathElementShape>';
 var polyLineGradientTest = 
                     '<PolyLineGradient 
                         points= "[ 100, 100, 50, 50, 30, 30, 70, 200 ]" 
