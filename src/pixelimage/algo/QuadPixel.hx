@@ -14,7 +14,7 @@ function fillQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
     // tri e - a b d
     // tri f - b c d
     fillTriangle( pixelImage, ax, ay, bx, by, dx, dy, color, hasHit );
-    fillTriangle( pixelImage, ax, ay, cx, cy, dx, dy, color, hasHit );
+    fillTriangle( pixelImage, bx, by, cx, cy, dx, dy, color, hasHit );
     return if( hasHit == false ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;
@@ -33,7 +33,7 @@ function tileQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
     // tri e - a b d
     // tri f - b c d
     tileTriangle( pixelImage, ax, ay, bx, by, dx, dy, tileImage, hasHit );
-    tileTriangle( pixelImage, ax, ay, cx, cy, dx, dy, tileImage, hasHit );
+    tileTriangle( pixelImage, bx, by, cx, cy, dx, dy, tileImage, hasHit );
     return if( hasHit == false ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;
