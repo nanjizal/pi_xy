@@ -86,12 +86,12 @@ class PathElementThickGradient extends FillShape implements ILinePathContext {
             info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth
-                     , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor );
+                     , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true );
             if( info != null && oldInfo != null ){
                 temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                                 , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                                 , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
-                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor );
+                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
             }
         } else {
             
@@ -106,12 +106,12 @@ class PathElementThickGradient extends FillShape implements ILinePathContext {
         info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
             , x2*scaleX + translateX, y2*scaleY + translateY 
             , strokeWidth
-            , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor );
+            , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true);
         if( info != null && oldInfo != null ){
             temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                 , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                 , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
-                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor );
+                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
         }
         x0 = x2;
         y0 = y2;

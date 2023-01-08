@@ -56,9 +56,12 @@ class DrawTileHelper implements ILinePathContext {
         var oldInfo = info;
         info = pixelImage.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, tileImageStroke );
+                     , strokeWidth, tileImageStroke, true );
         if( info != null && oldInfo != null ){
-            pixelImage.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke );
+            pixelImage.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
+                               , info.ax*scaleX + translateX, info.ay*scaleY + translateY
+                               , info.dx*scaleX + translateX, info.dy*scaleY + translateY
+                               , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke, true );
         }
         x0 = x2;
         y0 = y2;

@@ -45973,19 +45973,19 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineTo>
-		<moveTo public="1" set="method" line="70"><f a="x1:y1">
+		<moveTo public="1" set="method" line="73"><f a="x1:y1">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></moveTo>
-		<quadTo public="1" set="method" line="77"><f a="x2:y2:x3:y3">
+		<quadTo public="1" set="method" line="80"><f a="x2:y2:x3:y3">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></quadTo>
-		<curveTo public="1" set="method" line="81"><f a="x2:y2:x3:y3:x4:y4">
+		<curveTo public="1" set="method" line="84"><f a="x2:y2:x3:y3:x4:y4">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -45994,7 +45994,7 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></curveTo>
-		<quadThru public="1" set="method" line="85"><f a="x2:y2:x3:y3">
+		<quadThru public="1" set="method" line="88"><f a="x2:y2:x3:y3">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -46061,19 +46061,19 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineTo>
-		<moveTo public="1" set="method" line="68"><f a="x1:y1">
+		<moveTo public="1" set="method" line="71"><f a="x1:y1">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></moveTo>
-		<quadTo public="1" set="method" line="75"><f a="x2:y2:x3:y3">
+		<quadTo public="1" set="method" line="78"><f a="x2:y2:x3:y3">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></quadTo>
-		<curveTo public="1" set="method" line="79"><f a="x2:y2:x3:y3:x4:y4">
+		<curveTo public="1" set="method" line="82"><f a="x2:y2:x3:y3:x4:y4">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -46082,7 +46082,7 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></curveTo>
-		<quadThru public="1" set="method" line="83"><f a="x2:y2:x3:y3">
+		<quadThru public="1" set="method" line="86"><f a="x2:y2:x3:y3">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -46201,19 +46201,19 @@
 		<meta><m n=":structInit"/></meta>
 	</class>
 	<class path="pixelimage.triGML.coreShape.XMLshape" params="" file="src/pixelimage/triGML/coreShape/XMLshape.hx">
-		<withString public="1" get="inline" set="null" line="33" static="1"><f a="pixelImage:str">
+		<withString public="1" get="inline" set="null" line="34" static="1"><f a="pixelImage:str">
 	<x path="pixelimage.Pixelimage"/>
 	<c path="String"/>
 	<c path="pixelimage.triGML.coreShape.XMLshape"/>
 </f></withString>
 		<pixelImage><x path="pixelimage.Pixelimage"/></pixelImage>
 		<xml><c path="Xml"/></xml>
-		<process set="method" line="39"><f a=""><x path="Void"/></f></process>
-		<processShape set="method" line="44"><f a="x">
+		<process set="method" line="40"><f a=""><x path="Void"/></f></process>
+		<processShape set="method" line="45"><f a="x">
 	<c path="Xml"/>
 	<x path="Void"/>
 </f></processShape>
-		<new public="1" set="method" line="28"><f a="pixelImage:xml">
+		<new public="1" set="method" line="29"><f a="pixelImage:xml">
 	<x path="pixelimage.Pixelimage"/>
 	<c path="Xml"/>
 	<x path="Void"/>
@@ -46222,95 +46222,99 @@
 	</class>
 	<class path="pixelimage.triGML.coreShape._XMLshapeSamples.XMLshapeSamples_Fields_" params="" file="src/pixelimage/triGML/coreShape/XMLshapeSamples.hx" private="1" module="pixelimage.triGML.coreShape.XMLshapeSamples" final="1">
 		<shapeTestArr public="1" set="method" line="3" static="1"><f a=""><c path="Array"><c path="String"/></c></f></shapeTestArr>
-		<arcTest public="1" expr="&quot;&lt;ArcShape \n                        left=\&quot;100\&quot;  top=\&quot;100\&quot; \n                        width=\&quot;500\&quot; height=\&quot;480\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;5\&quot; \n                        fill=\&quot;0xFF00FF00\&quot; \n                        startAngle=\&quot;0\&quot; sweepAngle=\&quot;240\&quot;\n                        arcType=\&quot;pie\&quot;&gt;&lt;/ArcShape&gt;&quot;" line="29" static="1">
+		<arcTest public="1" expr="&quot;&lt;ArcShape \n                        left=\&quot;100\&quot;  top=\&quot;100\&quot; \n                        width=\&quot;500\&quot; height=\&quot;480\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;5\&quot; \n                        fill=\&quot;0xFF00FF00\&quot; \n                        startAngle=\&quot;0\&quot; sweepAngle=\&quot;240\&quot;\n                        arcType=\&quot;pie\&quot;&gt;&lt;/ArcShape&gt;&quot;" line="30" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<ArcShape \n                        left=\"100\"  top=\"100\" \n                        width=\"500\" height=\"480\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"5\" \n                        fill=\"0xFF00FF00\" \n                        startAngle=\"0\" sweepAngle=\"240\"\n                        arcType=\"pie\"></ArcShape>"]]></e></m></meta>
 		</arcTest>
-		<circleTest public="1" expr="&quot;&lt;CircleShape \n                        left=\&quot;200\&quot; top=\&quot;200\&quot; \n                        diameter=\&quot;300\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;10\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/CircleShape&gt;&quot;" line="38" static="1">
+		<circleTest public="1" expr="&quot;&lt;CircleShape \n                        left=\&quot;200\&quot; top=\&quot;200\&quot; \n                        diameter=\&quot;300\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;10\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/CircleShape&gt;&quot;" line="39" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<CircleShape \n                        left=\"200\" top=\"200\" \n                        diameter=\"300\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"10\" \n                        fill=\"0xFF00FF00\">\n                    </CircleShape>"]]></e></m></meta>
 		</circleTest>
-		<cubicCurveTest public="1" expr="&quot;&lt;CubicCurveShape \n                        thru=\&quot;true\&quot; \n                        x1=\&quot;100\&quot; y1=\&quot;100\&quot; \n                        x2=\&quot;200\&quot; y2=\&quot;150\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/CubicCurveShape&gt;&quot;" line="47" static="1">
+		<cubicCurveTest public="1" expr="&quot;&lt;CubicCurveShape \n                        thru=\&quot;true\&quot; \n                        x1=\&quot;100\&quot; y1=\&quot;100\&quot; \n                        x2=\&quot;200\&quot; y2=\&quot;150\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/CubicCurveShape&gt;&quot;" line="48" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<CubicCurveShape \n                        thru=\"true\" \n                        x1=\"100\" y1=\"100\" \n                        x2=\"200\" y2=\"150\" \n                        x3=\"130\" y3=\"220\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </CubicCurveShape>"]]></e></m></meta>
 		</cubicCurveTest>
-		<ellipseArcTest public="1" expr="&quot;&lt;EllipseArcTest \n                        left=\&quot;100\&quot;  top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot; \n                        startAngle=\&quot;10\&quot; sweepAngle=\&quot;90\&quot;&gt;\n                    &lt;/EllipseArcTest&gt;&quot;" line="57" static="1">
+		<ellipseArcTest public="1" expr="&quot;&lt;EllipseArcTest \n                        left=\&quot;100\&quot;  top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot; \n                        startAngle=\&quot;10\&quot; sweepAngle=\&quot;90\&quot;&gt;\n                    &lt;/EllipseArcTest&gt;&quot;" line="58" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<EllipseArcTest \n                        left=\"100\"  top=\"100\" \n                        width=\"200\" height=\"50\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\" \n                        startAngle=\"10\" sweepAngle=\"90\">\n                    </EllipseArcTest>"]]></e></m></meta>
 		</ellipseArcTest>
-		<ellipseTest public="1" expr="&quot;&lt;EllipseShape \n                        top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; \n                        height=\&quot;50\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/EllipseShape&gt;&quot;" line="66" static="1">
+		<ellipseTest public="1" expr="&quot;&lt;EllipseShape \n                        top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; \n                        height=\&quot;50\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/EllipseShape&gt;&quot;" line="67" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<EllipseShape \n                        top=\"100\" \n                        width=\"200\" \n                        height=\"50\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </EllipseShape>"]]></e></m></meta>
 		</ellipseTest>
-		<imageElement public="1" expr="&quot;&lt;ImageElement  \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        contents=\&quot;image\&quot;&gt;\n                    &lt;/ImageElement&gt;&quot;" line="75" static="1">
+		<imageElement public="1" expr="&quot;&lt;ImageElement  \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        contents=\&quot;image\&quot;&gt;\n                    &lt;/ImageElement&gt;&quot;" line="76" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<ImageElement  \n                        left=\"100\" top=\"100\" \n                        width=\"200\" height=\"50\" \n                        contents=\"image\">\n                    </ImageElement>"]]></e></m></meta>
 		</imageElement>
-		<lineGradientTest public="1" expr="&quot;&lt;LineGradient \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        strokewidth=\&quot;1\&quot; \n                        colorA=\&quot;0xFF0000\&quot; colorB=\&quot;0xa00cc0\&quot; colorC=\&quot;0x0fa00f\&quot; colorD=\&quot;0x000fff\&quot;&gt;\n                    &lt;/LineGradient&gt;&quot;" line="82" static="1">
+		<lineGradientTest public="1" expr="&quot;&lt;LineGradient \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        strokewidth=\&quot;1\&quot; \n                        colorA=\&quot;0xFF0000\&quot; colorB=\&quot;0xa00cc0\&quot; colorC=\&quot;0x0fa00f\&quot; colorD=\&quot;0x000fff\&quot;&gt;\n                    &lt;/LineGradient&gt;&quot;" line="83" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<LineGradient \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        strokewidth=\"1\" \n                        colorA=\"0xFF0000\" colorB=\"0xa00cc0\" colorC=\"0x0fa00f\" colorD=\"0x000fff\">\n                    </LineGradient>"]]></e></m></meta>
 		</lineGradientTest>
-		<lineShapeTest public="1" expr="&quot;&lt;LineShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;360\&quot; y2=\&quot;120\&quot; \n                        strokeWidth=\&quot;30\&quot; strokeColor=\&quot;0xffFF0000\&quot;&gt;\n                    &lt;/LineShape&gt;&quot;" line="90" static="1">
+		<lineShapeTest public="1" expr="&quot;&lt;LineShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;360\&quot; y2=\&quot;120\&quot; \n                        strokeWidth=\&quot;30\&quot; strokeColor=\&quot;0xffFF0000\&quot;&gt;\n                    &lt;/LineShape&gt;&quot;" line="91" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<LineShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </LineShape>"]]></e></m></meta>
 		</lineShapeTest>
-		<quadtest_d public="1" expr="&quot;M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200&quot;" line="96" static="1">
+		<quadtest_d public="1" expr="&quot;M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200&quot;" line="97" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e>"M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200"</e></m></meta>
 		</quadtest_d>
-		<cubictest_d public="1" expr="&quot;M100,200 C100,100 250,100 250,200S400,300 400,200&quot;" line="97" static="1">
+		<cubictest_d public="1" expr="&quot;M100,200 C100,100 250,100 250,200S400,300 400,200&quot;" line="98" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e>"M100,200 C100,100 250,100 250,200S400,300 400,200"</e></m></meta>
 		</cubictest_d>
-		<pathElementQuadTest public="1" expr="&quot;&lt;PathElementShape \n                        pathData=\&quot;$quadtest_d\&quot; \n                        strokeWidth=\&quot;10\&quot; strokeColor=\&quot;0xFFFF0000\&quot; \n                        fill=\&quot;0x0000ff\&quot;&gt;\n                    &lt;/PathElementShape&gt;&quot;" line="100" static="1">
+		<pathElementQuadTest public="1" expr="&quot;&lt;PathElementShape \n                        pathData=\&quot;$quadtest_d\&quot; \n                        strokeWidth=\&quot;10\&quot; strokeColor=\&quot;0xFFFF0000\&quot; \n                        fill=\&quot;0x0000ff\&quot;&gt;\n                    &lt;/PathElementShape&gt;&quot;" line="101" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<PathElementShape \n                        pathData=\"$quadtest_d\" \n                        strokeWidth=\"10\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0x0000ff\">\n                    </PathElementShape>"]]></e></m></meta>
 		</pathElementQuadTest>
-		<pathElementThickGradTest public="1" expr="&quot;&lt;PathElementThickGradient\n                        pathData=\&quot;$quadtest_d\&quot; \n                        strokeWidth=\&quot;25\&quot; strokeTopColor=\&quot;0xFFFF0000\&quot; strokeBottomColor=\&quot;0xFF00FFBB\&quot; \n                        fill=\&quot;0x0000ff\&quot;&gt;\n                    &lt;/PathElementThickGradient&gt;&quot;" line="106" static="1">
+		<pathElementThickGradTest public="1" expr="&quot;&lt;PathElementThickGradient\n                        pathData=\&quot;$quadtest_d\&quot; \n                        strokeWidth=\&quot;25\&quot; strokeTopColor=\&quot;0xFFFF0000\&quot; strokeBottomColor=\&quot;0xFF00FFBB\&quot; \n                        fill=\&quot;0x0000ff\&quot;&gt;\n                    &lt;/PathElementThickGradient&gt;&quot;" line="107" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<PathElementThickGradient\n                        pathData=\"$quadtest_d\" \n                        strokeWidth=\"25\" strokeTopColor=\"0xFFFF0000\" strokeBottomColor=\"0xFF00FFBB\" \n                        fill=\"0x0000ff\">\n                    </PathElementThickGradient>"]]></e></m></meta>
 		</pathElementThickGradTest>
-		<pathElementCubicTest public="1" expr="&quot;&lt;PathElementShape \n                        pathData=\&quot;$cubictest_d\&quot; \n                        translateX=\&quot;0\&quot;\n                        translateY=\&quot;0\&quot;\n                        strokeWidth=\&quot;30\&quot; strokeColor=\&quot;0xFFFF0000\&quot; \n                        fill=\&quot;0xff0000ff\&quot;&gt;\n                    &lt;/PathElementShape&gt;&quot;" line="112" static="1">
+		<pathElementCubicTest public="1" expr="&quot;&lt;PathElementShape \n                        pathData=\&quot;$cubictest_d\&quot; \n                        translateX=\&quot;0\&quot;\n                        translateY=\&quot;0\&quot;\n                        strokeWidth=\&quot;30\&quot; strokeColor=\&quot;0xFFFF0000\&quot; \n                        fill=\&quot;0xff0000ff\&quot;&gt;\n                    &lt;/PathElementShape&gt;&quot;" line="113" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<PathElementShape \n                        pathData=\"$cubictest_d\" \n                        translateX=\"0\"\n                        translateY=\"0\"\n                        strokeWidth=\"30\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0xff0000ff\">\n                    </PathElementShape>"]]></e></m></meta>
 		</pathElementCubicTest>
-		<polyLineGradientTest public="1" expr="&quot;&lt;PolyLineGradient \n                        points= \&quot;[ 100, 100, 50, 50, 30, 30, 70, 200 ]\&quot; \n                        colorDirection=\&quot;longways\&quot; \n                        cornerColors=\&quot;[ 0xFFFF0000, 0xFFb1afcc, 0xFFaaaa00, 0xFFcc00cc ]\&quot;&gt;\n                    &lt;/PolyLineGradient&gt;&quot;" line="120" static="1">
+		<vePathElementShape public="1" expr="&quot;&lt;VePathElementShape\n                        pathData=\&quot;$quadtest_d\&quot; \n                        translateX=\&quot;0\&quot;\n                        translateY=\&quot;0\&quot;\n                        strokeWidths=\&quot;[ 10, 20, 30, 40, 50, 60, 70 ]\&quot; \n                        strokeColors=\&quot;[ 0xFF9400D3, 0xFF4b0082, 0xFF0000FF, 0xFF00ff00, 0xFFFFFF00, 0xFFFF7F00, 0xFFFF0000 ]\&quot; \n                        fill=\&quot;0xff0000ff\&quot;&gt;\n                    &lt;/VePathElementShape&gt;&quot;" line="121" static="1">
+			<c path="String"/>
+			<meta><m n=":value"><e><![CDATA["<VePathElementShape\n                        pathData=\"$quadtest_d\" \n                        translateX=\"0\"\n                        translateY=\"0\"\n                        strokeWidths=\"[ 10, 20, 30, 40, 50, 60, 70 ]\" \n                        strokeColors=\"[ 0xFF9400D3, 0xFF4b0082, 0xFF0000FF, 0xFF00ff00, 0xFFFFFF00, 0xFFFF7F00, 0xFFFF0000 ]\" \n                        fill=\"0xff0000ff\">\n                    </VePathElementShape>"]]></e></m></meta>
+		</vePathElementShape>
+		<polyLineGradientTest public="1" expr="&quot;&lt;PolyLineGradient \n                        points= \&quot;[ 100, 100, 50, 50, 30, 30, 70, 200 ]\&quot; \n                        colorDirection=\&quot;longways\&quot; \n                        cornerColors=\&quot;[ 0xFFFF0000, 0xFFb1afcc, 0xFFaaaa00, 0xFFcc00cc ]\&quot;&gt;\n                    &lt;/PolyLineGradient&gt;&quot;" line="130" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<PolyLineGradient \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        colorDirection=\"longways\" \n                        cornerColors=\"[ 0xFFFF0000, 0xFFb1afcc, 0xFFaaaa00, 0xFFcc00cc ]\">\n                    </PolyLineGradient>"]]></e></m></meta>
 		</polyLineGradientTest>
-		<polyLineShapeTest public="1" expr="&quot;&lt;PolyLineShape \n                        points= \&quot;[ 100, 100, 50, 50, 30, 30, 70, 200 ]\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/PolyLineShape&gt;&quot;" line="127" static="1">
+		<polyLineShapeTest public="1" expr="&quot;&lt;PolyLineShape \n                        points= \&quot;[ 100, 100, 50, 50, 30, 30, 70, 200 ]\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/PolyLineShape&gt;&quot;" line="137" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<PolyLineShape \n                        points= \"[ 100, 100, 50, 50, 30, 30, 70, 200 ]\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </PolyLineShape>"]]></e></m></meta>
 		</polyLineShapeTest>
-		<quadCurveTest public="1" expr="&quot;&lt;QuadCurveShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        x4=\&quot;500\&quot; y4=\&quot;500\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot;&gt;\n                    &lt;/QuadCurveShape&gt;&quot;" line="134" static="1">
+		<quadCurveTest public="1" expr="&quot;&lt;QuadCurveShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        x4=\&quot;500\&quot; y4=\&quot;500\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot;&gt;\n                    &lt;/QuadCurveShape&gt;&quot;" line="144" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<QuadCurveShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        x3=\"130\" y3=\"220\" \n                        x4=\"500\" y4=\"500\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\">\n                    </QuadCurveShape>"]]></e></m></meta>
 		</quadCurveTest>
-		<quadShape public="1" expr="&quot;&lt;QuadShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        x4=\&quot;500\&quot; y4=\&quot;500\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/QuadShape&gt;&quot;" line="144" static="1">
+		<quadShape public="1" expr="&quot;&lt;QuadShape \n                        x1=\&quot;100\&quot; y1=\&quot;300\&quot; \n                        x2=\&quot;300\&quot; y2=\&quot;120\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        x4=\&quot;500\&quot; y4=\&quot;500\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/QuadShape&gt;&quot;" line="154" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<QuadShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        x3=\"130\" y3=\"220\" \n                        x4=\"500\" y4=\"500\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </QuadShape>"]]></e></m></meta>
 		</quadShape>
-		<rectangleShape public="1" expr="&quot;&lt;RectangleShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        rounded=\&quot;true\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; \n                        strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/RectangleShape&gt;&quot;" line="154" static="1">
+		<rectangleShape public="1" expr="&quot;&lt;RectangleShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;200\&quot; height=\&quot;50\&quot; \n                        rounded=\&quot;true\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; \n                        strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/RectangleShape&gt;&quot;" line="164" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<RectangleShape \n                        left=\"100\" top=\"100\" \n                        width=\"200\" height=\"50\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </RectangleShape>"]]></e></m></meta>
 		</rectangleShape>
-		<squareShape public="1" expr="&quot;&lt;SquareShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        diameter=\&quot;90\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/SquareShape&gt;&quot;" line="165" static="1">
+		<squareShape public="1" expr="&quot;&lt;SquareShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        diameter=\&quot;90\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/SquareShape&gt;&quot;" line="175" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </SquareShape>"]]></e></m></meta>
 		</squareShape>
-		<star6Shape public="1" expr="&quot;&lt;SquareShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        diameter=\&quot;90\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        rotation = \&quot;0\&quot;\n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/SquareShape&gt;&quot;" line="172" static="1">
+		<star6Shape public="1" expr="&quot;&lt;SquareShape \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        diameter=\&quot;90\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        rotation = \&quot;0\&quot;\n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/SquareShape&gt;&quot;" line="182" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<SquareShape \n                        left=\"100\" top=\"100\" \n                        diameter=\"90\" \n                        strokeColor=\"0xFFFF0000\" strokeWidth=\"1\" \n                        rotation = \"0\"\n                        fill=\"0xFF00FF00\">\n                    </SquareShape>"]]></e></m></meta>
 		</star6Shape>
-		<tileRectangleTest public="1" expr="&quot;&lt;RectanglePattern \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;600\&quot; height=\&quot;400\&quot; \n                        rounded=\&quot;true\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; \n                        strokeWidth=\&quot;12\&quot; \n                        fillColor0=\&quot;0xFF1912F9\&quot;\n                        fillColor1=\&quot;0xFF5CC7B3\&quot;\n                        strokeColor0=\&quot;0xFFF1FF33\&quot;\n                        strokeColor1=\&quot;0xFFF7287B\&quot; \n                        strokePatternFill=\&quot;[false,true]\&quot;\n                        strokePatternWidth=\&quot;2\&quot;\n                        strokePatternHeight=\&quot;2\&quot;\n                        strokePatternAcross=\&quot;true\&quot;\n                        strokePatternScale=\&quot;8\&quot;\n                        fillPatternFill=\&quot;[true,true,true,true,false,false,false,false]\&quot;\n                        fillPatternWidth=\&quot;8\&quot;\n                        fillPatternHeight=\&quot;8\&quot;\n                        fillPatternAcross=\&quot;true\&quot;\n                        fillPatternScale=\&quot;8\&quot;&gt;\n                    &lt;/RectanglePattern&gt;&quot;" line="181" static="1">
+		<tileRectangleTest public="1" expr="&quot;&lt;RectanglePattern \n                        left=\&quot;100\&quot; top=\&quot;100\&quot; \n                        width=\&quot;600\&quot; height=\&quot;400\&quot; \n                        rounded=\&quot;true\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; \n                        strokeWidth=\&quot;12\&quot; \n                        fillColor0=\&quot;0xFF1912F9\&quot;\n                        fillColor1=\&quot;0xFF5CC7B3\&quot;\n                        strokeColor0=\&quot;0xFFF1FF33\&quot;\n                        strokeColor1=\&quot;0xFFF7287B\&quot; \n                        strokePatternFill=\&quot;[false,true]\&quot;\n                        strokePatternWidth=\&quot;2\&quot;\n                        strokePatternHeight=\&quot;2\&quot;\n                        strokePatternAcross=\&quot;true\&quot;\n                        strokePatternScale=\&quot;8\&quot;\n                        fillPatternFill=\&quot;[true,true,true,true,false,false,false,false]\&quot;\n                        fillPatternWidth=\&quot;8\&quot;\n                        fillPatternHeight=\&quot;8\&quot;\n                        fillPatternAcross=\&quot;true\&quot;\n                        fillPatternScale=\&quot;8\&quot;&gt;\n                    &lt;/RectanglePattern&gt;&quot;" line="191" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<RectanglePattern \n                        left=\"100\" top=\"100\" \n                        width=\"600\" height=\"400\" \n                        rounded=\"true\" \n                        strokeColor=\"0xFFFF0000\" \n                        strokeWidth=\"12\" \n                        fillColor0=\"0xFF1912F9\"\n                        fillColor1=\"0xFF5CC7B3\"\n                        strokeColor0=\"0xFFF1FF33\"\n                        strokeColor1=\"0xFFF7287B\" \n                        strokePatternFill=\"[false,true]\"\n                        strokePatternWidth=\"2\"\n                        strokePatternHeight=\"2\"\n                        strokePatternAcross=\"true\"\n                        strokePatternScale=\"8\"\n                        fillPatternFill=\"[true,true,true,true,false,false,false,false]\"\n                        fillPatternWidth=\"8\"\n                        fillPatternHeight=\"8\"\n                        fillPatternAcross=\"true\"\n                        fillPatternScale=\"8\">\n                    </RectanglePattern>"]]></e></m></meta>
 		</tileRectangleTest>
-		<triangleGradientTest public="1" expr="&quot;&lt;TriangleGradient \n                        aX=\&quot;100\&quot; aY=\&quot;100\&quot; \n                        bX=\&quot;200\&quot; bY=\&quot;150\&quot; \n                        cX=\&quot;130\&quot; cY=\&quot;220\&quot; \n                        colorA=\&quot;0xffFF0000\&quot; colorB=\&quot;0xff0f00ff\&quot; colorC=\&quot;0xffcc00cc\&quot;&gt;\n                    &lt;/TriangleGradient&gt;&quot;" line="203" static="1">
+		<triangleGradientTest public="1" expr="&quot;&lt;TriangleGradient \n                        aX=\&quot;100\&quot; aY=\&quot;100\&quot; \n                        bX=\&quot;200\&quot; bY=\&quot;150\&quot; \n                        cX=\&quot;130\&quot; cY=\&quot;220\&quot; \n                        colorA=\&quot;0xffFF0000\&quot; colorB=\&quot;0xff0f00ff\&quot; colorC=\&quot;0xffcc00cc\&quot;&gt;\n                    &lt;/TriangleGradient&gt;&quot;" line="213" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<TriangleGradient \n                        aX=\"100\" aY=\"100\" \n                        bX=\"200\" bY=\"150\" \n                        cX=\"130\" cY=\"220\" \n                        colorA=\"0xffFF0000\" colorB=\"0xff0f00ff\" colorC=\"0xffcc00cc\">\n                    </TriangleGradient>"]]></e></m></meta>
 		</triangleGradientTest>
-		<triangleShape public="1" expr="&quot;&lt;TriangleShape \n                        x1=\&quot;100\&quot; y1=\&quot;100\&quot; \n                        x2=\&quot;200\&quot; y2=\&quot;150\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/TriangleShape&gt;&quot;" line="211" static="1">
+		<triangleShape public="1" expr="&quot;&lt;TriangleShape \n                        x1=\&quot;100\&quot; y1=\&quot;100\&quot; \n                        x2=\&quot;200\&quot; y2=\&quot;150\&quot; \n                        x3=\&quot;130\&quot; y3=\&quot;220\&quot; \n                        strokeColor=\&quot;0xFF0000\&quot; strokeWidth=\&quot;1\&quot; \n                        fill=\&quot;0xFF00FF00\&quot;&gt;\n                    &lt;/TriangleShape&gt;&quot;" line="221" static="1">
 			<c path="String"/>
 			<meta><m n=":value"><e><![CDATA["<TriangleShape \n                        x1=\"100\" y1=\"100\" \n                        x2=\"200\" y2=\"150\" \n                        x3=\"130\" y3=\"220\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </TriangleShape>"]]></e></m></meta>
 		</triangleShape>
@@ -46870,12 +46874,12 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineSegmentTo>
-		<lineTo public="1" set="method" line="111"><f a="x2:y2">
+		<lineTo public="1" set="method" line="114"><f a="x2:y2">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineTo>
-		<moveTo public="1" set="method" line="124"><f a="x1:y1">
+		<moveTo public="1" set="method" line="130"><f a="x1:y1">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
@@ -47339,12 +47343,12 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineSegmentTo>
-		<lineTo public="1" set="method" line="93"><f a="x2:y2">
+		<lineTo public="1" set="method" line="96"><f a="x2:y2">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></lineTo>
-		<moveTo public="1" set="method" line="106"><f a="x1:y1">
+		<moveTo public="1" set="method" line="112"><f a="x1:y1">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
@@ -47565,6 +47569,90 @@
 				<x path="Void"/>
 			</f>
 			<meta><m n=":value"><e>{ y3 : 0., x3 : 0., y2 : 0., x2 : 0., y1 : 0., x1 : 0., fill : 0x000000, strokeDashGapArray : null, strokeWidth : 1., strokeColor : 0x000000, visibility : true, opacity : 1. }</e></m></meta>
+		</new>
+		<meta>
+			<m n=":directlyUsed"/>
+			<m n=":structInit"/>
+		</meta>
+	</class>
+	<class path="pixelimage.triGML.shape.VePathElementShape" params="" file="src/pixelimage/triGML/shape/VePathElementShape.hx">
+		<extends path="pixelimage.triGML.coreShape.FillShape"/>
+		<implements path="justPath.ILinePathContext"/>
+		<pathData public="1" expr="&quot;&quot;">
+			<c path="String"/>
+			<meta><m n=":value"><e>""</e></m></meta>
+		</pathData>
+		<strokeColors public="1"><x path="Null"><c path="Array"><x path="Int"/></c></x></strokeColors>
+		<strokeWidths public="1"><x path="Null"><c path="Array"><x path="Float"/></c></x></strokeWidths>
+		<translateX public="1"><x path="Float"/></translateX>
+		<translateY public="1"><x path="Float"/></translateY>
+		<scaleX public="1"><x path="Float"/></scaleX>
+		<scaleY public="1"><x path="Float"/></scaleY>
+		<sp public="1"><c path="justPath.SvgLinePath"/></sp>
+		<x0 expr="0.">
+			<x path="Float"/>
+			<meta><m n=":value"><e>0.</e></m></meta>
+		</x0>
+		<y0 expr="0.">
+			<x path="Float"/>
+			<meta><m n=":value"><e>0.</e></m></meta>
+		</y0>
+		<temp><x path="pixelimage.Pixelimage"/></temp>
+		<toggleDraw expr="true">
+			<x path="Bool"/>
+			<meta><m n=":value"><e>true</e></m></meta>
+		</toggleDraw>
+		<info><a>
+	<dy><x path="Float"/></dy>
+	<dx><x path="Float"/></dx>
+	<cy><x path="Float"/></cy>
+	<cx><x path="Float"/></cx>
+	<by><x path="Float"/></by>
+	<bx><x path="Float"/></bx>
+	<ay><x path="Float"/></ay>
+	<ax><x path="Float"/></ax>
+</a></info>
+		<setParameter public="1" set="method" line="48" override="1"><f a="name:value">
+	<c path="String"/>
+	<c path="String"/>
+	<x path="Void"/>
+</f></setParameter>
+		<render public="1" set="method" line="70" override="1"><f a="pixelImage">
+	<x path="pixelimage.Pixelimage"/>
+	<x path="pixelimage.Pixelimage"/>
+</f></render>
+		<drawing public="1" set="method" line="92"><f a=""><x path="Void"/></f></drawing>
+		<lineSegmentTo public="1" set="method" line="97"><f a="x2:y2">
+	<x path="Float"/>
+	<x path="Float"/>
+	<x path="Void"/>
+</f></lineSegmentTo>
+		<lineTo public="1" set="method" line="117"><f a="x2:y2">
+	<x path="Float"/>
+	<x path="Float"/>
+	<x path="Void"/>
+</f></lineTo>
+		<moveTo public="1" set="method" line="130"><f a="x1:y1">
+	<x path="Float"/>
+	<x path="Float"/>
+	<x path="Void"/>
+</f></moveTo>
+		<new public="1" set="method" line="25">
+			<f a="?opacity:?visibility:?strokeColors:?strokeWidths:?strokeDashGapArray:?fill:?pathData:?translateX:?translateY:?scaleX:?scaleY" v="1.:true:null:null:null:0x000000:&quot;&quot;:0.:0.:1.:1.">
+				<x path="Float"/>
+				<x path="Bool"/>
+				<c path="Array"><x path="Int"/></c>
+				<c path="Array"><x path="Float"/></c>
+				<c path="Array"><x path="pixelimage.triGML.coreShape.DashGap"/></c>
+				<x path="Int"/>
+				<c path="String"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ scaleY : 1., scaleX : 1., translateY : 0., translateX : 0., pathData : "", fill : 0x000000, strokeDashGapArray : null, strokeWidths : null, strokeColors : null, visibility : true, opacity : 1. }</e></m></meta>
 		</new>
 		<meta>
 			<m n=":directlyUsed"/>

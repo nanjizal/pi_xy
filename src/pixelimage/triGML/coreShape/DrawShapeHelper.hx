@@ -58,9 +58,12 @@ class DrawShapeHelper implements ILinePathContext {
         var oldInfo = info;
         info = pixelImage.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor );
+                     , strokeWidth, strokeColor, true );
         if( info != null && oldInfo != null ){
-            pixelImage.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor );
+            pixelImage.fillQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
+                                , info.ax*scaleX + translateX, info.ay*scaleY + translateY
+                                , info.dx*scaleX + translateX, info.dy*scaleY + translateY
+                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeColor, true );
         }
         x0 = x2;
         y0 = y2;
