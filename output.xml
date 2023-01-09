@@ -46475,7 +46475,7 @@
 		</triangleShape>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
-	<class path="pixelimage.triGML.gradient.EllipseGradient" params="" file="src/pixelimage/triGML/gradient/EllipseRadialGradient.hx" module="pixelimage.triGML.gradient.EllipseRadialGradient">
+	<class path="pixelimage.triGML.gradient.EllipseRadialGradient" params="" file="src/pixelimage/triGML/gradient/EllipseRadialGradient.hx">
 		<extends path="pixelimage.triGML.coreShape.BasicGradient"/>
 		<centreX public="1"><x path="Float"/></centreX>
 		<centreY public="1"><x path="Float"/></centreY>

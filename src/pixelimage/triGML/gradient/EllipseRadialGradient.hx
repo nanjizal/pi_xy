@@ -5,7 +5,7 @@ import pixelimage.iter.BoundIterator;
 import pixelimage.algo.PolyPixel;
 
 @:structInit
-class EllipseGradient extends BasicGradient {
+class EllipseRadialGradient extends BasicGradient {
     public var centreX: Float;
     public var centreY: Float;
     public var radiusX: Float;
