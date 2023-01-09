@@ -46200,6 +46200,161 @@
 		</new>
 		<meta><m n=":structInit"/></meta>
 	</class>
+	<abstract path="pixelimage.triGML.coreShape.TriGMLname" params="" file="src/pixelimage/triGML/coreShape/TriGML.hx" module="pixelimage.triGML.coreShape.TriGML">
+		<this><c path="String"/></this>
+		<to><icast><c path="String"/></icast></to>
+		<meta><m n=":enum"/></meta>
+		<impl><class path="pixelimage.triGML.coreShape._TriGML.TriGMLname_Impl_" params="" file="src/pixelimage/triGML/coreShape/TriGML.hx" private="1" module="pixelimage.triGML.coreShape.TriGML" extern="1" final="1">
+	<cubicCurveShape_name public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="7" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "CubicCurveShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</cubicCurveShape_name>
+	<lineGridShape_name public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="8" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "LineGridShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</lineGridShape_name>
+	<lineShape_name public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="9" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "LineShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</lineShape_name>
+	<polyLineShape_name public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="10" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "PolyLineShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</polyLineShape_name>
+	<quadCurveShape_name public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="11" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "QuadCurveShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</quadCurveShape_name>
+	<thruCurveShape_name public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="12" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "ThruCurveShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</thruCurveShape_name>
+	<pathElementThickGradient public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="14" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "PathElementThickGradient"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</pathElementThickGradient>
+	<quadGradient public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="15" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "QuadGradient"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</quadGradient>
+	<triangleGradient public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="16" static="1">
+		<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "TriangleGradient"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</triangleGradient>
+	<meta><m n=":enum"/></meta>
+</class></impl>
+	</abstract>
+	<class path="pixelimage.triGML.coreShape._TriGML.TriGMLname_Impl_" params="" file="src/pixelimage/triGML/coreShape/TriGML.hx" private="1" module="pixelimage.triGML.coreShape.TriGML" extern="1" final="1">
+		<cubicCurveShape_name public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="7" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "CubicCurveShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</cubicCurveShape_name>
+		<lineGridShape_name public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="8" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "LineGridShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</lineGridShape_name>
+		<lineShape_name public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="9" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "LineShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</lineShape_name>
+		<polyLineShape_name public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="10" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "PolyLineShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</polyLineShape_name>
+		<quadCurveShape_name public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="11" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "QuadCurveShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</quadCurveShape_name>
+		<thruCurveShape_name public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="12" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "ThruCurveShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</thruCurveShape_name>
+		<pathElementThickGradient public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="14" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "PathElementThickGradient"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</pathElementThickGradient>
+		<quadGradient public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="15" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "QuadGradient"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</quadGradient>
+		<triangleGradient public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="16" static="1">
+			<x path="pixelimage.triGML.coreShape.TriGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "TriangleGradient"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</triangleGradient>
+		<meta><m n=":enum"/></meta>
+	</class>
 	<class path="pixelimage.triGML.coreShape.XMLshape" params="" file="src/pixelimage/triGML/coreShape/XMLshape.hx">
 		<withString public="1" get="inline" set="null" line="34" static="1"><f a="pixelImage:str">
 	<x path="pixelimage.Pixelimage"/>
@@ -46320,6 +46475,45 @@
 		</triangleShape>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
+	<class path="pixelimage.triGML.gradient.EllipseGradient" params="" file="src/pixelimage/triGML/gradient/EllipseRadialGradient.hx" module="pixelimage.triGML.gradient.EllipseRadialGradient">
+		<extends path="pixelimage.triGML.coreShape.BasicGradient"/>
+		<centreX public="1"><x path="Float"/></centreX>
+		<centreY public="1"><x path="Float"/></centreY>
+		<radiusX public="1"><x path="Float"/></radiusX>
+		<radiusY public="1"><x path="Float"/></radiusY>
+		<colorIn public="1"><x path="Int"/></colorIn>
+		<colorOut public="1"><x path="Int"/></colorOut>
+		<gradientCentreX public="1"><x path="Float"/></gradientCentreX>
+		<gradientCentreY public="1"><x path="Float"/></gradientCentreY>
+		<rotation public="1"><x path="Float"/></rotation>
+		<setParameter public="1" set="method" line="39" override="1"><f a="name:value">
+	<c path="String"/>
+	<c path="String"/>
+	<x path="Void"/>
+</f></setParameter>
+		<render public="1" set="method" line="63" override="1"><f a="pixelImage">
+	<x path="pixelimage.Pixelimage"/>
+	<x path="pixelimage.Pixelimage"/>
+</f></render>
+		<new public="1" set="method" line="29">
+			<f a="?opacity:?visibility:?centreX:?centreY:?radiusX:?radiusY:?colorIn:?colorOut:?gradientCentreX:?gradientCentreY:?rotation" v="1.:true:30:30:10:10:0xFFFFFF00:0xFF0000FF:-1.:-1.:0.">
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ rotation : 0., gradientCentreY : -1., gradientCentreX : -1., colorOut : 0xFF0000FF, colorIn : 0xFFFFFF00, radiusY : 10, radiusX : 10, centreY : 30, centreX : 30, visibility : true, opacity : 1. }</e></m></meta>
+		</new>
+		<meta><m n=":structInit"/></meta>
+	</class>
 	<class path="pixelimage.triGML.gradient.PathElementThickGradient" params="" file="src/pixelimage/triGML/gradient/PathElementThickGradient.hx">
 		<extends path="pixelimage.triGML.coreShape.FillShape"/>
 		<implements path="justPath.ILinePathContext"/>
@@ -46399,6 +46593,51 @@
 			<m n=":directlyUsed"/>
 			<m n=":structInit"/>
 		</meta>
+	</class>
+	<class path="pixelimage.triGML.gradient.QuadGradient" params="" file="src/pixelimage/triGML/gradient/QuadGradient.hx">
+		<extends path="pixelimage.triGML.coreShape.BasicGradient"/>
+		<x1 public="1"><x path="Float"/></x1>
+		<y1 public="1"><x path="Float"/></y1>
+		<color1 public="1"><x path="Int"/></color1>
+		<x2 public="1"><x path="Float"/></x2>
+		<y2 public="1"><x path="Float"/></y2>
+		<color2 public="1"><x path="Float"/></color2>
+		<x3 public="1"><x path="Float"/></x3>
+		<y3 public="1"><x path="Float"/></y3>
+		<color3 public="1"><x path="Float"/></color3>
+		<x4 public="1"><x path="Float"/></x4>
+		<y4 public="1"><x path="Float"/></y4>
+		<color4 public="1"><x path="Float"/></color4>
+		<setParameter public="1" set="method" line="45" override="1"><f a="name:value">
+	<c path="String"/>
+	<c path="String"/>
+	<x path="Void"/>
+</f></setParameter>
+		<render public="1" set="method" line="75" override="1"><f a="pixelImage">
+	<x path="pixelimage.Pixelimage"/>
+	<x path="pixelimage.Pixelimage"/>
+</f></render>
+		<new public="1" set="method" line="34">
+			<f a="?opacity:?visibility:?x1:?y1:?color1:?x2:?y2:?color2:?x3:?y3:?color3:?x4:?y4:?color4" v="1.:true:0.:0.:0xffd9ff00:0.:0.:0xFFFF00FB:0.:0.:0xFF00FFBF:0.:0.:0xFFFF9500">
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ color4 : 0xFFFF9500, y4 : 0., x4 : 0., color3 : 0xFF00FFBF, y3 : 0., x3 : 0., color2 : 0xFFFF00FB, y2 : 0., x2 : 0., color1 : 0xffd9ff00, y1 : 0., x1 : 0., visibility : true, opacity : 1. }</e></m></meta>
+		</new>
+		<meta><m n=":structInit"/></meta>
 	</class>
 	<class path="pixelimage.triGML.gradient.TriangleGradient" params="" file="src/pixelimage/triGML/gradient/TriangleGradient.hx">
 		<extends path="pixelimage.triGML.coreShape.BasicGradient"/>
