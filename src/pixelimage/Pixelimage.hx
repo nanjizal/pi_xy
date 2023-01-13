@@ -589,16 +589,26 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     public inline
     function fillArrow( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        , thick: Float, color: Int, flare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
         trace( 'pixelimage.fillArrow');
-        return fillLineArrow( this, px, py, qx, qy, thick, color, hasHit );
+        return fillLineArrow( this, px, py, qx, qy, thick, color, flare, hasHit );
     }
     public inline
     function fillArrowBoth( px: Float, py: Float, qx: Float, qy: Float
         , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
         return fillLineArrowBoth( this, px, py, qx, qy, thick, color, hasHit );
     }
-
+    public inline
+    function fillFixArrow( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
+        , thick: Float, color: Int, flare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
+        trace( 'pixelimage.fillArrow');
+        return fillLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, flare, hasHit );
+    }
+    public inline
+    function fillFixArrowBoth( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
+        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        return fillLineFixedArrowBoth( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, hasHit );
+    }
     /**
         tiles a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development

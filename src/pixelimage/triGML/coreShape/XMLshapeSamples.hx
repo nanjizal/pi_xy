@@ -97,10 +97,13 @@ var lineShapeTest: String =
 
 var arrowShapeTest: String = 
                     '<ArrowShape
+                        flare="true"
                         both="true"
                         x1="100" y1="300" 
                         x2="360" y2="120" 
-                        strokeWidth="30" strokeColor="0xffFF0000">
+                        arrowWidth="60"
+                        arrowHeight="50"
+                        strokeWidth="5" strokeColor="0xffFF0000">
                     </ArrowShape>';
 
 //var quadtest_d      = 'M200,300 Q400,50 600,300 T1000,300';
