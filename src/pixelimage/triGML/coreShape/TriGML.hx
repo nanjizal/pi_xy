@@ -20,6 +20,7 @@ enum abstract TriGMLname ( String ) to String {
     var QUAD_SHAPE                  = 'QuadShape';
     var THRU_CURVE_SHAPE            = 'ThruCurveShape';
     /* gradient */
+    var ARROW_THICK_GRADIENT        = 'ArrowThickGradient';
     var ELLIPSE_RADIAL_GRADIENT     = 'EllipseRadialGradient';
     var PATH_ELEMENT_THICK_GRADIENT = 'PathElementThickGradient';
     var QUAD_GRADIENT               = 'QuadGradient';
@@ -73,6 +74,8 @@ function getTriGML( nodeName: String ): ShapeInterface {
         case THRU_CURVE_SHAPE:
             new ThruCurveShape();
         /* gradient */
+        case ARROW_THICK_GRADIENT:
+            new ArrowThickGradient();
         case ELLIPSE_RADIAL_GRADIENT:
             new EllipseRadialGradient();
         case PATH_ELEMENT_THICK_GRADIENT:

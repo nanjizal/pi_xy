@@ -552,7 +552,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , bx, y,  colorB
                     , bx, cy, colorC
                     , x,  cy, colorD );
-        return { ax: x, ay: y, bx: bx, by: y, cx: bx, cy: cy, dx: x, dy: cy };
+        return { ax: x, ay: y, bx: bx, y: y, cx: bx, cy: cy, x: x, dy: cy };
     }
     /**
         uses two triangle to form a quad with clockwise coordinates a,b,c,d
@@ -589,9 +589,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     **/
     public inline
     function fillArrow( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color: Int, flare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
+        , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
         trace( 'pixelimage.fillArrow');
-        return fillLineArrow( this, px, py, qx, qy, thick, color, flare, hasHit );
+        return fillLineArrow( this, px, py, qx, qy, thick, color, flare, reverseFlare, hasHit );
     }
     public inline
     function fillArrowBoth( px: Float, py: Float, qx: Float, qy: Float
@@ -600,15 +600,38 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     }
     public inline
     function fillFixArrow( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
-        , thick: Float, color: Int, flare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
+        , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
         trace( 'pixelimage.fillArrow');
-        return fillLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, flare, hasHit );
+        return fillLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, flare, reverseFlare, hasHit );
     }
     public inline
     function fillFixArrowBoth( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
         , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
         return fillLineFixedArrowBoth( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, hasHit );
     }
+
+    // gradient thick arrows
+    public inline
+    function gradThickArrow( px: Float, py: Float, qx: Float, qy: Float
+        , thick: Float, color1: Int, color2: Int, flare: Bool = false, reverseFlare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
+        return gradThickLineArrow( this, px, py, qx, qy, thick, color1, color2, flare, reverseFlare, hasHit );
+    }
+    public inline
+    function gradThickArrowBoth( px: Float, py: Float, qx: Float, qy: Float
+        , thick: Float, color1: Int, color2: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        return gradThickLineArrowBoth( this, px, py, qx, qy, thick, color1, color2, hasHit );
+    }
+    public inline
+    function gradThickFixArrow( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
+        , thick: Float, color1: Int, color2: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
+        return gradThickLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color1, color2, flare, reverseFlare, hasHit );
+    }
+    public inline
+    function gradThickFixArrowBoth( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
+        , thick: Float, color1: Int, color2: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        return gradThickLineFixedArrowBoth( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color1, color2, hasHit );
+    }
+
     /**
         tiles a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development

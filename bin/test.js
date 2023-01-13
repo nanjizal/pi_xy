@@ -13287,6 +13287,14 @@ pixelimage_iter_IntIterStart.__name__ = "pixelimage.iter.IntIterStart";
 pixelimage_iter_IntIterStart.prototype = {
 	__class__: pixelimage_iter_IntIterStart
 };
+var pixelimage_pixel__$TwoGrad_TwoGrad_$ = function(colorClock,colorAnti) {
+	this.colorClock = colorClock;
+	this.colorAnti = colorAnti;
+};
+pixelimage_pixel__$TwoGrad_TwoGrad_$.__name__ = "pixelimage.pixel._TwoGrad.TwoGrad_";
+pixelimage_pixel__$TwoGrad_TwoGrad_$.prototype = {
+	__class__: pixelimage_pixel__$TwoGrad_TwoGrad_$
+};
 var pixelimage_triGML_coreShape_ShapeInterface = function() { };
 pixelimage_triGML_coreShape_ShapeInterface.__name__ = "pixelimage.triGML.coreShape.ShapeInterface";
 pixelimage_triGML_coreShape_ShapeInterface.__isInterface__ = true;
@@ -13361,7 +13369,7 @@ pixelimage_triGML_coreShape_BasicShape.prototype = $extend(pixelimage_triGML_cor
 	}
 	,__class__: pixelimage_triGML_coreShape_BasicShape
 });
-var pixelimage_triGML_contour_ArrowShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,both,flare,x1,y1,x2,y2,arrowWidth,arrowHeight) {
+var pixelimage_triGML_contour_ArrowShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,both,flare,reverseFlare,x1,y1,x2,y2,arrowWidth,arrowHeight) {
 	if(arrowHeight == null) {
 		arrowHeight = 0.;
 	}
@@ -13379,6 +13387,9 @@ var pixelimage_triGML_contour_ArrowShape = function(opacity,visibility,strokeCol
 	}
 	if(x1 == null) {
 		x1 = 0.;
+	}
+	if(reverseFlare == null) {
+		reverseFlare = false;
 	}
 	if(flare == null) {
 		flare = false;
@@ -13401,6 +13412,7 @@ var pixelimage_triGML_contour_ArrowShape = function(opacity,visibility,strokeCol
 	pixelimage_triGML_coreShape_BasicShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray);
 	this.both = both;
 	this.flare = flare;
+	this.reverseFlare = reverseFlare;
 	this.x1 = x1;
 	this.y1 = y1;
 	this.x2 = x2;
@@ -13422,6 +13434,9 @@ pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreS
 			break;
 		case "flare":
 			this.flare = StringTools.trim(value).toLowerCase() == "true";
+			break;
+		case "reverseFlare":
+			this.reverseFlare = StringTools.trim(value).toLowerCase() == "true";
 			break;
 		case "x1":
 			this.x1 = parseFloat(value);
@@ -13451,16 +13466,28 @@ pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreS
 				var thick = this.strokeWidth;
 				var color = this.strokeColor;
 				var flare = this.flare;
+				var reverseFlare = this.reverseFlare;
+				if(reverseFlare == null) {
+					reverseFlare = false;
+				}
+				if(flare == null) {
+					flare = false;
+				}
 				haxe_Log.trace("pixelimage.fillArrow",{ fileName : "src/pixelimage/Pixelimage.hx", lineNumber : 604, className : "pixelimage._Pixelimage.Pixelimage_Impl_", methodName : "fillFixArrow"});
 				var flare1 = flare;
+				var reverseFlare1 = reverseFlare;
 				var hasHit = true;
 				if(hasHit == null) {
 					hasHit = false;
+				}
+				if(reverseFlare1 == null) {
+					reverseFlare1 = false;
 				}
 				if(flare1 == null) {
 					flare1 = false;
 				}
 				var goldenRatio = 1.61803398875;
+				haxe_Log.trace("fillLineFixedArrow",{ fileName : "src/pixelimage/algo/ArrowPixel.hx", lineNumber : 249, className : "pixelimage.algo._ArrowPixel.ArrowPixel_Fields_", methodName : "fillLineFixedArrow"});
 				var o = qy - py;
 				var a = qx - px;
 				var h = Math.pow(o * o + a * a,0.5);
@@ -13473,326 +13500,650 @@ pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreS
 				var h2 = arrowHeight < h * 1.1 ? h - arrowHeight : h / goldenRatio;
 				var hitQuad;
 				if(flare1) {
-					var hasHit1 = true;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var sin1 = Math.sin(theta);
-					var cos1 = Math.cos(theta);
-					var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
-					var radius21 = thick / 2;
-					var dx = 0.1;
-					var dy = radius1;
-					var cx = h2;
-					var cy = radius21;
-					var bx = h2;
-					var by = -radius21;
-					var ax = 0.1;
-					var ay = -radius1;
-					var temp = 0.;
-					temp = px + (ax * cos1 - ay * sin1);
-					ay = py + (ay * cos1 + ax * sin1);
-					ax = temp;
-					temp = px + (bx * cos1 - by * sin1);
-					by = py + (by * cos1 + bx * sin1);
-					bx = temp;
-					temp = px + (cx * cos1 - cy * sin1);
-					cy = py + (cy * cos1 + cx * sin1);
-					cx = temp;
-					temp = px + (dx * cos1 - dy * sin1);
-					dy = py + (dy * cos1 + dx * sin1);
-					dx = temp;
-					var hasHit2 = hasHit1;
-					if(hasHit2 == null) {
-						hasHit2 = false;
-					}
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = dx;
-					var cy1 = dy;
-					var hasHit1 = hasHit2;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-					if(!adjustWinding) {
-						var bx_ = bx1;
-						var by_ = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_;
-						cy1 = by_;
-					}
-					var hasHit3 = hasHit1;
-					if(hasHit3 == null) {
-						hasHit3 = false;
-					}
-					var s0 = ay * cx1 - ax * cy1;
-					var sx = cy1 - ay;
-					var sy = ax - cx1;
-					var t0 = ax * by1 - ay * bx1;
-					var tx = ay - by1;
-					var ty = bx1 - ax;
-					var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-					var yIter3;
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max = Math.ceil(ay);
+					if(reverseFlare1) {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = thick / 2;
+						var radius21 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var bx1 = bx;
+						var by1 = by;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = ay * cx1 - ax * cy1;
+						var sx = cy1 - ay;
+						var sy = ax - cx1;
+						var t0 = ax * by1 - ay * bx1;
+						var tx = ay - by1;
+						var ty = bx1 - ax;
+						var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(ay > by1) {
+							if(ay > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+							var ii_max = Math.ceil(by1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						} else {
-							var ii_min = Math.floor(by1);
+							var ii_min = Math.floor(ay);
 							var ii_max = Math.ceil(cy1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						}
-					} else if(by1 > cy1) {
-						var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max = Math.ceil(by1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(ay);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					}
-					var foundY = false;
-					var s = 0.;
-					var t = 0.;
-					var sxx = 0.;
-					var txx = 0.;
-					var this1;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max = Math.ceil(ax);
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(ax > bx1) {
+							if(ax > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+							var ii_max = Math.ceil(bx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						} else {
-							var ii_min = Math.floor(bx1);
+							var ii_min = Math.floor(ax);
 							var ii_max = Math.ceil(cx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						}
-					} else if(bx1 > cx1) {
-						var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max = Math.ceil(bx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					} else {
-						var ii_min = Math.floor(ax);
-						var ii_max = Math.ceil(cx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					}
-					var _g_min = this1.start;
-					var _g_max = this1.max;
-					while(_g_min < _g_max) {
-						var x = _g_min++;
-						sxx = sx * x;
-						txx = tx * x;
-						foundY = false;
-						var _g_min1 = yIter3.start;
-						var _g_max1 = yIter3.max;
-						while(_g_min1 < _g_max1) {
-							var y = _g_min1++;
-							s = s0 + sxx + sy * y;
-							t = t0 + txx + ty * y;
-							if(s <= 0 || t <= 0) {
-								if(foundY) {
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
 									break;
 								}
-							} else if(s + t < A) {
-								var this1 = color;
-								var c = this1;
-								if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-									var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
-									var this2 = pixelImage.image[location];
-									var this3 = this2;
-									var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-									var this5 = this4 >> 24 & 255;
-									var a1 = this5 == 0 ? 0. : this5 / 255;
-									var this6 = this4 >> 16 & 255;
-									var r1 = this6 == 0 ? 0. : this6 / 255;
-									var this7 = this4 >> 8 & 255;
-									var g1 = this7 == 0 ? 0. : this7 / 255;
-									var this8 = this4 & 255;
-									var b1 = this8 == 0 ? 0. : this8 / 255;
-									var this9 = color >> 24 & 255;
-									var a2 = this9 == 0 ? 0. : this9 / 255;
-									var this10 = color >> 16 & 255;
-									var r2 = this10 == 0 ? 0. : this10 / 255;
-									var this11 = color >> 8 & 255;
-									var g2 = this11 == 0 ? 0. : this11 / 255;
-									var this12 = color & 255;
-									var b2 = this12 == 0 ? 0. : this12 / 255;
-									var a3 = a1 * (1 - a2);
-									var r = 255 * (r1 * a3 + r2 * a2) | 0;
-									var g = 255 * (g1 * a3 + g2 * a2) | 0;
-									var b = 255 * (b1 * a3 + b2 * a2) | 0;
-									var a = 255 * (a3 + a2) | 0;
-									var blended = a << 24 | r << 16 | g << 8 | b;
-									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-								} else {
-									pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-								}
-								foundY = true;
-							} else if(foundY) {
-								break;
 							}
 						}
-					}
-					if(hasHit3 == true) {
-						var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
-					}
-					var bx1 = cx;
-					var by1 = cy;
-					var cx1 = dx;
-					var cy1 = dy;
-					var hasHit1 = hasHit2;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
-					if(!adjustWinding) {
-						var bx_ = bx1;
-						var by_ = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_;
-						cy1 = by_;
-					}
-					var hasHit3 = hasHit1;
-					if(hasHit3 == null) {
-						hasHit3 = false;
-					}
-					var s0 = by * cx1 - bx * cy1;
-					var sx = cy1 - by;
-					var sy = bx - cx1;
-					var t0 = bx * by1 - by * bx1;
-					var tx = by - by1;
-					var ty = bx1 - bx;
-					var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
-					var yIter3;
-					if(by > by1) {
-						if(by > cy1) {
-							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max = Math.ceil(by);
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+						}
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = by * cx1 - bx * cy1;
+						var sx = cy1 - by;
+						var sy = bx - cx1;
+						var t0 = bx * by1 - by * bx1;
+						var tx = by - by1;
+						var ty = bx1 - bx;
+						var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(by > by1) {
+							if(by > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(by);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+							var ii_max = Math.ceil(by1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						} else {
-							var ii_min = Math.floor(by1);
+							var ii_min = Math.floor(by);
 							var ii_max = Math.ceil(cy1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						}
-					} else if(by1 > cy1) {
-						var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
-						var ii_max = Math.ceil(by1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					}
-					var foundY = false;
-					var s = 0.;
-					var t = 0.;
-					var sxx = 0.;
-					var txx = 0.;
-					var this1;
-					if(bx > bx1) {
-						if(bx > cx1) {
-							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max = Math.ceil(bx);
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(bx > bx1) {
+							if(bx > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+							var ii_max = Math.ceil(bx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						} else {
-							var ii_min = Math.floor(bx1);
+							var ii_min = Math.floor(bx);
 							var ii_max = Math.ceil(cx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						}
-					} else if(bx1 > cx1) {
-						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
-						var ii_max = Math.ceil(bx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(cx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					}
-					var _g_min = this1.start;
-					var _g_max = this1.max;
-					while(_g_min < _g_max) {
-						var x = _g_min++;
-						sxx = sx * x;
-						txx = tx * x;
-						foundY = false;
-						var _g_min1 = yIter3.start;
-						var _g_max1 = yIter3.max;
-						while(_g_min1 < _g_max1) {
-							var y = _g_min1++;
-							s = s0 + sxx + sy * y;
-							t = t0 + txx + ty * y;
-							if(s <= 0 || t <= 0) {
-								if(foundY) {
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
 									break;
 								}
-							} else if(s + t < A) {
-								var this1 = color;
-								var c = this1;
-								if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-									var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
-									var this2 = pixelImage.image[location];
-									var this3 = this2;
-									var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-									var this5 = this4 >> 24 & 255;
-									var a1 = this5 == 0 ? 0. : this5 / 255;
-									var this6 = this4 >> 16 & 255;
-									var r1 = this6 == 0 ? 0. : this6 / 255;
-									var this7 = this4 >> 8 & 255;
-									var g1 = this7 == 0 ? 0. : this7 / 255;
-									var this8 = this4 & 255;
-									var b1 = this8 == 0 ? 0. : this8 / 255;
-									var this9 = color >> 24 & 255;
-									var a2 = this9 == 0 ? 0. : this9 / 255;
-									var this10 = color >> 16 & 255;
-									var r2 = this10 == 0 ? 0. : this10 / 255;
-									var this11 = color >> 8 & 255;
-									var g2 = this11 == 0 ? 0. : this11 / 255;
-									var this12 = color & 255;
-									var b2 = this12 == 0 ? 0. : this12 / 255;
-									var a3 = a1 * (1 - a2);
-									var r = 255 * (r1 * a3 + r2 * a2) | 0;
-									var g = 255 * (g1 * a3 + g2 * a2) | 0;
-									var b = 255 * (b1 * a3 + b2 * a2) | 0;
-									var a = 255 * (a3 + a2) | 0;
-									var blended = a << 24 | r << 16 | g << 8 | b;
-									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-								} else {
-									pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-								}
-								foundY = true;
-							} else if(foundY) {
-								break;
 							}
 						}
-					}
-					if(hasHit3 == true) {
-						var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
-					}
-					if(hasHit2 == true) {
-						var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
-						hitQuad = v;
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
 					} else {
-						hitQuad = null;
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var radius21 = thick / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var bx1 = bx;
+						var by1 = by;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = ay * cx1 - ax * cy1;
+						var sx = cy1 - ay;
+						var sy = ax - cx1;
+						var t0 = ax * by1 - ay * bx1;
+						var tx = ay - by1;
+						var ty = bx1 - ax;
+						var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(ay > by1) {
+							if(ay > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						}
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(ax > bx1) {
+							if(ax > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+							var ii_max = Math.ceil(bx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(ax);
+							var ii_max = Math.ceil(cx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
+									break;
+								}
+							}
+						}
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+						}
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = by * cx1 - bx * cy1;
+						var sx = cy1 - by;
+						var sy = bx - cx1;
+						var t0 = bx * by1 - by * bx1;
+						var tx = by - by1;
+						var ty = bx1 - bx;
+						var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(by > by1) {
+							if(by > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(by);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(by);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						}
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(bx > bx1) {
+							if(bx > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+							var ii_max = Math.ceil(bx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(bx);
+							var ii_max = Math.ceil(cx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
+									break;
+								}
+							}
+						}
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
 					}
 				} else {
 					var hasHit1 = true;
@@ -14287,11 +14638,22 @@ pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreS
 				var thick = this.strokeWidth;
 				var color = this.strokeColor;
 				var flare = this.flare;
+				var reverseFlare = this.reverseFlare;
+				if(reverseFlare == null) {
+					reverseFlare = false;
+				}
+				if(flare == null) {
+					flare = false;
+				}
 				haxe_Log.trace("pixelimage.fillArrow",{ fileName : "src/pixelimage/Pixelimage.hx", lineNumber : 593, className : "pixelimage._Pixelimage.Pixelimage_Impl_", methodName : "fillArrow"});
 				var flare1 = flare;
+				var reverseFlare1 = reverseFlare;
 				var hasHit = true;
 				if(hasHit == null) {
 					hasHit = false;
+				}
+				if(reverseFlare1 == null) {
+					reverseFlare1 = false;
 				}
 				if(flare1 == null) {
 					flare1 = false;
@@ -14309,326 +14671,650 @@ pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreS
 				var h2 = h / goldenRatio;
 				var hitQuad;
 				if(flare1) {
-					var hasHit1 = true;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var sin1 = Math.sin(theta);
-					var cos1 = Math.cos(theta);
-					var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
-					var radius21 = thick / 2;
-					var dx = 0.1;
-					var dy = radius1;
-					var cx = h2;
-					var cy = radius21;
-					var bx = h2;
-					var by = -radius21;
-					var ax = 0.1;
-					var ay = -radius1;
-					var temp = 0.;
-					temp = px + (ax * cos1 - ay * sin1);
-					ay = py + (ay * cos1 + ax * sin1);
-					ax = temp;
-					temp = px + (bx * cos1 - by * sin1);
-					by = py + (by * cos1 + bx * sin1);
-					bx = temp;
-					temp = px + (cx * cos1 - cy * sin1);
-					cy = py + (cy * cos1 + cx * sin1);
-					cx = temp;
-					temp = px + (dx * cos1 - dy * sin1);
-					dy = py + (dy * cos1 + dx * sin1);
-					dx = temp;
-					var hasHit2 = hasHit1;
-					if(hasHit2 == null) {
-						hasHit2 = false;
-					}
-					var bx1 = bx;
-					var by1 = by;
-					var cx1 = dx;
-					var cy1 = dy;
-					var hasHit1 = hasHit2;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
-					if(!adjustWinding) {
-						var bx_ = bx1;
-						var by_ = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_;
-						cy1 = by_;
-					}
-					var hasHit3 = hasHit1;
-					if(hasHit3 == null) {
-						hasHit3 = false;
-					}
-					var s0 = ay * cx1 - ax * cy1;
-					var sx = cy1 - ay;
-					var sy = ax - cx1;
-					var t0 = ax * by1 - ay * bx1;
-					var tx = ay - by1;
-					var ty = bx1 - ax;
-					var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
-					var yIter3;
-					if(ay > by1) {
-						if(ay > cy1) {
-							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max = Math.ceil(ay);
+					if(reverseFlare1) {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = thick / 2;
+						var radius21 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var bx1 = bx;
+						var by1 = by;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = ay * cx1 - ax * cy1;
+						var sx = cy1 - ay;
+						var sy = ax - cx1;
+						var t0 = ax * by1 - ay * bx1;
+						var tx = ay - by1;
+						var ty = bx1 - ax;
+						var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(ay > by1) {
+							if(ay > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+							var ii_max = Math.ceil(by1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						} else {
-							var ii_min = Math.floor(by1);
+							var ii_min = Math.floor(ay);
 							var ii_max = Math.ceil(cy1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						}
-					} else if(by1 > cy1) {
-						var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
-						var ii_max = Math.ceil(by1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(ay);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					}
-					var foundY = false;
-					var s = 0.;
-					var t = 0.;
-					var sxx = 0.;
-					var txx = 0.;
-					var this1;
-					if(ax > bx1) {
-						if(ax > cx1) {
-							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max = Math.ceil(ax);
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(ax > bx1) {
+							if(ax > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+							var ii_max = Math.ceil(bx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						} else {
-							var ii_min = Math.floor(bx1);
+							var ii_min = Math.floor(ax);
 							var ii_max = Math.ceil(cx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						}
-					} else if(bx1 > cx1) {
-						var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
-						var ii_max = Math.ceil(bx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					} else {
-						var ii_min = Math.floor(ax);
-						var ii_max = Math.ceil(cx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					}
-					var _g_min = this1.start;
-					var _g_max = this1.max;
-					while(_g_min < _g_max) {
-						var x = _g_min++;
-						sxx = sx * x;
-						txx = tx * x;
-						foundY = false;
-						var _g_min1 = yIter3.start;
-						var _g_max1 = yIter3.max;
-						while(_g_min1 < _g_max1) {
-							var y = _g_min1++;
-							s = s0 + sxx + sy * y;
-							t = t0 + txx + ty * y;
-							if(s <= 0 || t <= 0) {
-								if(foundY) {
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
 									break;
 								}
-							} else if(s + t < A) {
-								var this1 = color;
-								var c = this1;
-								if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-									var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
-									var this2 = pixelImage.image[location];
-									var this3 = this2;
-									var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-									var this5 = this4 >> 24 & 255;
-									var a1 = this5 == 0 ? 0. : this5 / 255;
-									var this6 = this4 >> 16 & 255;
-									var r1 = this6 == 0 ? 0. : this6 / 255;
-									var this7 = this4 >> 8 & 255;
-									var g1 = this7 == 0 ? 0. : this7 / 255;
-									var this8 = this4 & 255;
-									var b1 = this8 == 0 ? 0. : this8 / 255;
-									var this9 = color >> 24 & 255;
-									var a2 = this9 == 0 ? 0. : this9 / 255;
-									var this10 = color >> 16 & 255;
-									var r2 = this10 == 0 ? 0. : this10 / 255;
-									var this11 = color >> 8 & 255;
-									var g2 = this11 == 0 ? 0. : this11 / 255;
-									var this12 = color & 255;
-									var b2 = this12 == 0 ? 0. : this12 / 255;
-									var a3 = a1 * (1 - a2);
-									var r = 255 * (r1 * a3 + r2 * a2) | 0;
-									var g = 255 * (g1 * a3 + g2 * a2) | 0;
-									var b = 255 * (b1 * a3 + b2 * a2) | 0;
-									var a = 255 * (a3 + a2) | 0;
-									var blended = a << 24 | r << 16 | g << 8 | b;
-									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-								} else {
-									pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-								}
-								foundY = true;
-							} else if(foundY) {
-								break;
 							}
 						}
-					}
-					if(hasHit3 == true) {
-						var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
-					}
-					var bx1 = cx;
-					var by1 = cy;
-					var cx1 = dx;
-					var cy1 = dy;
-					var hasHit1 = hasHit2;
-					if(hasHit1 == null) {
-						hasHit1 = false;
-					}
-					var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
-					if(!adjustWinding) {
-						var bx_ = bx1;
-						var by_ = by1;
-						bx1 = cx1;
-						by1 = cy1;
-						cx1 = bx_;
-						cy1 = by_;
-					}
-					var hasHit3 = hasHit1;
-					if(hasHit3 == null) {
-						hasHit3 = false;
-					}
-					var s0 = by * cx1 - bx * cy1;
-					var sx = cy1 - by;
-					var sy = bx - cx1;
-					var t0 = bx * by1 - by * bx1;
-					var tx = by - by1;
-					var ty = bx1 - bx;
-					var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
-					var yIter3;
-					if(by > by1) {
-						if(by > cy1) {
-							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-							var ii_max = Math.ceil(by);
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+						}
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = by * cx1 - bx * cy1;
+						var sx = cy1 - by;
+						var sy = bx - cx1;
+						var t0 = bx * by1 - by * bx1;
+						var tx = by - by1;
+						var ty = bx1 - bx;
+						var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(by > by1) {
+							if(by > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(by);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+							var ii_max = Math.ceil(by1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						} else {
-							var ii_min = Math.floor(by1);
+							var ii_min = Math.floor(by);
 							var ii_max = Math.ceil(cy1);
 							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							yIter3 = this1;
 						}
-					} else if(by1 > cy1) {
-						var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
-						var ii_max = Math.ceil(by1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						yIter3 = this1;
-					}
-					var foundY = false;
-					var s = 0.;
-					var t = 0.;
-					var sxx = 0.;
-					var txx = 0.;
-					var this1;
-					if(bx > bx1) {
-						if(bx > cx1) {
-							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-							var ii_max = Math.ceil(bx);
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(bx > bx1) {
+							if(bx > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+							var ii_max = Math.ceil(bx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						} else {
-							var ii_min = Math.floor(bx1);
+							var ii_min = Math.floor(bx);
 							var ii_max = Math.ceil(cx1);
 							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 							this1 = this2;
 						}
-					} else if(bx1 > cx1) {
-						var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
-						var ii_max = Math.ceil(bx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(cx1);
-						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this1 = this2;
-					}
-					var _g_min = this1.start;
-					var _g_max = this1.max;
-					while(_g_min < _g_max) {
-						var x = _g_min++;
-						sxx = sx * x;
-						txx = tx * x;
-						foundY = false;
-						var _g_min1 = yIter3.start;
-						var _g_max1 = yIter3.max;
-						while(_g_min1 < _g_max1) {
-							var y = _g_min1++;
-							s = s0 + sxx + sy * y;
-							t = t0 + txx + ty * y;
-							if(s <= 0 || t <= 0) {
-								if(foundY) {
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
 									break;
 								}
-							} else if(s + t < A) {
-								var this1 = color;
-								var c = this1;
-								if((c >> 24 & 255) < 254 && pixelImage.transparent) {
-									var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
-									var this2 = pixelImage.image[location];
-									var this3 = this2;
-									var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
-									var this5 = this4 >> 24 & 255;
-									var a1 = this5 == 0 ? 0. : this5 / 255;
-									var this6 = this4 >> 16 & 255;
-									var r1 = this6 == 0 ? 0. : this6 / 255;
-									var this7 = this4 >> 8 & 255;
-									var g1 = this7 == 0 ? 0. : this7 / 255;
-									var this8 = this4 & 255;
-									var b1 = this8 == 0 ? 0. : this8 / 255;
-									var this9 = color >> 24 & 255;
-									var a2 = this9 == 0 ? 0. : this9 / 255;
-									var this10 = color >> 16 & 255;
-									var r2 = this10 == 0 ? 0. : this10 / 255;
-									var this11 = color >> 8 & 255;
-									var g2 = this11 == 0 ? 0. : this11 / 255;
-									var this12 = color & 255;
-									var b2 = this12 == 0 ? 0. : this12 / 255;
-									var a3 = a1 * (1 - a2);
-									var r = 255 * (r1 * a3 + r2 * a2) | 0;
-									var g = 255 * (g1 * a3 + g2 * a2) | 0;
-									var b = 255 * (b1 * a3 + b2 * a2) | 0;
-									var a = 255 * (a3 + a2) | 0;
-									var blended = a << 24 | r << 16 | g << 8 | b;
-									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-								} else {
-									pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-								}
-								foundY = true;
-							} else if(foundY) {
-								break;
 							}
 						}
-					}
-					if(hasHit3 == true) {
-						var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
-					}
-					if(hasHit2 == true) {
-						var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
-						hitQuad = v;
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
 					} else {
-						hitQuad = null;
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var radius21 = thick / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var bx1 = bx;
+						var by1 = by;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = ay * cx1 - ax * cy1;
+						var sx = cy1 - ay;
+						var sy = ax - cx1;
+						var t0 = ax * by1 - ay * bx1;
+						var tx = ay - by1;
+						var ty = bx1 - ax;
+						var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(ay > by1) {
+							if(ay > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						}
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(ax > bx1) {
+							if(ax > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+							var ii_max = Math.ceil(bx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(ax);
+							var ii_max = Math.ceil(cx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
+									break;
+								}
+							}
+						}
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+						}
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var hasHit3 = hasHit1;
+						if(hasHit3 == null) {
+							hasHit3 = false;
+						}
+						var s0 = by * cx1 - bx * cy1;
+						var sx = cy1 - by;
+						var sy = bx - cx1;
+						var t0 = bx * by1 - by * bx1;
+						var tx = by - by1;
+						var ty = bx1 - bx;
+						var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+						var yIter3;
+						if(by > by1) {
+							if(by > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(by);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(by);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						}
+						var foundY = false;
+						var s = 0.;
+						var t = 0.;
+						var sxx = 0.;
+						var txx = 0.;
+						var this1;
+						if(bx > bx1) {
+							if(bx > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+							var ii_max = Math.ceil(bx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(bx);
+							var ii_max = Math.ceil(cx1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var x = _g_min++;
+							sxx = sx * x;
+							txx = tx * x;
+							foundY = false;
+							var _g_min1 = yIter3.start;
+							var _g_max1 = yIter3.max;
+							while(_g_min1 < _g_max1) {
+								var y = _g_min1++;
+								s = s0 + sxx + sy * y;
+								t = t0 + txx + ty * y;
+								if(s <= 0 || t <= 0) {
+									if(foundY) {
+										break;
+									}
+								} else if(s + t < A) {
+									var this1 = color;
+									var c = this1;
+									if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+										var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+										var this2 = pixelImage.image[location];
+										var this3 = this2;
+										var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+										var this5 = this4 >> 24 & 255;
+										var a1 = this5 == 0 ? 0. : this5 / 255;
+										var this6 = this4 >> 16 & 255;
+										var r1 = this6 == 0 ? 0. : this6 / 255;
+										var this7 = this4 >> 8 & 255;
+										var g1 = this7 == 0 ? 0. : this7 / 255;
+										var this8 = this4 & 255;
+										var b1 = this8 == 0 ? 0. : this8 / 255;
+										var this9 = color >> 24 & 255;
+										var a2 = this9 == 0 ? 0. : this9 / 255;
+										var this10 = color >> 16 & 255;
+										var r2 = this10 == 0 ? 0. : this10 / 255;
+										var this11 = color >> 8 & 255;
+										var g2 = this11 == 0 ? 0. : this11 / 255;
+										var this12 = color & 255;
+										var b2 = this12 == 0 ? 0. : this12 / 255;
+										var a3 = a1 * (1 - a2);
+										var r = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a = 255 * (a3 + a2) | 0;
+										var blended = a << 24 | r << 16 | g << 8 | b;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+									}
+									foundY = true;
+								} else if(foundY) {
+									break;
+								}
+							}
+						}
+						if(hasHit3 == true) {
+							var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
 					}
 				} else {
 					var hasHit1 = true;
@@ -22046,6 +22732,9 @@ function pixelimage_triGML_coreShape_TriGML_getTriGML(nodeName) {
 	case "ArrowShape":
 		s = new pixelimage_triGML_contour_ArrowShape();
 		break;
+	case "ArrowThickGradient":
+		s = new pixelimage_triGML_gradient_ArrowThickGradient();
+		break;
 	case "CirclePattern":
 		s = new pixelimage_triGML_patternShape_CirclePattern();
 		break;
@@ -22178,8 +22867,4825 @@ pixelimage_triGML_coreShape_XMLshape.prototype = {
 	,__class__: pixelimage_triGML_coreShape_XMLshape
 };
 function pixelimage_triGML_coreShape_XMLshapeSamples_shapeTestArr() {
-	return [pixelimage_triGML_coreShape_XMLshapeSamples_arrowShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_vePathElementShape,pixelimage_triGML_coreShape_XMLshapeSamples_arcTest,pixelimage_triGML_coreShape_XMLshapeSamples_circleTest,pixelimage_triGML_coreShape_XMLshapeSamples_cubicCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementCubicTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementThickGradTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadShape,pixelimage_triGML_coreShape_XMLshapeSamples_rectangleShape,pixelimage_triGML_coreShape_XMLshapeSamples_squareShape,pixelimage_triGML_coreShape_XMLshapeSamples_star6Shape,pixelimage_triGML_coreShape_XMLshapeSamples_tileRectangleTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleShape];
+	return [pixelimage_triGML_coreShape_XMLshapeSamples_arrowThickGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_arrowShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_vePathElementShape,pixelimage_triGML_coreShape_XMLshapeSamples_arcTest,pixelimage_triGML_coreShape_XMLshapeSamples_circleTest,pixelimage_triGML_coreShape_XMLshapeSamples_cubicCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementCubicTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementThickGradTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadShape,pixelimage_triGML_coreShape_XMLshapeSamples_rectangleShape,pixelimage_triGML_coreShape_XMLshapeSamples_squareShape,pixelimage_triGML_coreShape_XMLshapeSamples_star6Shape,pixelimage_triGML_coreShape_XMLshapeSamples_tileRectangleTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleShape];
 }
+var pixelimage_triGML_gradient_ArrowThickGradient = function(opacity,visibility,strokeTopColor,strokeBottomColor,strokeWidth,strokeDashGapArray,both,flare,reverseFlare,x1,y1,x2,y2,arrowWidth,arrowHeight) {
+	if(arrowHeight == null) {
+		arrowHeight = 0.;
+	}
+	if(arrowWidth == null) {
+		arrowWidth = 0.;
+	}
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(reverseFlare == null) {
+		reverseFlare = false;
+	}
+	if(flare == null) {
+		flare = false;
+	}
+	if(both == null) {
+		both = false;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeBottomColor == null) {
+		strokeBottomColor = -1;
+	}
+	if(strokeTopColor == null) {
+		strokeTopColor = -16777216;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_FillShape.call(this,opacity,visibility,-16777216,1.,strokeDashGapArray,this.fill);
+	this.both = both;
+	this.flare = flare;
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.strokeTopColor = strokeTopColor;
+	this.strokeBottomColor = strokeBottomColor;
+};
+pixelimage_triGML_gradient_ArrowThickGradient.__name__ = "pixelimage.triGML.gradient.ArrowThickGradient";
+pixelimage_triGML_gradient_ArrowThickGradient.__super__ = pixelimage_triGML_coreShape_FillShape;
+pixelimage_triGML_gradient_ArrowThickGradient.prototype = $extend(pixelimage_triGML_coreShape_FillShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "arrowHeight":
+			this.arrowHeight = parseFloat(value);
+			break;
+		case "arrowWidth":
+			this.arrowWidth = parseFloat(value);
+			break;
+		case "both":
+			this.both = StringTools.trim(value).toLowerCase() == "true";
+			break;
+		case "flare":
+			this.flare = StringTools.trim(value).toLowerCase() == "true";
+			break;
+		case "reverseFlare":
+			this.reverseFlare = StringTools.trim(value).toLowerCase() == "true";
+			break;
+		case "strokeBottomColor":
+			this.strokeBottomColor = Std.parseInt(value);
+			break;
+		case "strokeTopColor":
+			this.strokeTopColor = Std.parseInt(value);
+			break;
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_FillShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		if(this.both == false) {
+			if(this.arrowHeight > 0. || this.arrowWidth > 0.) {
+				var px = this.x1;
+				var py = this.y1;
+				var qx = this.x2;
+				var qy = this.y2;
+				var arrowWidth = this.arrowWidth;
+				var arrowHeight = this.arrowHeight;
+				var thick = this.strokeWidth;
+				var color1 = this.strokeTopColor;
+				var color2 = this.strokeBottomColor;
+				var flare = this.flare;
+				var reverseFlare = this.reverseFlare;
+				if(reverseFlare == null) {
+					reverseFlare = false;
+				}
+				if(flare == null) {
+					flare = false;
+				}
+				var flare1 = flare;
+				var reverseFlare1 = reverseFlare;
+				var hasHit = true;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				if(reverseFlare1 == null) {
+					reverseFlare1 = false;
+				}
+				if(flare1 == null) {
+					flare1 = false;
+				}
+				var goldenRatio = 1.61803398875;
+				var o = qy - py;
+				var a = qx - px;
+				var h = Math.pow(o * o + a * a,0.5);
+				var theta = Math.atan2(o,a);
+				var thicker = arrowWidth > thick * 1.1 ? arrowWidth : 2 * thick * goldenRatio;
+				var sin = Math.sin(theta);
+				var cos = Math.cos(theta);
+				var radius = thick / 2;
+				var radius2 = thicker / 2;
+				var h2 = arrowHeight < h * 1.1 ? h - arrowHeight : h / goldenRatio;
+				var hitQuad;
+				if(flare1) {
+					if(reverseFlare1) {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = thick / 2;
+						var radius21 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var aA = color1 >> 24 & 255;
+						var rA = color1 >> 16 & 255;
+						var gA = color1 >> 8 & 255;
+						var bA = color1 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = bx - dx;
+						var bcy = by - dy;
+						var acx = ax - dx;
+						var acy = ay - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > bx) {
+							if(dx > ax) {
+								var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx > ax) {
+							var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > by) {
+								if(dy > ay) {
+									var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(by);
+									var ii_max1 = Math.ceil(ay);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(by > ay) {
+								var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(by);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(ay);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						if(hasHit1 == false) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+						}
+						var aA = color2 >> 24 & 255;
+						var rA = color2 >> 16 & 255;
+						var gA = color2 >> 8 & 255;
+						var bA = color2 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = cx - dx;
+						var bcy = cy - dy;
+						var acx = bx - dx;
+						var acy = by - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > cx) {
+							if(dx > bx) {
+								var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(cx);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(cx > bx) {
+							var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+							var ii_max = Math.ceil(cx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > cy) {
+								if(dy > by) {
+									var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(cy);
+									var ii_max1 = Math.ceil(by);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(cy > by) {
+								var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(cy);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(by);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						var v_yIter3;
+						var v_xIter3;
+						var ax1 = bx;
+						var ay1 = by;
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var v_ax = ax1;
+						var v_ay = ay1;
+						var v_bx = bx1;
+						var v_by = by1;
+						var v_cx = cx1;
+						var v_cy = cy1;
+						var v_s0 = ay1 * cx1 - ax1 * cy1;
+						var v_sx = cy1 - ay1;
+						var v_sy = ax1 - cx1;
+						var v_t0 = ax1 * by1 - ay1 * bx1;
+						var v_tx = ay1 - by1;
+						var v_ty = bx1 - ax1;
+						var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+						if(ax1 > bx1) {
+							if(ax1 > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+							var ii_max = Math.ceil(bx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ax1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+						if(ay1 > by1) {
+							if(ay1 > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
+					} else {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var radius21 = thick / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var aA = color1 >> 24 & 255;
+						var rA = color1 >> 16 & 255;
+						var gA = color1 >> 8 & 255;
+						var bA = color1 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = bx - dx;
+						var bcy = by - dy;
+						var acx = ax - dx;
+						var acy = ay - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > bx) {
+							if(dx > ax) {
+								var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx > ax) {
+							var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > by) {
+								if(dy > ay) {
+									var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(by);
+									var ii_max1 = Math.ceil(ay);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(by > ay) {
+								var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(by);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(ay);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						if(hasHit1 == false) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+						}
+						var aA = color2 >> 24 & 255;
+						var rA = color2 >> 16 & 255;
+						var gA = color2 >> 8 & 255;
+						var bA = color2 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = cx - dx;
+						var bcy = cy - dy;
+						var acx = bx - dx;
+						var acy = by - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > cx) {
+							if(dx > bx) {
+								var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(cx);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(cx > bx) {
+							var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+							var ii_max = Math.ceil(cx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > cy) {
+								if(dy > by) {
+									var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(cy);
+									var ii_max1 = Math.ceil(by);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(cy > by) {
+								var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(cy);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(by);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						var v_yIter3;
+						var v_xIter3;
+						var ax1 = bx;
+						var ay1 = by;
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var v_ax = ax1;
+						var v_ay = ay1;
+						var v_bx = bx1;
+						var v_by = by1;
+						var v_cx = cx1;
+						var v_cy = cy1;
+						var v_s0 = ay1 * cx1 - ax1 * cy1;
+						var v_sx = cy1 - ay1;
+						var v_sy = ax1 - cx1;
+						var v_t0 = ax1 * by1 - ay1 * bx1;
+						var v_tx = ay1 - by1;
+						var v_ty = bx1 - ax1;
+						var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+						if(ax1 > bx1) {
+							if(ax1 > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+							var ii_max = Math.ceil(bx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ax1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+						if(ay1 > by1) {
+							if(ay1 > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
+					}
+				} else {
+					var hasHit1 = true;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var sin1 = Math.sin(theta);
+					var cos1 = Math.cos(theta);
+					var radius = thick / 2;
+					var dx = 0.1;
+					var dy = radius;
+					var cx = h2;
+					var cy = radius;
+					var bx = h2;
+					var by = -radius;
+					var ax = 0.1;
+					var ay = -radius;
+					var temp = 0.;
+					temp = px + (ax * cos1 - ay * sin1);
+					ay = py + (ay * cos1 + ax * sin1);
+					ax = temp;
+					temp = px + (bx * cos1 - by * sin1);
+					by = py + (by * cos1 + bx * sin1);
+					bx = temp;
+					temp = px + (cx * cos1 - cy * sin1);
+					cy = py + (cy * cos1 + cx * sin1);
+					cx = temp;
+					temp = px + (dx * cos1 - dy * sin1);
+					dy = py + (dy * cos1 + dx * sin1);
+					dx = temp;
+					var hasHit2 = hasHit1;
+					if(hasHit2 == null) {
+						hasHit2 = false;
+					}
+					var hasHit1 = hasHit2;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var aA = color1 >> 24 & 255;
+					var rA = color1 >> 16 & 255;
+					var gA = color1 >> 8 & 255;
+					var bA = color1 & 255;
+					var aB = color1 >> 24 & 255;
+					var rB = color1 >> 16 & 255;
+					var gB = color1 >> 8 & 255;
+					var bB = color1 & 255;
+					var aC = color2 >> 24 & 255;
+					var rC = color2 >> 16 & 255;
+					var gC = color2 >> 8 & 255;
+					var bC = color2 & 255;
+					var bcx = bx - dx;
+					var bcy = by - dy;
+					var acx = ax - dx;
+					var acy = ay - dy;
+					var dot11 = bcx * bcx + bcy * bcy;
+					var dot12 = bcx * acx + bcy * acy;
+					var dot22 = acx * acx + acy * acy;
+					var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+					var this1;
+					if(dx > bx) {
+						if(dx > ax) {
+							var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+							var ii_max = Math.ceil(dx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(bx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+					} else if(bx > ax) {
+						var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+						var ii_max = Math.ceil(bx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(dx);
+						var ii_max = Math.ceil(ax);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+					var _g_min = this1.start;
+					var _g_max = this1.max;
+					while(_g_min < _g_max) {
+						var px1 = _g_min++;
+						var pcx = px1 - dx;
+						var this1;
+						if(dy > by) {
+							if(dy > ay) {
+								var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+								var ii_max = Math.ceil(dy);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min1 = Math.floor(by);
+								var ii_max1 = Math.ceil(ay);
+								var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+								this1 = this3;
+							}
+						} else if(by > ay) {
+							var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+							var ii_max2 = Math.ceil(by);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+							this1 = this4;
+						} else {
+							var ii_min3 = Math.floor(dy);
+							var ii_max3 = Math.ceil(ay);
+							var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+							this1 = this5;
+						}
+						var _g_min1 = this1.start;
+						var _g_max1 = this1.max;
+						while(_g_min1 < _g_max1) {
+							var py1 = _g_min1++;
+							var pcy = py1 - dy;
+							var dot31 = pcx * bcx + pcy * bcy;
+							var dot32 = pcx * acx + pcy * acy;
+							var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+							var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+							var ratioC = 1.0 - ratioB - ratioA;
+							if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+								var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+								if(i > 255) {
+									i = 255;
+								}
+								if(i < 0) {
+									i = 0;
+								}
+								var this6 = i;
+								var a = this6;
+								var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+								if(i1 > 255) {
+									i1 = 255;
+								}
+								if(i1 < 0) {
+									i1 = 0;
+								}
+								var this7 = i1;
+								var r = this7;
+								var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+								if(i2 > 255) {
+									i2 = 255;
+								}
+								if(i2 < 0) {
+									i2 = 0;
+								}
+								var this8 = i2;
+								var g = this8;
+								var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+								if(i3 > 255) {
+									i3 = 255;
+								}
+								if(i3 < 0) {
+									i3 = 0;
+								}
+								var this9 = i3;
+								var b = this9;
+								var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+								if(pixelImage.transparent && a < 254) {
+									var this10 = pixelImage.image[location];
+									var this11 = this10;
+									var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+									var rhs = a << 24 | r << 16 | g << 8 | b;
+									var this12 = old >> 24 & 255;
+									var a1 = this12 == 0 ? 0. : this12 / 255;
+									var this13 = old >> 16 & 255;
+									var r1 = this13 == 0 ? 0. : this13 / 255;
+									var this14 = old >> 8 & 255;
+									var g1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = old & 255;
+									var b1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = rhs >> 24 & 255;
+									var a2 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = rhs >> 16 & 255;
+									var r2 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = rhs >> 8 & 255;
+									var g2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = rhs & 255;
+									var b2 = this19 == 0 ? 0. : this19 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a4 = 255 * (a3 + a2) | 0;
+									var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+								}
+							}
+						}
+					}
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+					}
+					var aA = color2 >> 24 & 255;
+					var rA = color2 >> 16 & 255;
+					var gA = color2 >> 8 & 255;
+					var bA = color2 & 255;
+					var aB = color1 >> 24 & 255;
+					var rB = color1 >> 16 & 255;
+					var gB = color1 >> 8 & 255;
+					var bB = color1 & 255;
+					var aC = color2 >> 24 & 255;
+					var rC = color2 >> 16 & 255;
+					var gC = color2 >> 8 & 255;
+					var bC = color2 & 255;
+					var bcx = cx - dx;
+					var bcy = cy - dy;
+					var acx = bx - dx;
+					var acy = by - dy;
+					var dot11 = bcx * bcx + bcy * bcy;
+					var dot12 = bcx * acx + bcy * acy;
+					var dot22 = acx * acx + acy * acy;
+					var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+					var this1;
+					if(dx > cx) {
+						if(dx > bx) {
+							var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+							var ii_max = Math.ceil(dx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(cx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+					} else if(cx > bx) {
+						var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+						var ii_max = Math.ceil(cx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(dx);
+						var ii_max = Math.ceil(bx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+					var _g_min = this1.start;
+					var _g_max = this1.max;
+					while(_g_min < _g_max) {
+						var px1 = _g_min++;
+						var pcx = px1 - dx;
+						var this1;
+						if(dy > cy) {
+							if(dy > by) {
+								var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+								var ii_max = Math.ceil(dy);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min1 = Math.floor(cy);
+								var ii_max1 = Math.ceil(by);
+								var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+								this1 = this3;
+							}
+						} else if(cy > by) {
+							var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+							var ii_max2 = Math.ceil(cy);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+							this1 = this4;
+						} else {
+							var ii_min3 = Math.floor(dy);
+							var ii_max3 = Math.ceil(by);
+							var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+							this1 = this5;
+						}
+						var _g_min1 = this1.start;
+						var _g_max1 = this1.max;
+						while(_g_min1 < _g_max1) {
+							var py1 = _g_min1++;
+							var pcy = py1 - dy;
+							var dot31 = pcx * bcx + pcy * bcy;
+							var dot32 = pcx * acx + pcy * acy;
+							var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+							var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+							var ratioC = 1.0 - ratioB - ratioA;
+							if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+								var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+								if(i > 255) {
+									i = 255;
+								}
+								if(i < 0) {
+									i = 0;
+								}
+								var this6 = i;
+								var a = this6;
+								var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+								if(i1 > 255) {
+									i1 = 255;
+								}
+								if(i1 < 0) {
+									i1 = 0;
+								}
+								var this7 = i1;
+								var r = this7;
+								var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+								if(i2 > 255) {
+									i2 = 255;
+								}
+								if(i2 < 0) {
+									i2 = 0;
+								}
+								var this8 = i2;
+								var g = this8;
+								var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+								if(i3 > 255) {
+									i3 = 255;
+								}
+								if(i3 < 0) {
+									i3 = 0;
+								}
+								var this9 = i3;
+								var b = this9;
+								var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+								if(pixelImage.transparent && a < 254) {
+									var this10 = pixelImage.image[location];
+									var this11 = this10;
+									var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+									var rhs = a << 24 | r << 16 | g << 8 | b;
+									var this12 = old >> 24 & 255;
+									var a1 = this12 == 0 ? 0. : this12 / 255;
+									var this13 = old >> 16 & 255;
+									var r1 = this13 == 0 ? 0. : this13 / 255;
+									var this14 = old >> 8 & 255;
+									var g1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = old & 255;
+									var b1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = rhs >> 24 & 255;
+									var a2 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = rhs >> 16 & 255;
+									var r2 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = rhs >> 8 & 255;
+									var g2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = rhs & 255;
+									var b2 = this19 == 0 ? 0. : this19 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a4 = 255 * (a3 + a2) | 0;
+									var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+								}
+							}
+						}
+					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax1 = bx;
+					var ay1 = by;
+					var bx1 = cx;
+					var by1 = cy;
+					var cx1 = dx;
+					var cy1 = dy;
+					var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx1;
+						var by_ = by1;
+						bx1 = cx1;
+						by1 = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var v_ax = ax1;
+					var v_ay = ay1;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy1;
+					var v_s0 = ay1 * cx1 - ax1 * cy1;
+					var v_sx = cy1 - ay1;
+					var v_sy = ax1 - cx1;
+					var v_t0 = ax1 * by1 - ay1 * bx1;
+					var v_tx = ay1 - by1;
+					var v_ty = bx1 - ax1;
+					var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+					if(ax1 > bx1) {
+						if(ax1 > cx1) {
+							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max = Math.ceil(ax1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(bx1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+						var ii_max = Math.ceil(bx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(ax1);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+					if(ay1 > by1) {
+						if(ay1 > cy1) {
+							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max = Math.ceil(ay1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(by1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+					} else if(by1 > cy1) {
+						var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+						var ii_max = Math.ceil(by1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(ay1);
+						var ii_max = Math.ceil(cy1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+					if(hasHit2 == true) {
+						var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+						hitQuad = v;
+					} else {
+						hitQuad = null;
+					}
+				}
+				var cx = h2;
+				var cy = radius2;
+				var bx = h2;
+				var by = -radius2;
+				var temp = 0.;
+				temp = px + (bx * cos - by * sin);
+				by = py + (by * cos + bx * sin);
+				bx = temp;
+				temp = px + (cx * cos - cy * sin);
+				cy = py + (cy * cos + cx * sin);
+				cx = temp;
+				var this1 = new pixelimage_pixel__$TwoGrad_TwoGrad_$(color1,color2);
+				var twoColors = this1;
+				var a = twoColors.colorClock;
+				var b = twoColors.colorAnti;
+				var half = Math.round(((a >> 24 & 255) / 255 + (b >> 24 & 255) / 255) / 2 * 255) << 24 | Math.round(((a >> 16 & 255) / 255 + (b >> 16 & 255) / 255) / 2 * 255) << 16 | Math.round(((a >> 8 & 255) / 255 + (b >> 8 & 255) / 255) / 2 * 255) << 8 | Math.round(((a & 255) / 255 + (b & 255) / 255) / 2 * 255);
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var aA = color1 >> 24 & 255;
+				var rA = color1 >> 16 & 255;
+				var gA = color1 >> 8 & 255;
+				var bA = color1 & 255;
+				var aB = half >> 24 & 255;
+				var rB = half >> 16 & 255;
+				var gB = half >> 8 & 255;
+				var bB = half & 255;
+				var aC = color2 >> 24 & 255;
+				var rC = color2 >> 16 & 255;
+				var gC = color2 >> 8 & 255;
+				var bC = color2 & 255;
+				var bcx = bx - cx;
+				var bcy = by - cy;
+				var acx = qx - cx;
+				var acy = qy - cy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this1;
+				if(cx > bx) {
+					if(cx > qx) {
+						var ii_min = bx > qx ? Math.floor(qx) : Math.floor(bx);
+						var ii_max = Math.ceil(cx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(qx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+				} else if(bx > qx) {
+					var ii_min = cx > qx ? Math.floor(qx) : Math.ceil(cx);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(cx);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+				var _g_min = this1.start;
+				var _g_max = this1.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - cx;
+					var this1;
+					if(cy > by) {
+						if(cy > qy) {
+							var ii_min = by > qy ? Math.floor(qy) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(qy);
+							var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							this1 = this3;
+						}
+					} else if(by > qy) {
+						var ii_min2 = cy > qy ? Math.floor(qy) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						this1 = this4;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(qy);
+						var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						this1 = this5;
+					}
+					var _g_min1 = this1.start;
+					var _g_max1 = this1.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - cy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this6 = i;
+							var a = this6;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this7 = i1;
+							var r = this7;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this8 = i2;
+							var g = this8;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this9 = i3;
+							var b = this9;
+							var location = pixelImage.useVirtualPos ? (py - pixelImage.virtualY) * pixelImage.width + px - pixelImage.virtualX | 0 : py * pixelImage.width + px | 0;
+							if(pixelImage.transparent && a < 254) {
+								var this10 = pixelImage.image[location];
+								var this11 = this10;
+								var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this12 = old >> 24 & 255;
+								var a1 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = old >> 16 & 255;
+								var r1 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = old >> 8 & 255;
+								var g1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = old & 255;
+								var b1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = rhs >> 24 & 255;
+								var a2 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = rhs >> 16 & 255;
+								var r2 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = rhs >> 8 & 255;
+								var g2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = rhs & 255;
+								var b2 = this19 == 0 ? 0. : this19 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var hitTri;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(qx,qy,bx,by,cx,cy);
+					hitTri = v;
+				} else {
+					hitTri = null;
+				}
+				if(hasHit) {
+					var hitArr = new pixelimage_algo_HitTriArray([hitTri]);
+					if(hitQuad != null) {
+						hitArr.triArr.push(hitQuad.triABD);
+					}
+					hitArr.triArr.push(hitQuad.triBCD);
+				}
+			} else {
+				var px = this.x1;
+				var py = this.y1;
+				var qx = this.x2;
+				var qy = this.y2;
+				var thick = this.strokeWidth;
+				var color1 = this.strokeTopColor;
+				var color2 = this.strokeBottomColor;
+				var flare = this.flare;
+				if(flare == null) {
+					flare = false;
+				}
+				var flare1 = flare;
+				var reverseFlare = this.reverseFlare;
+				var hasHit = true;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				if(reverseFlare == null) {
+					reverseFlare = false;
+				}
+				if(flare1 == null) {
+					flare1 = false;
+				}
+				var goldenRatio = 1.61803398875;
+				var o = qy - py;
+				var a = qx - px;
+				var h = Math.pow(o * o + a * a,0.5);
+				var theta = Math.atan2(o,a);
+				var thicker = 2 * thick * goldenRatio;
+				var sin = Math.sin(theta);
+				var cos = Math.cos(theta);
+				var radius = thick / 2;
+				var radius2 = thicker / 2;
+				var h2 = h / goldenRatio;
+				var hitQuad;
+				if(flare1) {
+					if(reverseFlare) {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = thick / 2;
+						var radius21 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var aA = color1 >> 24 & 255;
+						var rA = color1 >> 16 & 255;
+						var gA = color1 >> 8 & 255;
+						var bA = color1 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = bx - dx;
+						var bcy = by - dy;
+						var acx = ax - dx;
+						var acy = ay - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > bx) {
+							if(dx > ax) {
+								var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx > ax) {
+							var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > by) {
+								if(dy > ay) {
+									var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(by);
+									var ii_max1 = Math.ceil(ay);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(by > ay) {
+								var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(by);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(ay);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						if(hasHit1 == false) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+						}
+						var aA = color2 >> 24 & 255;
+						var rA = color2 >> 16 & 255;
+						var gA = color2 >> 8 & 255;
+						var bA = color2 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = cx - dx;
+						var bcy = cy - dy;
+						var acx = bx - dx;
+						var acy = by - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > cx) {
+							if(dx > bx) {
+								var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(cx);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(cx > bx) {
+							var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+							var ii_max = Math.ceil(cx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > cy) {
+								if(dy > by) {
+									var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(cy);
+									var ii_max1 = Math.ceil(by);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(cy > by) {
+								var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(cy);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(by);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						var v_yIter3;
+						var v_xIter3;
+						var ax1 = bx;
+						var ay1 = by;
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var v_ax = ax1;
+						var v_ay = ay1;
+						var v_bx = bx1;
+						var v_by = by1;
+						var v_cx = cx1;
+						var v_cy = cy1;
+						var v_s0 = ay1 * cx1 - ax1 * cy1;
+						var v_sx = cy1 - ay1;
+						var v_sy = ax1 - cx1;
+						var v_t0 = ax1 * by1 - ay1 * bx1;
+						var v_tx = ay1 - by1;
+						var v_ty = bx1 - ax1;
+						var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+						if(ax1 > bx1) {
+							if(ax1 > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+							var ii_max = Math.ceil(bx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ax1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+						if(ay1 > by1) {
+							if(ay1 > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
+					} else {
+						var hasHit1 = true;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var sin1 = Math.sin(theta);
+						var cos1 = Math.cos(theta);
+						var radius1 = (thicker - (thicker - thick) / goldenRatio) / 2;
+						var radius21 = thick / 2;
+						var dx = 0.1;
+						var dy = radius1;
+						var cx = h2;
+						var cy = radius21;
+						var bx = h2;
+						var by = -radius21;
+						var ax = 0.1;
+						var ay = -radius1;
+						var temp = 0.;
+						temp = px + (ax * cos1 - ay * sin1);
+						ay = py + (ay * cos1 + ax * sin1);
+						ax = temp;
+						temp = px + (bx * cos1 - by * sin1);
+						by = py + (by * cos1 + bx * sin1);
+						bx = temp;
+						temp = px + (cx * cos1 - cy * sin1);
+						cy = py + (cy * cos1 + cx * sin1);
+						cx = temp;
+						temp = px + (dx * cos1 - dy * sin1);
+						dy = py + (dy * cos1 + dx * sin1);
+						dx = temp;
+						var hasHit2 = hasHit1;
+						if(hasHit2 == null) {
+							hasHit2 = false;
+						}
+						var hasHit1 = hasHit2;
+						if(hasHit1 == null) {
+							hasHit1 = false;
+						}
+						var aA = color1 >> 24 & 255;
+						var rA = color1 >> 16 & 255;
+						var gA = color1 >> 8 & 255;
+						var bA = color1 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = bx - dx;
+						var bcy = by - dy;
+						var acx = ax - dx;
+						var acy = ay - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > bx) {
+							if(dx > ax) {
+								var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(bx);
+								var ii_max = Math.ceil(ax);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(bx > ax) {
+							var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > by) {
+								if(dy > ay) {
+									var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(by);
+									var ii_max1 = Math.ceil(ay);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(by > ay) {
+								var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(by);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(ay);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						if(hasHit1 == false) {
+							var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+						}
+						var aA = color2 >> 24 & 255;
+						var rA = color2 >> 16 & 255;
+						var gA = color2 >> 8 & 255;
+						var bA = color2 & 255;
+						var aB = color1 >> 24 & 255;
+						var rB = color1 >> 16 & 255;
+						var gB = color1 >> 8 & 255;
+						var bB = color1 & 255;
+						var aC = color2 >> 24 & 255;
+						var rC = color2 >> 16 & 255;
+						var gC = color2 >> 8 & 255;
+						var bC = color2 & 255;
+						var bcx = cx - dx;
+						var bcy = cy - dy;
+						var acx = bx - dx;
+						var acy = by - dy;
+						var dot11 = bcx * bcx + bcy * bcy;
+						var dot12 = bcx * acx + bcy * acy;
+						var dot22 = acx * acx + acy * acy;
+						var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+						var this1;
+						if(dx > cx) {
+							if(dx > bx) {
+								var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+								var ii_max = Math.ceil(dx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min = Math.floor(cx);
+								var ii_max = Math.ceil(bx);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							}
+						} else if(cx > bx) {
+							var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+							var ii_max = Math.ceil(cx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(dx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+						var _g_min = this1.start;
+						var _g_max = this1.max;
+						while(_g_min < _g_max) {
+							var px1 = _g_min++;
+							var pcx = px1 - dx;
+							var this1;
+							if(dy > cy) {
+								if(dy > by) {
+									var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+									var ii_max = Math.ceil(dy);
+									var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+									this1 = this2;
+								} else {
+									var ii_min1 = Math.floor(cy);
+									var ii_max1 = Math.ceil(by);
+									var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+									this1 = this3;
+								}
+							} else if(cy > by) {
+								var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+								var ii_max2 = Math.ceil(cy);
+								var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+								this1 = this4;
+							} else {
+								var ii_min3 = Math.floor(dy);
+								var ii_max3 = Math.ceil(by);
+								var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+								this1 = this5;
+							}
+							var _g_min1 = this1.start;
+							var _g_max1 = this1.max;
+							while(_g_min1 < _g_max1) {
+								var py1 = _g_min1++;
+								var pcy = py1 - dy;
+								var dot31 = pcx * bcx + pcy * bcy;
+								var dot32 = pcx * acx + pcy * acy;
+								var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+								var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+								var ratioC = 1.0 - ratioB - ratioA;
+								if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+									var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+									if(i > 255) {
+										i = 255;
+									}
+									if(i < 0) {
+										i = 0;
+									}
+									var this6 = i;
+									var a = this6;
+									var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+									if(i1 > 255) {
+										i1 = 255;
+									}
+									if(i1 < 0) {
+										i1 = 0;
+									}
+									var this7 = i1;
+									var r = this7;
+									var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+									if(i2 > 255) {
+										i2 = 255;
+									}
+									if(i2 < 0) {
+										i2 = 0;
+									}
+									var this8 = i2;
+									var g = this8;
+									var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+									if(i3 > 255) {
+										i3 = 255;
+									}
+									if(i3 < 0) {
+										i3 = 0;
+									}
+									var this9 = i3;
+									var b = this9;
+									var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+									if(pixelImage.transparent && a < 254) {
+										var this10 = pixelImage.image[location];
+										var this11 = this10;
+										var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+										var rhs = a << 24 | r << 16 | g << 8 | b;
+										var this12 = old >> 24 & 255;
+										var a1 = this12 == 0 ? 0. : this12 / 255;
+										var this13 = old >> 16 & 255;
+										var r1 = this13 == 0 ? 0. : this13 / 255;
+										var this14 = old >> 8 & 255;
+										var g1 = this14 == 0 ? 0. : this14 / 255;
+										var this15 = old & 255;
+										var b1 = this15 == 0 ? 0. : this15 / 255;
+										var this16 = rhs >> 24 & 255;
+										var a2 = this16 == 0 ? 0. : this16 / 255;
+										var this17 = rhs >> 16 & 255;
+										var r2 = this17 == 0 ? 0. : this17 / 255;
+										var this18 = rhs >> 8 & 255;
+										var g2 = this18 == 0 ? 0. : this18 / 255;
+										var this19 = rhs & 255;
+										var b2 = this19 == 0 ? 0. : this19 / 255;
+										var a3 = a1 * (1 - a2);
+										var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+										var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+										var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+										var a4 = 255 * (a3 + a2) | 0;
+										var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+										pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+									} else {
+										pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+									}
+								}
+							}
+						}
+						var v_yIter3;
+						var v_xIter3;
+						var ax1 = bx;
+						var ay1 = by;
+						var bx1 = cx;
+						var by1 = cy;
+						var cx1 = dx;
+						var cy1 = dy;
+						var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+						if(!adjustWinding) {
+							var bx_ = bx1;
+							var by_ = by1;
+							bx1 = cx1;
+							by1 = cy1;
+							cx1 = bx_;
+							cy1 = by_;
+						}
+						var v_ax = ax1;
+						var v_ay = ay1;
+						var v_bx = bx1;
+						var v_by = by1;
+						var v_cx = cx1;
+						var v_cy = cy1;
+						var v_s0 = ay1 * cx1 - ax1 * cy1;
+						var v_sx = cy1 - ay1;
+						var v_sy = ax1 - cx1;
+						var v_t0 = ax1 * by1 - ay1 * bx1;
+						var v_tx = ay1 - by1;
+						var v_ty = bx1 - ax1;
+						var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+						if(ax1 > bx1) {
+							if(ax1 > cx1) {
+								var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+								var ii_max = Math.ceil(ax1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							} else {
+								var ii_min = Math.floor(bx1);
+								var ii_max = Math.ceil(cx1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_xIter3 = this1;
+							}
+						} else if(bx1 > cx1) {
+							var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+							var ii_max = Math.ceil(bx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ax1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+						if(ay1 > by1) {
+							if(ay1 > cy1) {
+								var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+								var ii_max = Math.ceil(ay1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							} else {
+								var ii_min = Math.floor(by1);
+								var ii_max = Math.ceil(cy1);
+								var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								v_yIter3 = this1;
+							}
+						} else if(by1 > cy1) {
+							var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+							var ii_max = Math.ceil(by1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(ay1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+						if(hasHit2 == true) {
+							var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+							hitQuad = v;
+						} else {
+							hitQuad = null;
+						}
+					}
+				} else {
+					var hasHit1 = true;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var sin1 = Math.sin(theta);
+					var cos1 = Math.cos(theta);
+					var radius = thick / 2;
+					var dx = 0.1;
+					var dy = radius;
+					var cx = h2;
+					var cy = radius;
+					var bx = h2;
+					var by = -radius;
+					var ax = 0.1;
+					var ay = -radius;
+					var temp = 0.;
+					temp = px + (ax * cos1 - ay * sin1);
+					ay = py + (ay * cos1 + ax * sin1);
+					ax = temp;
+					temp = px + (bx * cos1 - by * sin1);
+					by = py + (by * cos1 + bx * sin1);
+					bx = temp;
+					temp = px + (cx * cos1 - cy * sin1);
+					cy = py + (cy * cos1 + cx * sin1);
+					cx = temp;
+					temp = px + (dx * cos1 - dy * sin1);
+					dy = py + (dy * cos1 + dx * sin1);
+					dx = temp;
+					var hasHit2 = hasHit1;
+					if(hasHit2 == null) {
+						hasHit2 = false;
+					}
+					var hasHit1 = hasHit2;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var aA = color1 >> 24 & 255;
+					var rA = color1 >> 16 & 255;
+					var gA = color1 >> 8 & 255;
+					var bA = color1 & 255;
+					var aB = color1 >> 24 & 255;
+					var rB = color1 >> 16 & 255;
+					var gB = color1 >> 8 & 255;
+					var bB = color1 & 255;
+					var aC = color2 >> 24 & 255;
+					var rC = color2 >> 16 & 255;
+					var gC = color2 >> 8 & 255;
+					var bC = color2 & 255;
+					var bcx = bx - dx;
+					var bcy = by - dy;
+					var acx = ax - dx;
+					var acy = ay - dy;
+					var dot11 = bcx * bcx + bcy * bcy;
+					var dot12 = bcx * acx + bcy * acy;
+					var dot22 = acx * acx + acy * acy;
+					var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+					var this1;
+					if(dx > bx) {
+						if(dx > ax) {
+							var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+							var ii_max = Math.ceil(dx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(bx);
+							var ii_max = Math.ceil(ax);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+					} else if(bx > ax) {
+						var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+						var ii_max = Math.ceil(bx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(dx);
+						var ii_max = Math.ceil(ax);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+					var _g_min = this1.start;
+					var _g_max = this1.max;
+					while(_g_min < _g_max) {
+						var px1 = _g_min++;
+						var pcx = px1 - dx;
+						var this1;
+						if(dy > by) {
+							if(dy > ay) {
+								var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+								var ii_max = Math.ceil(dy);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min1 = Math.floor(by);
+								var ii_max1 = Math.ceil(ay);
+								var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+								this1 = this3;
+							}
+						} else if(by > ay) {
+							var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+							var ii_max2 = Math.ceil(by);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+							this1 = this4;
+						} else {
+							var ii_min3 = Math.floor(dy);
+							var ii_max3 = Math.ceil(ay);
+							var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+							this1 = this5;
+						}
+						var _g_min1 = this1.start;
+						var _g_max1 = this1.max;
+						while(_g_min1 < _g_max1) {
+							var py1 = _g_min1++;
+							var pcy = py1 - dy;
+							var dot31 = pcx * bcx + pcy * bcy;
+							var dot32 = pcx * acx + pcy * acy;
+							var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+							var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+							var ratioC = 1.0 - ratioB - ratioA;
+							if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+								var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+								if(i > 255) {
+									i = 255;
+								}
+								if(i < 0) {
+									i = 0;
+								}
+								var this6 = i;
+								var a = this6;
+								var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+								if(i1 > 255) {
+									i1 = 255;
+								}
+								if(i1 < 0) {
+									i1 = 0;
+								}
+								var this7 = i1;
+								var r = this7;
+								var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+								if(i2 > 255) {
+									i2 = 255;
+								}
+								if(i2 < 0) {
+									i2 = 0;
+								}
+								var this8 = i2;
+								var g = this8;
+								var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+								if(i3 > 255) {
+									i3 = 255;
+								}
+								if(i3 < 0) {
+									i3 = 0;
+								}
+								var this9 = i3;
+								var b = this9;
+								var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+								if(pixelImage.transparent && a < 254) {
+									var this10 = pixelImage.image[location];
+									var this11 = this10;
+									var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+									var rhs = a << 24 | r << 16 | g << 8 | b;
+									var this12 = old >> 24 & 255;
+									var a1 = this12 == 0 ? 0. : this12 / 255;
+									var this13 = old >> 16 & 255;
+									var r1 = this13 == 0 ? 0. : this13 / 255;
+									var this14 = old >> 8 & 255;
+									var g1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = old & 255;
+									var b1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = rhs >> 24 & 255;
+									var a2 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = rhs >> 16 & 255;
+									var r2 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = rhs >> 8 & 255;
+									var g2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = rhs & 255;
+									var b2 = this19 == 0 ? 0. : this19 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a4 = 255 * (a3 + a2) | 0;
+									var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+								}
+							}
+						}
+					}
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+					}
+					var aA = color2 >> 24 & 255;
+					var rA = color2 >> 16 & 255;
+					var gA = color2 >> 8 & 255;
+					var bA = color2 & 255;
+					var aB = color1 >> 24 & 255;
+					var rB = color1 >> 16 & 255;
+					var gB = color1 >> 8 & 255;
+					var bB = color1 & 255;
+					var aC = color2 >> 24 & 255;
+					var rC = color2 >> 16 & 255;
+					var gC = color2 >> 8 & 255;
+					var bC = color2 & 255;
+					var bcx = cx - dx;
+					var bcy = cy - dy;
+					var acx = bx - dx;
+					var acy = by - dy;
+					var dot11 = bcx * bcx + bcy * bcy;
+					var dot12 = bcx * acx + bcy * acy;
+					var dot22 = acx * acx + acy * acy;
+					var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+					var this1;
+					if(dx > cx) {
+						if(dx > bx) {
+							var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+							var ii_max = Math.ceil(dx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min = Math.floor(cx);
+							var ii_max = Math.ceil(bx);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						}
+					} else if(cx > bx) {
+						var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+						var ii_max = Math.ceil(cx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(dx);
+						var ii_max = Math.ceil(bx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+					var _g_min = this1.start;
+					var _g_max = this1.max;
+					while(_g_min < _g_max) {
+						var px1 = _g_min++;
+						var pcx = px1 - dx;
+						var this1;
+						if(dy > cy) {
+							if(dy > by) {
+								var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+								var ii_max = Math.ceil(dy);
+								var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+								this1 = this2;
+							} else {
+								var ii_min1 = Math.floor(cy);
+								var ii_max1 = Math.ceil(by);
+								var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+								this1 = this3;
+							}
+						} else if(cy > by) {
+							var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+							var ii_max2 = Math.ceil(cy);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+							this1 = this4;
+						} else {
+							var ii_min3 = Math.floor(dy);
+							var ii_max3 = Math.ceil(by);
+							var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+							this1 = this5;
+						}
+						var _g_min1 = this1.start;
+						var _g_max1 = this1.max;
+						while(_g_min1 < _g_max1) {
+							var py1 = _g_min1++;
+							var pcy = py1 - dy;
+							var dot31 = pcx * bcx + pcy * bcy;
+							var dot32 = pcx * acx + pcy * acy;
+							var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+							var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+							var ratioC = 1.0 - ratioB - ratioA;
+							if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+								var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+								if(i > 255) {
+									i = 255;
+								}
+								if(i < 0) {
+									i = 0;
+								}
+								var this6 = i;
+								var a = this6;
+								var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+								if(i1 > 255) {
+									i1 = 255;
+								}
+								if(i1 < 0) {
+									i1 = 0;
+								}
+								var this7 = i1;
+								var r = this7;
+								var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+								if(i2 > 255) {
+									i2 = 255;
+								}
+								if(i2 < 0) {
+									i2 = 0;
+								}
+								var this8 = i2;
+								var g = this8;
+								var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+								if(i3 > 255) {
+									i3 = 255;
+								}
+								if(i3 < 0) {
+									i3 = 0;
+								}
+								var this9 = i3;
+								var b = this9;
+								var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+								if(pixelImage.transparent && a < 254) {
+									var this10 = pixelImage.image[location];
+									var this11 = this10;
+									var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+									var rhs = a << 24 | r << 16 | g << 8 | b;
+									var this12 = old >> 24 & 255;
+									var a1 = this12 == 0 ? 0. : this12 / 255;
+									var this13 = old >> 16 & 255;
+									var r1 = this13 == 0 ? 0. : this13 / 255;
+									var this14 = old >> 8 & 255;
+									var g1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = old & 255;
+									var b1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = rhs >> 24 & 255;
+									var a2 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = rhs >> 16 & 255;
+									var r2 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = rhs >> 8 & 255;
+									var g2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = rhs & 255;
+									var b2 = this19 == 0 ? 0. : this19 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a4 = 255 * (a3 + a2) | 0;
+									var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+									pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+								}
+							}
+						}
+					}
+					var v_yIter3;
+					var v_xIter3;
+					var ax1 = bx;
+					var ay1 = by;
+					var bx1 = cx;
+					var by1 = cy;
+					var cx1 = dx;
+					var cy1 = dy;
+					var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx1;
+						var by_ = by1;
+						bx1 = cx1;
+						by1 = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var v_ax = ax1;
+					var v_ay = ay1;
+					var v_bx = bx1;
+					var v_by = by1;
+					var v_cx = cx1;
+					var v_cy = cy1;
+					var v_s0 = ay1 * cx1 - ax1 * cy1;
+					var v_sx = cy1 - ay1;
+					var v_sy = ax1 - cx1;
+					var v_t0 = ax1 * by1 - ay1 * bx1;
+					var v_tx = ay1 - by1;
+					var v_ty = bx1 - ax1;
+					var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+					if(ax1 > bx1) {
+						if(ax1 > cx1) {
+							var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+							var ii_max = Math.ceil(ax1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						} else {
+							var ii_min = Math.floor(bx1);
+							var ii_max = Math.ceil(cx1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_xIter3 = this1;
+						}
+					} else if(bx1 > cx1) {
+						var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+						var ii_max = Math.ceil(bx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(ax1);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+					if(ay1 > by1) {
+						if(ay1 > cy1) {
+							var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+							var ii_max = Math.ceil(ay1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						} else {
+							var ii_min = Math.floor(by1);
+							var ii_max = Math.ceil(cy1);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							v_yIter3 = this1;
+						}
+					} else if(by1 > cy1) {
+						var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+						var ii_max = Math.ceil(by1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(ay1);
+						var ii_max = Math.ceil(cy1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+					if(hasHit2 == true) {
+						var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+						hitQuad = v;
+					} else {
+						hitQuad = null;
+					}
+				}
+				var cx = h2;
+				var cy = radius2;
+				var bx = h2;
+				var by = -radius2;
+				var temp = 0.;
+				temp = px + (bx * cos - by * sin);
+				by = py + (by * cos + bx * sin);
+				bx = temp;
+				temp = px + (cx * cos - cy * sin);
+				cy = py + (cy * cos + cx * sin);
+				cx = temp;
+				var this1 = new pixelimage_pixel__$TwoGrad_TwoGrad_$(color1,color2);
+				var twoColors = this1;
+				var a = twoColors.colorClock;
+				var b = twoColors.colorAnti;
+				var half = Math.round(((a >> 24 & 255) / 255 + (b >> 24 & 255) / 255) / 2 * 255) << 24 | Math.round(((a >> 16 & 255) / 255 + (b >> 16 & 255) / 255) / 2 * 255) << 16 | Math.round(((a >> 8 & 255) / 255 + (b >> 8 & 255) / 255) / 2 * 255) << 8 | Math.round(((a & 255) / 255 + (b & 255) / 255) / 2 * 255);
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var aA = color1 >> 24 & 255;
+				var rA = color1 >> 16 & 255;
+				var gA = color1 >> 8 & 255;
+				var bA = color1 & 255;
+				var aB = half >> 24 & 255;
+				var rB = half >> 16 & 255;
+				var gB = half >> 8 & 255;
+				var bB = half & 255;
+				var aC = color2 >> 24 & 255;
+				var rC = color2 >> 16 & 255;
+				var gC = color2 >> 8 & 255;
+				var bC = color2 & 255;
+				var bcx = bx - cx;
+				var bcy = by - cy;
+				var acx = qx - cx;
+				var acy = qy - cy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this1;
+				if(cx > bx) {
+					if(cx > qx) {
+						var ii_min = bx > qx ? Math.floor(qx) : Math.floor(bx);
+						var ii_max = Math.ceil(cx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(qx);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					}
+				} else if(bx > qx) {
+					var ii_min = cx > qx ? Math.floor(qx) : Math.ceil(cx);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(cx);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+				var _g_min = this1.start;
+				var _g_max = this1.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - cx;
+					var this1;
+					if(cy > by) {
+						if(cy > qy) {
+							var ii_min = by > qy ? Math.floor(qy) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this1 = this2;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(qy);
+							var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							this1 = this3;
+						}
+					} else if(by > qy) {
+						var ii_min2 = cy > qy ? Math.floor(qy) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						this1 = this4;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(qy);
+						var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						this1 = this5;
+					}
+					var _g_min1 = this1.start;
+					var _g_max1 = this1.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - cy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this6 = i;
+							var a = this6;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this7 = i1;
+							var r = this7;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this8 = i2;
+							var g = this8;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this9 = i3;
+							var b = this9;
+							var location = pixelImage.useVirtualPos ? (py - pixelImage.virtualY) * pixelImage.width + px - pixelImage.virtualX | 0 : py * pixelImage.width + px | 0;
+							if(pixelImage.transparent && a < 254) {
+								var this10 = pixelImage.image[location];
+								var this11 = this10;
+								var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this12 = old >> 24 & 255;
+								var a1 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = old >> 16 & 255;
+								var r1 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = old >> 8 & 255;
+								var g1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = old & 255;
+								var b1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = rhs >> 24 & 255;
+								var a2 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = rhs >> 16 & 255;
+								var r2 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = rhs >> 8 & 255;
+								var g2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = rhs & 255;
+								var b2 = this19 == 0 ? 0. : this19 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var hitTri;
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(qx,qy,bx,by,cx,cy);
+					hitTri = v;
+				} else {
+					hitTri = null;
+				}
+				if(hasHit) {
+					var hitArr = new pixelimage_algo_HitTriArray([hitTri]);
+					if(hitQuad != null) {
+						hitArr.triArr.push(hitQuad.triABD);
+					}
+					hitArr.triArr.push(hitQuad.triBCD);
+				}
+			}
+		} else if(this.arrowHeight > 0. || this.arrowWidth > 0.) {
+			var px = this.x1;
+			var py = this.y1;
+			var qx = this.x2;
+			var qy = this.y2;
+			var arrowWidth = this.arrowWidth;
+			var arrowHeight = this.arrowHeight;
+			var thick = this.strokeWidth;
+			var color1 = this.strokeTopColor;
+			var color2 = this.strokeBottomColor;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var goldenRatio = 1.61803398875;
+			var o = qy - py;
+			var a = qx - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var thicker = arrowWidth > thick * 1.1 ? arrowWidth : 2 * thick * goldenRatio;
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = thick / 2;
+			var radius2 = thicker / 2;
+			var h2 = arrowHeight < h * 1.1 ? h - arrowHeight : h / goldenRatio;
+			var hSmall = h - h2;
+			var px_ = hSmall;
+			var py_ = 0.;
+			var temp = 0.;
+			temp = px + (px_ * cos - py_ * sin);
+			py_ = py + (py_ * cos + px_ * sin);
+			px_ = temp;
+			var h = h2 - hSmall;
+			var hasHit1 = true;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var sin1 = Math.sin(theta);
+			var cos1 = Math.cos(theta);
+			var radius = thick / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp1 = 0.;
+			temp1 = px_ + (ax * cos1 - ay * sin1);
+			ay = py_ + (ay * cos1 + ax * sin1);
+			ax = temp1;
+			temp1 = px_ + (bx * cos1 - by * sin1);
+			by = py_ + (by * cos1 + bx * sin1);
+			bx = temp1;
+			temp1 = px_ + (cx * cos1 - cy * sin1);
+			cy = py_ + (cy * cos1 + cx * sin1);
+			cx = temp1;
+			temp1 = px_ + (dx * cos1 - dy * sin1);
+			dy = py_ + (dy * cos1 + dx * sin1);
+			dx = temp1;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = color1 >> 24 & 255;
+			var rB = color1 >> 16 & 255;
+			var gB = color1 >> 8 & 255;
+			var bB = color1 & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = bx - dx;
+			var bcy = by - dy;
+			var acx = ax - dx;
+			var acy = ay - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > bx) {
+				if(dx > ax) {
+					var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx > ax) {
+				var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > by) {
+					if(dy > ay) {
+						var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(ay);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(by > ay) {
+					var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(by);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(ay);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+			}
+			var aA = color2 >> 24 & 255;
+			var rA = color2 >> 16 & 255;
+			var gA = color2 >> 8 & 255;
+			var bA = color2 & 255;
+			var aB = color1 >> 24 & 255;
+			var rB = color1 >> 16 & 255;
+			var gB = color1 >> 8 & 255;
+			var bB = color1 & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = cx - dx;
+			var bcy = cy - dy;
+			var acx = bx - dx;
+			var acy = by - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > cx) {
+				if(dx > bx) {
+					var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(cx);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(cx > bx) {
+				var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > cy) {
+					if(dy > by) {
+						var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(cy);
+						var ii_max1 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(cy > by) {
+					var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(by);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+			var hitQuad;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				hitQuad = v;
+			} else {
+				hitQuad = null;
+			}
+			var cx = h2;
+			var cy = radius2;
+			var bx = h2;
+			var by = -radius2;
+			var dx = hSmall;
+			var dy = radius2;
+			var ax = hSmall;
+			var ay = -radius2;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			var this1 = new pixelimage_pixel__$TwoGrad_TwoGrad_$(color1,color2);
+			var twoColors = this1;
+			var a = twoColors.colorClock;
+			var b = twoColors.colorAnti;
+			var half = Math.round(((a >> 24 & 255) / 255 + (b >> 24 & 255) / 255) / 2 * 255) << 24 | Math.round(((a >> 16 & 255) / 255 + (b >> 16 & 255) / 255) / 2 * 255) << 16 | Math.round(((a >> 8 & 255) / 255 + (b >> 8 & 255) / 255) / 2 * 255) << 8 | Math.round(((a & 255) / 255 + (b & 255) / 255) / 2 * 255);
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = half >> 24 & 255;
+			var rB = half >> 16 & 255;
+			var gB = half >> 8 & 255;
+			var bB = half & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = bx - cx;
+			var bcy = by - cy;
+			var acx = qx - cx;
+			var acy = qy - cy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(cx > bx) {
+				if(cx > qx) {
+					var ii_min = bx > qx ? Math.floor(qx) : Math.floor(bx);
+					var ii_max = Math.ceil(cx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx > qx) {
+				var ii_min = cx > qx ? Math.floor(qx) : Math.ceil(cx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(cx);
+				var ii_max = Math.ceil(qx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - cx;
+				var this1;
+				if(cy > by) {
+					if(cy > qy) {
+						var ii_min = by > qy ? Math.floor(qy) : Math.floor(by);
+						var ii_max = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(qy);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(by > qy) {
+					var ii_min2 = cy > qy ? Math.floor(qy) : Math.ceil(cy);
+					var ii_max2 = Math.ceil(by);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(cy);
+					var ii_max3 = Math.ceil(qy);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - cy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var hitTriTop;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(qx,qy,bx,by,cx,cy);
+				hitTriTop = v;
+			} else {
+				hitTriTop = null;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = half >> 24 & 255;
+			var rB = half >> 16 & 255;
+			var gB = half >> 8 & 255;
+			var bB = half & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = ax - dx;
+			var bcy = ay - dy;
+			var acx = px - dx;
+			var acy = py - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > ax) {
+				if(dx > px) {
+					var ii_min = ax > px ? Math.floor(px) : Math.floor(ax);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(px);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(ax > px) {
+				var ii_min = dx > px ? Math.floor(px) : Math.ceil(dx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(px);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > ay) {
+					if(dy > py) {
+						var ii_min = ay > py ? Math.floor(py) : Math.floor(ay);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(ay);
+						var ii_max1 = Math.ceil(py);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(ay > py) {
+					var ii_min2 = dy > py ? Math.floor(py) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(ay);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(py);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var hitTriBottom;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(px,py,ax,ay,dx,dy);
+				hitTriBottom = v;
+			} else {
+				hitTriBottom = null;
+			}
+			if(hasHit) {
+				var hitArr = new pixelimage_algo_HitTriArray([hitTriTop,hitTriBottom]);
+				if(hitQuad != null) {
+					hitArr.triArr.push(hitQuad.triABD);
+				}
+				hitArr.triArr.push(hitQuad.triBCD);
+			}
+		} else {
+			var px = this.x1;
+			var py = this.y1;
+			var qx = this.x2;
+			var qy = this.y2;
+			var thick = this.strokeWidth;
+			var color1 = this.strokeTopColor;
+			var color2 = this.strokeBottomColor;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var goldenRatio = 1.61803398875;
+			var o = qy - py;
+			var a = qx - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var thicker = 2 * thick * goldenRatio;
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = thick / 2;
+			var radius2 = thicker / 2;
+			var h2 = h / goldenRatio;
+			var hSmall = h - h2;
+			var px_ = hSmall;
+			var py_ = 0.;
+			var temp = 0.;
+			temp = px + (px_ * cos - py_ * sin);
+			py_ = py + (py_ * cos + px_ * sin);
+			px_ = temp;
+			var h = h2 - hSmall;
+			var hasHit1 = true;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var sin1 = Math.sin(theta);
+			var cos1 = Math.cos(theta);
+			var radius = thick / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp1 = 0.;
+			temp1 = px_ + (ax * cos1 - ay * sin1);
+			ay = py_ + (ay * cos1 + ax * sin1);
+			ax = temp1;
+			temp1 = px_ + (bx * cos1 - by * sin1);
+			by = py_ + (by * cos1 + bx * sin1);
+			bx = temp1;
+			temp1 = px_ + (cx * cos1 - cy * sin1);
+			cy = py_ + (cy * cos1 + cx * sin1);
+			cx = temp1;
+			temp1 = px_ + (dx * cos1 - dy * sin1);
+			dy = py_ + (dy * cos1 + dx * sin1);
+			dx = temp1;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = color1 >> 24 & 255;
+			var rB = color1 >> 16 & 255;
+			var gB = color1 >> 8 & 255;
+			var bB = color1 & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = bx - dx;
+			var bcy = by - dy;
+			var acx = ax - dx;
+			var acy = ay - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > bx) {
+				if(dx > ax) {
+					var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx > ax) {
+				var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > by) {
+					if(dy > ay) {
+						var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(ay);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(by > ay) {
+					var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(by);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(ay);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+			}
+			var aA = color2 >> 24 & 255;
+			var rA = color2 >> 16 & 255;
+			var gA = color2 >> 8 & 255;
+			var bA = color2 & 255;
+			var aB = color1 >> 24 & 255;
+			var rB = color1 >> 16 & 255;
+			var gB = color1 >> 8 & 255;
+			var bB = color1 & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = cx - dx;
+			var bcy = cy - dy;
+			var acx = bx - dx;
+			var acy = by - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > cx) {
+				if(dx > bx) {
+					var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(cx);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(cx > bx) {
+				var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > cy) {
+					if(dy > by) {
+						var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(cy);
+						var ii_max1 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(cy > by) {
+					var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(by);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+			var hitQuad;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				hitQuad = v;
+			} else {
+				hitQuad = null;
+			}
+			var cx = h2;
+			var cy = radius2;
+			var bx = h2;
+			var by = -radius2;
+			var dx = hSmall;
+			var dy = radius2;
+			var ax = hSmall;
+			var ay = -radius2;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			var this1 = new pixelimage_pixel__$TwoGrad_TwoGrad_$(color1,color2);
+			var twoColors = this1;
+			var a = twoColors.colorClock;
+			var b = twoColors.colorAnti;
+			var half = Math.round(((a >> 24 & 255) / 255 + (b >> 24 & 255) / 255) / 2 * 255) << 24 | Math.round(((a >> 16 & 255) / 255 + (b >> 16 & 255) / 255) / 2 * 255) << 16 | Math.round(((a >> 8 & 255) / 255 + (b >> 8 & 255) / 255) / 2 * 255) << 8 | Math.round(((a & 255) / 255 + (b & 255) / 255) / 2 * 255);
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = half >> 24 & 255;
+			var rB = half >> 16 & 255;
+			var gB = half >> 8 & 255;
+			var bB = half & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = bx - cx;
+			var bcy = by - cy;
+			var acx = qx - cx;
+			var acy = qy - cy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(cx > bx) {
+				if(cx > qx) {
+					var ii_min = bx > qx ? Math.floor(qx) : Math.floor(bx);
+					var ii_max = Math.ceil(cx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx > qx) {
+				var ii_min = cx > qx ? Math.floor(qx) : Math.ceil(cx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(cx);
+				var ii_max = Math.ceil(qx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - cx;
+				var this1;
+				if(cy > by) {
+					if(cy > qy) {
+						var ii_min = by > qy ? Math.floor(qy) : Math.floor(by);
+						var ii_max = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(qy);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(by > qy) {
+					var ii_min2 = cy > qy ? Math.floor(qy) : Math.ceil(cy);
+					var ii_max2 = Math.ceil(by);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(cy);
+					var ii_max3 = Math.ceil(qy);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - cy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var hitTriTop;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(qx,qy,bx,by,cx,cy);
+				hitTriTop = v;
+			} else {
+				hitTriTop = null;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var aA = color1 >> 24 & 255;
+			var rA = color1 >> 16 & 255;
+			var gA = color1 >> 8 & 255;
+			var bA = color1 & 255;
+			var aB = half >> 24 & 255;
+			var rB = half >> 16 & 255;
+			var gB = half >> 8 & 255;
+			var bB = half & 255;
+			var aC = color2 >> 24 & 255;
+			var rC = color2 >> 16 & 255;
+			var gC = color2 >> 8 & 255;
+			var bC = color2 & 255;
+			var bcx = ax - dx;
+			var bcy = ay - dy;
+			var acx = px - dx;
+			var acy = py - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this1;
+			if(dx > ax) {
+				if(dx > px) {
+					var ii_min = ax > px ? Math.floor(px) : Math.floor(ax);
+					var ii_max = Math.ceil(dx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(px);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(ax > px) {
+				var ii_min = dx > px ? Math.floor(px) : Math.ceil(dx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(px);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var px1 = _g_min++;
+				var pcx = px1 - dx;
+				var this1;
+				if(dy > ay) {
+					if(dy > py) {
+						var ii_min = ay > py ? Math.floor(py) : Math.floor(ay);
+						var ii_max = Math.ceil(dy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(ay);
+						var ii_max1 = Math.ceil(py);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(ay > py) {
+					var ii_min2 = dy > py ? Math.floor(py) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(ay);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(py);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min1 = this1.start;
+				var _g_max1 = this1.max;
+				while(_g_min1 < _g_max1) {
+					var py1 = _g_min1++;
+					var pcy = py1 - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this6 = i;
+						var a = this6;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this7 = i1;
+						var r = this7;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this8 = i2;
+						var g = this8;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this9 = i3;
+						var b = this9;
+						var location = pixelImage.useVirtualPos ? (py1 - pixelImage.virtualY) * pixelImage.width + px1 - pixelImage.virtualX | 0 : py1 * pixelImage.width + px1 | 0;
+						if(pixelImage.transparent && a < 254) {
+							var this10 = pixelImage.image[location];
+							var this11 = this10;
+							var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this12 = old >> 24 & 255;
+							var a1 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = old >> 16 & 255;
+							var r1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 8 & 255;
+							var g1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old & 255;
+							var b1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = rhs >> 24 & 255;
+							var a2 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 16 & 255;
+							var r2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 8 & 255;
+							var g2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs & 255;
+							var b2 = this19 == 0 ? 0. : this19 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[location] = pixelImage.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var hitTriBottom;
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(px,py,ax,ay,dx,dy);
+				hitTriBottom = v;
+			} else {
+				hitTriBottom = null;
+			}
+			if(hasHit) {
+				var hitArr = new pixelimage_algo_HitTriArray([hitTriTop,hitTriBottom]);
+				if(hitQuad != null) {
+					hitArr.triArr.push(hitQuad.triABD);
+				}
+				hitArr.triArr.push(hitQuad.triBCD);
+			}
+		}
+		return pixelimage_triGML_coreShape_FillShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_gradient_ArrowThickGradient
+});
 var pixelimage_triGML_gradient_EllipseRadialGradient = function(opacity,visibility,centreX,centreY,radiusX,radiusY,colorIn,colorOut,gradientCentreX,gradientCentreY,rotation) {
 	if(rotation == null) {
 		rotation = 0.;
@@ -55461,6 +60967,7 @@ var pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest = "<EllipseShape \n 
 var pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest = "<LineGradient \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        strokewidth=\"1\" \n                        colorA=\"0xFF0000\" colorB=\"0xa00cc0\" colorC=\"0x0fa00f\" colorD=\"0x000fff\">\n                    </LineGradient>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest = "<LineShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </LineShape>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_arrowShapeTest = "<ArrowShape\n                        flare=\"true\"\n                        both=\"true\"\n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        arrowWidth=\"60\"\n                        arrowHeight=\"50\"\n                        strokeWidth=\"5\" strokeColor=\"0xffFF0000\">\n                    </ArrowShape>";
+var pixelimage_triGML_coreShape_XMLshapeSamples_arrowThickGradientTest = "<ArrowThickGradient\n                        flare=\"true\"\n                        reverseFlare=\"true\"\n                        both=\"false\"\n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        arrowWidth=\"60\"\n                        arrowHeight=\"50\"\n                        strokeWidth=\"5\" strokeTopColor=\"0xFF9000FF\" strokeBottomColor=\"0xffffa200\">\n                    </ArrowThickGradient>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_quadtest_d = "M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_triGML_coreShape_XMLshapeSamples_cubictest_d = "M100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest = "<PathElementShape \n                        pathData=\"" + pixelimage_triGML_coreShape_XMLshapeSamples_quadtest_d + "\" \n                        strokeWidth=\"10\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0x0000ff\">\n                    </PathElementShape>";
