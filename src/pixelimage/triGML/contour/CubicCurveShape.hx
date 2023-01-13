@@ -3,8 +3,6 @@ import pixelimage.Pixelimage;
 import pixelimage.triGML.coreShape.FillShape;
 import pixelimage.triGML.coreShape.DrawShapeHelper; 
 
-@:dox(hide)
-// hidden for now need to find suitable concept
 @:structInit
 class CubicCurveShape extends FillShape {
     public var x1:      Float;

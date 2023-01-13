@@ -1,10 +1,10 @@
-package pixelimage.triGML.shape;
+package pixelimage.triGML.patternContour;
 import pixelimage.Pixelimage;
-import pixelimage.triGML.coreShape.FillShape;
-import pixelimage.iter.BoundIterator;
+import pixelimage.triGML.coreShape.PatternStroke;
+import pixelimage.triGML.coreShape.DrawTileHelper; 
 
 @:structInit
-class QuadShape extends FillShape {
+class CubicCurvePattern extends PatternStroke {
     public var x1:      Float;
     public var y1:      Float;
     public var x2:      Float;
@@ -13,14 +13,27 @@ class QuadShape extends FillShape {
     public var y3:      Float;
     public var x4:      Float;
     public var y4:      Float;
+    public var translateX: Float;
+    public var translateY: Float;
+    public var scaleX: Float;
+    public var scaleY: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
-                        , strokeColor        = 0x000000
                         , strokeWidth        = 1.
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
+
+                        , strokeColor0 = 0x00000000
+                        , strokeColor1 = 0x00000000
+
+                        , strokePatternFill = null
+                        , strokePatternWidth = null
+                        , strokePatternHeight = null
+                        , strokePatternAcross = true
+                        , strokePatternScale = 1
                         , fill = 0x000000
+                        , thru = false
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
@@ -29,8 +42,14 @@ class QuadShape extends FillShape {
                         , y3 = 0.
                         , x4 = 0.
                         , y4 = 0.
+                        , translateX = 0.
+                        , translateY = 0.
+                        , scaleX = 1.
+                        , scaleY = 1.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
+        super( opacity, visibility, 0xFFFF0000, strokeWidth, strokeDashGapArray
+            , strokeColor0, strokeColor1
+            , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale );
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -39,6 +58,10 @@ class QuadShape extends FillShape {
         this.y3 = y3;
         this.x4 = x4;
         this.y4 = y4;
+        this.translateX = translateX;
+        this.translateY = translateY;
+        this.scaleX     = scaleX;
+        this.scaleY     = scaleY;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -63,47 +86,10 @@ class QuadShape extends FillShape {
         }
     }
     public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var iterX  = boundIterator4( x1, x2, x3, x4 );
-        var iterY  = boundIterator4( y1, y2, y3, y4 );
-        var left   = iterX.start;
-        var top    = iterY.start;
-        var width  = iterX.max - left;
-        var height = iterY.max - top;
-        var temp   = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
-        temp.transparent = false;
-        var rx = width/2;
-        var ry = height/2;
-
-        var x1_ = x1 - left;
-        var x2_ = x2 - left;
-        var x3_ = x2 - left;
-        var x4_ = x4 - left;
-
-        var y1_ = y1 - top;
-        var y2_ = y2 - top;
-        var y3_ = y3 - top;
-        var y4_ = y4 - top;
-
-        // slight round error
-        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, strokeColor );
-
-        x1_ += strokeWidth;
-        x2_ += strokeWidth;
-        x3_ += strokeWidth;
-        x4_ += strokeWidth;
-
-        y1_ += strokeWidth;
-        y2_ += strokeWidth;
-        y3_ += strokeWidth;
-        y4_ += strokeWidth;
-
-        // slight round error
-        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, fill );
-
-        pixelImage.putPixelImage( temp, left, top );
-        temp = null;
-
+        buildPatternTemplates();
+        var drawing = new DrawTileHelper( pixelImage, strokeWidth, tileImageStroke, translateX, translateY, scaleX, scaleY );
+        drawing.moveTo( x1, y1 );
+        drawing.curveTo( x2, y2, x3, y3, x4, y4 );
         return super.render( pixelImage );
     }
-    
 }

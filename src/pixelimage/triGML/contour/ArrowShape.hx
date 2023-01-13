@@ -1,13 +1,14 @@
-package pixelimage.triGML.patternContour;
+package pixelimage.triGML.contour;
 import pixelimage.Pixelimage;
-import pixelimage.triGML.coreShape.PatternStroke;
+import pixelimage.triGML.coreShape.BasicShape;
 
 @:structInit
-class LinePattern extends PatternStroke {
+class ArrowShape extends BasicShape {
     public var x1: Float;
     public var y1: Float;
     public var x2: Float;
     public var y2: Float;
+    public var both: Bool;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0xFFF00000
@@ -15,24 +16,14 @@ class LinePattern extends PatternStroke {
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
-
-                        , strokeColor0 = 0x00000000
-                        , strokeColor1 = 0x00000000
-
-                        , strokePatternFill = null
-                        , strokePatternWidth = null
-                        , strokePatternHeight = null
-                        , strokePatternAcross = true
-                        , strokePatternScale = 1
-
+                        , both = false
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
                         , y2 = 0.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray
-            , strokeColor0, strokeColor1
-            , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray );
+        this.both = both;
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -40,6 +31,8 @@ class LinePattern extends PatternStroke {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
+            case 'both':
+                both = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
             case 'x1':
                 x1 = Std.parseFloat( value );
             case 'y1':
@@ -53,8 +46,11 @@ class LinePattern extends PatternStroke {
         }
     }
     public override function render( pixelImage: Pixelimage ): Pixelimage {
-        buildPatternTemplates();
-        pixelImage.tileLine( x1, y1, x2, y2, strokeWidth, tileImageStroke );
+        if( both == false ){
+            pixelImage.fillArrow( x1, y1, x2, y2, strokeWidth, strokeColor );
+        } else {
+            pixelImage.fillArrowBoth( x1, y1, x2, y2, strokeWidth, strokeColor );
+        }
         return super.render( pixelImage );
     }
 }

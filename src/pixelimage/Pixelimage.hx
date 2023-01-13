@@ -21,6 +21,7 @@ import pixelimage.algo.HitTri;
 import pixelimage.algo.HitQuad;
 import pixelimage.algo.HitTriArray;
 import pixelimage.algo.QuadPixel;
+import pixelimage.algo.ArrowPixel;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -565,7 +566,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                          , bx: Float, by: Float, colorB: Pixel32
                          , cx: Float, cy: Float, colorC: Pixel32 
                          , dx: Float, dy: Float, colorD: Pixel32
-                         , hasHit: Bool = false ): Null<HitQuad> {
+                         , hasHit: Bool = true ): Null<HitQuad> {
         // tri e - a b d
         // tri f - b c d
         return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
@@ -583,7 +584,22 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var theta = Math.atan2( o, a );
         return rotateLine( this, px, py, thick, h, theta, color, debugCorners );
     }
-        /**
+    /**
+        provides a thick arrow using two triangles vector p, q
+    **/
+    public inline
+    function fillArrow( px: Float, py: Float, qx: Float, qy: Float
+        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        trace( 'pixelimage.fillArrow');
+        return fillLineArrow( this, px, py, qx, qy, thick, color, hasHit );
+    }
+    public inline
+    function fillArrowBoth( px: Float, py: Float, qx: Float, qy: Float
+        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
+        return fillLineArrowBoth( this, px, py, qx, qy, thick, color, hasHit );
+    }
+
+    /**
         tiles a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development
     **/

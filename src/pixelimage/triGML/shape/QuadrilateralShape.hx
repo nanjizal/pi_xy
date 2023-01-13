@@ -1,10 +1,10 @@
-package pixelimage.triGML.patternShape;
+package pixelimage.triGML.shape;
 import pixelimage.Pixelimage;
-import pixelimage.triGML.coreShape.PatternShape;
+import pixelimage.triGML.coreShape.FillShape;
 import pixelimage.iter.BoundIterator;
 
 @:structInit
-class QuadPattern extends PatternShape {
+class QuadrilateralShape extends FillShape {
     public var x1:      Float;
     public var y1:      Float;
     public var x2:      Float;
@@ -20,22 +20,7 @@ class QuadPattern extends PatternShape {
                         , strokeDashGapArray = null
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
-                        
-                        , strokeColor0 = 0x00000000
-                        , strokeColor1 = 0x00000000
-                        , fillColor0   = 0x00000000
-                        , fillColor1   = 0x00000000
-                        , strokePatternFill = null
-                        , strokePatternWidth = null
-                        , strokePatternHeight = null
-                        , strokePatternAcross = true
-                        , strokePatternScale = 1
-                        , fillPatternFill = null
-                        , fillPatternWidth = 16
-                        , fillPatternHeight = 16
-                        , fillPatternAcross = true
-                        , fillPatternScale = 1                       
-
+                        , fill = 0x000000
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
@@ -45,10 +30,7 @@ class QuadPattern extends PatternShape {
                         , x4 = 0.
                         , y4 = 0.
                         ){
-        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray
-             , strokeColor0, strokeColor1, fillColor0, fillColor1
-             , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale
-             , fillPatternFill, fillPatternWidth, fillPatternHeight, fillPatternAcross, fillPatternScale );
+        super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray, fill );
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -89,8 +71,6 @@ class QuadPattern extends PatternShape {
         var height = iterY.max - top;
         var temp   = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
-
-        buildPatternTemplates();
         var rx = width/2;
         var ry = height/2;
 
@@ -105,7 +85,7 @@ class QuadPattern extends PatternShape {
         var y4_ = y4 - top;
 
         // slight round error
-        temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageStroke );
+        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, strokeColor );
 
         x1_ += strokeWidth;
         x2_ += strokeWidth;
@@ -118,7 +98,7 @@ class QuadPattern extends PatternShape {
         y4_ += strokeWidth;
 
         // slight round error
-        temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageFill );
+        temp.fillQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, fill );
 
         pixelImage.putPixelImage( temp, left, top );
         temp = null;

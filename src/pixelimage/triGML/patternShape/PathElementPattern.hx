@@ -6,7 +6,7 @@ import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
 
 @:structInit
-class PathElementShape extends PatternShape implements ILinePathContext {
+class PathElementPattern extends PatternShape implements ILinePathContext {
     public var pathData: String;
     public var translateX: Float;
     public var translateY: Float;

@@ -73,7 +73,7 @@ import pixelimage.algo.HitTri;
                 }
             }                                                                                                                                                                                                                                                                                                                                                                                                                                
         }
-        return if( hasHit == false ){
+        return if( hasHit == true ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
             v;
         } else {

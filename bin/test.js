@@ -13032,9 +13032,9 @@ var pixelimage_DemoUse = function() {
 	pixelimage_Pixelimage.setRelativePosition(p,0,0);
 	var count = 0;
 	var aShape = pixelimage_triGML_coreShape_XMLshapeSamples_shapeTestArr()[0];
-	haxe_Log.trace(aShape,{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 35, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "withString"});
+	haxe_Log.trace(aShape,{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 17, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "withString"});
 	var xml = Xml.parse("<node>" + aShape + "</node>").firstElement();
-	haxe_Log.trace(xml,{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 37, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "withString"});
+	haxe_Log.trace(xml,{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 19, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "withString"});
 	new pixelimage_triGML_coreShape_XMLshape(p,xml);
 	++count;
 	var ctx = g.me;
@@ -13271,9 +13271,14 @@ pixelimage_algo_HitTri.__interfaces__ = [pixelimage_algo_IhitObj];
 pixelimage_algo_HitTri.prototype = {
 	__class__: pixelimage_algo_HitTri
 };
-var pixelimage_algo_HitTriArray = function() { };
+var pixelimage_algo_HitTriArray = function(triArr) {
+	this.triArr = triArr;
+};
 pixelimage_algo_HitTriArray.__name__ = "pixelimage.algo.HitTriArray";
 pixelimage_algo_HitTriArray.__interfaces__ = [pixelimage_algo_IhitObj];
+pixelimage_algo_HitTriArray.prototype = {
+	__class__: pixelimage_algo_HitTriArray
+};
 var pixelimage_iter_IntIterStart = function(min_,max_) {
 	this.start = min_;
 	this.max = max_;
@@ -13355,6 +13360,1246 @@ pixelimage_triGML_coreShape_BasicShape.prototype = $extend(pixelimage_triGML_cor
 		}
 	}
 	,__class__: pixelimage_triGML_coreShape_BasicShape
+});
+var pixelimage_triGML_contour_ArrowShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,both,x1,y1,x2,y2) {
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(both == null) {
+		both = false;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = -1048576;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray);
+	this.both = both;
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+};
+pixelimage_triGML_contour_ArrowShape.__name__ = "pixelimage.triGML.contour.ArrowShape";
+pixelimage_triGML_contour_ArrowShape.__super__ = pixelimage_triGML_coreShape_BasicShape;
+pixelimage_triGML_contour_ArrowShape.prototype = $extend(pixelimage_triGML_coreShape_BasicShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "both":
+			this.both = StringTools.trim(value).toLowerCase() == "true";
+			break;
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		if(this.both == false) {
+			var px = this.x1;
+			var py = this.y1;
+			var qx = this.x2;
+			var qy = this.y2;
+			var thick = this.strokeWidth;
+			var color = this.strokeColor;
+			haxe_Log.trace("pixelimage.fillArrow",{ fileName : "src/pixelimage/Pixelimage.hx", lineNumber : 593, className : "pixelimage._Pixelimage.Pixelimage_Impl_", methodName : "fillArrow"});
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var goldenRatio = 1.61803398875;
+			var o = qy - py;
+			var a = qx - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var thicker = 2 * thick * goldenRatio;
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = thick / 2;
+			var radius2 = thicker / 2;
+			var h2 = h / goldenRatio;
+			var hasHit1 = true;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var sin1 = Math.sin(theta);
+			var cos1 = Math.cos(theta);
+			var radius = thick / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h2;
+			var cy = radius;
+			var bx = h2;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp = 0.;
+			temp = px + (ax * cos1 - ay * sin1);
+			ay = py + (ay * cos1 + ax * sin1);
+			ax = temp;
+			temp = px + (bx * cos1 - by * sin1);
+			by = py + (by * cos1 + bx * sin1);
+			bx = temp;
+			temp = px + (cx * cos1 - cy * sin1);
+			cy = py + (cy * cos1 + cx * sin1);
+			cx = temp;
+			temp = px + (dx * cos1 - dy * sin1);
+			dy = py + (dy * cos1 + dx * sin1);
+			dx = temp;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit3 = hasHit1;
+			if(hasHit3 == null) {
+				hasHit3 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit3 == true) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit3 = hasHit1;
+			if(hasHit3 == null) {
+				hasHit3 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit3 == true) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			var hitQuad;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				hitQuad = v;
+			} else {
+				hitQuad = null;
+			}
+			var cx = h2;
+			var cy = radius2;
+			var bx = h2;
+			var by = -radius2;
+			var temp = 0.;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = cx;
+			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = qx * by1 - bx1 * qy + (bx1 * cy1 - cx1 * by1) + (cx1 * qy - qx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = qy * cx1 - qx * cy1;
+			var sx = cy1 - qy;
+			var sy = qx - cx1;
+			var t0 = qx * by1 - qy * bx1;
+			var tx = qy - by1;
+			var ty = bx1 - qx;
+			var A = -by1 * cx1 + qy * (-bx1 + cx1) + qx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(qy > by1) {
+				if(qy > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(qy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = qy > cy1 ? Math.floor(cy1) : Math.ceil(qy);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(qy);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(qx > bx1) {
+				if(qx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = qx > cx1 ? Math.floor(cx1) : Math.ceil(qx);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(qx);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var hitTri;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitTri(qx,qy,bx1,by1,cx1,cy1);
+				hitTri = v;
+			} else {
+				hitTri = null;
+			}
+			if(hasHit) {
+				var hitArr = new pixelimage_algo_HitTriArray([hitTri]);
+				if(hitQuad != null) {
+					hitArr.triArr.push(hitQuad.triABD);
+				}
+				hitArr.triArr.push(hitQuad.triBCD);
+			}
+		} else {
+			var px = this.x1;
+			var py = this.y1;
+			var qx = this.x2;
+			var qy = this.y2;
+			var thick = this.strokeWidth;
+			var color = this.strokeColor;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var goldenRatio = 1.61803398875;
+			var o = qy - py;
+			var a = qx - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var thicker = 2 * thick * goldenRatio;
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = thick / 2;
+			var radius2 = thicker / 2;
+			var h2 = h / goldenRatio;
+			var hSmall = h - h2;
+			var px_ = hSmall;
+			var py_ = 0.;
+			var temp = 0.;
+			temp = px + (px_ * cos - py_ * sin);
+			py_ = py + (py_ * cos + px_ * sin);
+			px_ = temp;
+			var h = h2 - hSmall;
+			var hasHit1 = true;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var sin1 = Math.sin(theta);
+			var cos1 = Math.cos(theta);
+			var radius = thick / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp1 = 0.;
+			temp1 = px_ + (ax * cos1 - ay * sin1);
+			ay = py_ + (ay * cos1 + ax * sin1);
+			ax = temp1;
+			temp1 = px_ + (bx * cos1 - by * sin1);
+			by = py_ + (by * cos1 + bx * sin1);
+			bx = temp1;
+			temp1 = px_ + (cx * cos1 - cy * sin1);
+			cy = py_ + (cy * cos1 + cx * sin1);
+			cx = temp1;
+			temp1 = px_ + (dx * cos1 - dy * sin1);
+			dy = py_ + (dy * cos1 + dx * sin1);
+			dx = temp1;
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit3 = hasHit1;
+			if(hasHit3 == null) {
+				hasHit3 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit3 == true) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit2;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit3 = hasHit1;
+			if(hasHit3 == null) {
+				hasHit3 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit3 == true) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			var hitQuad;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				hitQuad = v;
+			} else {
+				hitQuad = null;
+			}
+			var cx = h2;
+			var cy = radius2;
+			var bx = h2;
+			var by = -radius2;
+			var dx = hSmall;
+			var dy = radius2;
+			var ax = hSmall;
+			var ay = -radius2;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = cx;
+			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = qx * by1 - bx1 * qy + (bx1 * cy1 - cx1 * by1) + (cx1 * qy - qx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = qy * cx1 - qx * cy1;
+			var sx = cy1 - qy;
+			var sy = qx - cx1;
+			var t0 = qx * by1 - qy * bx1;
+			var tx = qy - by1;
+			var ty = bx1 - qx;
+			var A = -by1 * cx1 + qy * (-bx1 + cx1) + qx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(qy > by1) {
+				if(qy > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(qy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = qy > cy1 ? Math.floor(cy1) : Math.ceil(qy);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(qy);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(qx > bx1) {
+				if(qx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(qx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = qx > cx1 ? Math.floor(cx1) : Math.ceil(qx);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(qx);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var hitTriTop;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitTri(qx,qy,bx1,by1,cx1,cy1);
+				hitTriTop = v;
+			} else {
+				hitTriTop = null;
+			}
+			var bx = ax;
+			var by = ay;
+			var cx = dx;
+			var cy = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = px * by - bx * py + (bx * cy - cx * by) + (cx * py - px * cy) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx;
+				var by_ = by;
+				bx = cx;
+				by = cy;
+				cx = bx_;
+				cy = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = py * cx - px * cy;
+			var sx = cy - py;
+			var sy = px - cx;
+			var t0 = px * by - py * bx;
+			var tx = py - by;
+			var ty = bx - px;
+			var A = -by * cx + py * (-bx + cx) + px * (by - cy) + bx * cy;
+			var yIter3;
+			if(py > by) {
+				if(py > cy) {
+					var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+					var ii_max = Math.ceil(py);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by > cy) {
+				var ii_min = py > cy ? Math.floor(cy) : Math.ceil(py);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(py);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(px > bx) {
+				if(px > cx) {
+					var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+					var ii_max = Math.ceil(px);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx > cx) {
+				var ii_min = px > cx ? Math.floor(cx) : Math.ceil(px);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(px);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = color;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+							var this2 = pixelImage.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var hitTriBottom;
+			if(hasHit2 == true) {
+				var v = new pixelimage_algo_HitTri(px,py,bx,by,cx,cy);
+				hitTriBottom = v;
+			} else {
+				hitTriBottom = null;
+			}
+			if(hasHit) {
+				var hitArr = new pixelimage_algo_HitTriArray([hitTriTop,hitTriBottom]);
+				if(hitQuad != null) {
+					hitArr.triArr.push(hitQuad.triABD);
+				}
+				hitArr.triArr.push(hitQuad.triBCD);
+			}
+		}
+		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_contour_ArrowShape
 });
 var pixelimage_triGML_coreShape_FillShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill) {
 	if(fill == null) {
@@ -13481,6 +14726,316 @@ pixelimage_triGML_contour_CubicCurveShape.prototype = $extend(pixelimage_triGML_
 	}
 	,__class__: pixelimage_triGML_contour_CubicCurveShape
 });
+var pixelimage_triGML_contour_LineGridShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,left,top,width,height,delta,deltaH) {
+	if(deltaH == null) {
+		deltaH = 0.;
+	}
+	if(delta == null) {
+		delta = 1.;
+	}
+	if(height == null) {
+		height = 1.;
+	}
+	if(width == null) {
+		width = 1.;
+	}
+	if(top == null) {
+		top = 0.;
+	}
+	if(left == null) {
+		left = 0.;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = -1048576;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray);
+	this.left = left;
+	this.top = top;
+	this.width = width;
+	this.height = height;
+	this.delta = delta;
+	this.deltaH = deltaH;
+};
+pixelimage_triGML_contour_LineGridShape.__name__ = "pixelimage.triGML.contour.LineGridShape";
+pixelimage_triGML_contour_LineGridShape.__super__ = pixelimage_triGML_coreShape_BasicShape;
+pixelimage_triGML_contour_LineGridShape.prototype = $extend(pixelimage_triGML_coreShape_BasicShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "delta":
+			this.delta = parseFloat(value);
+			break;
+		case "deltaH":
+			this.deltaH = parseFloat(value);
+			break;
+		case "height":
+			this.height = parseFloat(value);
+			break;
+		case "left":
+			this.left = parseFloat(value);
+			break;
+		case "top":
+			this.top = parseFloat(value);
+			break;
+		case "width":
+			this.width = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var pixelShape = pixelImage;
+		if(this.deltaH != 0.) {
+			var x = this.left;
+			var y = this.top;
+			var w = this.width;
+			var h = this.height;
+			var deltaW = this.delta;
+			var deltaH = this.deltaH;
+			var thick = this.strokeWidth;
+			var color = this.strokeColor;
+			var h_ = Math.floor(h / deltaH) * deltaH;
+			var w_ = Math.floor(w / deltaW) * deltaW;
+			var _g = 0;
+			var _g1 = Math.floor(w / deltaW) + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var x1 = x + i * deltaW - thick / 2;
+				var p = x1 | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x1 + thick | 0;
+				var maxY = y + h_ | 0;
+				while(true) {
+					var x2 = p++;
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+						var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x2 - pixelShape.virtualX | 0 : q * pixelShape.width + x2 | 0;
+						var this2 = pixelShape.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x2 - pixelShape.virtualX | 0 : q * pixelShape.width + x2 | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var _g = 0;
+			var _g1 = Math.floor(h / deltaH) + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var y1 = y + i * deltaH - thick / 2;
+				var p = x | 0;
+				var xx = p;
+				var q = y1 | 0;
+				var maxX = x + w_ | 0;
+				var maxY = y1 + thick | 0;
+				while(true) {
+					var x1 = p++;
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+						var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0;
+						var this2 = pixelShape.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+		} else {
+			var x = this.left;
+			var y = this.top;
+			var w = this.width;
+			var h = this.height;
+			var delta = this.delta;
+			var thick = this.strokeWidth;
+			var color = this.strokeColor;
+			var h_ = Math.floor(h / delta) * delta;
+			var w_ = Math.floor(w / delta) * delta;
+			var _g = 0;
+			var _g1 = Math.floor(w / delta) + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var x1 = x + i * delta - thick / 2;
+				var p = x1 | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x1 + thick | 0;
+				var maxY = y + h_ | 0;
+				while(true) {
+					var x2 = p++;
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+						var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x2 - pixelShape.virtualX | 0 : q * pixelShape.width + x2 | 0;
+						var this2 = pixelShape.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x2 - pixelShape.virtualX | 0 : q * pixelShape.width + x2 | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var _g = 0;
+			var _g1 = Math.floor(h / delta) + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var y1 = y + i * delta - thick / 2;
+				var p = x | 0;
+				var xx = p;
+				var q = y1 | 0;
+				var maxX = x + w_ | 0;
+				var maxY = y1 + thick | 0;
+				while(true) {
+					var x1 = p++;
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelShape.transparent) {
+						var location = pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0;
+						var this2 = pixelShape.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelShape.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelShape.image[pixelShape.useVirtualPos ? (q - pixelShape.virtualY) * pixelShape.width + x1 - pixelShape.virtualX | 0 : q * pixelShape.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+		}
+		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_contour_LineGridShape
+});
 var pixelimage_triGML_contour_LineShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,x1,y1,x2,y2) {
 	if(y2 == null) {
 		y2 = 0.;
@@ -13571,7 +15126,7 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -13711,7 +15266,7 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -13852,10 +15407,10 @@ pixelimage_triGML_contour_LineShape.prototype = $extend(pixelimage_triGML_coreSh
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
@@ -14012,6 +15567,464 @@ pixelimage_triGML_contour_QuadCurveShape.prototype = $extend(pixelimage_triGML_c
 	}
 	,__class__: pixelimage_triGML_contour_QuadCurveShape
 });
+var pixelimage_triGML_contour_QuadShape = function(opacity,visibility,strokeColor,aX,aY,bX,bY,cX,cY,dX,dY) {
+	if(dY == null) {
+		dY = 1.;
+	}
+	if(dX == null) {
+		dX = 0.;
+	}
+	if(cY == null) {
+		cY = 1.;
+	}
+	if(cX == null) {
+		cX = 1.;
+	}
+	if(bY == null) {
+		bY = 0.;
+	}
+	if(bX == null) {
+		bX = 1.;
+	}
+	if(aY == null) {
+		aY = 0.;
+	}
+	if(aX == null) {
+		aX = 0.;
+	}
+	if(strokeColor == null) {
+		strokeColor = -1048576;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicShape.call(this,opacity,visibility,strokeColor,0.,null);
+	this.aX = aX;
+	this.aY = aY;
+	this.bX = bX;
+	this.bY = bY;
+	this.cX = cX;
+	this.cY = cY;
+	this.dX = dX;
+	this.dY = dY;
+};
+pixelimage_triGML_contour_QuadShape.__name__ = "pixelimage.triGML.contour.QuadShape";
+pixelimage_triGML_contour_QuadShape.__super__ = pixelimage_triGML_coreShape_BasicShape;
+pixelimage_triGML_contour_QuadShape.prototype = $extend(pixelimage_triGML_coreShape_BasicShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "aX":
+			this.aX = parseFloat(value);
+			break;
+		case "aY":
+			this.aY = parseFloat(value);
+			break;
+		case "bX":
+			this.bX = parseFloat(value);
+			break;
+		case "bY":
+			this.bY = parseFloat(value);
+			break;
+		case "cX":
+			this.cX = parseFloat(value);
+			break;
+		case "cY":
+			this.cY = parseFloat(value);
+			break;
+		case "dX":
+			this.dX = parseFloat(value);
+			break;
+		case "dY":
+			this.dY = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var ax = this.aX;
+		var ay = this.aY;
+		var bx = this.bX;
+		var by = this.bY;
+		var cx = this.cX;
+		var cy = this.cY;
+		var dx = this.dX;
+		var dy = this.dY;
+		var color = this.strokeColor;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == true) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var this1 = color;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == true) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
+		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_contour_QuadShape
+});
+var pixelimage_triGML_contour_ThruCurveShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,x1,y1,x2,y2,x3,y3) {
+	if(y3 == null) {
+		y3 = 0.;
+	}
+	if(x3 == null) {
+		x3 = 0.;
+	}
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(fill == null) {
+		fill = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_FillShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill);
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.x3 = x3;
+	this.y3 = y3;
+};
+pixelimage_triGML_contour_ThruCurveShape.__name__ = "pixelimage.triGML.contour.ThruCurveShape";
+pixelimage_triGML_contour_ThruCurveShape.__super__ = pixelimage_triGML_coreShape_FillShape;
+pixelimage_triGML_contour_ThruCurveShape.prototype = $extend(pixelimage_triGML_coreShape_FillShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "x3":
+			this.x3 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		case "y3":
+			this.y3 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_FillShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var drawing = new pixelimage_triGML_coreShape_DrawShapeHelper(pixelImage,this.strokeWidth,this.strokeColor);
+		drawing.moveTo(this.x1,this.y1);
+		drawing.quadThru(this.x2,this.y2,this.x3,this.y3);
+		drawing = null;
+		return pixelimage_triGML_coreShape_FillShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_contour_ThruCurveShape
+});
 var pixelimage_triGML_coreShape_BasicGradient = function(opacity,visibility,cornerColors) {
 	if(visibility == null) {
 		visibility = true;
@@ -14115,7 +16128,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			dx = temp;
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
@@ -14255,7 +16268,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
@@ -14396,11 +16409,11 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
 			var tmp;
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				tmp = v;
 			} else {
@@ -14420,7 +16433,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				var color = this.strokeColor;
 				var hasHit = false;
 				if(hasHit == null) {
-					hasHit = true;
+					hasHit = false;
 				}
 				var bx1 = bx;
 				var by1 = by;
@@ -14560,7 +16573,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
 				var bx1 = cx;
@@ -14701,10 +16714,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 				}
-				if(hasHit == false) {
+				if(hasHit == true) {
 					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
@@ -14753,7 +16766,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -14893,7 +16906,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -15034,11 +17047,11 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
 		var tmp;
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			tmp = v;
 		} else {
@@ -15056,17 +17069,21 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var color = this.strokeColor;
-			var hasHit = false;
+			var hasHit = true;
 			if(hasHit == null) {
-				hasHit = true;
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
@@ -15077,7 +17094,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -15198,16 +17215,16 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 			if(!adjustWinding) {
@@ -15218,7 +17235,7 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -15339,10 +17356,10 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
-			if(hasHit == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
@@ -15452,7 +17469,1867 @@ pixelimage_triGML_coreShape_DrawShapeHelper.prototype = {
 		_this.px = x4;
 		_this.py = y4;
 	}
+	,quadThru: function(x2,y2,x3,y3) {
+		var _this = this.svgLinePath;
+		var newx = 2 * x2 - 0.5 * (_this.px + x3);
+		var newy = 2 * y2 - 0.5 * (_this.py + y3);
+		var tempArr = [];
+		var ax = _this.px;
+		var ay = _this.py;
+		var x = ax - newx;
+		var y = ay - newy;
+		var x1 = newx - x3;
+		var y1 = newy - y3;
+		var approxDistance = Math.sqrt(x * x + y * y) + Math.sqrt(x1 * x1 + y1 * y1);
+		if(approxDistance == 0) {
+			approxDistance = 0.000001;
+		}
+		var step = Math.min(1 / (approxDistance * 0.707),justPath_CurveMath_quadStep);
+		var l = tempArr.length;
+		tempArr[l++] = ax;
+		tempArr[l++] = ay;
+		var t = step;
+		while(t < 1.) {
+			var u = 1 - t;
+			tempArr[l++] = Math.pow(u,2) * ax + 2 * u * t * newx + Math.pow(t,2) * x3;
+			var u1 = 1 - t;
+			tempArr[l++] = Math.pow(u1,2) * ay + 2 * u1 * t * newy + Math.pow(t,2) * y3;
+			t += step;
+		}
+		tempArr[l++] = x3;
+		tempArr[l++] = y3;
+		haxe_Log.trace(tempArr,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 502, className : "justPath.SvgLinePath", methodName : "quadTo"});
+		var withMove = false;
+		if(withMove == null) {
+			withMove = true;
+		}
+		var l = tempArr.length;
+		var i = 2;
+		if(withMove) {
+			_this.pathContext.moveTo(tempArr[0],tempArr[1]);
+		} else {
+			_this.pathContext.lineSegmentTo(tempArr[0],tempArr[1]);
+		}
+		while(i < l) {
+			_this.pathContext.lineSegmentTo(tempArr[i],tempArr[i + 1]);
+			i += 2;
+		}
+		tempArr = [];
+		_this.px = x3;
+		_this.py = y3;
+	}
 	,__class__: pixelimage_triGML_coreShape_DrawShapeHelper
+};
+var pixelimage_triGML_coreShape_DrawTileHelper = function(pixelImage,strokeWidth,tileImageStroke,translateX,translateY,scaleX,scaleY) {
+	if(scaleY == null) {
+		scaleY = 1.;
+	}
+	if(scaleX == null) {
+		scaleX = 1.;
+	}
+	if(translateY == null) {
+		translateY = 0.;
+	}
+	if(translateX == null) {
+		translateX = 0.;
+	}
+	this.toggleDraw = true;
+	this.y0 = 0.;
+	this.x0 = 0.;
+	this.pixelImage = pixelImage;
+	this.translateX = translateX;
+	this.translateY = translateY;
+	this.scaleX = scaleX;
+	this.scaleY = scaleY;
+	this.svgLinePath = new justPath_SvgLinePath(this);
+};
+pixelimage_triGML_coreShape_DrawTileHelper.__name__ = "pixelimage.triGML.coreShape.DrawTileHelper";
+pixelimage_triGML_coreShape_DrawTileHelper.__interfaces__ = [justPath_ILinePathContext];
+pixelimage_triGML_coreShape_DrawTileHelper.prototype = {
+	lineSegmentTo: function(x2,y2) {
+		if(this.toggleDraw) {
+			var oldInfo = this.info;
+			var this1 = this.pixelImage;
+			var px = this.x0 * this.scaleX + this.translateX;
+			var py = this.y0 * this.scaleY + this.translateY;
+			var tileImage = this.tileImageStroke;
+			var o = y2 * this.scaleY + this.translateY - py;
+			var a = x2 * this.scaleX + this.translateX - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var hasHit = false;
+			var debugCorners = false;
+			if(debugCorners == null) {
+				debugCorners = false;
+			}
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = this.strokeWidth / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp = 0.;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			if(debugCorners) {
+				var x = ax - 6.;
+				var y = ay - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -65536;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = bx - 6.;
+				var y = by - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16711936;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = cx - 6.;
+				var y = cy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16776961;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = dx - 6.;
+				var y = dy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -1048336;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 240;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 240;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			var tmp;
+			if(hasHit1 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
+			} else {
+				tmp = null;
+			}
+			this.info = tmp;
+			if(this.info != null && oldInfo != null) {
+				var this1 = this.pixelImage;
+				var ax = oldInfo.bx * this.scaleX + this.translateX;
+				var ay = oldInfo.by * this.scaleY + this.translateY;
+				var bx = this.info.ax * this.scaleX + this.translateX;
+				var by = this.info.ay * this.scaleY + this.translateY;
+				var cx = this.info.dx * this.scaleX + this.translateX;
+				var cy = this.info.dy * this.scaleY + this.translateY;
+				var dx = oldInfo.cx * this.scaleX + this.translateX;
+				var dy = oldInfo.cy * this.scaleY + this.translateY;
+				var tileImage = this.tileImageStroke;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = ay * cx1 - ax * cy1;
+				var sx = cy1 - ay;
+				var sy = ax - cx1;
+				var t0 = ax * by1 - ay * bx1;
+				var tx = ay - by1;
+				var ty = bx1 - ax;
+				var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				var yIter3;
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this2;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this2 = color;
+							var c1 = this2;
+							if((c1 >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				}
+				var bx1 = cx;
+				var by1 = cy;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit2 = hasHit1;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = by * cx1 - bx * cy1;
+				var sx = cy1 - by;
+				var sy = bx - cx1;
+				var t0 = bx * by1 - by * bx1;
+				var tx = by - by1;
+				var ty = bx1 - bx;
+				var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+				var yIter3;
+				if(by > by1) {
+					if(by > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(by);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+					var ii_max = Math.ceil(by1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this2;
+				if(bx > bx1) {
+					if(bx > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(bx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+					var ii_max = Math.ceil(bx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this2 = color;
+							var c1 = this2;
+							if((c1 >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+				}
+				if(hasHit == true) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				}
+			}
+		}
+		this.toggleDraw = !this.toggleDraw;
+		this.x0 = x2;
+		this.y0 = y2;
+	}
+	,lineTo: function(x2,y2) {
+		var oldInfo = this.info;
+		var this1 = this.pixelImage;
+		var px = this.x0 * this.scaleX + this.translateX;
+		var py = this.y0 * this.scaleY + this.translateY;
+		var tileImage = this.tileImageStroke;
+		var hasHit = true;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var o = y2 * this.scaleY + this.translateY - py;
+		var a = x2 * this.scaleX + this.translateX - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit1 = hasHit;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -65536;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16711936;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16776961;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -1048336;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 240;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 240;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this2;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this2 = color;
+					var c1 = this2;
+					if((c1 >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this2;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this2 = color;
+					var c1 = this2;
+					if((c1 >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		var tmp;
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
+		} else {
+			tmp = null;
+		}
+		this.info = tmp;
+		if(this.info != null && oldInfo != null) {
+			var this1 = this.pixelImage;
+			var ax = oldInfo.bx * this.scaleX + this.translateX;
+			var ay = oldInfo.by * this.scaleY + this.translateY;
+			var bx = this.info.ax * this.scaleX + this.translateX;
+			var by = this.info.ay * this.scaleY + this.translateY;
+			var cx = this.info.dx * this.scaleX + this.translateX;
+			var cy = this.info.dy * this.scaleY + this.translateY;
+			var dx = oldInfo.cx * this.scaleX + this.translateX;
+			var dy = oldInfo.cy * this.scaleY + this.translateY;
+			var tileImage = this.tileImageStroke;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			if(hasHit1 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			}
+		}
+		this.x0 = x2;
+		this.y0 = y2;
+		this.toggleDraw = true;
+	}
+	,moveTo: function(x1,y1) {
+		this.x0 = x1;
+		this.y0 = y1;
+		this.info = null;
+		this.toggleDraw = true;
+	}
+	,curveTo: function(x2,y2,x3,y3,x4,y4) {
+		var _this = this.svgLinePath;
+		var tempArr = [];
+		var ax = _this.px;
+		var ay = _this.py;
+		var x = ax - x2;
+		var y = ay - y2;
+		var x1 = x2 - x3;
+		var y1 = y2 - y3;
+		var x5 = x3 - x4;
+		var y5 = y3 - y4;
+		var approxDistance = Math.sqrt(x * x + y * y) + Math.sqrt(x1 * x1 + y1 * y1) + Math.sqrt(x5 * x5 + y5 * y5);
+		if(approxDistance == 0) {
+			approxDistance = 0.000001;
+		}
+		var step = Math.min(1 / (approxDistance * 0.707),0.03);
+		var l = tempArr.length;
+		tempArr[l++] = ax;
+		tempArr[l++] = ay;
+		var t = step;
+		while(t < 1.) {
+			var u = 1 - t;
+			tempArr[l++] = Math.pow(u,3) * ax + 3 * Math.pow(u,2) * t * x2 + 3 * u * Math.pow(t,2) * x3 + Math.pow(t,3) * x4;
+			var u1 = 1 - t;
+			tempArr[l++] = Math.pow(u1,3) * ay + 3 * Math.pow(u1,2) * t * y2 + 3 * u1 * Math.pow(t,2) * y3 + Math.pow(t,3) * y4;
+			t += step;
+		}
+		tempArr[l++] = x4;
+		tempArr[l++] = y4;
+		haxe_Log.trace(tempArr,{ fileName : "justPath/SvgLinePath.hx", lineNumber : 512, className : "justPath.SvgLinePath", methodName : "curveTo"});
+		var withMove = false;
+		if(withMove == null) {
+			withMove = true;
+		}
+		var l = tempArr.length;
+		var i = 2;
+		if(withMove) {
+			_this.pathContext.moveTo(tempArr[0],tempArr[1]);
+		} else {
+			_this.pathContext.lineSegmentTo(tempArr[0],tempArr[1]);
+		}
+		while(i < l) {
+			_this.pathContext.lineSegmentTo(tempArr[i],tempArr[i + 1]);
+			i += 2;
+		}
+		tempArr = [];
+		_this.px = x4;
+		_this.py = y4;
+	}
+	,__class__: pixelimage_triGML_coreShape_DrawTileHelper
 };
 var pixelimage_triGML_coreShape_PatternShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale) {
 	if(fillPatternScale == null) {
@@ -16011,6 +19888,407 @@ pixelimage_triGML_coreShape_PatternShape.prototype = $extend(pixelimage_triGML_c
 	}
 	,__class__: pixelimage_triGML_coreShape_PatternShape
 });
+var pixelimage_triGML_coreShape_PatternStroke = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale) {
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray);
+	this.strokeColor0 = strokeColor0;
+	this.strokeColor1 = strokeColor1;
+	this.strokePatternFill = strokePatternFill;
+	this.strokePatternWidth = strokePatternWidth;
+	this.strokePatternHeight = strokePatternHeight;
+	this.strokePatternAcross = strokePatternAcross;
+	this.strokePatternScale = strokePatternScale;
+};
+pixelimage_triGML_coreShape_PatternStroke.__name__ = "pixelimage.triGML.coreShape.PatternStroke";
+pixelimage_triGML_coreShape_PatternStroke.__super__ = pixelimage_triGML_coreShape_BasicShape;
+pixelimage_triGML_coreShape_PatternStroke.prototype = $extend(pixelimage_triGML_coreShape_BasicShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "strokeColor0":
+			this.strokeColor0 = Std.parseInt(value);
+			break;
+		case "strokeColor1":
+			this.strokeColor1 = Std.parseInt(value);
+			break;
+		case "strokePatternAcross":
+			var bools = StringTools.trim(value).toLowerCase();
+			this.strokePatternAcross = bools == "true" || bools == "1";
+			break;
+		case "strokePatternFill":
+			value = value.split("[")[1].split("]")[0];
+			var _g = [];
+			var _g1 = 0;
+			var _g2 = value.split(",");
+			while(_g1 < _g2.length) {
+				var v = _g2[_g1];
+				++_g1;
+				var bools = StringTools.trim(v).toLowerCase();
+				_g.push(bools == "true" || bools == "1");
+			}
+			this.strokePatternFill = _g;
+			break;
+		case "strokePatternHeight":
+			this.strokePatternHeight = Std.parseInt(value);
+			break;
+		case "strokePatternScale":
+			this.strokePatternScale = Std.parseInt(value);
+			break;
+		case "strokePatternWidth":
+			this.strokePatternWidth = Std.parseInt(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		this.tileImageStroke = null;
+		return pixelimage_triGML_coreShape_BasicShape.prototype.render.call(this,pixelImage);
+	}
+	,buildPatternTemplates: function() {
+		var w = this.strokePatternWidth;
+		var h = this.strokePatternHeight;
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		this.tileImageStroke = this2;
+		this.tileImageStroke.transparent = false;
+		if(this.strokePatternAcross) {
+			var this1 = this.tileImageStroke;
+			var foreColor = this.strokeColor0;
+			var backColor = this.strokeColor1;
+			var patternFill = this.strokePatternFill;
+			var p = 0;
+			var xx = p;
+			var q = 0;
+			var maxX = this.strokePatternWidth | 0;
+			var maxY = this.strokePatternHeight | 0;
+			var count = 0;
+			var useFore = true;
+			while(true) {
+				if(count < patternFill.length) {
+					useFore = patternFill[count];
+					++count;
+				} else {
+					count = 0;
+					useFore = patternFill[count];
+					++count;
+				}
+				var color = useFore ? foreColor : backColor;
+				var x = p++;
+				var this2 = color;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = color >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = color >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = color >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = color & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		} else {
+			var this1 = this.tileImageStroke;
+			var foreColor = this.strokeColor0;
+			var backColor = this.strokeColor1;
+			var patternFill = this.strokePatternFill;
+			var p = 0;
+			var xx = p;
+			var q = 0;
+			var maxX = this.strokePatternWidth | 0;
+			var maxY = this.strokePatternHeight | 0;
+			var count = 0;
+			var useFore = true;
+			while(true) {
+				if(count < patternFill.length) {
+					useFore = patternFill[count];
+					++count;
+				} else {
+					count = 0;
+					useFore = patternFill[count];
+					++count;
+				}
+				var color = useFore ? foreColor : backColor;
+				var x = p++;
+				var this2 = color;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = color >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = color >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = color >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = color & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		if(this.strokePatternScale > 1) {
+			var this1 = this.tileImageStroke;
+			var scaleW = this.strokePatternScale;
+			var scaleH = this.strokePatternScale;
+			if(scaleH == null) {
+				scaleH = 2;
+			}
+			if(scaleW == null) {
+				scaleW = 2;
+			}
+			var p = 0;
+			var xx = p;
+			var q = 0;
+			var wNew = this1.width * scaleW | 0;
+			var hNew = this1.height * scaleH | 0;
+			var this2 = new Uint32Array(wNew * hNew | 0);
+			var this3 = new pixelimage_ImageStruct(wNew,hNew,this2);
+			var pixelImage = this3;
+			var maxX = wNew;
+			var maxY = hNew;
+			while(true) {
+				var x = p / scaleW | 0;
+				var y = q / scaleH | 0;
+				var c = this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0];
+				var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				var x1 = p++;
+				var this2 = color;
+				var c1 = this2;
+				if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : q * pixelImage.width + x1 | 0;
+					var this3 = pixelImage.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = color >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = color >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = color >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = color & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : q * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			this.tileImageStroke = pixelImage;
+		}
+	}
+	,__class__: pixelimage_triGML_coreShape_PatternStroke
+});
+function pixelimage_triGML_coreShape_TriGML_getTriGML(nodeName) {
+	var triGMLname = nodeName;
+	var s;
+	switch(triGMLname) {
+	case "ArcPattern":
+		s = new pixelimage_triGML_patternShape_ArcPattern();
+		break;
+	case "ArcShape":
+		s = new pixelimage_triGML_shape_ArcShape();
+		break;
+	case "ArrowShape":
+		s = new pixelimage_triGML_contour_ArrowShape();
+		break;
+	case "CirclePattern":
+		s = new pixelimage_triGML_patternShape_CirclePattern();
+		break;
+	case "CircleShape":
+		s = new pixelimage_triGML_shape_CircleShape();
+		break;
+	case "CubicCurvePattern":
+		s = new pixelimage_triGML_patternContour_CubicCurvePattern();
+		break;
+	case "CubicCurveShape":
+		s = new pixelimage_triGML_contour_CubicCurveShape();
+		break;
+	case "EllipsePattern":
+		s = new pixelimage_triGML_patternShape_EllipsePattern();
+		break;
+	case "EllipseRadialGradient":
+		s = new pixelimage_triGML_gradient_EllipseRadialGradient();
+		break;
+	case "EllipseShape":
+		s = new pixelimage_triGML_shape_EllipseShape();
+		break;
+	case "LineGradient":
+		s = new pixelimage_triGML_gradientContour_LineGradient();
+		break;
+	case "LineGridShape":
+		s = new pixelimage_triGML_contour_LineGridShape();
+		break;
+	case "LinePattern":
+		s = new pixelimage_triGML_patternContour_LinePattern();
+		break;
+	case "LineShape":
+		s = new pixelimage_triGML_contour_LineShape();
+		break;
+	case "PathElementPattern":
+		s = new pixelimage_triGML_patternShape_PathElementPattern();
+		break;
+	case "PathElementShape":
+		s = new pixelimage_triGML_shape_PathElementShape();
+		break;
+	case "PathElementThickGradient":
+		s = new pixelimage_triGML_gradient_PathElementThickGradient();
+		break;
+	case "PolyLineGradient":
+		s = new pixelimage_triGML_gradientContour_PolyLineGradient();
+		break;
+	case "PolyLineShape":
+		s = new pixelimage_triGML_contour_PolyLineShape();
+		break;
+	case "QuadCurveShape":
+		s = new pixelimage_triGML_contour_QuadCurveShape();
+		break;
+	case "QuadGradient":
+		s = new pixelimage_triGML_gradient_QuadGradient();
+		break;
+	case "QuadPattern":
+		s = new pixelimage_triGML_patternContour_QuadPattern();
+		break;
+	case "QuadShape":
+		s = new pixelimage_triGML_contour_QuadShape();
+		break;
+	case "QuadrilateralPattern":
+		s = new pixelimage_triGML_patternShape_QuadrilateralPattern();
+		break;
+	case "QuadrilateralShape":
+		s = new pixelimage_triGML_shape_QuadrilateralShape();
+		break;
+	case "RectanglePattern":
+		s = new pixelimage_triGML_patternShape_RectanglePattern();
+		break;
+	case "RectangleShape":
+		s = new pixelimage_triGML_shape_RectangleShape();
+		break;
+	case "SquarePattern":
+		s = new pixelimage_triGML_patternShape_SquarePattern();
+		break;
+	case "SquareShape":
+		s = new pixelimage_triGML_shape_SquareShape();
+		break;
+	case "Star6Shape":
+		s = new pixelimage_triGML_shape_Star6Shape();
+		break;
+	case "ThruCurveShape":
+		s = new pixelimage_triGML_contour_ThruCurveShape();
+		break;
+	case "TriangleGradient":
+		s = new pixelimage_triGML_gradient_TriangleGradient();
+		break;
+	case "TrianglePattern":
+		s = new pixelimage_triGML_patternContour_TrianglePattern();
+		break;
+	case "TriangleShape":
+		s = new pixelimage_triGML_shape_TriangleShape();
+		break;
+	case "VePathElementShape":
+		s = new pixelimage_triGML_shape_VePathElementShape();
+		break;
+	default:
+		throw haxe_Exception.thrown("shape unfound");
+	}
+	return s;
+}
 var pixelimage_triGML_coreShape_XMLshape = function(pixelImage,xml) {
 	this.pixelImage = pixelImage;
 	this.xml = xml;
@@ -16026,76 +20304,15 @@ pixelimage_triGML_coreShape_XMLshape.prototype = {
 		}
 	}
 	,processShape: function(x) {
-		var s;
 		if(x.nodeType != Xml.Element) {
 			throw haxe_Exception.thrown("Bad node type, expected Element but found " + (x.nodeType == null ? "null" : XmlType.toString(x.nodeType)));
 		}
-		switch(x.nodeName) {
-		case "ArcShape":
-			s = new pixelimage_triGML_shape_ArcShape();
-			break;
-		case "CircleShape":
-			s = new pixelimage_triGML_shape_CircleShape();
-			break;
-		case "CubicCurveShape":
-			s = new pixelimage_triGML_contour_CubicCurveShape();
-			break;
-		case "EllipseShape":
-			s = new pixelimage_triGML_shape_EllipseShape();
-			break;
-		case "LineGradient":
-			s = new pixelimage_triGML_gradientContour_LineGradient();
-			break;
-		case "LineShape":
-			s = new pixelimage_triGML_contour_LineShape();
-			break;
-		case "PathElementShape":
-			s = new pixelimage_triGML_shape_PathElementShape();
-			break;
-		case "PathElementThickGradient":
-			s = new pixelimage_triGML_gradient_PathElementThickGradient();
-			break;
-		case "PolyLineGradient":
-			s = new pixelimage_triGML_gradientContour_PolyLineGradient();
-			break;
-		case "PolyLineShape":
-			s = new pixelimage_triGML_contour_PolyLineShape();
-			break;
-		case "QuadCurveShape":
-			s = new pixelimage_triGML_contour_QuadCurveShape();
-			break;
-		case "QuadShape":
-			s = new pixelimage_triGML_shape_QuadShape();
-			break;
-		case "RectanglePattern":
-			s = new pixelimage_triGML_patternShape_RectanglePattern();
-			break;
-		case "RectangleShape":
-			s = new pixelimage_triGML_shape_RectangleShape();
-			break;
-		case "SquareShape":
-			s = new pixelimage_triGML_shape_SquareShape();
-			break;
-		case "Star6Shape":
-			s = new pixelimage_triGML_shape_Star6Shape();
-			break;
-		case "TriangleGradient":
-			haxe_Log.trace("triangle gradient",{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 81, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "processShape"});
-			s = new pixelimage_triGML_gradient_TriangleGradient();
-			break;
-		case "TriangleShape":
-			s = new pixelimage_triGML_shape_TriangleShape();
-			break;
-		case "VePathElementShape":
-			s = new pixelimage_triGML_shape_VePathElementShape();
-			break;
-		default:
-			throw haxe_Exception.thrown("shape unfound");
-		}
+		var name = x.nodeName;
+		var s = pixelimage_triGML_coreShape_TriGML_getTriGML(name);
 		var att = x.attributes();
 		while(att.hasNext()) {
 			var att1 = att.next();
-			haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 94, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "processShape"});
+			haxe_Log.trace(att1 + " " + x.get(att1),{ fileName : "src/pixelimage/triGML/coreShape/XMLshape.hx", lineNumber : 31, className : "pixelimage.triGML.coreShape.XMLshape", methodName : "processShape"});
 			s.setParameter(att1,x.get(att1));
 		}
 		s.render(this.pixelImage);
@@ -16103,8 +20320,804 @@ pixelimage_triGML_coreShape_XMLshape.prototype = {
 	,__class__: pixelimage_triGML_coreShape_XMLshape
 };
 function pixelimage_triGML_coreShape_XMLshapeSamples_shapeTestArr() {
-	return [pixelimage_triGML_coreShape_XMLshapeSamples_vePathElementShape,pixelimage_triGML_coreShape_XMLshapeSamples_arcTest,pixelimage_triGML_coreShape_XMLshapeSamples_circleTest,pixelimage_triGML_coreShape_XMLshapeSamples_cubicCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementCubicTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementThickGradTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadShape,pixelimage_triGML_coreShape_XMLshapeSamples_rectangleShape,pixelimage_triGML_coreShape_XMLshapeSamples_squareShape,pixelimage_triGML_coreShape_XMLshapeSamples_star6Shape,pixelimage_triGML_coreShape_XMLshapeSamples_tileRectangleTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleShape];
+	return [pixelimage_triGML_coreShape_XMLshapeSamples_arrowShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_vePathElementShape,pixelimage_triGML_coreShape_XMLshapeSamples_arcTest,pixelimage_triGML_coreShape_XMLshapeSamples_circleTest,pixelimage_triGML_coreShape_XMLshapeSamples_cubicCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementCubicTest,pixelimage_triGML_coreShape_XMLshapeSamples_pathElementThickGradTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_polyLineShapeTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadCurveTest,pixelimage_triGML_coreShape_XMLshapeSamples_quadShape,pixelimage_triGML_coreShape_XMLshapeSamples_rectangleShape,pixelimage_triGML_coreShape_XMLshapeSamples_squareShape,pixelimage_triGML_coreShape_XMLshapeSamples_star6Shape,pixelimage_triGML_coreShape_XMLshapeSamples_tileRectangleTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleGradientTest,pixelimage_triGML_coreShape_XMLshapeSamples_triangleShape];
 }
+var pixelimage_triGML_gradient_EllipseRadialGradient = function(opacity,visibility,centreX,centreY,radiusX,radiusY,colorIn,colorOut,gradientCentreX,gradientCentreY,rotation) {
+	if(rotation == null) {
+		rotation = 0.;
+	}
+	if(gradientCentreY == null) {
+		gradientCentreY = -1.;
+	}
+	if(gradientCentreX == null) {
+		gradientCentreX = -1.;
+	}
+	if(colorOut == null) {
+		colorOut = -16776961;
+	}
+	if(colorIn == null) {
+		colorIn = -256;
+	}
+	if(radiusY == null) {
+		radiusY = 10;
+	}
+	if(radiusX == null) {
+		radiusX = 10;
+	}
+	if(centreY == null) {
+		centreY = 30;
+	}
+	if(centreX == null) {
+		centreX = 30;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicGradient.call(this,opacity,visibility,[colorIn,colorOut]);
+	this.centreX = centreX;
+	this.centreY = centreY;
+	this.radiusX = radiusX;
+	this.radiusY = radiusY;
+	this.gradientCentreY = gradientCentreX;
+	this.gradientCentreY = gradientCentreY;
+	this.rotation = rotation;
+};
+pixelimage_triGML_gradient_EllipseRadialGradient.__name__ = "pixelimage.triGML.gradient.EllipseRadialGradient";
+pixelimage_triGML_gradient_EllipseRadialGradient.__super__ = pixelimage_triGML_coreShape_BasicGradient;
+pixelimage_triGML_gradient_EllipseRadialGradient.prototype = $extend(pixelimage_triGML_coreShape_BasicGradient.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "centreX":
+			this.centreX = parseFloat(value);
+			break;
+		case "centreY":
+			this.centreY = parseFloat(value);
+			break;
+		case "colorIn":
+			this.cornerColors[0] = Std.parseInt(value);
+			break;
+		case "colorOut":
+			this.cornerColors[1] = Std.parseInt(value);
+			break;
+		case "gradientCentreX":
+			this.gradientCentreX = parseFloat(value);
+			break;
+		case "gradientCentreY":
+			this.gradientCentreY = parseFloat(value);
+			break;
+		case "radiusX":
+			this.radiusX = parseFloat(value);
+			break;
+		case "radiusY":
+			this.radiusY = parseFloat(value);
+			break;
+		case "rotation":
+			this.rotation = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicGradient.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		if(this.gradientCentreX == -1.) {
+			this.gradientCentreX = this.centreX;
+		}
+		if(this.gradientCentreY == -1.) {
+			this.gradientCentreY = this.centreY;
+		}
+		var rSmall = this.radiusX > this.radiusY ? this.radiusY : this.radiusX;
+		var rLarge = this.radiusX < this.radiusY ? this.radiusY : this.radiusX;
+		var rDif = rLarge - rSmall;
+		var temp;
+		if(this.rotation == 0) {
+			var w = 2 * this.radiusX | 0;
+			var h = 2 * this.radiusY | 0;
+			var this1 = new Uint32Array(w * h | 0);
+			var this2 = new pixelimage_ImageStruct(w,h,this1);
+			temp = this2;
+		} else {
+			var w = 2 * rLarge + rDif | 0;
+			var h = 2 * rLarge + rDif | 0;
+			var this1 = new Uint32Array(w * h | 0);
+			var this2 = new pixelimage_ImageStruct(w,h,this1);
+			temp = this2;
+		}
+		temp.transparent = false;
+		var cx = this.centreX;
+		var cy = this.centreY;
+		var rx = this.radiusX;
+		var ry = this.radiusY;
+		var colorIn = this.colorIn;
+		var colorOut = this.colorOut;
+		var gx = this.gradientCentreX;
+		var gy = this.gradientCentreY;
+		var phi = this.rotation;
+		if(phi == null) {
+			phi = 0.;
+		}
+		if(gy == null) {
+			gy = 0;
+		}
+		if(gx == null) {
+			gx = 0;
+		}
+		if(gx < -1.) {
+			gx = -1;
+		}
+		if(gx > 1.) {
+			gx = 1;
+		}
+		if(gy < -1.) {
+			gy = -1.;
+		}
+		if(gy > 1.) {
+			gy = 1;
+		}
+		var mx = cx + gx * rx;
+		var my = cy + gy * ry;
+		var theta = 2 * Math.PI / 36;
+		var omega = 0.;
+		var lastX = 0.;
+		var lastY = 0.;
+		if(phi != 0) {
+			lastX = rx * Math.cos(36 * theta + omega) * Math.cos(phi) - ry * Math.sin(36 * theta + omega) * Math.sin(phi) + cx;
+			lastY = rx * Math.cos(36 * theta + omega) * Math.sin(phi) + ry * Math.sin(36 * theta + omega) * Math.cos(phi) + cy;
+		} else {
+			lastX = cx + rx * Math.cos(36 * theta + omega);
+			lastY = cy + ry * Math.sin(36 * theta + omega);
+		}
+		if(phi != 0) {
+			var cphi = Math.cos(phi);
+			var sphi = Math.sin(phi);
+			var _g = 0;
+			var _g1 = 37;
+			while(_g < _g1) {
+				var i = _g++;
+				var stheta = Math.sin(i * theta + omega);
+				var ctheta = Math.cos(i * theta + omega);
+				var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
+				var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
+				var aA = colorOut >> 24 & 255;
+				var rA = colorOut >> 16 & 255;
+				var gA = colorOut >> 8 & 255;
+				var bA = colorOut & 255;
+				var aB = colorIn >> 24 & 255;
+				var rB = colorIn >> 16 & 255;
+				var gB = colorIn >> 8 & 255;
+				var bB = colorIn & 255;
+				var aC = colorOut >> 24 & 255;
+				var rC = colorOut >> 16 & 255;
+				var gC = colorOut >> 8 & 255;
+				var bC = colorOut & 255;
+				var bcx = lastX - nextX;
+				var bcy = lastY - nextY;
+				var acx = mx - nextX;
+				var acy = my - nextY;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this1;
+				if(nextX > lastX) {
+					if(nextX > mx) {
+						var ii_min = lastX > mx ? Math.floor(mx) : Math.floor(lastX);
+						var ii_max = Math.ceil(nextX);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(lastX);
+						var ii_max1 = Math.ceil(mx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(lastX > mx) {
+					var ii_min2 = nextX > mx ? Math.floor(mx) : Math.ceil(nextX);
+					var ii_max2 = Math.ceil(lastX);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(nextX);
+					var ii_max3 = Math.ceil(mx);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min = this1.start;
+				var _g_max = this1.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - nextX;
+					var this6;
+					if(nextY > lastY) {
+						if(nextY > my) {
+							var ii_min4 = lastY > my ? Math.floor(my) : Math.floor(lastY);
+							var ii_max4 = Math.ceil(nextY);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this6 = this7;
+						} else {
+							var ii_min5 = Math.floor(lastY);
+							var ii_max5 = Math.ceil(my);
+							var this8 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this6 = this8;
+						}
+					} else if(lastY > my) {
+						var ii_min6 = nextY > my ? Math.floor(my) : Math.ceil(nextY);
+						var ii_max6 = Math.ceil(lastY);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this6 = this9;
+					} else {
+						var ii_min7 = Math.floor(nextY);
+						var ii_max7 = Math.ceil(my);
+						var this10 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this6 = this10;
+					}
+					var _g_min1 = this6.start;
+					var _g_max1 = this6.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - nextY;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i1 = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this11 = i1;
+							var a = this11;
+							var i2 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this12 = i2;
+							var r = this12;
+							var i3 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this13 = i3;
+							var g = this13;
+							var i4 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i4 > 255) {
+								i4 = 255;
+							}
+							if(i4 < 0) {
+								i4 = 0;
+							}
+							var this14 = i4;
+							var b = this14;
+							var location = temp.useVirtualPos ? (py - temp.virtualY) * temp.width + px - temp.virtualX | 0 : py * temp.width + px | 0;
+							if(temp.transparent && a < 254) {
+								var this15 = temp.image[location];
+								var this16 = this15;
+								var old = pixelimage_Endian_isLittleEndian ? (this16 >> 24 & 255) << 24 | (this16 & 255) << 16 | (this16 >> 8 & 255) << 8 | this16 >> 16 & 255 : this16;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this17 = old >> 24 & 255;
+								var a1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = old >> 16 & 255;
+								var r1 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = old >> 8 & 255;
+								var g1 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = old & 255;
+								var b1 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = rhs >> 24 & 255;
+								var a2 = this21 == 0 ? 0. : this21 / 255;
+								var this22 = rhs >> 16 & 255;
+								var r2 = this22 == 0 ? 0. : this22 / 255;
+								var this23 = rhs >> 8 & 255;
+								var g2 = this23 == 0 ? 0. : this23 / 255;
+								var this24 = rhs & 255;
+								var b2 = this24 == 0 ? 0. : this24 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[location] = temp.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = mx;
+				var ay = my;
+				var bx = lastX;
+				var by = lastY;
+				var cx1 = nextX;
+				var cy1 = nextY;
+				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx;
+				var v_by = by;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by - ay * bx;
+				var v_tx = ay - by;
+				var v_ty = bx - ax;
+				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+				if(ax > bx) {
+					if(ax > cx1) {
+						var ii_min8 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max8 = Math.ceil(ax);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this25;
+					} else {
+						var ii_min9 = Math.floor(bx);
+						var ii_max9 = Math.ceil(cx1);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this26;
+					}
+				} else if(bx > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx);
+					var this27 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this27;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this28;
+				}
+				if(ay > by) {
+					if(ay > cy1) {
+						var ii_min12 = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max12 = Math.ceil(ay);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this29;
+					} else {
+						var ii_min13 = Math.floor(by);
+						var ii_max13 = Math.ceil(cy1);
+						var this30 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this30;
+					}
+				} else if(by > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by);
+					var this31 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this31;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this32 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this32;
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		} else {
+			var _g = 0;
+			var _g1 = 37;
+			while(_g < _g1) {
+				var i = _g++;
+				var nextX = cx + rx * Math.cos(i * theta + omega);
+				var nextY = cy + ry * Math.sin(i * theta + omega);
+				var aA = colorOut >> 24 & 255;
+				var rA = colorOut >> 16 & 255;
+				var gA = colorOut >> 8 & 255;
+				var bA = colorOut & 255;
+				var aB = colorIn >> 24 & 255;
+				var rB = colorIn >> 16 & 255;
+				var gB = colorIn >> 8 & 255;
+				var bB = colorIn & 255;
+				var aC = colorOut >> 24 & 255;
+				var rC = colorOut >> 16 & 255;
+				var gC = colorOut >> 8 & 255;
+				var bC = colorOut & 255;
+				var bcx = lastX - nextX;
+				var bcy = lastY - nextY;
+				var acx = mx - nextX;
+				var acy = my - nextY;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this1;
+				if(nextX > lastX) {
+					if(nextX > mx) {
+						var ii_min = lastX > mx ? Math.floor(mx) : Math.floor(lastX);
+						var ii_max = Math.ceil(nextX);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this1 = this2;
+					} else {
+						var ii_min1 = Math.floor(lastX);
+						var ii_max1 = Math.ceil(mx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this1 = this3;
+					}
+				} else if(lastX > mx) {
+					var ii_min2 = nextX > mx ? Math.floor(mx) : Math.ceil(nextX);
+					var ii_max2 = Math.ceil(lastX);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this1 = this4;
+				} else {
+					var ii_min3 = Math.floor(nextX);
+					var ii_max3 = Math.ceil(mx);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this1 = this5;
+				}
+				var _g_min = this1.start;
+				var _g_max = this1.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - nextX;
+					var this6;
+					if(nextY > lastY) {
+						if(nextY > my) {
+							var ii_min4 = lastY > my ? Math.floor(my) : Math.floor(lastY);
+							var ii_max4 = Math.ceil(nextY);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this6 = this7;
+						} else {
+							var ii_min5 = Math.floor(lastY);
+							var ii_max5 = Math.ceil(my);
+							var this8 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this6 = this8;
+						}
+					} else if(lastY > my) {
+						var ii_min6 = nextY > my ? Math.floor(my) : Math.ceil(nextY);
+						var ii_max6 = Math.ceil(lastY);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this6 = this9;
+					} else {
+						var ii_min7 = Math.floor(nextY);
+						var ii_max7 = Math.ceil(my);
+						var this10 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this6 = this10;
+					}
+					var _g_min1 = this6.start;
+					var _g_max1 = this6.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - nextY;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i1 = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this11 = i1;
+							var a = this11;
+							var i2 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this12 = i2;
+							var r = this12;
+							var i3 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this13 = i3;
+							var g = this13;
+							var i4 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i4 > 255) {
+								i4 = 255;
+							}
+							if(i4 < 0) {
+								i4 = 0;
+							}
+							var this14 = i4;
+							var b = this14;
+							var location = temp.useVirtualPos ? (py - temp.virtualY) * temp.width + px - temp.virtualX | 0 : py * temp.width + px | 0;
+							if(temp.transparent && a < 254) {
+								var this15 = temp.image[location];
+								var this16 = this15;
+								var old = pixelimage_Endian_isLittleEndian ? (this16 >> 24 & 255) << 24 | (this16 & 255) << 16 | (this16 >> 8 & 255) << 8 | this16 >> 16 & 255 : this16;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this17 = old >> 24 & 255;
+								var a1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = old >> 16 & 255;
+								var r1 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = old >> 8 & 255;
+								var g1 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = old & 255;
+								var b1 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = rhs >> 24 & 255;
+								var a2 = this21 == 0 ? 0. : this21 / 255;
+								var this22 = rhs >> 16 & 255;
+								var r2 = this22 == 0 ? 0. : this22 / 255;
+								var this23 = rhs >> 8 & 255;
+								var g2 = this23 == 0 ? 0. : this23 / 255;
+								var this24 = rhs & 255;
+								var b2 = this24 == 0 ? 0. : this24 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[location] = temp.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax = mx;
+				var ay = my;
+				var bx = lastX;
+				var by = lastY;
+				var cx1 = nextX;
+				var cy1 = nextY;
+				var adjustWinding = ax * by - bx * ay + (bx * cy1 - cx1 * by) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax;
+				var v_ay = ay;
+				var v_bx = bx;
+				var v_by = by;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay * cx1 - ax * cy1;
+				var v_sx = cy1 - ay;
+				var v_sy = ax - cx1;
+				var v_t0 = ax * by - ay * bx;
+				var v_tx = ay - by;
+				var v_ty = bx - ax;
+				var v_A = -by * cx1 + ay * (-bx + cx1) + ax * (by - cy1) + bx * cy1;
+				if(ax > bx) {
+					if(ax > cx1) {
+						var ii_min8 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max8 = Math.ceil(ax);
+						var this25 = new pixelimage_iter_IntIterStart(ii_min8,ii_max8);
+						v_xIter3 = this25;
+					} else {
+						var ii_min9 = Math.floor(bx);
+						var ii_max9 = Math.ceil(cx1);
+						var this26 = new pixelimage_iter_IntIterStart(ii_min9,ii_max9);
+						v_xIter3 = this26;
+					}
+				} else if(bx > cx1) {
+					var ii_min10 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max10 = Math.ceil(bx);
+					var this27 = new pixelimage_iter_IntIterStart(ii_min10,ii_max10);
+					v_xIter3 = this27;
+				} else {
+					var ii_min11 = Math.floor(ax);
+					var ii_max11 = Math.ceil(cx1);
+					var this28 = new pixelimage_iter_IntIterStart(ii_min11,ii_max11);
+					v_xIter3 = this28;
+				}
+				if(ay > by) {
+					if(ay > cy1) {
+						var ii_min12 = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max12 = Math.ceil(ay);
+						var this29 = new pixelimage_iter_IntIterStart(ii_min12,ii_max12);
+						v_yIter3 = this29;
+					} else {
+						var ii_min13 = Math.floor(by);
+						var ii_max13 = Math.ceil(cy1);
+						var this30 = new pixelimage_iter_IntIterStart(ii_min13,ii_max13);
+						v_yIter3 = this30;
+					}
+				} else if(by > cy1) {
+					var ii_min14 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max14 = Math.ceil(by);
+					var this31 = new pixelimage_iter_IntIterStart(ii_min14,ii_max14);
+					v_yIter3 = this31;
+				} else {
+					var ii_min15 = Math.floor(ay);
+					var ii_max15 = Math.ceil(cy1);
+					var this32 = new pixelimage_iter_IntIterStart(ii_min15,ii_max15);
+					v_yIter3 = this32;
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		}
+		if(this.rotation == 0) {
+			var x = this.centreX - this.radiusX | 0;
+			var y = this.centreY - this.radiusY | 0;
+			var _g = 0;
+			var _g1 = temp.height;
+			while(_g < _g1) {
+				var dy = _g++;
+				var _g2 = 0;
+				var _g3 = temp.width;
+				while(_g2 < _g3) {
+					var dx = _g2++;
+					var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+					var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					if(temp.useMask && temp.mask != null) {
+						var this1 = temp.mask;
+						var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+						var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						var maskPixel = this2;
+						var this3 = col;
+						var this4 = this3;
+						if(maskPixel == 0) {
+							var this5 = this4;
+							col = this5;
+						} else {
+							var this6 = maskPixel >> 24 & 255;
+							var m0 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = maskPixel >> 16 & 255;
+							var m1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = maskPixel >> 8 & 255;
+							var m2 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = maskPixel & 255;
+							var m3 = this9 == 0 ? 0. : this9 / 255;
+							var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+							var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+							var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+							var ch3 = (1. - m3) * (this4 & 255) | 0;
+							col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+						}
+					}
+					if(col != 0) {
+						var x1 = x + dx;
+						var y1 = y + dy;
+						var this10 = col;
+						var c2 = this10;
+						if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+							var this11 = pixelImage.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = col >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = col >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = col >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = col & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+						}
+					}
+				}
+			}
+		} else {
+			var x = this.centreX - this.radiusX - rDif | 0;
+			var y = this.centreY - this.radiusY - rDif | 0;
+			var _g = 0;
+			var _g1 = temp.height;
+			while(_g < _g1) {
+				var dy = _g++;
+				var _g2 = 0;
+				var _g3 = temp.width;
+				while(_g2 < _g3) {
+					var dx = _g2++;
+					var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+					var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					if(temp.useMask && temp.mask != null) {
+						var this1 = temp.mask;
+						var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+						var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						var maskPixel = this2;
+						var this3 = col;
+						var this4 = this3;
+						if(maskPixel == 0) {
+							var this5 = this4;
+							col = this5;
+						} else {
+							var this6 = maskPixel >> 24 & 255;
+							var m0 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = maskPixel >> 16 & 255;
+							var m1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = maskPixel >> 8 & 255;
+							var m2 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = maskPixel & 255;
+							var m3 = this9 == 0 ? 0. : this9 / 255;
+							var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+							var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+							var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+							var ch3 = (1. - m3) * (this4 & 255) | 0;
+							col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+						}
+					}
+					if(col != 0) {
+						var x1 = x + dx;
+						var y1 = y + dy;
+						var this10 = col;
+						var c2 = this10;
+						if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+							var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+							var this11 = pixelImage.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = col >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = col >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = col >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = col & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+						}
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_gradient_EllipseRadialGradient
+});
 var pixelimage_triGML_gradient_PathElementThickGradient = function(opacity,visibility,strokeTopColor,strokeBottomColor,strokeWidth,strokeDashGapArray,fill,pathData,translateX,translateY,scaleX,scaleY) {
 	if(scaleY == null) {
 		scaleY = 1.;
@@ -16285,17 +21298,21 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 			var colorB = this.strokeTopColor;
 			var colorC = this.strokeBottomColor;
 			var colorD = this.strokeBottomColor;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
 			var o = y2 * this.scaleY + this.translateY - py;
 			var a = x2 * this.scaleX + this.translateX - px;
 			var h = Math.pow(o * o + a * a,0.5);
 			var theta = Math.atan2(o,a);
-			var hasHit = false;
+			var hasHit1 = hasHit;
 			var debugCorners = false;
 			if(debugCorners == null) {
 				debugCorners = false;
 			}
-			if(hasHit == null) {
-				hasHit = false;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var sin = Math.sin(theta);
 			var cos = Math.cos(theta);
@@ -16523,1500 +21540,9 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 					}
 				}
 			}
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = true;
-			}
 			var hasHit = hasHit1;
 			if(hasHit == null) {
 				hasHit = false;
-			}
-			var aA = colorB >> 24 & 255;
-			var rA = colorB >> 16 & 255;
-			var gA = colorB >> 8 & 255;
-			var bA = colorB & 255;
-			var aB = colorA >> 24 & 255;
-			var rB = colorA >> 16 & 255;
-			var gB = colorA >> 8 & 255;
-			var bB = colorA & 255;
-			var aC = colorD >> 24 & 255;
-			var rC = colorD >> 16 & 255;
-			var gC = colorD >> 8 & 255;
-			var bC = colorD & 255;
-			var bcx = bx - dx;
-			var bcy = by - dy;
-			var acx = ax - dx;
-			var acy = ay - dy;
-			var dot11 = bcx * bcx + bcy * bcy;
-			var dot12 = bcx * acx + bcy * acy;
-			var dot22 = acx * acx + acy * acy;
-			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-			var this2;
-			if(dx > bx) {
-				if(dx > ax) {
-					var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
-					var ii_max = Math.ceil(dx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min = Math.floor(bx);
-					var ii_max = Math.ceil(ax);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				}
-			} else if(bx > ax) {
-				var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
-				var ii_max = Math.ceil(bx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			} else {
-				var ii_min = Math.floor(dx);
-				var ii_max = Math.ceil(ax);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			}
-			var _g_min = this2.start;
-			var _g_max = this2.max;
-			while(_g_min < _g_max) {
-				var px = _g_min++;
-				var pcx = px - dx;
-				var this2;
-				if(dy > by) {
-					if(dy > ay) {
-						var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
-						var ii_max = Math.ceil(dy);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					} else {
-						var ii_min1 = Math.floor(by);
-						var ii_max1 = Math.ceil(ay);
-						var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-						this2 = this4;
-					}
-				} else if(by > ay) {
-					var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
-					var ii_max2 = Math.ceil(by);
-					var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-					this2 = this5;
-				} else {
-					var ii_min3 = Math.floor(dy);
-					var ii_max3 = Math.ceil(ay);
-					var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-					this2 = this6;
-				}
-				var _g_min1 = this2.start;
-				var _g_max1 = this2.max;
-				while(_g_min1 < _g_max1) {
-					var py = _g_min1++;
-					var pcy = py - dy;
-					var dot31 = pcx * bcx + pcy * bcy;
-					var dot32 = pcx * acx + pcy * acy;
-					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-					var ratioC = 1.0 - ratioB - ratioA;
-					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-						if(i > 255) {
-							i = 255;
-						}
-						if(i < 0) {
-							i = 0;
-						}
-						var this7 = i;
-						var a = this7;
-						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-						if(i1 > 255) {
-							i1 = 255;
-						}
-						if(i1 < 0) {
-							i1 = 0;
-						}
-						var this8 = i1;
-						var r = this8;
-						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-						if(i2 > 255) {
-							i2 = 255;
-						}
-						if(i2 < 0) {
-							i2 = 0;
-						}
-						var this9 = i2;
-						var g = this9;
-						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-						if(i3 > 255) {
-							i3 = 255;
-						}
-						if(i3 < 0) {
-							i3 = 0;
-						}
-						var this10 = i3;
-						var b = this10;
-						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-						if(this1.transparent && a < 254) {
-							var this11 = this1.image[location];
-							var this12 = this11;
-							var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-							var rhs = a << 24 | r << 16 | g << 8 | b;
-							var this13 = old >> 24 & 255;
-							var a1 = this13 == 0 ? 0. : this13 / 255;
-							var this14 = old >> 16 & 255;
-							var r1 = this14 == 0 ? 0. : this14 / 255;
-							var this15 = old >> 8 & 255;
-							var g1 = this15 == 0 ? 0. : this15 / 255;
-							var this16 = old & 255;
-							var b1 = this16 == 0 ? 0. : this16 / 255;
-							var this17 = rhs >> 24 & 255;
-							var a2 = this17 == 0 ? 0. : this17 / 255;
-							var this18 = rhs >> 16 & 255;
-							var r2 = this18 == 0 ? 0. : this18 / 255;
-							var this19 = rhs >> 8 & 255;
-							var g2 = this19 == 0 ? 0. : this19 / 255;
-							var this20 = rhs & 255;
-							var b2 = this20 == 0 ? 0. : this20 / 255;
-							var a3 = a1 * (1 - a2);
-							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-							var a4 = 255 * (a3 + a2) | 0;
-							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-						} else {
-							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-						}
-					}
-				}
-			}
-			if(hasHit == false) {
-				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
-			}
-			var aA = colorC >> 24 & 255;
-			var rA = colorC >> 16 & 255;
-			var gA = colorC >> 8 & 255;
-			var bA = colorC & 255;
-			var aB = colorB >> 24 & 255;
-			var rB = colorB >> 16 & 255;
-			var gB = colorB >> 8 & 255;
-			var bB = colorB & 255;
-			var aC = colorD >> 24 & 255;
-			var rC = colorD >> 16 & 255;
-			var gC = colorD >> 8 & 255;
-			var bC = colorD & 255;
-			var bcx = cx - dx;
-			var bcy = cy - dy;
-			var acx = bx - dx;
-			var acy = by - dy;
-			var dot11 = bcx * bcx + bcy * bcy;
-			var dot12 = bcx * acx + bcy * acy;
-			var dot22 = acx * acx + acy * acy;
-			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-			var this2;
-			if(dx > cx) {
-				if(dx > bx) {
-					var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
-					var ii_max = Math.ceil(dx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min = Math.floor(cx);
-					var ii_max = Math.ceil(bx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				}
-			} else if(cx > bx) {
-				var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
-				var ii_max = Math.ceil(cx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			} else {
-				var ii_min = Math.floor(dx);
-				var ii_max = Math.ceil(bx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			}
-			var _g_min = this2.start;
-			var _g_max = this2.max;
-			while(_g_min < _g_max) {
-				var px = _g_min++;
-				var pcx = px - dx;
-				var this2;
-				if(dy > cy) {
-					if(dy > by) {
-						var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
-						var ii_max = Math.ceil(dy);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					} else {
-						var ii_min1 = Math.floor(cy);
-						var ii_max1 = Math.ceil(by);
-						var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-						this2 = this4;
-					}
-				} else if(cy > by) {
-					var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
-					var ii_max2 = Math.ceil(cy);
-					var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-					this2 = this5;
-				} else {
-					var ii_min3 = Math.floor(dy);
-					var ii_max3 = Math.ceil(by);
-					var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-					this2 = this6;
-				}
-				var _g_min1 = this2.start;
-				var _g_max1 = this2.max;
-				while(_g_min1 < _g_max1) {
-					var py = _g_min1++;
-					var pcy = py - dy;
-					var dot31 = pcx * bcx + pcy * bcy;
-					var dot32 = pcx * acx + pcy * acy;
-					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-					var ratioC = 1.0 - ratioB - ratioA;
-					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-						if(i > 255) {
-							i = 255;
-						}
-						if(i < 0) {
-							i = 0;
-						}
-						var this7 = i;
-						var a = this7;
-						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-						if(i1 > 255) {
-							i1 = 255;
-						}
-						if(i1 < 0) {
-							i1 = 0;
-						}
-						var this8 = i1;
-						var r = this8;
-						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-						if(i2 > 255) {
-							i2 = 255;
-						}
-						if(i2 < 0) {
-							i2 = 0;
-						}
-						var this9 = i2;
-						var g = this9;
-						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-						if(i3 > 255) {
-							i3 = 255;
-						}
-						if(i3 < 0) {
-							i3 = 0;
-						}
-						var this10 = i3;
-						var b = this10;
-						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-						if(this1.transparent && a < 254) {
-							var this11 = this1.image[location];
-							var this12 = this11;
-							var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-							var rhs = a << 24 | r << 16 | g << 8 | b;
-							var this13 = old >> 24 & 255;
-							var a1 = this13 == 0 ? 0. : this13 / 255;
-							var this14 = old >> 16 & 255;
-							var r1 = this14 == 0 ? 0. : this14 / 255;
-							var this15 = old >> 8 & 255;
-							var g1 = this15 == 0 ? 0. : this15 / 255;
-							var this16 = old & 255;
-							var b1 = this16 == 0 ? 0. : this16 / 255;
-							var this17 = rhs >> 24 & 255;
-							var a2 = this17 == 0 ? 0. : this17 / 255;
-							var this18 = rhs >> 16 & 255;
-							var r2 = this18 == 0 ? 0. : this18 / 255;
-							var this19 = rhs >> 8 & 255;
-							var g2 = this19 == 0 ? 0. : this19 / 255;
-							var this20 = rhs & 255;
-							var b2 = this20 == 0 ? 0. : this20 / 255;
-							var a3 = a1 * (1 - a2);
-							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-							var a4 = 255 * (a3 + a2) | 0;
-							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-						} else {
-							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-						}
-					}
-				}
-			}
-			var v_yIter3;
-			var v_xIter3;
-			var ax1 = bx;
-			var ay1 = by;
-			var bx1 = cx;
-			var by1 = cy;
-			var cx1 = dx;
-			var cy1 = dy;
-			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-			if(!adjustWinding) {
-				var bx_ = bx1;
-				var by_ = by1;
-				bx1 = cx1;
-				by1 = cy1;
-				cx1 = bx_;
-				cy1 = by_;
-			}
-			var v_ax = ax1;
-			var v_ay = ay1;
-			var v_bx = bx1;
-			var v_by = by1;
-			var v_cx = cx1;
-			var v_cy = cy1;
-			var v_s0 = ay1 * cx1 - ax1 * cy1;
-			var v_sx = cy1 - ay1;
-			var v_sy = ax1 - cx1;
-			var v_t0 = ax1 * by1 - ay1 * bx1;
-			var v_tx = ay1 - by1;
-			var v_ty = bx1 - ax1;
-			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-			if(ax1 > bx1) {
-				if(ax1 > cx1) {
-					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-					var ii_max = Math.ceil(ax1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(bx1);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-			} else if(bx1 > cx1) {
-				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-				var ii_max = Math.ceil(bx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ax1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-			if(ay1 > by1) {
-				if(ay1 > cy1) {
-					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-					var ii_max = Math.ceil(ay1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(by1);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-			} else if(by1 > cy1) {
-				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-				var ii_max = Math.ceil(by1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(ay1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-			var tmp;
-			if(hasHit1 == false) {
-				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
-				tmp = v;
-			} else {
-				tmp = null;
-			}
-			this.info = tmp;
-			if(this.info != null && oldInfo != null) {
-				var this1 = this.temp;
-				var ax = oldInfo.bx * this.scaleX + this.translateX;
-				var ay = oldInfo.by * this.scaleY + this.translateY;
-				var colorA = this.strokeTopColor;
-				var bx = this.info.ax * this.scaleX + this.translateX;
-				var by = this.info.ay * this.scaleY + this.translateY;
-				var colorB = this.strokeTopColor;
-				var cx = this.info.dx * this.scaleX + this.translateX;
-				var cy = this.info.dy * this.scaleY + this.translateY;
-				var colorC = this.strokeBottomColor;
-				var dx = oldInfo.cx * this.scaleX + this.translateX;
-				var dy = oldInfo.cy * this.scaleY + this.translateY;
-				var colorD = this.strokeBottomColor;
-				var hasHit = false;
-				if(hasHit == null) {
-					hasHit = true;
-				}
-				var hasHit1 = hasHit;
-				if(hasHit1 == null) {
-					hasHit1 = false;
-				}
-				var aA = colorB >> 24 & 255;
-				var rA = colorB >> 16 & 255;
-				var gA = colorB >> 8 & 255;
-				var bA = colorB & 255;
-				var aB = colorA >> 24 & 255;
-				var rB = colorA >> 16 & 255;
-				var gB = colorA >> 8 & 255;
-				var bB = colorA & 255;
-				var aC = colorD >> 24 & 255;
-				var rC = colorD >> 16 & 255;
-				var gC = colorD >> 8 & 255;
-				var bC = colorD & 255;
-				var bcx = bx - dx;
-				var bcy = by - dy;
-				var acx = ax - dx;
-				var acy = ay - dy;
-				var dot11 = bcx * bcx + bcy * bcy;
-				var dot12 = bcx * acx + bcy * acy;
-				var dot22 = acx * acx + acy * acy;
-				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-				var this2;
-				if(dx > bx) {
-					if(dx > ax) {
-						var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
-						var ii_max = Math.ceil(dx);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					} else {
-						var ii_min = Math.floor(bx);
-						var ii_max = Math.ceil(ax);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					}
-				} else if(bx > ax) {
-					var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
-					var ii_max = Math.ceil(bx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min = Math.floor(dx);
-					var ii_max = Math.ceil(ax);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				}
-				var _g_min = this2.start;
-				var _g_max = this2.max;
-				while(_g_min < _g_max) {
-					var px = _g_min++;
-					var pcx = px - dx;
-					var this2;
-					if(dy > by) {
-						if(dy > ay) {
-							var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
-							var ii_max = Math.ceil(dy);
-							var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-							this2 = this3;
-						} else {
-							var ii_min1 = Math.floor(by);
-							var ii_max1 = Math.ceil(ay);
-							var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-							this2 = this4;
-						}
-					} else if(by > ay) {
-						var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
-						var ii_max2 = Math.ceil(by);
-						var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-						this2 = this5;
-					} else {
-						var ii_min3 = Math.floor(dy);
-						var ii_max3 = Math.ceil(ay);
-						var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-						this2 = this6;
-					}
-					var _g_min1 = this2.start;
-					var _g_max1 = this2.max;
-					while(_g_min1 < _g_max1) {
-						var py = _g_min1++;
-						var pcy = py - dy;
-						var dot31 = pcx * bcx + pcy * bcy;
-						var dot32 = pcx * acx + pcy * acy;
-						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-						var ratioC = 1.0 - ratioB - ratioA;
-						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-							if(i > 255) {
-								i = 255;
-							}
-							if(i < 0) {
-								i = 0;
-							}
-							var this7 = i;
-							var a = this7;
-							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-							if(i1 > 255) {
-								i1 = 255;
-							}
-							if(i1 < 0) {
-								i1 = 0;
-							}
-							var this8 = i1;
-							var r = this8;
-							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-							if(i2 > 255) {
-								i2 = 255;
-							}
-							if(i2 < 0) {
-								i2 = 0;
-							}
-							var this9 = i2;
-							var g = this9;
-							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-							if(i3 > 255) {
-								i3 = 255;
-							}
-							if(i3 < 0) {
-								i3 = 0;
-							}
-							var this10 = i3;
-							var b = this10;
-							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-							if(this1.transparent && a < 254) {
-								var this11 = this1.image[location];
-								var this12 = this11;
-								var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-								var rhs = a << 24 | r << 16 | g << 8 | b;
-								var this13 = old >> 24 & 255;
-								var a1 = this13 == 0 ? 0. : this13 / 255;
-								var this14 = old >> 16 & 255;
-								var r1 = this14 == 0 ? 0. : this14 / 255;
-								var this15 = old >> 8 & 255;
-								var g1 = this15 == 0 ? 0. : this15 / 255;
-								var this16 = old & 255;
-								var b1 = this16 == 0 ? 0. : this16 / 255;
-								var this17 = rhs >> 24 & 255;
-								var a2 = this17 == 0 ? 0. : this17 / 255;
-								var this18 = rhs >> 16 & 255;
-								var r2 = this18 == 0 ? 0. : this18 / 255;
-								var this19 = rhs >> 8 & 255;
-								var g2 = this19 == 0 ? 0. : this19 / 255;
-								var this20 = rhs & 255;
-								var b2 = this20 == 0 ? 0. : this20 / 255;
-								var a3 = a1 * (1 - a2);
-								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-								var a4 = 255 * (a3 + a2) | 0;
-								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-							} else {
-								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-							}
-						}
-					}
-				}
-				if(hasHit1 == false) {
-					var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
-				}
-				var aA = colorC >> 24 & 255;
-				var rA = colorC >> 16 & 255;
-				var gA = colorC >> 8 & 255;
-				var bA = colorC & 255;
-				var aB = colorB >> 24 & 255;
-				var rB = colorB >> 16 & 255;
-				var gB = colorB >> 8 & 255;
-				var bB = colorB & 255;
-				var aC = colorD >> 24 & 255;
-				var rC = colorD >> 16 & 255;
-				var gC = colorD >> 8 & 255;
-				var bC = colorD & 255;
-				var bcx = cx - dx;
-				var bcy = cy - dy;
-				var acx = bx - dx;
-				var acy = by - dy;
-				var dot11 = bcx * bcx + bcy * bcy;
-				var dot12 = bcx * acx + bcy * acy;
-				var dot22 = acx * acx + acy * acy;
-				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-				var this2;
-				if(dx > cx) {
-					if(dx > bx) {
-						var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
-						var ii_max = Math.ceil(dx);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					} else {
-						var ii_min = Math.floor(cx);
-						var ii_max = Math.ceil(bx);
-						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						this2 = this3;
-					}
-				} else if(cx > bx) {
-					var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
-					var ii_max = Math.ceil(cx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min = Math.floor(dx);
-					var ii_max = Math.ceil(bx);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				}
-				var _g_min = this2.start;
-				var _g_max = this2.max;
-				while(_g_min < _g_max) {
-					var px = _g_min++;
-					var pcx = px - dx;
-					var this2;
-					if(dy > cy) {
-						if(dy > by) {
-							var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
-							var ii_max = Math.ceil(dy);
-							var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-							this2 = this3;
-						} else {
-							var ii_min1 = Math.floor(cy);
-							var ii_max1 = Math.ceil(by);
-							var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-							this2 = this4;
-						}
-					} else if(cy > by) {
-						var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
-						var ii_max2 = Math.ceil(cy);
-						var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-						this2 = this5;
-					} else {
-						var ii_min3 = Math.floor(dy);
-						var ii_max3 = Math.ceil(by);
-						var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-						this2 = this6;
-					}
-					var _g_min1 = this2.start;
-					var _g_max1 = this2.max;
-					while(_g_min1 < _g_max1) {
-						var py = _g_min1++;
-						var pcy = py - dy;
-						var dot31 = pcx * bcx + pcy * bcy;
-						var dot32 = pcx * acx + pcy * acy;
-						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-						var ratioC = 1.0 - ratioB - ratioA;
-						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-							if(i > 255) {
-								i = 255;
-							}
-							if(i < 0) {
-								i = 0;
-							}
-							var this7 = i;
-							var a = this7;
-							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-							if(i1 > 255) {
-								i1 = 255;
-							}
-							if(i1 < 0) {
-								i1 = 0;
-							}
-							var this8 = i1;
-							var r = this8;
-							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-							if(i2 > 255) {
-								i2 = 255;
-							}
-							if(i2 < 0) {
-								i2 = 0;
-							}
-							var this9 = i2;
-							var g = this9;
-							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-							if(i3 > 255) {
-								i3 = 255;
-							}
-							if(i3 < 0) {
-								i3 = 0;
-							}
-							var this10 = i3;
-							var b = this10;
-							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-							if(this1.transparent && a < 254) {
-								var this11 = this1.image[location];
-								var this12 = this11;
-								var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-								var rhs = a << 24 | r << 16 | g << 8 | b;
-								var this13 = old >> 24 & 255;
-								var a1 = this13 == 0 ? 0. : this13 / 255;
-								var this14 = old >> 16 & 255;
-								var r1 = this14 == 0 ? 0. : this14 / 255;
-								var this15 = old >> 8 & 255;
-								var g1 = this15 == 0 ? 0. : this15 / 255;
-								var this16 = old & 255;
-								var b1 = this16 == 0 ? 0. : this16 / 255;
-								var this17 = rhs >> 24 & 255;
-								var a2 = this17 == 0 ? 0. : this17 / 255;
-								var this18 = rhs >> 16 & 255;
-								var r2 = this18 == 0 ? 0. : this18 / 255;
-								var this19 = rhs >> 8 & 255;
-								var g2 = this19 == 0 ? 0. : this19 / 255;
-								var this20 = rhs & 255;
-								var b2 = this20 == 0 ? 0. : this20 / 255;
-								var a3 = a1 * (1 - a2);
-								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-								var a4 = 255 * (a3 + a2) | 0;
-								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-							} else {
-								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-							}
-						}
-					}
-				}
-				var v_yIter3;
-				var v_xIter3;
-				var ax1 = bx;
-				var ay1 = by;
-				var bx1 = cx;
-				var by1 = cy;
-				var cx1 = dx;
-				var cy1 = dy;
-				var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-				if(!adjustWinding) {
-					var bx_ = bx1;
-					var by_ = by1;
-					bx1 = cx1;
-					by1 = cy1;
-					cx1 = bx_;
-					cy1 = by_;
-				}
-				var v_ax = ax1;
-				var v_ay = ay1;
-				var v_bx = bx1;
-				var v_by = by1;
-				var v_cx = cx1;
-				var v_cy = cy1;
-				var v_s0 = ay1 * cx1 - ax1 * cy1;
-				var v_sx = cy1 - ay1;
-				var v_sy = ax1 - cx1;
-				var v_t0 = ax1 * by1 - ay1 * bx1;
-				var v_tx = ay1 - by1;
-				var v_ty = bx1 - ax1;
-				var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-				if(ax1 > bx1) {
-					if(ax1 > cx1) {
-						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-						var ii_max = Math.ceil(ax1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					} else {
-						var ii_min = Math.floor(bx1);
-						var ii_max = Math.ceil(cx1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_xIter3 = this1;
-					}
-				} else if(bx1 > cx1) {
-					var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-					var ii_max = Math.ceil(bx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ax1);
-					var ii_max = Math.ceil(cx1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_xIter3 = this1;
-				}
-				if(ay1 > by1) {
-					if(ay1 > cy1) {
-						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-						var ii_max = Math.ceil(ay1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					} else {
-						var ii_min = Math.floor(by1);
-						var ii_max = Math.ceil(cy1);
-						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-						v_yIter3 = this1;
-					}
-				} else if(by1 > cy1) {
-					var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-					var ii_max = Math.ceil(by1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				} else {
-					var ii_min = Math.floor(ay1);
-					var ii_max = Math.ceil(cy1);
-					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					v_yIter3 = this1;
-				}
-				if(hasHit == false) {
-					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
-				}
-			}
-		}
-		this.toggleDraw = !this.toggleDraw;
-		this.x0 = x2;
-		this.y0 = y2;
-	}
-	,lineTo: function(x2,y2) {
-		var oldInfo = this.info;
-		var this1 = this.temp;
-		var px = this.x0 * this.scaleX + this.translateX;
-		var py = this.y0 * this.scaleY + this.translateY;
-		var colorA = this.strokeTopColor;
-		var colorB = this.strokeTopColor;
-		var colorC = this.strokeBottomColor;
-		var colorD = this.strokeBottomColor;
-		var o = y2 * this.scaleY + this.translateY - py;
-		var a = x2 * this.scaleX + this.translateX - px;
-		var h = Math.pow(o * o + a * a,0.5);
-		var theta = Math.atan2(o,a);
-		var hasHit = false;
-		var debugCorners = false;
-		if(debugCorners == null) {
-			debugCorners = false;
-		}
-		if(hasHit == null) {
-			hasHit = false;
-		}
-		var sin = Math.sin(theta);
-		var cos = Math.cos(theta);
-		var radius = this.strokeWidth / 2;
-		var dx = 0.1;
-		var dy = radius;
-		var cx = h;
-		var cy = radius;
-		var bx = h;
-		var by = -radius;
-		var ax = 0.1;
-		var ay = -radius;
-		var temp = 0.;
-		temp = px + (ax * cos - ay * sin);
-		ay = py + (ay * cos + ax * sin);
-		ax = temp;
-		temp = px + (bx * cos - by * sin);
-		by = py + (by * cos + bx * sin);
-		bx = temp;
-		temp = px + (cx * cos - cy * sin);
-		cy = py + (cy * cos + cx * sin);
-		cx = temp;
-		temp = px + (dx * cos - dy * sin);
-		dy = py + (dy * cos + dx * sin);
-		dx = temp;
-		if(debugCorners) {
-			var x = ax - 6.;
-			var y = ay - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = colorA;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = colorA >> 24 & 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = colorA >> 16 & 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = colorA >> 8 & 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = colorA & 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = bx - 6.;
-			var y = by - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = colorB;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = colorB >> 24 & 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = colorB >> 16 & 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = colorB >> 8 & 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = colorB & 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = cx - 6.;
-			var y = cy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = colorC;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = colorC >> 24 & 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = colorC >> 16 & 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = colorC >> 8 & 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = colorC & 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-			var x = dx - 6.;
-			var y = dy - 6.;
-			var p = x | 0;
-			var xx = p;
-			var q = y | 0;
-			var maxX = x + 12 | 0;
-			var maxY = y + 12 | 0;
-			while(true) {
-				var x = p++;
-				var this2 = colorD;
-				var c = this2;
-				if((c >> 24 & 255) < 254 && this1.transparent) {
-					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
-					var this3 = this1.image[location];
-					var this4 = this3;
-					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
-					var this6 = this5 >> 24 & 255;
-					var a1 = this6 == 0 ? 0. : this6 / 255;
-					var this7 = this5 >> 16 & 255;
-					var r1 = this7 == 0 ? 0. : this7 / 255;
-					var this8 = this5 >> 8 & 255;
-					var g1 = this8 == 0 ? 0. : this8 / 255;
-					var this9 = this5 & 255;
-					var b1 = this9 == 0 ? 0. : this9 / 255;
-					var this10 = colorD >> 24 & 255;
-					var a2 = this10 == 0 ? 0. : this10 / 255;
-					var this11 = colorD >> 16 & 255;
-					var r2 = this11 == 0 ? 0. : this11 / 255;
-					var this12 = colorD >> 8 & 255;
-					var g2 = this12 == 0 ? 0. : this12 / 255;
-					var this13 = colorD & 255;
-					var b2 = this13 == 0 ? 0. : this13 / 255;
-					var a3 = a1 * (1 - a2);
-					var r = 255 * (r1 * a3 + r2 * a2) | 0;
-					var g = 255 * (g1 * a3 + g2 * a2) | 0;
-					var b = 255 * (b1 * a3 + b2 * a2) | 0;
-					var a = 255 * (a3 + a2) | 0;
-					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-				} else {
-					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
-				}
-				if(p > maxX) {
-					p = xx;
-					++q;
-				}
-				if(q > maxY) {
-					break;
-				}
-			}
-		}
-		var hasHit1 = hasHit;
-		if(hasHit1 == null) {
-			hasHit1 = true;
-		}
-		var hasHit = hasHit1;
-		if(hasHit == null) {
-			hasHit = false;
-		}
-		var aA = colorB >> 24 & 255;
-		var rA = colorB >> 16 & 255;
-		var gA = colorB >> 8 & 255;
-		var bA = colorB & 255;
-		var aB = colorA >> 24 & 255;
-		var rB = colorA >> 16 & 255;
-		var gB = colorA >> 8 & 255;
-		var bB = colorA & 255;
-		var aC = colorD >> 24 & 255;
-		var rC = colorD >> 16 & 255;
-		var gC = colorD >> 8 & 255;
-		var bC = colorD & 255;
-		var bcx = bx - dx;
-		var bcy = by - dy;
-		var acx = ax - dx;
-		var acy = ay - dy;
-		var dot11 = bcx * bcx + bcy * bcy;
-		var dot12 = bcx * acx + bcy * acy;
-		var dot22 = acx * acx + acy * acy;
-		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-		var this2;
-		if(dx > bx) {
-			if(dx > ax) {
-				var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
-				var ii_max = Math.ceil(dx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			} else {
-				var ii_min = Math.floor(bx);
-				var ii_max = Math.ceil(ax);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			}
-		} else if(bx > ax) {
-			var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
-			var ii_max = Math.ceil(bx);
-			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			this2 = this3;
-		} else {
-			var ii_min = Math.floor(dx);
-			var ii_max = Math.ceil(ax);
-			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			this2 = this3;
-		}
-		var _g_min = this2.start;
-		var _g_max = this2.max;
-		while(_g_min < _g_max) {
-			var px = _g_min++;
-			var pcx = px - dx;
-			var this2;
-			if(dy > by) {
-				if(dy > ay) {
-					var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
-					var ii_max = Math.ceil(dy);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min1 = Math.floor(by);
-					var ii_max1 = Math.ceil(ay);
-					var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-					this2 = this4;
-				}
-			} else if(by > ay) {
-				var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
-				var ii_max2 = Math.ceil(by);
-				var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-				this2 = this5;
-			} else {
-				var ii_min3 = Math.floor(dy);
-				var ii_max3 = Math.ceil(ay);
-				var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-				this2 = this6;
-			}
-			var _g_min1 = this2.start;
-			var _g_max1 = this2.max;
-			while(_g_min1 < _g_max1) {
-				var py = _g_min1++;
-				var pcy = py - dy;
-				var dot31 = pcx * bcx + pcy * bcy;
-				var dot32 = pcx * acx + pcy * acy;
-				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-				var ratioC = 1.0 - ratioB - ratioA;
-				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-					if(i > 255) {
-						i = 255;
-					}
-					if(i < 0) {
-						i = 0;
-					}
-					var this7 = i;
-					var a = this7;
-					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-					if(i1 > 255) {
-						i1 = 255;
-					}
-					if(i1 < 0) {
-						i1 = 0;
-					}
-					var this8 = i1;
-					var r = this8;
-					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-					if(i2 > 255) {
-						i2 = 255;
-					}
-					if(i2 < 0) {
-						i2 = 0;
-					}
-					var this9 = i2;
-					var g = this9;
-					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-					if(i3 > 255) {
-						i3 = 255;
-					}
-					if(i3 < 0) {
-						i3 = 0;
-					}
-					var this10 = i3;
-					var b = this10;
-					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-					if(this1.transparent && a < 254) {
-						var this11 = this1.image[location];
-						var this12 = this11;
-						var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-						var rhs = a << 24 | r << 16 | g << 8 | b;
-						var this13 = old >> 24 & 255;
-						var a1 = this13 == 0 ? 0. : this13 / 255;
-						var this14 = old >> 16 & 255;
-						var r1 = this14 == 0 ? 0. : this14 / 255;
-						var this15 = old >> 8 & 255;
-						var g1 = this15 == 0 ? 0. : this15 / 255;
-						var this16 = old & 255;
-						var b1 = this16 == 0 ? 0. : this16 / 255;
-						var this17 = rhs >> 24 & 255;
-						var a2 = this17 == 0 ? 0. : this17 / 255;
-						var this18 = rhs >> 16 & 255;
-						var r2 = this18 == 0 ? 0. : this18 / 255;
-						var this19 = rhs >> 8 & 255;
-						var g2 = this19 == 0 ? 0. : this19 / 255;
-						var this20 = rhs & 255;
-						var b2 = this20 == 0 ? 0. : this20 / 255;
-						var a3 = a1 * (1 - a2);
-						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a4 = 255 * (a3 + a2) | 0;
-						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-					}
-				}
-			}
-		}
-		if(hasHit == false) {
-			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
-		}
-		var aA = colorC >> 24 & 255;
-		var rA = colorC >> 16 & 255;
-		var gA = colorC >> 8 & 255;
-		var bA = colorC & 255;
-		var aB = colorB >> 24 & 255;
-		var rB = colorB >> 16 & 255;
-		var gB = colorB >> 8 & 255;
-		var bB = colorB & 255;
-		var aC = colorD >> 24 & 255;
-		var rC = colorD >> 16 & 255;
-		var gC = colorD >> 8 & 255;
-		var bC = colorD & 255;
-		var bcx = cx - dx;
-		var bcy = cy - dy;
-		var acx = bx - dx;
-		var acy = by - dy;
-		var dot11 = bcx * bcx + bcy * bcy;
-		var dot12 = bcx * acx + bcy * acy;
-		var dot22 = acx * acx + acy * acy;
-		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
-		var this2;
-		if(dx > cx) {
-			if(dx > bx) {
-				var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
-				var ii_max = Math.ceil(dx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			} else {
-				var ii_min = Math.floor(cx);
-				var ii_max = Math.ceil(bx);
-				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				this2 = this3;
-			}
-		} else if(cx > bx) {
-			var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
-			var ii_max = Math.ceil(cx);
-			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			this2 = this3;
-		} else {
-			var ii_min = Math.floor(dx);
-			var ii_max = Math.ceil(bx);
-			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			this2 = this3;
-		}
-		var _g_min = this2.start;
-		var _g_max = this2.max;
-		while(_g_min < _g_max) {
-			var px = _g_min++;
-			var pcx = px - dx;
-			var this2;
-			if(dy > cy) {
-				if(dy > by) {
-					var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
-					var ii_max = Math.ceil(dy);
-					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-					this2 = this3;
-				} else {
-					var ii_min1 = Math.floor(cy);
-					var ii_max1 = Math.ceil(by);
-					var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
-					this2 = this4;
-				}
-			} else if(cy > by) {
-				var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
-				var ii_max2 = Math.ceil(cy);
-				var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
-				this2 = this5;
-			} else {
-				var ii_min3 = Math.floor(dy);
-				var ii_max3 = Math.ceil(by);
-				var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
-				this2 = this6;
-			}
-			var _g_min1 = this2.start;
-			var _g_max1 = this2.max;
-			while(_g_min1 < _g_max1) {
-				var py = _g_min1++;
-				var pcy = py - dy;
-				var dot31 = pcx * bcx + pcy * bcy;
-				var dot32 = pcx * acx + pcy * acy;
-				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
-				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
-				var ratioC = 1.0 - ratioB - ratioA;
-				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
-					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
-					if(i > 255) {
-						i = 255;
-					}
-					if(i < 0) {
-						i = 0;
-					}
-					var this7 = i;
-					var a = this7;
-					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
-					if(i1 > 255) {
-						i1 = 255;
-					}
-					if(i1 < 0) {
-						i1 = 0;
-					}
-					var this8 = i1;
-					var r = this8;
-					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
-					if(i2 > 255) {
-						i2 = 255;
-					}
-					if(i2 < 0) {
-						i2 = 0;
-					}
-					var this9 = i2;
-					var g = this9;
-					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
-					if(i3 > 255) {
-						i3 = 255;
-					}
-					if(i3 < 0) {
-						i3 = 0;
-					}
-					var this10 = i3;
-					var b = this10;
-					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
-					if(this1.transparent && a < 254) {
-						var this11 = this1.image[location];
-						var this12 = this11;
-						var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
-						var rhs = a << 24 | r << 16 | g << 8 | b;
-						var this13 = old >> 24 & 255;
-						var a1 = this13 == 0 ? 0. : this13 / 255;
-						var this14 = old >> 16 & 255;
-						var r1 = this14 == 0 ? 0. : this14 / 255;
-						var this15 = old >> 8 & 255;
-						var g1 = this15 == 0 ? 0. : this15 / 255;
-						var this16 = old & 255;
-						var b1 = this16 == 0 ? 0. : this16 / 255;
-						var this17 = rhs >> 24 & 255;
-						var a2 = this17 == 0 ? 0. : this17 / 255;
-						var this18 = rhs >> 16 & 255;
-						var r2 = this18 == 0 ? 0. : this18 / 255;
-						var this19 = rhs >> 8 & 255;
-						var g2 = this19 == 0 ? 0. : this19 / 255;
-						var this20 = rhs & 255;
-						var b2 = this20 == 0 ? 0. : this20 / 255;
-						var a3 = a1 * (1 - a2);
-						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
-						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
-						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
-						var a4 = 255 * (a3 + a2) | 0;
-						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
-						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
-					} else {
-						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
-					}
-				}
-			}
-		}
-		var v_yIter3;
-		var v_xIter3;
-		var ax1 = bx;
-		var ay1 = by;
-		var bx1 = cx;
-		var by1 = cy;
-		var cx1 = dx;
-		var cy1 = dy;
-		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
-		if(!adjustWinding) {
-			var bx_ = bx1;
-			var by_ = by1;
-			bx1 = cx1;
-			by1 = cy1;
-			cx1 = bx_;
-			cy1 = by_;
-		}
-		var v_ax = ax1;
-		var v_ay = ay1;
-		var v_bx = bx1;
-		var v_by = by1;
-		var v_cx = cx1;
-		var v_cy = cy1;
-		var v_s0 = ay1 * cx1 - ax1 * cy1;
-		var v_sx = cy1 - ay1;
-		var v_sy = ax1 - cx1;
-		var v_t0 = ax1 * by1 - ay1 * bx1;
-		var v_tx = ay1 - by1;
-		var v_ty = bx1 - ax1;
-		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
-		if(ax1 > bx1) {
-			if(ax1 > cx1) {
-				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
-				var ii_max = Math.ceil(ax1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			} else {
-				var ii_min = Math.floor(bx1);
-				var ii_max = Math.ceil(cx1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_xIter3 = this1;
-			}
-		} else if(bx1 > cx1) {
-			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
-			var ii_max = Math.ceil(bx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ax1);
-			var ii_max = Math.ceil(cx1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_xIter3 = this1;
-		}
-		if(ay1 > by1) {
-			if(ay1 > cy1) {
-				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
-				var ii_max = Math.ceil(ay1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			} else {
-				var ii_min = Math.floor(by1);
-				var ii_max = Math.ceil(cy1);
-				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-				v_yIter3 = this1;
-			}
-		} else if(by1 > cy1) {
-			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
-			var ii_max = Math.ceil(by1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		} else {
-			var ii_min = Math.floor(ay1);
-			var ii_max = Math.ceil(cy1);
-			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-			v_yIter3 = this1;
-		}
-		var tmp;
-		if(hasHit1 == false) {
-			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
-			tmp = v;
-		} else {
-			tmp = null;
-		}
-		this.info = tmp;
-		if(this.info != null && oldInfo != null) {
-			var this1 = this.temp;
-			var ax = oldInfo.bx * this.scaleX + this.translateX;
-			var ay = oldInfo.by * this.scaleY + this.translateY;
-			var colorA = this.strokeTopColor;
-			var bx = this.info.ax * this.scaleX + this.translateX;
-			var by = this.info.ay * this.scaleY + this.translateY;
-			var colorB = this.strokeTopColor;
-			var cx = this.info.dx * this.scaleX + this.translateX;
-			var cy = this.info.dy * this.scaleY + this.translateY;
-			var colorC = this.strokeBottomColor;
-			var dx = oldInfo.cx * this.scaleX + this.translateX;
-			var dy = oldInfo.cy * this.scaleY + this.translateY;
-			var colorD = this.strokeBottomColor;
-			var hasHit = false;
-			if(hasHit == null) {
-				hasHit = true;
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
@@ -18411,7 +21937,1510 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 				v_yIter3 = this1;
 			}
+			var tmp;
+			if(hasHit == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
+			} else {
+				tmp = null;
+			}
+			this.info = tmp;
+			if(this.info != null && oldInfo != null) {
+				var this1 = this.temp;
+				var ax = oldInfo.bx * this.scaleX + this.translateX;
+				var ay = oldInfo.by * this.scaleY + this.translateY;
+				var colorA = this.strokeTopColor;
+				var bx = this.info.ax * this.scaleX + this.translateX;
+				var by = this.info.ay * this.scaleY + this.translateY;
+				var colorB = this.strokeTopColor;
+				var cx = this.info.dx * this.scaleX + this.translateX;
+				var cy = this.info.dy * this.scaleY + this.translateY;
+				var colorC = this.strokeBottomColor;
+				var dx = oldInfo.cx * this.scaleX + this.translateX;
+				var dy = oldInfo.cy * this.scaleY + this.translateY;
+				var colorD = this.strokeBottomColor;
+				var hasHit = true;
+				if(hasHit == null) {
+					hasHit = true;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var aA = colorB >> 24 & 255;
+				var rA = colorB >> 16 & 255;
+				var gA = colorB >> 8 & 255;
+				var bA = colorB & 255;
+				var aB = colorA >> 24 & 255;
+				var rB = colorA >> 16 & 255;
+				var gB = colorA >> 8 & 255;
+				var bB = colorA & 255;
+				var aC = colorD >> 24 & 255;
+				var rC = colorD >> 16 & 255;
+				var gC = colorD >> 8 & 255;
+				var bC = colorD & 255;
+				var bcx = bx - dx;
+				var bcy = by - dy;
+				var acx = ax - dx;
+				var acy = ay - dy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this2;
+				if(dx > bx) {
+					if(dx > ax) {
+						var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+						var ii_max = Math.ceil(dx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(bx);
+						var ii_max = Math.ceil(ax);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(bx > ax) {
+					var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(dx);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - dx;
+					var this2;
+					if(dy > by) {
+						if(dy > ay) {
+							var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+							var ii_max = Math.ceil(dy);
+							var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this2 = this3;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(ay);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							this2 = this4;
+						}
+					} else if(by > ay) {
+						var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+						var ii_max2 = Math.ceil(by);
+						var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						this2 = this5;
+					} else {
+						var ii_min3 = Math.floor(dy);
+						var ii_max3 = Math.ceil(ay);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						this2 = this6;
+					}
+					var _g_min1 = this2.start;
+					var _g_max1 = this2.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - dy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this7 = i;
+							var a = this7;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this8 = i1;
+							var r = this8;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this9 = i2;
+							var g = this9;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this10 = i3;
+							var b = this10;
+							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+							if(this1.transparent && a < 254) {
+								var this11 = this1.image[location];
+								var this12 = this11;
+								var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this13 = old >> 24 & 255;
+								var a1 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = old >> 16 & 255;
+								var r1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = old >> 8 & 255;
+								var g1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = old & 255;
+								var b1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = rhs >> 24 & 255;
+								var a2 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = rhs >> 16 & 255;
+								var r2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = rhs >> 8 & 255;
+								var g2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = rhs & 255;
+								var b2 = this20 == 0 ? 0. : this20 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				if(hasHit == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+				}
+				var aA = colorC >> 24 & 255;
+				var rA = colorC >> 16 & 255;
+				var gA = colorC >> 8 & 255;
+				var bA = colorC & 255;
+				var aB = colorB >> 24 & 255;
+				var rB = colorB >> 16 & 255;
+				var gB = colorB >> 8 & 255;
+				var bB = colorB & 255;
+				var aC = colorD >> 24 & 255;
+				var rC = colorD >> 16 & 255;
+				var gC = colorD >> 8 & 255;
+				var bC = colorD & 255;
+				var bcx = cx - dx;
+				var bcy = cy - dy;
+				var acx = bx - dx;
+				var acy = by - dy;
+				var dot11 = bcx * bcx + bcy * bcy;
+				var dot12 = bcx * acx + bcy * acy;
+				var dot22 = acx * acx + acy * acy;
+				var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+				var this2;
+				if(dx > cx) {
+					if(dx > bx) {
+						var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+						var ii_max = Math.ceil(dx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(cx);
+						var ii_max = Math.ceil(bx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(cx > bx) {
+					var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+					var ii_max = Math.ceil(cx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(dx);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var px = _g_min++;
+					var pcx = px - dx;
+					var this2;
+					if(dy > cy) {
+						if(dy > by) {
+							var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+							var ii_max = Math.ceil(dy);
+							var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							this2 = this3;
+						} else {
+							var ii_min1 = Math.floor(cy);
+							var ii_max1 = Math.ceil(by);
+							var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							this2 = this4;
+						}
+					} else if(cy > by) {
+						var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+						var ii_max2 = Math.ceil(cy);
+						var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						this2 = this5;
+					} else {
+						var ii_min3 = Math.floor(dy);
+						var ii_max3 = Math.ceil(by);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						this2 = this6;
+					}
+					var _g_min1 = this2.start;
+					var _g_max1 = this2.max;
+					while(_g_min1 < _g_max1) {
+						var py = _g_min1++;
+						var pcy = py - dy;
+						var dot31 = pcx * bcx + pcy * bcy;
+						var dot32 = pcx * acx + pcy * acy;
+						var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+						var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+						var ratioC = 1.0 - ratioB - ratioA;
+						if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+							var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+							if(i > 255) {
+								i = 255;
+							}
+							if(i < 0) {
+								i = 0;
+							}
+							var this7 = i;
+							var a = this7;
+							var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+							if(i1 > 255) {
+								i1 = 255;
+							}
+							if(i1 < 0) {
+								i1 = 0;
+							}
+							var this8 = i1;
+							var r = this8;
+							var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+							if(i2 > 255) {
+								i2 = 255;
+							}
+							if(i2 < 0) {
+								i2 = 0;
+							}
+							var this9 = i2;
+							var g = this9;
+							var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+							if(i3 > 255) {
+								i3 = 255;
+							}
+							if(i3 < 0) {
+								i3 = 0;
+							}
+							var this10 = i3;
+							var b = this10;
+							var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+							if(this1.transparent && a < 254) {
+								var this11 = this1.image[location];
+								var this12 = this11;
+								var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var rhs = a << 24 | r << 16 | g << 8 | b;
+								var this13 = old >> 24 & 255;
+								var a1 = this13 == 0 ? 0. : this13 / 255;
+								var this14 = old >> 16 & 255;
+								var r1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = old >> 8 & 255;
+								var g1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = old & 255;
+								var b1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = rhs >> 24 & 255;
+								var a2 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = rhs >> 16 & 255;
+								var r2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = rhs >> 8 & 255;
+								var g2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = rhs & 255;
+								var b2 = this20 == 0 ? 0. : this20 / 255;
+								var a3 = a1 * (1 - a2);
+								var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a4 = 255 * (a3 + a2) | 0;
+								var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+							}
+						}
+					}
+				}
+				var v_yIter3;
+				var v_xIter3;
+				var ax1 = bx;
+				var ay1 = by;
+				var bx1 = cx;
+				var by1 = cy;
+				var cx1 = dx;
+				var cy1 = dy;
+				var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var v_ax = ax1;
+				var v_ay = ay1;
+				var v_bx = bx1;
+				var v_by = by1;
+				var v_cx = cx1;
+				var v_cy = cy1;
+				var v_s0 = ay1 * cx1 - ax1 * cy1;
+				var v_sx = cy1 - ay1;
+				var v_sy = ax1 - cx1;
+				var v_t0 = ax1 * by1 - ay1 * bx1;
+				var v_tx = ay1 - by1;
+				var v_ty = bx1 - ax1;
+				var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+				if(ax1 > bx1) {
+					if(ax1 > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_xIter3 = this1;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+					var ii_max = Math.ceil(bx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ax1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+				if(ay1 > by1) {
+					if(ay1 > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						v_yIter3 = this1;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+					var ii_max = Math.ceil(by1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(ay1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+				if(hasHit1 == true) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				}
+			}
+		}
+		this.toggleDraw = !this.toggleDraw;
+		this.x0 = x2;
+		this.y0 = y2;
+	}
+	,lineTo: function(x2,y2) {
+		var oldInfo = this.info;
+		var this1 = this.temp;
+		var px = this.x0 * this.scaleX + this.translateX;
+		var py = this.y0 * this.scaleY + this.translateY;
+		var colorA = this.strokeTopColor;
+		var colorB = this.strokeTopColor;
+		var colorC = this.strokeBottomColor;
+		var colorD = this.strokeBottomColor;
+		var hasHit = true;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var o = y2 * this.scaleY + this.translateY - py;
+		var a = x2 * this.scaleX + this.translateX - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit1 = hasHit;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorA;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorA >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorA >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorA >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorA & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorB;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorB >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorB >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorB >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorB & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorC;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorC >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorC >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorC >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorC & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = colorD;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = colorD >> 24 & 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = colorD >> 16 & 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = colorD >> 8 & 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = colorD & 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var aA = colorB >> 24 & 255;
+		var rA = colorB >> 16 & 255;
+		var gA = colorB >> 8 & 255;
+		var bA = colorB & 255;
+		var aB = colorA >> 24 & 255;
+		var rB = colorA >> 16 & 255;
+		var gB = colorA >> 8 & 255;
+		var bB = colorA & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = bx - dx;
+		var bcy = by - dy;
+		var acx = ax - dx;
+		var acy = ay - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var this2;
+		if(dx > bx) {
+			if(dx > ax) {
+				var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+				var ii_max = Math.ceil(dx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(ax);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(bx > ax) {
+			var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+			var ii_max = Math.ceil(bx);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(dx);
+			var ii_max = Math.ceil(ax);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var px = _g_min++;
+			var pcx = px - dx;
+			var this2;
+			if(dy > by) {
+				if(dy > ay) {
+					var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+					var ii_max = Math.ceil(dy);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min1 = Math.floor(by);
+					var ii_max1 = Math.ceil(ay);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					this2 = this4;
+				}
+			} else if(by > ay) {
+				var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+				var ii_max2 = Math.ceil(by);
+				var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				this2 = this5;
+			} else {
+				var ii_min3 = Math.floor(dy);
+				var ii_max3 = Math.ceil(ay);
+				var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				this2 = this6;
+			}
+			var _g_min1 = this2.start;
+			var _g_max1 = this2.max;
+			while(_g_min1 < _g_max1) {
+				var py = _g_min1++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this7 = i;
+					var a = this7;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this8 = i1;
+					var r = this8;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this9 = i2;
+					var g = this9;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this10 = i3;
+					var b = this10;
+					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+					if(this1.transparent && a < 254) {
+						var this11 = this1.image[location];
+						var this12 = this11;
+						var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this13 = old >> 24 & 255;
+						var a1 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = old >> 16 & 255;
+						var r1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = old >> 8 & 255;
+						var g1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = old & 255;
+						var b1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = rhs >> 24 & 255;
+						var a2 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = rhs >> 16 & 255;
+						var r2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = rhs >> 8 & 255;
+						var g2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = rhs & 255;
+						var b2 = this20 == 0 ? 0. : this20 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+		}
+		var aA = colorC >> 24 & 255;
+		var rA = colorC >> 16 & 255;
+		var gA = colorC >> 8 & 255;
+		var bA = colorC & 255;
+		var aB = colorB >> 24 & 255;
+		var rB = colorB >> 16 & 255;
+		var gB = colorB >> 8 & 255;
+		var bB = colorB & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = cx - dx;
+		var bcy = cy - dy;
+		var acx = bx - dx;
+		var acy = by - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var this2;
+		if(dx > cx) {
+			if(dx > bx) {
+				var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+				var ii_max = Math.ceil(dx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(cx);
+				var ii_max = Math.ceil(bx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(cx > bx) {
+			var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+			var ii_max = Math.ceil(cx);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(dx);
+			var ii_max = Math.ceil(bx);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var px = _g_min++;
+			var pcx = px - dx;
+			var this2;
+			if(dy > cy) {
+				if(dy > by) {
+					var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+					var ii_max = Math.ceil(dy);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min1 = Math.floor(cy);
+					var ii_max1 = Math.ceil(by);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					this2 = this4;
+				}
+			} else if(cy > by) {
+				var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+				var ii_max2 = Math.ceil(cy);
+				var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				this2 = this5;
+			} else {
+				var ii_min3 = Math.floor(dy);
+				var ii_max3 = Math.ceil(by);
+				var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				this2 = this6;
+			}
+			var _g_min1 = this2.start;
+			var _g_max1 = this2.max;
+			while(_g_min1 < _g_max1) {
+				var py = _g_min1++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this7 = i;
+					var a = this7;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this8 = i1;
+					var r = this8;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this9 = i2;
+					var g = this9;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this10 = i3;
+					var b = this10;
+					var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+					if(this1.transparent && a < 254) {
+						var this11 = this1.image[location];
+						var this12 = this11;
+						var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this13 = old >> 24 & 255;
+						var a1 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = old >> 16 & 255;
+						var r1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = old >> 8 & 255;
+						var g1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = old & 255;
+						var b1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = rhs >> 24 & 255;
+						var a2 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = rhs >> 16 & 255;
+						var r2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = rhs >> 8 & 255;
+						var g2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = rhs & 255;
+						var b2 = this20 == 0 ? 0. : this20 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
+		var tmp;
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
+		} else {
+			tmp = null;
+		}
+		this.info = tmp;
+		if(this.info != null && oldInfo != null) {
+			var this1 = this.temp;
+			var ax = oldInfo.bx * this.scaleX + this.translateX;
+			var ay = oldInfo.by * this.scaleY + this.translateY;
+			var colorA = this.strokeTopColor;
+			var bx = this.info.ax * this.scaleX + this.translateX;
+			var by = this.info.ay * this.scaleY + this.translateY;
+			var colorB = this.strokeTopColor;
+			var cx = this.info.dx * this.scaleX + this.translateX;
+			var cy = this.info.dy * this.scaleY + this.translateY;
+			var colorC = this.strokeBottomColor;
+			var dx = oldInfo.cx * this.scaleX + this.translateX;
+			var dy = oldInfo.cy * this.scaleY + this.translateY;
+			var colorD = this.strokeBottomColor;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = true;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var aA = colorB >> 24 & 255;
+			var rA = colorB >> 16 & 255;
+			var gA = colorB >> 8 & 255;
+			var bA = colorB & 255;
+			var aB = colorA >> 24 & 255;
+			var rB = colorA >> 16 & 255;
+			var gB = colorA >> 8 & 255;
+			var bB = colorA & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = bx - dx;
+			var bcy = by - dy;
+			var acx = ax - dx;
+			var acy = ay - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this2;
+			if(dx > bx) {
+				if(dx > ax) {
+					var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+					var ii_max = Math.ceil(dx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx > ax) {
+				var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+				var ii_max = Math.ceil(bx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(ax);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var px = _g_min++;
+				var pcx = px - dx;
+				var this2;
+				if(dy > by) {
+					if(dy > ay) {
+						var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+						var ii_max = Math.ceil(dy);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(ay);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this2 = this4;
+					}
+				} else if(by > ay) {
+					var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(by);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this2 = this5;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(ay);
+					var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this2 = this6;
+				}
+				var _g_min1 = this2.start;
+				var _g_max1 = this2.max;
+				while(_g_min1 < _g_max1) {
+					var py = _g_min1++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this7 = i;
+						var a = this7;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this8 = i1;
+						var r = this8;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this9 = i2;
+						var g = this9;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this10 = i3;
+						var b = this10;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this11 = this1.image[location];
+							var this12 = this11;
+							var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this13 = old >> 24 & 255;
+							var a1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 16 & 255;
+							var r1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old >> 8 & 255;
+							var g1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = old & 255;
+							var b1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 24 & 255;
+							var a2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 16 & 255;
+							var r2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs >> 8 & 255;
+							var g2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = rhs & 255;
+							var b2 = this20 == 0 ? 0. : this20 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
 			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+			}
+			var aA = colorC >> 24 & 255;
+			var rA = colorC >> 16 & 255;
+			var gA = colorC >> 8 & 255;
+			var bA = colorC & 255;
+			var aB = colorB >> 24 & 255;
+			var rB = colorB >> 16 & 255;
+			var gB = colorB >> 8 & 255;
+			var bB = colorB & 255;
+			var aC = colorD >> 24 & 255;
+			var rC = colorD >> 16 & 255;
+			var gC = colorD >> 8 & 255;
+			var bC = colorD & 255;
+			var bcx = cx - dx;
+			var bcy = cy - dy;
+			var acx = bx - dx;
+			var acy = by - dy;
+			var dot11 = bcx * bcx + bcy * bcy;
+			var dot12 = bcx * acx + bcy * acy;
+			var dot22 = acx * acx + acy * acy;
+			var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+			var this2;
+			if(dx > cx) {
+				if(dx > bx) {
+					var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+					var ii_max = Math.ceil(dx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(cx);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(cx > bx) {
+				var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+				var ii_max = Math.ceil(cx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(dx);
+				var ii_max = Math.ceil(bx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var px = _g_min++;
+				var pcx = px - dx;
+				var this2;
+				if(dy > cy) {
+					if(dy > by) {
+						var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+						var ii_max = Math.ceil(dy);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min1 = Math.floor(cy);
+						var ii_max1 = Math.ceil(by);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						this2 = this4;
+					}
+				} else if(cy > by) {
+					var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+					var ii_max2 = Math.ceil(cy);
+					var this5 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					this2 = this5;
+				} else {
+					var ii_min3 = Math.floor(dy);
+					var ii_max3 = Math.ceil(by);
+					var this6 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					this2 = this6;
+				}
+				var _g_min1 = this2.start;
+				var _g_max1 = this2.max;
+				while(_g_min1 < _g_max1) {
+					var py = _g_min1++;
+					var pcy = py - dy;
+					var dot31 = pcx * bcx + pcy * bcy;
+					var dot32 = pcx * acx + pcy * acy;
+					var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+					var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+					var ratioC = 1.0 - ratioB - ratioA;
+					if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+						var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+						if(i > 255) {
+							i = 255;
+						}
+						if(i < 0) {
+							i = 0;
+						}
+						var this7 = i;
+						var a = this7;
+						var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+						if(i1 > 255) {
+							i1 = 255;
+						}
+						if(i1 < 0) {
+							i1 = 0;
+						}
+						var this8 = i1;
+						var r = this8;
+						var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+						if(i2 > 255) {
+							i2 = 255;
+						}
+						if(i2 < 0) {
+							i2 = 0;
+						}
+						var this9 = i2;
+						var g = this9;
+						var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+						if(i3 > 255) {
+							i3 = 255;
+						}
+						if(i3 < 0) {
+							i3 = 0;
+						}
+						var this10 = i3;
+						var b = this10;
+						var location = this1.useVirtualPos ? (py - this1.virtualY) * this1.width + px - this1.virtualX | 0 : py * this1.width + px | 0;
+						if(this1.transparent && a < 254) {
+							var this11 = this1.image[location];
+							var this12 = this11;
+							var old = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var rhs = a << 24 | r << 16 | g << 8 | b;
+							var this13 = old >> 24 & 255;
+							var a1 = this13 == 0 ? 0. : this13 / 255;
+							var this14 = old >> 16 & 255;
+							var r1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = old >> 8 & 255;
+							var g1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = old & 255;
+							var b1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = rhs >> 24 & 255;
+							var a2 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = rhs >> 16 & 255;
+							var r2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = rhs >> 8 & 255;
+							var g2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = rhs & 255;
+							var b2 = this20 == 0 ? 0. : this20 / 255;
+							var a3 = a1 * (1 - a2);
+							var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a4 = 255 * (a3 + a2) | 0;
+							var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[location] = this1.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+						}
+					}
+				}
+			}
+			var v_yIter3;
+			var v_xIter3;
+			var ax1 = bx;
+			var ay1 = by;
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var v_ax = ax1;
+			var v_ay = ay1;
+			var v_bx = bx1;
+			var v_by = by1;
+			var v_cx = cx1;
+			var v_cy = cy1;
+			var v_s0 = ay1 * cx1 - ax1 * cy1;
+			var v_sx = cy1 - ay1;
+			var v_sy = ax1 - cx1;
+			var v_t0 = ax1 * by1 - ay1 * bx1;
+			var v_tx = ay1 - by1;
+			var v_ty = bx1 - ax1;
+			var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+			if(ax1 > bx1) {
+				if(ax1 > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_xIter3 = this1;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+				var ii_max = Math.ceil(bx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ax1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+			if(ay1 > by1) {
+				if(ay1 > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					v_yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
@@ -18426,6 +23455,657 @@ pixelimage_triGML_gradient_PathElementThickGradient.prototype = $extend(pixelima
 		this.toggleDraw = true;
 	}
 	,__class__: pixelimage_triGML_gradient_PathElementThickGradient
+});
+var pixelimage_triGML_gradient_QuadGradient = function(opacity,visibility,x1,y1,color1,x2,y2,color2,x3,y3,color3,x4,y4,color4) {
+	if(color4 == null) {
+		color4 = -27392;
+	}
+	if(y4 == null) {
+		y4 = 0.;
+	}
+	if(x4 == null) {
+		x4 = 0.;
+	}
+	if(color3 == null) {
+		color3 = -16711745;
+	}
+	if(y3 == null) {
+		y3 = 0.;
+	}
+	if(x3 == null) {
+		x3 = 0.;
+	}
+	if(color2 == null) {
+		color2 = -65285;
+	}
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(color1 == null) {
+		color1 = -2490624;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_BasicGradient.call(this,opacity,visibility,[color1,color2,color3,color4]);
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.x3 = x3;
+	this.y3 = y3;
+	this.x4 = x4;
+	this.y4 = y4;
+};
+pixelimage_triGML_gradient_QuadGradient.__name__ = "pixelimage.triGML.gradient.QuadGradient";
+pixelimage_triGML_gradient_QuadGradient.__super__ = pixelimage_triGML_coreShape_BasicGradient;
+pixelimage_triGML_gradient_QuadGradient.prototype = $extend(pixelimage_triGML_coreShape_BasicGradient.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "color1":
+			this.cornerColors[0] = Std.parseInt(value);
+			break;
+		case "color2":
+			this.cornerColors[1] = Std.parseInt(value);
+			break;
+		case "color3":
+			this.cornerColors[2] = Std.parseInt(value);
+			break;
+		case "color4":
+			this.cornerColors[3] = Std.parseInt(value);
+			break;
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "x3":
+			this.x3 = parseFloat(value);
+			break;
+		case "x4":
+			this.x4 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		case "y3":
+			this.y3 = parseFloat(value);
+			break;
+		case "y4":
+			this.y4 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_BasicGradient.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var a = this.x1;
+		var b = this.x2;
+		var c = this.x3;
+		var d = this.x4;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		var iterX = this1;
+		var a = this.y1;
+		var b = this.y2;
+		var c = this.y3;
+		var d = this.y4;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		var iterY = this1;
+		var left = iterX.start;
+		var top = iterY.start;
+		var width = iterX.max - left;
+		var height = iterY.max - top;
+		var w = Math.ceil(width);
+		var h = Math.ceil(height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		var ax = this.x1;
+		var ay = this.y1;
+		var colorA = this.cornerColors[0];
+		var bx = this.x2;
+		var by = this.y2;
+		var colorB = this.cornerColors[1];
+		var cx = this.x3;
+		var cy = this.y3;
+		var colorC = this.cornerColors[2];
+		var dx = this.x4;
+		var dy = this.y4;
+		var colorD = this.cornerColors[3];
+		var hasHit = true;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var aA = colorB >> 24 & 255;
+		var rA = colorB >> 16 & 255;
+		var gA = colorB >> 8 & 255;
+		var bA = colorB & 255;
+		var aB = colorA >> 24 & 255;
+		var rB = colorA >> 16 & 255;
+		var gB = colorA >> 8 & 255;
+		var bB = colorA & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = bx - dx;
+		var bcy = by - dy;
+		var acx = ax - dx;
+		var acy = ay - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var this1;
+		if(dx > bx) {
+			if(dx > ax) {
+				var ii_min = bx > ax ? Math.floor(ax) : Math.floor(bx);
+				var ii_max = Math.ceil(dx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > ax) {
+			var ii_min = dx > ax ? Math.floor(ax) : Math.ceil(dx);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(dx);
+			var ii_max = Math.ceil(ax);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var px = _g_min++;
+			var pcx = px - dx;
+			var this1;
+			if(dy > by) {
+				if(dy > ay) {
+					var ii_min = by > ay ? Math.floor(ay) : Math.floor(by);
+					var ii_max = Math.ceil(dy);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min1 = Math.floor(by);
+					var ii_max1 = Math.ceil(ay);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					this1 = this3;
+				}
+			} else if(by > ay) {
+				var ii_min2 = dy > ay ? Math.floor(ay) : Math.ceil(dy);
+				var ii_max2 = Math.ceil(by);
+				var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				this1 = this4;
+			} else {
+				var ii_min3 = Math.floor(dy);
+				var ii_max3 = Math.ceil(ay);
+				var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				this1 = this5;
+			}
+			var _g_min1 = this1.start;
+			var _g_max1 = this1.max;
+			while(_g_min1 < _g_max1) {
+				var py = _g_min1++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this6 = i;
+					var a = this6;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this7 = i1;
+					var r = this7;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this8 = i2;
+					var g = this8;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this9 = i3;
+					var b = this9;
+					var location = temp.useVirtualPos ? (py - temp.virtualY) * temp.width + px - temp.virtualX | 0 : py * temp.width + px | 0;
+					if(temp.transparent && a < 254) {
+						var this10 = temp.image[location];
+						var this11 = this10;
+						var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this12 = old >> 24 & 255;
+						var a1 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = old >> 16 & 255;
+						var r1 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = old >> 8 & 255;
+						var g1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = old & 255;
+						var b1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = rhs >> 24 & 255;
+						var a2 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = rhs >> 16 & 255;
+						var r2 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = rhs >> 8 & 255;
+						var g2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = rhs & 255;
+						var b2 = this19 == 0 ? 0. : this19 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[location] = temp.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
+		}
+		var aA = colorC >> 24 & 255;
+		var rA = colorC >> 16 & 255;
+		var gA = colorC >> 8 & 255;
+		var bA = colorC & 255;
+		var aB = colorB >> 24 & 255;
+		var rB = colorB >> 16 & 255;
+		var gB = colorB >> 8 & 255;
+		var bB = colorB & 255;
+		var aC = colorD >> 24 & 255;
+		var rC = colorD >> 16 & 255;
+		var gC = colorD >> 8 & 255;
+		var bC = colorD & 255;
+		var bcx = cx - dx;
+		var bcy = cy - dy;
+		var acx = bx - dx;
+		var acy = by - dy;
+		var dot11 = bcx * bcx + bcy * bcy;
+		var dot12 = bcx * acx + bcy * acy;
+		var dot22 = acx * acx + acy * acy;
+		var denom1 = 1 / (dot11 * dot22 - dot12 * dot12);
+		var this1;
+		if(dx > cx) {
+			if(dx > bx) {
+				var ii_min = cx > bx ? Math.floor(bx) : Math.floor(cx);
+				var ii_max = Math.ceil(dx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(cx);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(cx > bx) {
+			var ii_min = dx > bx ? Math.floor(bx) : Math.ceil(dx);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(dx);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var px = _g_min++;
+			var pcx = px - dx;
+			var this1;
+			if(dy > cy) {
+				if(dy > by) {
+					var ii_min = cy > by ? Math.floor(by) : Math.floor(cy);
+					var ii_max = Math.ceil(dy);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min1 = Math.floor(cy);
+					var ii_max1 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					this1 = this3;
+				}
+			} else if(cy > by) {
+				var ii_min2 = dy > by ? Math.floor(by) : Math.ceil(dy);
+				var ii_max2 = Math.ceil(cy);
+				var this4 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				this1 = this4;
+			} else {
+				var ii_min3 = Math.floor(dy);
+				var ii_max3 = Math.ceil(by);
+				var this5 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				this1 = this5;
+			}
+			var _g_min1 = this1.start;
+			var _g_max1 = this1.max;
+			while(_g_min1 < _g_max1) {
+				var py = _g_min1++;
+				var pcy = py - dy;
+				var dot31 = pcx * bcx + pcy * bcy;
+				var dot32 = pcx * acx + pcy * acy;
+				var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+				var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+				var ratioC = 1.0 - ratioB - ratioA;
+				if(ratioA >= 0 && ratioB >= 0 && ratioC >= 0) {
+					var i = aA * ratioA + aB * ratioB + aC * ratioC | 0;
+					if(i > 255) {
+						i = 255;
+					}
+					if(i < 0) {
+						i = 0;
+					}
+					var this6 = i;
+					var a = this6;
+					var i1 = rA * ratioA + rB * ratioB + rC * ratioC | 0;
+					if(i1 > 255) {
+						i1 = 255;
+					}
+					if(i1 < 0) {
+						i1 = 0;
+					}
+					var this7 = i1;
+					var r = this7;
+					var i2 = gA * ratioA + gB * ratioB + gC * ratioC | 0;
+					if(i2 > 255) {
+						i2 = 255;
+					}
+					if(i2 < 0) {
+						i2 = 0;
+					}
+					var this8 = i2;
+					var g = this8;
+					var i3 = bA * ratioA + bB * ratioB + bC * ratioC | 0;
+					if(i3 > 255) {
+						i3 = 255;
+					}
+					if(i3 < 0) {
+						i3 = 0;
+					}
+					var this9 = i3;
+					var b = this9;
+					var location = temp.useVirtualPos ? (py - temp.virtualY) * temp.width + px - temp.virtualX | 0 : py * temp.width + px | 0;
+					if(temp.transparent && a < 254) {
+						var this10 = temp.image[location];
+						var this11 = this10;
+						var old = pixelimage_Endian_isLittleEndian ? (this11 >> 24 & 255) << 24 | (this11 & 255) << 16 | (this11 >> 8 & 255) << 8 | this11 >> 16 & 255 : this11;
+						var rhs = a << 24 | r << 16 | g << 8 | b;
+						var this12 = old >> 24 & 255;
+						var a1 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = old >> 16 & 255;
+						var r1 = this13 == 0 ? 0. : this13 / 255;
+						var this14 = old >> 8 & 255;
+						var g1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = old & 255;
+						var b1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = rhs >> 24 & 255;
+						var a2 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = rhs >> 16 & 255;
+						var r2 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = rhs >> 8 & 255;
+						var g2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = rhs & 255;
+						var b2 = this19 == 0 ? 0. : this19 / 255;
+						var a3 = a1 * (1 - a2);
+						var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g3 = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b3 = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a4 = 255 * (a3 + a2) | 0;
+						var blended = a4 << 24 | r3 << 16 | g3 << 8 | b3;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[location] = temp.isLittle ? a << 24 | b << 16 | g << 8 | r : a << 24 | r << 16 | g << 8 | b;
+					}
+				}
+			}
+		}
+		var v_yIter3;
+		var v_xIter3;
+		var ax1 = bx;
+		var ay1 = by;
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var adjustWinding = ax1 * by1 - bx1 * ay1 + (bx1 * cy1 - cx1 * by1) + (cx1 * ay1 - ax1 * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var v_ax = ax1;
+		var v_ay = ay1;
+		var v_bx = bx1;
+		var v_by = by1;
+		var v_cx = cx1;
+		var v_cy = cy1;
+		var v_s0 = ay1 * cx1 - ax1 * cy1;
+		var v_sx = cy1 - ay1;
+		var v_sy = ax1 - cx1;
+		var v_t0 = ax1 * by1 - ay1 * bx1;
+		var v_tx = ay1 - by1;
+		var v_ty = bx1 - ax1;
+		var v_A = -by1 * cx1 + ay1 * (-bx1 + cx1) + ax1 * (by1 - cy1) + bx1 * cy1;
+		if(ax1 > bx1) {
+			if(ax1 > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_xIter3 = this1;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax1 > cx1 ? Math.floor(cx1) : Math.ceil(ax1);
+			var ii_max = Math.ceil(bx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ax1);
+			var ii_max = Math.ceil(cx1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_xIter3 = this1;
+		}
+		if(ay1 > by1) {
+			if(ay1 > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				v_yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay1 > cy1 ? Math.floor(cy1) : Math.ceil(ay1);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay1);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			v_yIter3 = this1;
+		}
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x = left + dx;
+					var y = top + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_gradient_QuadGradient
 });
 var pixelimage_triGML_gradient_TriangleGradient = function(opacity,visibility,aX,aY,bX,bY,cX,cY,colorA,colorB,colorC) {
 	if(colorC == null) {
@@ -19087,7 +24767,7 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 		}
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var hasHit = hasHit1;
 		if(hasHit == null) {
@@ -19482,7 +25162,7 @@ pixelimage_triGML_gradientContour_LineGradient.prototype = $extend(pixelimage_tr
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			v_yIter3 = this1;
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
@@ -19845,7 +25525,7 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var hasHit2 = hasHit1;
 			if(hasHit2 == null) {
@@ -20240,13 +25920,9539 @@ pixelimage_triGML_gradientContour_PolyLineGradient.prototype = $extend(pixelimag
 				var this104 = new pixelimage_iter_IntIterStart(ii_min23,ii_max23);
 				v_yIter3 = this104;
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v1 = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
 		return pixelimage_triGML_coreShape_BasicGradient.prototype.render.call(this,pixelImage);
 	}
 	,__class__: pixelimage_triGML_gradientContour_PolyLineGradient
+});
+var pixelimage_triGML_patternContour_CubicCurvePattern = function(opacity,visibility,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fill,thru,x1,y1,x2,y2,x3,y3,x4,y4,translateX,translateY,scaleX,scaleY) {
+	if(scaleY == null) {
+		scaleY = 1.;
+	}
+	if(scaleX == null) {
+		scaleX = 1.;
+	}
+	if(translateY == null) {
+		translateY = 0.;
+	}
+	if(translateX == null) {
+		translateX = 0.;
+	}
+	if(y4 == null) {
+		y4 = 0.;
+	}
+	if(x4 == null) {
+		x4 = 0.;
+	}
+	if(y3 == null) {
+		y3 = 0.;
+	}
+	if(x3 == null) {
+		x3 = 0.;
+	}
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(thru == null) {
+		thru = false;
+	}
+	if(fill == null) {
+		fill = 0;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternStroke.call(this,opacity,visibility,-65536,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale);
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.x3 = x3;
+	this.y3 = y3;
+	this.x4 = x4;
+	this.y4 = y4;
+	this.translateX = translateX;
+	this.translateY = translateY;
+	this.scaleX = scaleX;
+	this.scaleY = scaleY;
+};
+pixelimage_triGML_patternContour_CubicCurvePattern.__name__ = "pixelimage.triGML.patternContour.CubicCurvePattern";
+pixelimage_triGML_patternContour_CubicCurvePattern.__super__ = pixelimage_triGML_coreShape_PatternStroke;
+pixelimage_triGML_patternContour_CubicCurvePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternStroke.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "x3":
+			this.x3 = parseFloat(value);
+			break;
+		case "x4":
+			this.x4 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		case "y3":
+			this.y3 = parseFloat(value);
+			break;
+		case "y4":
+			this.y4 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternStroke.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		this.buildPatternTemplates();
+		var drawing = new pixelimage_triGML_coreShape_DrawTileHelper(pixelImage,this.strokeWidth,this.tileImageStroke,this.translateX,this.translateY,this.scaleX,this.scaleY);
+		drawing.moveTo(this.x1,this.y1);
+		drawing.curveTo(this.x2,this.y2,this.x3,this.y3,this.x4,this.y4);
+		return pixelimage_triGML_coreShape_PatternStroke.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternContour_CubicCurvePattern
+});
+var pixelimage_triGML_patternContour_LinePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,x1,y1,x2,y2) {
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = -1048576;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternStroke.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale);
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+};
+pixelimage_triGML_patternContour_LinePattern.__name__ = "pixelimage.triGML.patternContour.LinePattern";
+pixelimage_triGML_patternContour_LinePattern.__super__ = pixelimage_triGML_coreShape_PatternStroke;
+pixelimage_triGML_patternContour_LinePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternStroke.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternStroke.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		this.buildPatternTemplates();
+		var px = this.x1;
+		var py = this.y1;
+		var tileImage = this.tileImageStroke;
+		var o = this.y2 - py;
+		var a = this.x2 - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit = false;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -65536;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
+					var this2 = pixelImage.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16711936;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
+					var this2 = pixelImage.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16776961;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
+					var this2 = pixelImage.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -1048336;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && pixelImage.transparent) {
+					var location = pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0;
+					var this2 = pixelImage.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 240;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 240;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					pixelImage.image[pixelImage.useVirtualPos ? (q - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : q * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		if(hasHit1 == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
+		return pixelimage_triGML_coreShape_PatternStroke.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternContour_LinePattern
+});
+var pixelimage_triGML_patternContour_QuadPattern = function(opacity,visibility,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,aX,aY,bX,bY,cX,cY,dX,dY) {
+	if(dY == null) {
+		dY = 1.;
+	}
+	if(dX == null) {
+		dX = 0.;
+	}
+	if(cY == null) {
+		cY = 1.;
+	}
+	if(cX == null) {
+		cX = 1.;
+	}
+	if(bY == null) {
+		bY = 0.;
+	}
+	if(bX == null) {
+		bX = 1.;
+	}
+	if(aY == null) {
+		aY = 0.;
+	}
+	if(aX == null) {
+		aX = 0.;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternStroke.call(this,opacity,visibility,0,0,null,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale);
+	this.aX = aX;
+	this.aY = aY;
+	this.bX = bX;
+	this.bY = bY;
+	this.cX = cX;
+	this.cY = cY;
+	this.dX = dX;
+	this.dY = dY;
+};
+pixelimage_triGML_patternContour_QuadPattern.__name__ = "pixelimage.triGML.patternContour.QuadPattern";
+pixelimage_triGML_patternContour_QuadPattern.__super__ = pixelimage_triGML_coreShape_PatternStroke;
+pixelimage_triGML_patternContour_QuadPattern.prototype = $extend(pixelimage_triGML_coreShape_PatternStroke.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "aX":
+			this.aX = parseFloat(value);
+			break;
+		case "aY":
+			this.aY = parseFloat(value);
+			break;
+		case "bX":
+			this.bX = parseFloat(value);
+			break;
+		case "bY":
+			this.bY = parseFloat(value);
+			break;
+		case "cX":
+			this.cX = parseFloat(value);
+			break;
+		case "cY":
+			this.cY = parseFloat(value);
+			break;
+		case "dX":
+			this.dX = parseFloat(value);
+			break;
+		case "dY":
+			this.dY = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternStroke.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		this.buildPatternTemplates();
+		var ax = this.aX;
+		var ay = this.aY;
+		var bx = this.bX;
+		var by = this.bY;
+		var cx = this.cX;
+		var cy = this.cY;
+		var dx = this.dX;
+		var dy = this.dY;
+		var tileImage = this.tileImageStroke;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
+		return pixelimage_triGML_coreShape_PatternStroke.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternContour_QuadPattern
+});
+var pixelimage_triGML_patternContour_TrianglePattern = function(opacity,visibility,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,aX,aY,bX,bY,cX,cY) {
+	if(cY == null) {
+		cY = 1.;
+	}
+	if(cX == null) {
+		cX = 0.;
+	}
+	if(bY == null) {
+		bY = 0.;
+	}
+	if(bX == null) {
+		bX = 1.;
+	}
+	if(aY == null) {
+		aY = 0.;
+	}
+	if(aX == null) {
+		aX = 0.;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternStroke.call(this,opacity,visibility,0,0,null,strokeColor0,strokeColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale);
+	this.aX = aX;
+	this.aY = aY;
+	this.bX = bX;
+	this.bY = bY;
+	this.cX = cX;
+	this.cY = cY;
+};
+pixelimage_triGML_patternContour_TrianglePattern.__name__ = "pixelimage.triGML.patternContour.TrianglePattern";
+pixelimage_triGML_patternContour_TrianglePattern.__super__ = pixelimage_triGML_coreShape_PatternStroke;
+pixelimage_triGML_patternContour_TrianglePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternStroke.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "aX":
+			this.aX = parseFloat(value);
+			break;
+		case "aY":
+			this.aY = parseFloat(value);
+			break;
+		case "bX":
+			this.bX = parseFloat(value);
+			break;
+		case "bY":
+			this.bY = parseFloat(value);
+			break;
+		case "cX":
+			this.cX = parseFloat(value);
+			break;
+		case "cY":
+			this.cY = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternStroke.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		this.buildPatternTemplates();
+		var ax = this.aX;
+		var ay = this.aY;
+		var tileImage = this.tileImageStroke;
+		var bx = this.bX;
+		var by = this.bY;
+		var cx = this.cX;
+		var cy = this.cY;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var s0 = ay * cx - ax * cy;
+		var sx = cy - ay;
+		var sy = ax - cx;
+		var t0 = ax * by - ay * bx;
+		var tx = ay - by;
+		var ty = bx - ax;
+		var A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
+		var yIter3;
+		if(ay > by) {
+			if(ay > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx) {
+			if(ax > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > cx) {
+			var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this2 = pixelImage.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit1 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,cx,cy);
+		}
+		return pixelimage_triGML_coreShape_PatternStroke.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternContour_TrianglePattern
+});
+var pixelimage_triGML_patternShape_ArcPattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,width,height,startAngle,sweepAngle,arcType) {
+	if(arcType == null) {
+		arcType = "pie";
+	}
+	if(sweepAngle == null) {
+		sweepAngle = 0.;
+	}
+	if(startAngle == null) {
+		startAngle = 0.;
+	}
+	if(height == null) {
+		height = 1.;
+	}
+	if(width == null) {
+		width = 1.;
+	}
+	if(top == null) {
+		top = 0.;
+	}
+	if(left == null) {
+		left = 0.;
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.left = left;
+	this.top = top;
+	this.width = width;
+	this.height = height;
+	this.startAngle = startAngle;
+	this.sweepAngle = sweepAngle;
+	this.arcType = arcType;
+	this.rx = width / 2;
+	this.ry = height / 2;
+};
+pixelimage_triGML_patternShape_ArcPattern.__name__ = "pixelimage.triGML.patternShape.ArcPattern";
+pixelimage_triGML_patternShape_ArcPattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_ArcPattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "arcType":
+			this.arcType = js_Boot.__cast(value , String);
+			break;
+		case "height":
+			this.height = parseFloat(value);
+			break;
+		case "left":
+			this.left = parseFloat(value);
+			break;
+		case "startAngle":
+			var degree = parseFloat(value);
+			this.startAngle = degree == 0 ? 0 : Math.PI * degree / 180;
+			break;
+		case "sweepAngle":
+			var degree = parseFloat(value);
+			this.sweepAngle = degree == 0 ? 0 : Math.PI * degree / 180;
+			break;
+		case "top":
+			this.top = parseFloat(value);
+			break;
+		case "width":
+			this.width = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+		this.rx = this.width / 2;
+		this.ry = this.height / 2;
+	}
+	,render: function(pixelImage) {
+		var w = Math.ceil(this.width);
+		var h = Math.ceil(this.height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		this.buildPatternTemplates();
+		switch(this.arcType) {
+		case "chord":
+			this.chord(temp);
+			break;
+		case "ellipse":
+			this.ellipse(temp);
+			break;
+		case "pie":
+			this.pie(temp);
+			break;
+		}
+		var x = this.left | 0;
+		var y = this.top | 0;
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x1 = x + dx;
+					var y1 = y + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,chord: function(temp) {
+		this.ellipse(temp);
+		var endAngle = this.startAngle + this.sweepAngle;
+		var bx = this.rx * Math.cos(this.startAngle) + this.rx;
+		var by = this.ry * Math.sin(this.startAngle) + this.ry;
+		var cx = this.rx * Math.cos(endAngle) + this.rx;
+		var cy = this.ry * Math.sin(endAngle) + this.ry;
+		if(this.sweepAngle < Math.PI) {
+			var bxS = (this.rx - this.strokeWidth) * Math.cos(this.startAngle) + this.rx;
+			var byS = (this.ry - this.strokeWidth) * Math.sin(this.startAngle) + this.ry;
+			var cxS = (this.rx - this.strokeWidth) * Math.cos(endAngle + 0.01) + this.rx;
+			var cyS = (this.ry - this.strokeWidth) * Math.sin(endAngle + 0.01) + this.ry;
+			var d = this.strokeWidth;
+			var x = this.rx - d / 2;
+			var y = this.ry - d / 2;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + d | 0;
+			var maxY = y + d | 0;
+			while(true) {
+				var x = p++;
+				var this1 = 0;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 0;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var ax = this.rx;
+			var ay = this.ry;
+			var tileImage = this.tileImageStroke;
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = cx;
+			var cy1 = cy;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this1 = color;
+						var c1 = this1;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit1 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var ax = this.rx;
+			var ay = this.ry;
+			var bx1 = bxS;
+			var by1 = byS;
+			var cx1 = cxS;
+			var cy1 = cyS;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var this1 = 0;
+						var c = this1;
+						if((c >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = 0;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = 0;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = 0;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = 0;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit1 == true) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+		} else {
+			var ax = this.rx;
+			var ay = this.ry;
+			var rx = this.rx;
+			var ry = this.ry;
+			var tileImage = this.tileImageStroke;
+			var currAngle = endAngle;
+			var bx1 = rx * Math.cos(currAngle) + ax;
+			var by1 = ry * Math.sin(currAngle) + ay;
+			currAngle = endAngle + (2 * Math.PI - this.sweepAngle + 0.01);
+			var cx1 = rx * Math.cos(currAngle) + ax;
+			var cy1 = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by2 - bx2 * ay + (bx2 * cy2 - cx2 * by2) + (cx2 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var s0 = ay * cx2 - ax * cy2;
+			var sx = cy2 - ay;
+			var sy = ax - cx2;
+			var t0 = ax * by2 - ay * bx2;
+			var tx = ay - by2;
+			var ty = bx2 - ax;
+			var A = -by2 * cx2 + ay * (-bx2 + cx2) + ax * (by2 - cy2) + bx2 * cy2;
+			var yIter3;
+			if(ay > by2) {
+				if(ay > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx2) {
+				if(ax > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this1 = color;
+						var c1 = this1;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
+			}
+			var ax = this.rx;
+			var ay = this.ry;
+			var rx = this.rx - this.strokeWidth;
+			var ry = this.ry - this.strokeWidth;
+			var tileImage = this.tileImageFill;
+			var currAngle = endAngle;
+			var bx1 = rx * Math.cos(currAngle) + ax;
+			var by1 = ry * Math.sin(currAngle) + ay;
+			currAngle = endAngle + (2 * Math.PI - this.sweepAngle + 0.01);
+			var cx1 = rx * Math.cos(currAngle) + ax;
+			var cy1 = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var bx2 = bx1;
+			var by2 = by1;
+			var cx2 = cx1;
+			var cy2 = cy1;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by2 - bx2 * ay + (bx2 * cy2 - cx2 * by2) + (cx2 * ay - ax * cy2) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx2;
+				var by_ = by2;
+				bx2 = cx2;
+				by2 = cy2;
+				cx2 = bx_;
+				cy2 = by_;
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var s0 = ay * cx2 - ax * cy2;
+			var sx = cy2 - ay;
+			var sy = ax - cx2;
+			var t0 = ax * by2 - ay * bx2;
+			var tx = ay - by2;
+			var ty = bx2 - ax;
+			var A = -by2 * cx2 + ay * (-bx2 + cx2) + ax * (by2 - cy2) + bx2 * cy2;
+			var yIter3;
+			if(ay > by2) {
+				if(ay > cy2) {
+					var ii_min = by2 > cy2 ? Math.floor(cy2) : Math.floor(by2);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by2);
+					var ii_max = Math.ceil(cy2);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by2 > cy2) {
+				var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+				var ii_max = Math.ceil(by2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx2) {
+				if(ax > cx2) {
+					var ii_min = bx2 > cx2 ? Math.floor(cx2) : Math.floor(bx2);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx2);
+					var ii_max = Math.ceil(cx2);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx2 > cx2) {
+				var ii_min = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this1 = color;
+						var c1 = this1;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
+			}
+			var tileImage = this.tileImageStroke;
+			var o = by - cy;
+			var a = bx - cx;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var hasHit = false;
+			var debugCorners = false;
+			if(debugCorners == null) {
+				debugCorners = false;
+			}
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = this.strokeWidth / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx1 = h;
+			var cy1 = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp1 = 0.;
+			temp1 = cx + (ax * cos - ay * sin);
+			ay = cy + (ay * cos + ax * sin);
+			ax = temp1;
+			temp1 = cx + (bx * cos - by * sin);
+			by = cy + (by * cos + bx * sin);
+			bx = temp1;
+			temp1 = cx + (cx1 * cos - cy1 * sin);
+			cy1 = cy + (cy1 * cos + cx1 * sin);
+			cx1 = temp1;
+			temp1 = cx + (dx * cos - dy * sin);
+			dy = cy + (dy * cos + dx * sin);
+			dx = temp1;
+			if(debugCorners) {
+				var x = ax - 6.;
+				var y = ay - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this1 = -65536;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = bx - 6.;
+				var y = by - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this1 = -16711936;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 0;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = cx1 - 6.;
+				var y = cy1 - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this1 = -16776961;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 0;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = dx - 6.;
+				var y = dy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this1 = -1048336;
+					var c = this1;
+					if((c >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 240;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 240;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx = dx;
+			var cy = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy - cx * by1) + (cx * ay - ax * cy) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx;
+				by1 = cy;
+				cx = bx_;
+				cy = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx - ax * cy;
+			var sx = cy - ay;
+			var sy = ax - cx;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx + ay * (-bx1 + cx) + ax * (by1 - cy) + bx1 * cy;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy) {
+					var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy) {
+				var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(ax > bx1) {
+				if(ax > cx) {
+					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx) {
+				var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this1 = color;
+						var c1 = this1;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx,cy);
+			}
+			var bx1 = cx1;
+			var by1 = cy1;
+			var cx = dx;
+			var cy = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy - cx * by1) + (cx * by - bx * cy) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx;
+				by1 = cy;
+				cx = bx_;
+				cy = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = by * cx - bx * cy;
+			var sx = cy - by;
+			var sy = bx - cx;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx + by * (-bx1 + cx) + bx * (by1 - cy) + bx1 * cy;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy) {
+					var ii_min = by1 > cy ? Math.floor(cy) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				}
+			} else if(by1 > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this1;
+			if(bx > bx1) {
+				if(bx > cx) {
+					var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this1 = this2;
+				}
+			} else if(bx1 > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+			var _g_min = this1.start;
+			var _g_max = this1.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this1 = color;
+						var c1 = this1;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this2 = temp.image[location];
+							var this3 = this2;
+							var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+							var this5 = this4 >> 24 & 255;
+							var a1 = this5 == 0 ? 0. : this5 / 255;
+							var this6 = this4 >> 16 & 255;
+							var r1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this4 >> 8 & 255;
+							var g1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this4 & 255;
+							var b1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = color >> 24 & 255;
+							var a2 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 16 & 255;
+							var r2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 8 & 255;
+							var g2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color & 255;
+							var b2 = this12 == 0 ? 0. : this12 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx,cy);
+			}
+			if(hasHit1 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
+			}
+		}
+	}
+	,ellipse: function(temp) {
+		var ax = this.rx;
+		var ay = this.ry;
+		var rx = this.rx;
+		var ry = this.ry;
+		var startRadian = this.startAngle;
+		var sweepRadian = this.sweepAngle;
+		var tileImage = this.tileImageStroke;
+		var rSmall = rx > ry ? ry : rx;
+		var targetE = 1.05;
+		if(targetE == null) {
+			targetE = 1.05;
+		}
+		var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+		var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+		var theta = 1.41213 * Math.PI / noSides;
+		var currAngle = startRadian;
+		var tot = Math.floor(sweepRadian / theta);
+		theta += (sweepRadian / theta - tot) / noSides;
+		tot = Math.floor(sweepRadian / theta);
+		var bx = rx * Math.cos(currAngle) + ax;
+		var by = ry * Math.sin(currAngle) + ay;
+		var cx = 0.;
+		var cy = 0.;
+		var arrTri = [];
+		var _g = 1;
+		var _g1 = tot + 1;
+		while(_g < _g1) {
+			var i = _g++;
+			currAngle = startRadian + i * theta;
+			cx = rx * Math.cos(currAngle) + ax;
+			cy = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = cx;
+			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min1 = Math.floor(by1);
+					var ii_max1 = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min2 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max2 = Math.ceil(by1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				yIter3 = this3;
+			} else {
+				var ii_min3 = Math.floor(ay);
+				var ii_max3 = Math.ceil(cy1);
+				var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				yIter3 = this4;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this5;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min4 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max4 = Math.ceil(ax);
+					var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+					this5 = this6;
+				} else {
+					var ii_min5 = Math.floor(bx1);
+					var ii_max5 = Math.ceil(cx1);
+					var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+					this5 = this7;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min6 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max6 = Math.ceil(bx1);
+				var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+				this5 = this8;
+			} else {
+				var ii_min7 = Math.floor(ax);
+				var ii_max7 = Math.ceil(cx1);
+				var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+				this5 = this9;
+			}
+			var _g_min = this5.start;
+			var _g_max = this5.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this10 = color;
+						var c1 = this10;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this11 = temp.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = color >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = color >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = color >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = color & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var triHit;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				triHit = v;
+			} else {
+				triHit = null;
+			}
+			bx = cx;
+			by = cy;
+		}
+		currAngle = startRadian + sweepRadian;
+		cx = rx * Math.cos(currAngle) + ax;
+		cy = ry * Math.sin(currAngle) + ay;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		var triHit;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			triHit = v;
+		} else {
+			triHit = null;
+		}
+		arrTri = null;
+		var ax = this.rx;
+		var ay = this.ry;
+		var rx = this.rx - this.strokeWidth;
+		var ry = this.ry - this.strokeWidth;
+		var startRadian = this.startAngle;
+		var sweepRadian = this.sweepAngle;
+		var tileImage = this.tileImageFill;
+		var rSmall = rx > ry ? ry : rx;
+		var targetE = 1.05;
+		if(targetE == null) {
+			targetE = 1.05;
+		}
+		var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+		var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+		var theta = 1.41213 * Math.PI / noSides;
+		var currAngle = startRadian;
+		var tot = Math.floor(sweepRadian / theta);
+		theta += (sweepRadian / theta - tot) / noSides;
+		tot = Math.floor(sweepRadian / theta);
+		var bx = rx * Math.cos(currAngle) + ax;
+		var by = ry * Math.sin(currAngle) + ay;
+		var cx = 0.;
+		var cy = 0.;
+		var arrTri = [];
+		var _g = 1;
+		var _g1 = tot + 1;
+		while(_g < _g1) {
+			var i = _g++;
+			currAngle = startRadian + i * theta;
+			cx = rx * Math.cos(currAngle) + ax;
+			cy = ry * Math.sin(currAngle) + ay;
+			var hasHit = false;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = cx;
+			var cy1 = cy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this1;
+				} else {
+					var ii_min1 = Math.floor(by1);
+					var ii_max1 = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min2 = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max2 = Math.ceil(by1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+				yIter3 = this3;
+			} else {
+				var ii_min3 = Math.floor(ay);
+				var ii_max3 = Math.ceil(cy1);
+				var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+				yIter3 = this4;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this5;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min4 = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max4 = Math.ceil(ax);
+					var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+					this5 = this6;
+				} else {
+					var ii_min5 = Math.floor(bx1);
+					var ii_max5 = Math.ceil(cx1);
+					var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+					this5 = this7;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min6 = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max6 = Math.ceil(bx1);
+				var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+				this5 = this8;
+			} else {
+				var ii_min7 = Math.floor(ax);
+				var ii_max7 = Math.ceil(cx1);
+				var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+				this5 = this9;
+			}
+			var _g_min = this5.start;
+			var _g_max = this5.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this10 = color;
+						var c1 = this10;
+						if((c1 >> 24 & 255) < 254 && temp.transparent) {
+							var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+							var this11 = temp.image[location];
+							var this12 = this11;
+							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+							var this14 = this13 >> 24 & 255;
+							var a1 = this14 == 0 ? 0. : this14 / 255;
+							var this15 = this13 >> 16 & 255;
+							var r1 = this15 == 0 ? 0. : this15 / 255;
+							var this16 = this13 >> 8 & 255;
+							var g1 = this16 == 0 ? 0. : this16 / 255;
+							var this17 = this13 & 255;
+							var b1 = this17 == 0 ? 0. : this17 / 255;
+							var this18 = color >> 24 & 255;
+							var a2 = this18 == 0 ? 0. : this18 / 255;
+							var this19 = color >> 16 & 255;
+							var r2 = this19 == 0 ? 0. : this19 / 255;
+							var this20 = color >> 8 & 255;
+							var g2 = this20 == 0 ? 0. : this20 / 255;
+							var this21 = color & 255;
+							var b2 = this21 == 0 ? 0. : this21 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			var triHit;
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				triHit = v;
+			} else {
+				triHit = null;
+			}
+			bx = cx;
+			by = cy;
+		}
+		currAngle = startRadian + sweepRadian;
+		cx = rx * Math.cos(currAngle) + ax;
+		cy = ry * Math.sin(currAngle) + ay;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = cx;
+		var cy1 = cy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		var triHit;
+		if(hasHit == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			triHit = v;
+		} else {
+			triHit = null;
+		}
+		arrTri = null;
+	}
+	,pie: function(temp) {
+		this.ellipse(temp);
+		var bx = this.rx * Math.cos(this.startAngle) + this.rx;
+		var by = this.ry * Math.sin(this.startAngle) + this.ry;
+		var currAngle = this.startAngle + this.sweepAngle / 2;
+		var ax = this.strokeWidth * Math.cos(currAngle) + this.rx;
+		var ay = this.strokeWidth * Math.sin(currAngle) + this.ry;
+		currAngle = this.startAngle + this.sweepAngle;
+		var cx = this.rx * Math.cos(currAngle) + this.rx;
+		var cy = this.ry * Math.sin(currAngle) + this.ry;
+		var px = this.rx;
+		var py = this.ry;
+		var tileImage = this.tileImageStroke;
+		var o = by - py;
+		var a = bx - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit = false;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx1 = h;
+		var cy1 = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp1 = 0.;
+		temp1 = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp1;
+		temp1 = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp1;
+		temp1 = px + (cx1 * cos - cy1 * sin);
+		cy1 = py + (cy1 * cos + cx1 * sin);
+		cx1 = temp1;
+		temp1 = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp1;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -65536;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16711936;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx1 - 6.;
+			var y = cy1 - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16776961;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -1048336;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 240;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 240;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx2 = dx;
+		var cy2 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy2 - cx2 * by1) + (cx2 * ay - ax * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx2;
+			by1 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx2 - ax * cy2;
+		var sx = cy2 - ay;
+		var sy = ax - cx2;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx2 + ay * (-bx1 + cx2) + ax * (by1 - cy2) + bx1 * cy2;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy2) {
+				var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy2) {
+			var ii_min = ay > cy2 ? Math.floor(cy2) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx2) {
+				var ii_min = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx2) {
+			var ii_min = ax > cx2 ? Math.floor(cx2) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx2,cy2);
+		}
+		var bx1 = cx1;
+		var by1 = cy1;
+		var cx2 = dx;
+		var cy2 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy2 - cx2 * by1) + (cx2 * by - bx * cy2) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx2;
+			by1 = cy2;
+			cx2 = bx_;
+			cy2 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx2 - bx * cy2;
+		var sx = cy2 - by;
+		var sy = bx - cx2;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx2 + by * (-bx1 + cx2) + bx * (by1 - cy2) + bx1 * cy2;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy2) {
+				var ii_min = by1 > cy2 ? Math.floor(cy2) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy2);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy2) {
+			var ii_min = by > cy2 ? Math.floor(cy2) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy2);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx2) {
+				var ii_min = bx1 > cx2 ? Math.floor(cx2) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx2);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx2) {
+			var ii_min = bx > cx2 ? Math.floor(cx2) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx2);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx2,cy2);
+		}
+		if(hasHit1 == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
+		}
+		var px = this.rx;
+		var py = this.ry;
+		var tileImage = this.tileImageStroke;
+		var o = cy - py;
+		var a = cx - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit = false;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp1 = 0.;
+		temp1 = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp1;
+		temp1 = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp1;
+		temp1 = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp1;
+		temp1 = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp1;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -65536;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16711936;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -16776961;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 0;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this1 = -1048336;
+				var c = this1;
+				if((c >> 24 & 255) < 254 && temp.transparent) {
+					var location = temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0;
+					var this2 = temp.image[location];
+					var this3 = this2;
+					var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+					var this5 = this4 >> 24 & 255;
+					var a1 = this5 == 0 ? 0. : this5 / 255;
+					var this6 = this4 >> 16 & 255;
+					var r1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this4 >> 8 & 255;
+					var g1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this4 & 255;
+					var b1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = 255;
+					var a2 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 240;
+					var r2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var g2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 240;
+					var b2 = this12 == 0 ? 0. : this12 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					temp.image[temp.useVirtualPos ? (q - temp.virtualY) * temp.width + x - temp.virtualX | 0 : q * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		if(hasHit1 == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+		}
+	}
+	,__class__: pixelimage_triGML_patternShape_ArcPattern
+});
+var pixelimage_triGML_patternShape_CirclePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,diameter) {
+	if(diameter == null) {
+		diameter = 1.;
+	}
+	if(top == null) {
+		top = 0.;
+	}
+	if(left == null) {
+		left = 0.;
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.left = left;
+	this.top = top;
+	this.diameter = diameter;
+};
+pixelimage_triGML_patternShape_CirclePattern.__name__ = "pixelimage.triGML.patternShape.CirclePattern";
+pixelimage_triGML_patternShape_CirclePattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_CirclePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "diameter":
+			this.diameter = parseFloat(value);
+			break;
+		case "left":
+			this.left = parseFloat(value);
+			break;
+		case "top":
+			this.top = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var w = Math.ceil(this.diameter);
+		var h = Math.ceil(this.diameter);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		this.buildPatternTemplates();
+		this.buildCircle(temp);
+		var x = this.left | 0;
+		var y = this.top | 0;
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x1 = x + dx;
+					var y1 = y + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,buildCircle: function(temp) {
+		var w = Math.round(this.strokeWidth / 2);
+		var r = this.diameter / 2;
+		var innerR = this.diameter / 2 - 4 * w;
+		var cx = this.diameter / 2;
+		var cy = this.diameter / 2;
+		var phi = 0.;
+		var innerCx = cx - w / 4;
+		var innerCy = cy - w / 4;
+		if(this.tiledBorder) {
+			var tileImage = this.tileImageStroke;
+			var phi1 = phi;
+			if(phi1 == null) {
+				phi1 = 0;
+			}
+			var rSmall = r > r ? r : r;
+			var targetE = 1.05;
+			if(targetE == null) {
+				targetE = 1.05;
+			}
+			var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+			var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+			var phi2 = phi1;
+			var sides = noSides;
+			if(sides == null) {
+				sides = 36;
+			}
+			if(phi2 == null) {
+				phi2 = 0.;
+			}
+			var phi1 = phi2;
+			var sides1 = sides;
+			var cornerUp = true;
+			if(cornerUp == null) {
+				cornerUp = true;
+			}
+			if(sides1 == null) {
+				sides1 = 36;
+			}
+			if(phi1 == null) {
+				phi1 = 0.;
+			}
+			var theta = 2 * Math.PI / sides1;
+			var omega;
+			if(cornerUp) {
+				omega = 0.;
+			} else if((sides1 / 2 | 0) == sides1 / 2) {
+				omega = Math.PI / sides1;
+			} else {
+				var v = sides1 / 2 - 0.5;
+				omega = (v / 2 | 0) == v / 2 ? 0.5 * Math.PI / sides1 - Math.PI : 0.5 * Math.PI / sides1;
+			}
+			var lastX = 0.;
+			var lastY = 0.;
+			if(phi1 != 0) {
+				lastX = r * Math.cos(sides1 * theta + omega) * Math.cos(phi1) - r * Math.sin(sides1 * theta + omega) * Math.sin(phi1) + cx;
+				lastY = r * Math.cos(sides1 * theta + omega) * Math.sin(phi1) + r * Math.sin(sides1 * theta + omega) * Math.cos(phi1) + cy;
+			} else {
+				lastX = cx + r * Math.cos(sides1 * theta + omega);
+				lastY = cy + r * Math.sin(sides1 * theta + omega);
+			}
+			if(phi1 != 0) {
+				var cphi = Math.cos(phi1);
+				var sphi = Math.sin(phi1);
+				var _g = 0;
+				var _g1 = sides1 + 1;
+				while(_g < _g1) {
+					var i = _g++;
+					var stheta = Math.sin(i * theta + omega);
+					var ctheta = Math.cos(i * theta + omega);
+					var nextX = r * ctheta * cphi - r * stheta * sphi + cx;
+					var nextY = r * ctheta * sphi + r * stheta * cphi + cy;
+					var bx = lastX;
+					var by = lastY;
+					var cx1 = nextX;
+					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
+					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx;
+						var by_ = by;
+						bx = cx1;
+						by = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var s0 = cy * cx1 - cx * cy1;
+					var sx = cy1 - cy;
+					var sy = cx - cx1;
+					var t0 = cx * by - cy * bx;
+					var tx = cy - by;
+					var ty = bx - cx;
+					var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+					var yIter3;
+					if(cy > by) {
+						if(cy > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(cy1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							yIter3 = this2;
+						}
+					} else if(by > cy1) {
+						var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						yIter3 = this3;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(cy1);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						yIter3 = this4;
+					}
+					var foundY = false;
+					var s = 0.;
+					var t = 0.;
+					var sxx = 0.;
+					var txx = 0.;
+					var this5;
+					if(cx > bx) {
+						if(cx > cx1) {
+							var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+							var ii_max4 = Math.ceil(cx);
+							var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this5 = this6;
+						} else {
+							var ii_min5 = Math.floor(bx);
+							var ii_max5 = Math.ceil(cx1);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this5 = this7;
+						}
+					} else if(bx > cx1) {
+						var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+						var ii_max6 = Math.ceil(bx);
+						var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this5 = this8;
+					} else {
+						var ii_min7 = Math.floor(cx);
+						var ii_max7 = Math.ceil(cx1);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this5 = this9;
+					}
+					var _g_min = this5.start;
+					var _g_max = this5.max;
+					while(_g_min < _g_max) {
+						var x = _g_min++;
+						sxx = sx * x;
+						txx = tx * x;
+						foundY = false;
+						var _g_min1 = yIter3.start;
+						var _g_max1 = yIter3.max;
+						while(_g_min1 < _g_max1) {
+							var y = _g_min1++;
+							s = s0 + sxx + sy * y;
+							t = t0 + txx + ty * y;
+							if(s <= 0 || t <= 0) {
+								if(foundY) {
+									break;
+								}
+							} else if(s + t < A) {
+								var x1 = x % tileImage.width;
+								var y1 = y % tileImage.height;
+								var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+								var this10 = color;
+								var c1 = this10;
+								if((c1 >> 24 & 255) < 254 && temp.transparent) {
+									var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+									var this11 = temp.image[location];
+									var this12 = this11;
+									var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+									var this14 = this13 >> 24 & 255;
+									var a1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = this13 >> 16 & 255;
+									var r1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = this13 >> 8 & 255;
+									var g1 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = this13 & 255;
+									var b1 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = color >> 24 & 255;
+									var a2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = color >> 16 & 255;
+									var r2 = this19 == 0 ? 0. : this19 / 255;
+									var this20 = color >> 8 & 255;
+									var g2 = this20 == 0 ? 0. : this20 / 255;
+									var this21 = color & 255;
+									var b2 = this21 == 0 ? 0. : this21 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a = 255 * (a3 + a2) | 0;
+									var blended = a << 24 | r3 << 16 | g << 8 | b;
+									temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+								}
+								foundY = true;
+							} else if(foundY) {
+								break;
+							}
+						}
+					}
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+					}
+					lastX = nextX;
+					lastY = nextY;
+				}
+			} else {
+				var _g = 0;
+				var _g1 = sides1 + 1;
+				while(_g < _g1) {
+					var i = _g++;
+					var nextX = cx + r * Math.cos(i * theta + omega);
+					var nextY = cy + r * Math.sin(i * theta + omega);
+					var bx = lastX;
+					var by = lastY;
+					var cx1 = nextX;
+					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
+					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx;
+						var by_ = by;
+						bx = cx1;
+						by = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var s0 = cy * cx1 - cx * cy1;
+					var sx = cy1 - cy;
+					var sy = cx - cx1;
+					var t0 = cx * by - cy * bx;
+					var tx = cy - by;
+					var ty = bx - cx;
+					var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+					var yIter3;
+					if(cy > by) {
+						if(cy > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(cy1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							yIter3 = this2;
+						}
+					} else if(by > cy1) {
+						var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						yIter3 = this3;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(cy1);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						yIter3 = this4;
+					}
+					var foundY = false;
+					var s = 0.;
+					var t = 0.;
+					var sxx = 0.;
+					var txx = 0.;
+					var this5;
+					if(cx > bx) {
+						if(cx > cx1) {
+							var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+							var ii_max4 = Math.ceil(cx);
+							var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this5 = this6;
+						} else {
+							var ii_min5 = Math.floor(bx);
+							var ii_max5 = Math.ceil(cx1);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this5 = this7;
+						}
+					} else if(bx > cx1) {
+						var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+						var ii_max6 = Math.ceil(bx);
+						var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this5 = this8;
+					} else {
+						var ii_min7 = Math.floor(cx);
+						var ii_max7 = Math.ceil(cx1);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this5 = this9;
+					}
+					var _g_min = this5.start;
+					var _g_max = this5.max;
+					while(_g_min < _g_max) {
+						var x = _g_min++;
+						sxx = sx * x;
+						txx = tx * x;
+						foundY = false;
+						var _g_min1 = yIter3.start;
+						var _g_max1 = yIter3.max;
+						while(_g_min1 < _g_max1) {
+							var y = _g_min1++;
+							s = s0 + sxx + sy * y;
+							t = t0 + txx + ty * y;
+							if(s <= 0 || t <= 0) {
+								if(foundY) {
+									break;
+								}
+							} else if(s + t < A) {
+								var x1 = x % tileImage.width;
+								var y1 = y % tileImage.height;
+								var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+								var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+								var this10 = color;
+								var c1 = this10;
+								if((c1 >> 24 & 255) < 254 && temp.transparent) {
+									var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+									var this11 = temp.image[location];
+									var this12 = this11;
+									var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+									var this14 = this13 >> 24 & 255;
+									var a1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = this13 >> 16 & 255;
+									var r1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = this13 >> 8 & 255;
+									var g1 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = this13 & 255;
+									var b1 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = color >> 24 & 255;
+									var a2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = color >> 16 & 255;
+									var r2 = this19 == 0 ? 0. : this19 / 255;
+									var this20 = color >> 8 & 255;
+									var g2 = this20 == 0 ? 0. : this20 / 255;
+									var this21 = color & 255;
+									var b2 = this21 == 0 ? 0. : this21 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a = 255 * (a3 + a2) | 0;
+									var blended = a << 24 | r3 << 16 | g << 8 | b;
+									temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+								}
+								foundY = true;
+							} else if(foundY) {
+								break;
+							}
+						}
+					}
+					if(hasHit1 == false) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+					}
+					lastX = nextX;
+					lastY = nextY;
+				}
+			}
+		} else {
+			var color = this.strokeColor;
+			var phi1 = phi;
+			if(phi1 == null) {
+				phi1 = 0;
+			}
+			var rSmall = r > r ? r : r;
+			var targetE = 1.05;
+			if(targetE == null) {
+				targetE = 1.05;
+			}
+			var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+			var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+			var phi2 = phi1;
+			var sides = noSides;
+			if(sides == null) {
+				sides = 36;
+			}
+			if(phi2 == null) {
+				phi2 = 0.;
+			}
+			var phi1 = phi2;
+			var sides1 = sides;
+			var cornerUp = true;
+			if(cornerUp == null) {
+				cornerUp = true;
+			}
+			if(sides1 == null) {
+				sides1 = 36;
+			}
+			if(phi1 == null) {
+				phi1 = 0.;
+			}
+			var theta = 2 * Math.PI / sides1;
+			var omega;
+			if(cornerUp) {
+				omega = 0.;
+			} else if((sides1 / 2 | 0) == sides1 / 2) {
+				omega = Math.PI / sides1;
+			} else {
+				var v = sides1 / 2 - 0.5;
+				omega = (v / 2 | 0) == v / 2 ? 0.5 * Math.PI / sides1 - Math.PI : 0.5 * Math.PI / sides1;
+			}
+			var lastX = 0.;
+			var lastY = 0.;
+			if(phi1 != 0) {
+				lastX = r * Math.cos(sides1 * theta + omega) * Math.cos(phi1) - r * Math.sin(sides1 * theta + omega) * Math.sin(phi1) + cx;
+				lastY = r * Math.cos(sides1 * theta + omega) * Math.sin(phi1) + r * Math.sin(sides1 * theta + omega) * Math.cos(phi1) + cy;
+			} else {
+				lastX = cx + r * Math.cos(sides1 * theta + omega);
+				lastY = cy + r * Math.sin(sides1 * theta + omega);
+			}
+			if(phi1 != 0) {
+				var cphi = Math.cos(phi1);
+				var sphi = Math.sin(phi1);
+				var _g = 0;
+				var _g1 = sides1 + 1;
+				while(_g < _g1) {
+					var i = _g++;
+					var stheta = Math.sin(i * theta + omega);
+					var ctheta = Math.cos(i * theta + omega);
+					var nextX = r * ctheta * cphi - r * stheta * sphi + cx;
+					var nextY = r * ctheta * sphi + r * stheta * cphi + cy;
+					var bx = lastX;
+					var by = lastY;
+					var cx1 = nextX;
+					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
+					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx;
+						var by_ = by;
+						bx = cx1;
+						by = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var s0 = cy * cx1 - cx * cy1;
+					var sx = cy1 - cy;
+					var sy = cx - cx1;
+					var t0 = cx * by - cy * bx;
+					var tx = cy - by;
+					var ty = bx - cx;
+					var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+					var yIter3;
+					if(cy > by) {
+						if(cy > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(cy1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							yIter3 = this2;
+						}
+					} else if(by > cy1) {
+						var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						yIter3 = this3;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(cy1);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						yIter3 = this4;
+					}
+					var foundY = false;
+					var s = 0.;
+					var t = 0.;
+					var sxx = 0.;
+					var txx = 0.;
+					var this5;
+					if(cx > bx) {
+						if(cx > cx1) {
+							var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+							var ii_max4 = Math.ceil(cx);
+							var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this5 = this6;
+						} else {
+							var ii_min5 = Math.floor(bx);
+							var ii_max5 = Math.ceil(cx1);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this5 = this7;
+						}
+					} else if(bx > cx1) {
+						var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+						var ii_max6 = Math.ceil(bx);
+						var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this5 = this8;
+					} else {
+						var ii_min7 = Math.floor(cx);
+						var ii_max7 = Math.ceil(cx1);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this5 = this9;
+					}
+					var _g_min = this5.start;
+					var _g_max = this5.max;
+					while(_g_min < _g_max) {
+						var x = _g_min++;
+						sxx = sx * x;
+						txx = tx * x;
+						foundY = false;
+						var _g_min1 = yIter3.start;
+						var _g_max1 = yIter3.max;
+						while(_g_min1 < _g_max1) {
+							var y = _g_min1++;
+							s = s0 + sxx + sy * y;
+							t = t0 + txx + ty * y;
+							if(s <= 0 || t <= 0) {
+								if(foundY) {
+									break;
+								}
+							} else if(s + t < A) {
+								var this10 = color;
+								var c = this10;
+								if((c >> 24 & 255) < 254 && temp.transparent) {
+									var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+									var this11 = temp.image[location];
+									var this12 = this11;
+									var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+									var this14 = this13 >> 24 & 255;
+									var a1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = this13 >> 16 & 255;
+									var r1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = this13 >> 8 & 255;
+									var g1 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = this13 & 255;
+									var b1 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = color >> 24 & 255;
+									var a2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = color >> 16 & 255;
+									var r2 = this19 == 0 ? 0. : this19 / 255;
+									var this20 = color >> 8 & 255;
+									var g2 = this20 == 0 ? 0. : this20 / 255;
+									var this21 = color & 255;
+									var b2 = this21 == 0 ? 0. : this21 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a = 255 * (a3 + a2) | 0;
+									var blended = a << 24 | r3 << 16 | g << 8 | b;
+									temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+								}
+								foundY = true;
+							} else if(foundY) {
+								break;
+							}
+						}
+					}
+					if(hasHit1 == true) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+					}
+					lastX = nextX;
+					lastY = nextY;
+				}
+			} else {
+				var _g = 0;
+				var _g1 = sides1 + 1;
+				while(_g < _g1) {
+					var i = _g++;
+					var nextX = cx + r * Math.cos(i * theta + omega);
+					var nextY = cy + r * Math.sin(i * theta + omega);
+					var bx = lastX;
+					var by = lastY;
+					var cx1 = nextX;
+					var cy1 = nextY;
+					var hasHit = false;
+					if(hasHit == null) {
+						hasHit = false;
+					}
+					var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+					if(!adjustWinding) {
+						var bx_ = bx;
+						var by_ = by;
+						bx = cx1;
+						by = cy1;
+						cx1 = bx_;
+						cy1 = by_;
+					}
+					var hasHit1 = hasHit;
+					if(hasHit1 == null) {
+						hasHit1 = false;
+					}
+					var s0 = cy * cx1 - cx * cy1;
+					var sx = cy1 - cy;
+					var sy = cx - cx1;
+					var t0 = cx * by - cy * bx;
+					var tx = cy - by;
+					var ty = bx - cx;
+					var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+					var yIter3;
+					if(cy > by) {
+						if(cy > cy1) {
+							var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+							var ii_max = Math.ceil(cy);
+							var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+							yIter3 = this1;
+						} else {
+							var ii_min1 = Math.floor(by);
+							var ii_max1 = Math.ceil(cy1);
+							var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+							yIter3 = this2;
+						}
+					} else if(by > cy1) {
+						var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+						var ii_max2 = Math.ceil(by);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+						yIter3 = this3;
+					} else {
+						var ii_min3 = Math.floor(cy);
+						var ii_max3 = Math.ceil(cy1);
+						var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+						yIter3 = this4;
+					}
+					var foundY = false;
+					var s = 0.;
+					var t = 0.;
+					var sxx = 0.;
+					var txx = 0.;
+					var this5;
+					if(cx > bx) {
+						if(cx > cx1) {
+							var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+							var ii_max4 = Math.ceil(cx);
+							var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+							this5 = this6;
+						} else {
+							var ii_min5 = Math.floor(bx);
+							var ii_max5 = Math.ceil(cx1);
+							var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+							this5 = this7;
+						}
+					} else if(bx > cx1) {
+						var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+						var ii_max6 = Math.ceil(bx);
+						var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+						this5 = this8;
+					} else {
+						var ii_min7 = Math.floor(cx);
+						var ii_max7 = Math.ceil(cx1);
+						var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+						this5 = this9;
+					}
+					var _g_min = this5.start;
+					var _g_max = this5.max;
+					while(_g_min < _g_max) {
+						var x = _g_min++;
+						sxx = sx * x;
+						txx = tx * x;
+						foundY = false;
+						var _g_min1 = yIter3.start;
+						var _g_max1 = yIter3.max;
+						while(_g_min1 < _g_max1) {
+							var y = _g_min1++;
+							s = s0 + sxx + sy * y;
+							t = t0 + txx + ty * y;
+							if(s <= 0 || t <= 0) {
+								if(foundY) {
+									break;
+								}
+							} else if(s + t < A) {
+								var this10 = color;
+								var c = this10;
+								if((c >> 24 & 255) < 254 && temp.transparent) {
+									var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+									var this11 = temp.image[location];
+									var this12 = this11;
+									var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+									var this14 = this13 >> 24 & 255;
+									var a1 = this14 == 0 ? 0. : this14 / 255;
+									var this15 = this13 >> 16 & 255;
+									var r1 = this15 == 0 ? 0. : this15 / 255;
+									var this16 = this13 >> 8 & 255;
+									var g1 = this16 == 0 ? 0. : this16 / 255;
+									var this17 = this13 & 255;
+									var b1 = this17 == 0 ? 0. : this17 / 255;
+									var this18 = color >> 24 & 255;
+									var a2 = this18 == 0 ? 0. : this18 / 255;
+									var this19 = color >> 16 & 255;
+									var r2 = this19 == 0 ? 0. : this19 / 255;
+									var this20 = color >> 8 & 255;
+									var g2 = this20 == 0 ? 0. : this20 / 255;
+									var this21 = color & 255;
+									var b2 = this21 == 0 ? 0. : this21 / 255;
+									var a3 = a1 * (1 - a2);
+									var r3 = 255 * (r1 * a3 + r2 * a2) | 0;
+									var g = 255 * (g1 * a3 + g2 * a2) | 0;
+									var b = 255 * (b1 * a3 + b2 * a2) | 0;
+									var a = 255 * (a3 + a2) | 0;
+									var blended = a << 24 | r3 << 16 | g << 8 | b;
+									temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+								} else {
+									temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+								}
+								foundY = true;
+							} else if(foundY) {
+								break;
+							}
+						}
+					}
+					if(hasHit1 == true) {
+						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+					}
+					lastX = nextX;
+					lastY = nextY;
+				}
+			}
+		}
+		var tileImage = this.tileImageFill;
+		var phi1 = phi;
+		if(phi1 == null) {
+			phi1 = 0;
+		}
+		var rSmall = innerR > innerR ? innerR : innerR;
+		var targetE = 1.05;
+		if(targetE == null) {
+			targetE = 1.05;
+		}
+		var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+		var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+		var phi = phi1;
+		var sides = noSides;
+		if(sides == null) {
+			sides = 36;
+		}
+		if(phi == null) {
+			phi = 0.;
+		}
+		var phi1 = phi;
+		var sides1 = sides;
+		var cornerUp = true;
+		if(cornerUp == null) {
+			cornerUp = true;
+		}
+		if(sides1 == null) {
+			sides1 = 36;
+		}
+		if(phi1 == null) {
+			phi1 = 0.;
+		}
+		var theta = 2 * Math.PI / sides1;
+		var omega;
+		if(cornerUp) {
+			omega = 0.;
+		} else if((sides1 / 2 | 0) == sides1 / 2) {
+			omega = Math.PI / sides1;
+		} else {
+			var v = sides1 / 2 - 0.5;
+			omega = (v / 2 | 0) == v / 2 ? 0.5 * Math.PI / sides1 - Math.PI : 0.5 * Math.PI / sides1;
+		}
+		var lastX = 0.;
+		var lastY = 0.;
+		if(phi1 != 0) {
+			lastX = innerR * Math.cos(sides1 * theta + omega) * Math.cos(phi1) - innerR * Math.sin(sides1 * theta + omega) * Math.sin(phi1) + innerCx;
+			lastY = innerR * Math.cos(sides1 * theta + omega) * Math.sin(phi1) + innerR * Math.sin(sides1 * theta + omega) * Math.cos(phi1) + innerCy;
+		} else {
+			lastX = innerCx + innerR * Math.cos(sides1 * theta + omega);
+			lastY = innerCy + innerR * Math.sin(sides1 * theta + omega);
+		}
+		if(phi1 != 0) {
+			var cphi = Math.cos(phi1);
+			var sphi = Math.sin(phi1);
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var stheta = Math.sin(i * theta + omega);
+				var ctheta = Math.cos(i * theta + omega);
+				var nextX = innerR * ctheta * cphi - innerR * stheta * sphi + innerCx;
+				var nextY = innerR * ctheta * sphi + innerR * stheta * cphi + innerCy;
+				var bx = lastX;
+				var by = lastY;
+				var cx = nextX;
+				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx;
+					by = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = innerCy * cx - innerCx * cy;
+				var sx = cy - innerCy;
+				var sy = innerCx - cx;
+				var t0 = innerCx * by - innerCy * bx;
+				var tx = innerCy - by;
+				var ty = bx - innerCx;
+				var A = -by * cx + innerCy * (-bx + cx) + innerCx * (by - cy) + bx * cy;
+				var yIter3;
+				if(innerCy > by) {
+					if(innerCy > cy) {
+						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+						var ii_max = Math.ceil(innerCy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy) {
+					var ii_min2 = innerCy > cy ? Math.floor(cy) : Math.ceil(innerCy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(innerCy);
+					var ii_max3 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(innerCx > bx) {
+					if(innerCx > cx) {
+						var ii_min4 = bx > cx ? Math.floor(cx) : Math.floor(bx);
+						var ii_max4 = Math.ceil(innerCx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx) {
+					var ii_min6 = innerCx > cx ? Math.floor(cx) : Math.ceil(innerCx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(innerCx);
+					var ii_max7 = Math.ceil(cx);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		} else {
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var nextX = innerCx + innerR * Math.cos(i * theta + omega);
+				var nextY = innerCy + innerR * Math.sin(i * theta + omega);
+				var bx = lastX;
+				var by = lastY;
+				var cx = nextX;
+				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx;
+					by = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = innerCy * cx - innerCx * cy;
+				var sx = cy - innerCy;
+				var sy = innerCx - cx;
+				var t0 = innerCx * by - innerCy * bx;
+				var tx = innerCy - by;
+				var ty = bx - innerCx;
+				var A = -by * cx + innerCy * (-bx + cx) + innerCx * (by - cy) + bx * cy;
+				var yIter3;
+				if(innerCy > by) {
+					if(innerCy > cy) {
+						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+						var ii_max = Math.ceil(innerCy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy) {
+					var ii_min2 = innerCy > cy ? Math.floor(cy) : Math.ceil(innerCy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(innerCy);
+					var ii_max3 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(innerCx > bx) {
+					if(innerCx > cx) {
+						var ii_min4 = bx > cx ? Math.floor(cx) : Math.floor(bx);
+						var ii_max4 = Math.ceil(innerCx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx) {
+					var ii_min6 = innerCx > cx ? Math.floor(cx) : Math.ceil(innerCx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(innerCx);
+					var ii_max7 = Math.ceil(cx);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		}
+	}
+	,__class__: pixelimage_triGML_patternShape_CirclePattern
+});
+var pixelimage_triGML_patternShape_EllipsePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,width,height) {
+	if(height == null) {
+		height = 1.;
+	}
+	if(width == null) {
+		width = 1.;
+	}
+	if(top == null) {
+		top = 0.;
+	}
+	if(left == null) {
+		left = 0.;
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.left = left;
+	this.top = top;
+	this.width = width;
+	this.height = height;
+};
+pixelimage_triGML_patternShape_EllipsePattern.__name__ = "pixelimage.triGML.patternShape.EllipsePattern";
+pixelimage_triGML_patternShape_EllipsePattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_EllipsePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "height":
+			this.height = parseFloat(value);
+			break;
+		case "left":
+			this.left = parseFloat(value);
+			break;
+		case "top":
+			this.top = parseFloat(value);
+			break;
+		case "width":
+			this.width = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var w = Math.ceil(this.width);
+		var h = Math.ceil(this.height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		this.buildPatternTemplates();
+		var rW = this.width / 2;
+		var rH = this.height / 2;
+		var innerRw = rW - this.strokeWidth / 2;
+		var innerRh = rH - this.strokeWidth / 2;
+		var cx = rW;
+		var cy = rH;
+		var phi = 0;
+		var innerCx = cx + this.strokeWidth;
+		var innerCy = cy + this.strokeWidth;
+		var tileImage = this.tileImageStroke;
+		var phi1 = phi;
+		if(phi1 == null) {
+			phi1 = 0;
+		}
+		var rSmall = rW > rH ? rH : rW;
+		var targetE = 1.05;
+		if(targetE == null) {
+			targetE = 1.05;
+		}
+		var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+		var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+		var phi2 = phi1;
+		var sides = noSides;
+		if(sides == null) {
+			sides = 36;
+		}
+		if(phi2 == null) {
+			phi2 = 0.;
+		}
+		var phi1 = phi2;
+		var sides1 = sides;
+		var cornerUp = true;
+		if(cornerUp == null) {
+			cornerUp = true;
+		}
+		if(sides1 == null) {
+			sides1 = 36;
+		}
+		if(phi1 == null) {
+			phi1 = 0.;
+		}
+		var theta = 2 * Math.PI / sides1;
+		var omega;
+		if(cornerUp) {
+			omega = 0.;
+		} else if((sides1 / 2 | 0) == sides1 / 2) {
+			omega = Math.PI / sides1;
+		} else {
+			var v = sides1 / 2 - 0.5;
+			omega = (v / 2 | 0) == v / 2 ? 0.5 * Math.PI / sides1 - Math.PI : 0.5 * Math.PI / sides1;
+		}
+		var lastX = 0.;
+		var lastY = 0.;
+		if(phi1 != 0) {
+			lastX = rW * Math.cos(sides1 * theta + omega) * Math.cos(phi1) - rH * Math.sin(sides1 * theta + omega) * Math.sin(phi1) + cx;
+			lastY = rW * Math.cos(sides1 * theta + omega) * Math.sin(phi1) + rH * Math.sin(sides1 * theta + omega) * Math.cos(phi1) + cy;
+		} else {
+			lastX = cx + rW * Math.cos(sides1 * theta + omega);
+			lastY = cy + rH * Math.sin(sides1 * theta + omega);
+		}
+		if(phi1 != 0) {
+			var cphi = Math.cos(phi1);
+			var sphi = Math.sin(phi1);
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var stheta = Math.sin(i * theta + omega);
+				var ctheta = Math.cos(i * theta + omega);
+				var nextX = rW * ctheta * cphi - rH * stheta * sphi + cx;
+				var nextY = rW * ctheta * sphi + rH * stheta * cphi + cy;
+				var bx = lastX;
+				var by = lastY;
+				var cx1 = nextX;
+				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = cy * cx1 - cx * cy1;
+				var sx = cy1 - cy;
+				var sy = cx - cx1;
+				var t0 = cx * by - cy * bx;
+				var tx = cy - by;
+				var ty = bx - cx;
+				var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+				var yIter3;
+				if(cy > by) {
+					if(cy > cy1) {
+						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max = Math.ceil(cy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy1) {
+					var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(cy);
+					var ii_max3 = Math.ceil(cy1);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(cx > bx) {
+					if(cx > cx1) {
+						var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max4 = Math.ceil(cx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx1);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx1) {
+					var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(cx);
+					var ii_max7 = Math.ceil(cx1);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		} else {
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var nextX = cx + rW * Math.cos(i * theta + omega);
+				var nextY = cy + rH * Math.sin(i * theta + omega);
+				var bx = lastX;
+				var by = lastY;
+				var cx1 = nextX;
+				var cy1 = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = cx * by - bx * cy + (bx * cy1 - cx1 * by) + (cx1 * cy - cx * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx1;
+					by = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = cy * cx1 - cx * cy1;
+				var sx = cy1 - cy;
+				var sy = cx - cx1;
+				var t0 = cx * by - cy * bx;
+				var tx = cy - by;
+				var ty = bx - cx;
+				var A = -by * cx1 + cy * (-bx + cx1) + cx * (by - cy1) + bx * cy1;
+				var yIter3;
+				if(cy > by) {
+					if(cy > cy1) {
+						var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+						var ii_max = Math.ceil(cy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy1) {
+					var ii_min2 = cy > cy1 ? Math.floor(cy1) : Math.ceil(cy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(cy);
+					var ii_max3 = Math.ceil(cy1);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(cx > bx) {
+					if(cx > cx1) {
+						var ii_min4 = bx > cx1 ? Math.floor(cx1) : Math.floor(bx);
+						var ii_max4 = Math.ceil(cx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx1);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx1) {
+					var ii_min6 = cx > cx1 ? Math.floor(cx1) : Math.ceil(cx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(cx);
+					var ii_max7 = Math.ceil(cx1);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		}
+		var tileImage = this.tileImageFill;
+		var phi1 = phi;
+		if(phi1 == null) {
+			phi1 = 0;
+		}
+		var rSmall = innerRw > innerRh ? innerRh : innerRw;
+		var targetE = 1.05;
+		if(targetE == null) {
+			targetE = 1.05;
+		}
+		var result = Math.ceil(Math.PI / Math.acos(1 - targetE / rSmall));
+		var noSides = result < 12 ? 12 : result > 500 ? 500 : result;
+		var phi = phi1;
+		var sides = noSides;
+		if(sides == null) {
+			sides = 36;
+		}
+		if(phi == null) {
+			phi = 0.;
+		}
+		var phi1 = phi;
+		var sides1 = sides;
+		var cornerUp = true;
+		if(cornerUp == null) {
+			cornerUp = true;
+		}
+		if(sides1 == null) {
+			sides1 = 36;
+		}
+		if(phi1 == null) {
+			phi1 = 0.;
+		}
+		var theta = 2 * Math.PI / sides1;
+		var omega;
+		if(cornerUp) {
+			omega = 0.;
+		} else if((sides1 / 2 | 0) == sides1 / 2) {
+			omega = Math.PI / sides1;
+		} else {
+			var v = sides1 / 2 - 0.5;
+			omega = (v / 2 | 0) == v / 2 ? 0.5 * Math.PI / sides1 - Math.PI : 0.5 * Math.PI / sides1;
+		}
+		var lastX = 0.;
+		var lastY = 0.;
+		if(phi1 != 0) {
+			lastX = innerRw * Math.cos(sides1 * theta + omega) * Math.cos(phi1) - innerRh * Math.sin(sides1 * theta + omega) * Math.sin(phi1) + innerCx;
+			lastY = innerRw * Math.cos(sides1 * theta + omega) * Math.sin(phi1) + innerRh * Math.sin(sides1 * theta + omega) * Math.cos(phi1) + innerCy;
+		} else {
+			lastX = innerCx + innerRw * Math.cos(sides1 * theta + omega);
+			lastY = innerCy + innerRh * Math.sin(sides1 * theta + omega);
+		}
+		if(phi1 != 0) {
+			var cphi = Math.cos(phi1);
+			var sphi = Math.sin(phi1);
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var stheta = Math.sin(i * theta + omega);
+				var ctheta = Math.cos(i * theta + omega);
+				var nextX = innerRw * ctheta * cphi - innerRh * stheta * sphi + innerCx;
+				var nextY = innerRw * ctheta * sphi + innerRh * stheta * cphi + innerCy;
+				var bx = lastX;
+				var by = lastY;
+				var cx = nextX;
+				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx;
+					by = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = innerCy * cx - innerCx * cy;
+				var sx = cy - innerCy;
+				var sy = innerCx - cx;
+				var t0 = innerCx * by - innerCy * bx;
+				var tx = innerCy - by;
+				var ty = bx - innerCx;
+				var A = -by * cx + innerCy * (-bx + cx) + innerCx * (by - cy) + bx * cy;
+				var yIter3;
+				if(innerCy > by) {
+					if(innerCy > cy) {
+						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+						var ii_max = Math.ceil(innerCy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy) {
+					var ii_min2 = innerCy > cy ? Math.floor(cy) : Math.ceil(innerCy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(innerCy);
+					var ii_max3 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(innerCx > bx) {
+					if(innerCx > cx) {
+						var ii_min4 = bx > cx ? Math.floor(cx) : Math.floor(bx);
+						var ii_max4 = Math.ceil(innerCx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx) {
+					var ii_min6 = innerCx > cx ? Math.floor(cx) : Math.ceil(innerCx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(innerCx);
+					var ii_max7 = Math.ceil(cx);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		} else {
+			var _g = 0;
+			var _g1 = sides1 + 1;
+			while(_g < _g1) {
+				var i = _g++;
+				var nextX = innerCx + innerRw * Math.cos(i * theta + omega);
+				var nextY = innerCy + innerRh * Math.sin(i * theta + omega);
+				var bx = lastX;
+				var by = lastY;
+				var cx = nextX;
+				var cy = nextY;
+				var hasHit = false;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = innerCx * by - bx * innerCy + (bx * cy - cx * by) + (cx * innerCy - innerCx * cy) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx;
+					var by_ = by;
+					bx = cx;
+					by = cy;
+					cx = bx_;
+					cy = by_;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var s0 = innerCy * cx - innerCx * cy;
+				var sx = cy - innerCy;
+				var sy = innerCx - cx;
+				var t0 = innerCx * by - innerCy * bx;
+				var tx = innerCy - by;
+				var ty = bx - innerCx;
+				var A = -by * cx + innerCy * (-bx + cx) + innerCx * (by - cy) + bx * cy;
+				var yIter3;
+				if(innerCy > by) {
+					if(innerCy > cy) {
+						var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+						var ii_max = Math.ceil(innerCy);
+						var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this1;
+					} else {
+						var ii_min1 = Math.floor(by);
+						var ii_max1 = Math.ceil(cy);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min1,ii_max1);
+						yIter3 = this2;
+					}
+				} else if(by > cy) {
+					var ii_min2 = innerCy > cy ? Math.floor(cy) : Math.ceil(innerCy);
+					var ii_max2 = Math.ceil(by);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min2,ii_max2);
+					yIter3 = this3;
+				} else {
+					var ii_min3 = Math.floor(innerCy);
+					var ii_max3 = Math.ceil(cy);
+					var this4 = new pixelimage_iter_IntIterStart(ii_min3,ii_max3);
+					yIter3 = this4;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this5;
+				if(innerCx > bx) {
+					if(innerCx > cx) {
+						var ii_min4 = bx > cx ? Math.floor(cx) : Math.floor(bx);
+						var ii_max4 = Math.ceil(innerCx);
+						var this6 = new pixelimage_iter_IntIterStart(ii_min4,ii_max4);
+						this5 = this6;
+					} else {
+						var ii_min5 = Math.floor(bx);
+						var ii_max5 = Math.ceil(cx);
+						var this7 = new pixelimage_iter_IntIterStart(ii_min5,ii_max5);
+						this5 = this7;
+					}
+				} else if(bx > cx) {
+					var ii_min6 = innerCx > cx ? Math.floor(cx) : Math.ceil(innerCx);
+					var ii_max6 = Math.ceil(bx);
+					var this8 = new pixelimage_iter_IntIterStart(ii_min6,ii_max6);
+					this5 = this8;
+				} else {
+					var ii_min7 = Math.floor(innerCx);
+					var ii_max7 = Math.ceil(cx);
+					var this9 = new pixelimage_iter_IntIterStart(ii_min7,ii_max7);
+					this5 = this9;
+				}
+				var _g_min = this5.start;
+				var _g_max = this5.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this10 = color;
+							var c1 = this10;
+							if((c1 >> 24 & 255) < 254 && temp.transparent) {
+								var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+								var this11 = temp.image[location];
+								var this12 = this11;
+								var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+								var this14 = this13 >> 24 & 255;
+								var a1 = this14 == 0 ? 0. : this14 / 255;
+								var this15 = this13 >> 16 & 255;
+								var r1 = this15 == 0 ? 0. : this15 / 255;
+								var this16 = this13 >> 8 & 255;
+								var g1 = this16 == 0 ? 0. : this16 / 255;
+								var this17 = this13 & 255;
+								var b1 = this17 == 0 ? 0. : this17 / 255;
+								var this18 = color >> 24 & 255;
+								var a2 = this18 == 0 ? 0. : this18 / 255;
+								var this19 = color >> 16 & 255;
+								var r2 = this19 == 0 ? 0. : this19 / 255;
+								var this20 = color >> 8 & 255;
+								var g2 = this20 == 0 ? 0. : this20 / 255;
+								var this21 = color & 255;
+								var b2 = this21 == 0 ? 0. : this21 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit1 == false) {
+					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
+				}
+				lastX = nextX;
+				lastY = nextY;
+			}
+		}
+		var x = this.left | 0;
+		var y = this.top | 0;
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x1 = x + dx;
+					var y1 = y + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternShape_EllipsePattern
+});
+var pixelimage_triGML_patternShape_PathElementPattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,pathData,translateX,translateY,scaleX,scaleY) {
+	if(scaleY == null) {
+		scaleY = 1.;
+	}
+	if(scaleX == null) {
+		scaleX = 1.;
+	}
+	if(translateY == null) {
+		translateY = 0.;
+	}
+	if(translateX == null) {
+		translateX = 0.;
+	}
+	if(pathData == null) {
+		pathData = "";
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	this.toggleDraw = true;
+	this.y0 = 0.;
+	this.x0 = 0.;
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.pathData = pathData;
+	this.translateX = translateX;
+	this.translateY = translateY;
+	this.scaleX = scaleX;
+	this.scaleY = scaleY;
+};
+pixelimage_triGML_patternShape_PathElementPattern.__name__ = "pixelimage.triGML.patternShape.PathElementPattern";
+pixelimage_triGML_patternShape_PathElementPattern.__interfaces__ = [justPath_ILinePathContext];
+pixelimage_triGML_patternShape_PathElementPattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_PathElementPattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "pathData":
+			this.pathData = value;
+			break;
+		case "scaleX":
+			this.scaleX = parseFloat(value);
+			break;
+		case "scaleY":
+			this.scaleY = parseFloat(value);
+			break;
+		case "translateX":
+			this.translateX = parseFloat(value);
+			break;
+		case "translateY":
+			this.translateY = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var w = Math.ceil(pixelImage.width);
+		var h = Math.ceil(pixelImage.height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		this.temp = this2;
+		this.temp.transparent = true;
+		this.buildPatternTemplates();
+		var sp = new justPath_SvgLinePath(this);
+		sp.parse(this.pathData);
+		var pixelImage1 = this.temp;
+		var _g = 0;
+		var _g1 = pixelImage1.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = pixelImage1.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = pixelImage1.image[pixelImage1.useVirtualPos ? (dy - pixelImage1.virtualY) * pixelImage1.width + dx - pixelImage1.virtualX | 0 : dy * pixelImage1.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(pixelImage1.useMask && pixelImage1.mask != null) {
+					var this1 = pixelImage1.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x = dx;
+					var y = dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		this.temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,lineSegmentTo: function(x2,y2) {
+		if(this.toggleDraw) {
+			var oldInfo = this.info;
+			var this1 = this.temp;
+			var px = this.x0 * this.scaleX + this.translateX;
+			var py = this.y0 * this.scaleY + this.translateY;
+			var tileImage = this.tileImageStroke;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var o = y2 * this.scaleY + this.translateY - py;
+			var a = x2 * this.scaleX + this.translateX - px;
+			var h = Math.pow(o * o + a * a,0.5);
+			var theta = Math.atan2(o,a);
+			var hasHit1 = hasHit;
+			var debugCorners = false;
+			if(debugCorners == null) {
+				debugCorners = false;
+			}
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var sin = Math.sin(theta);
+			var cos = Math.cos(theta);
+			var radius = this.strokeWidth / 2;
+			var dx = 0.1;
+			var dy = radius;
+			var cx = h;
+			var cy = radius;
+			var bx = h;
+			var by = -radius;
+			var ax = 0.1;
+			var ay = -radius;
+			var temp = 0.;
+			temp = px + (ax * cos - ay * sin);
+			ay = py + (ay * cos + ax * sin);
+			ax = temp;
+			temp = px + (bx * cos - by * sin);
+			by = py + (by * cos + bx * sin);
+			bx = temp;
+			temp = px + (cx * cos - cy * sin);
+			cy = py + (cy * cos + cx * sin);
+			cx = temp;
+			temp = px + (dx * cos - dy * sin);
+			dy = py + (dy * cos + dx * sin);
+			dx = temp;
+			if(debugCorners) {
+				var x = ax - 6.;
+				var y = ay - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -65536;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = bx - 6.;
+				var y = by - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16711936;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 0;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = cx - 6.;
+				var y = cy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -16776961;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 0;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+				var x = dx - 6.;
+				var y = dy - 6.;
+				var p = x | 0;
+				var xx = p;
+				var q = y | 0;
+				var maxX = x + 12 | 0;
+				var maxY = y + 12 | 0;
+				while(true) {
+					var x = p++;
+					var this2 = -1048336;
+					var c = this2;
+					if((c >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = 240;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = 0;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = 240;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					}
+					if(p > maxX) {
+						p = xx;
+						++q;
+					}
+					if(q > maxY) {
+						break;
+					}
+				}
+			}
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit1;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			var tmp;
+			if(hasHit == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				tmp = v;
+			} else {
+				tmp = null;
+			}
+			this.info = tmp;
+			if(this.info != null && oldInfo != null) {
+				var this1 = this.temp;
+				var ax = oldInfo.bx * this.scaleX + this.translateX;
+				var ay = oldInfo.by * this.scaleY + this.translateY;
+				var bx = this.info.ax * this.scaleX + this.translateX;
+				var by = this.info.ay * this.scaleY + this.translateY;
+				var cx = this.info.dx * this.scaleX + this.translateX;
+				var cy = this.info.dy * this.scaleY + this.translateY;
+				var dx = oldInfo.cx * this.scaleX + this.translateX;
+				var dy = oldInfo.cy * this.scaleY + this.translateY;
+				var tileImage = this.tileImageStroke;
+				var hasHit = true;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
+				}
+				var bx1 = bx;
+				var by1 = by;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = ay * cx1 - ax * cy1;
+				var sx = cy1 - ay;
+				var sy = ax - cx1;
+				var t0 = ax * by1 - ay * bx1;
+				var tx = ay - by1;
+				var ty = bx1 - ax;
+				var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+				var yIter3;
+				if(ay > by1) {
+					if(ay > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(ay);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+					var ii_max = Math.ceil(by1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(ay);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this2;
+				if(ax > bx1) {
+					if(ax > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(ax);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+					var ii_max = Math.ceil(bx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(ax);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this2 = color;
+							var c1 = this2;
+							if((c1 >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+				}
+				var bx1 = cx;
+				var by1 = cy;
+				var cx1 = dx;
+				var cy1 = dy;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
+				}
+				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+				if(!adjustWinding) {
+					var bx_ = bx1;
+					var by_ = by1;
+					bx1 = cx1;
+					by1 = cy1;
+					cx1 = bx_;
+					cy1 = by_;
+				}
+				var hasHit2 = hasHit;
+				if(hasHit2 == null) {
+					hasHit2 = false;
+				}
+				var s0 = by * cx1 - bx * cy1;
+				var sx = cy1 - by;
+				var sy = bx - cx1;
+				var t0 = bx * by1 - by * bx1;
+				var tx = by - by1;
+				var ty = bx1 - bx;
+				var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+				var yIter3;
+				if(by > by1) {
+					if(by > cy1) {
+						var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+						var ii_max = Math.ceil(by);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					} else {
+						var ii_min = Math.floor(by1);
+						var ii_max = Math.ceil(cy1);
+						var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						yIter3 = this2;
+					}
+				} else if(by1 > cy1) {
+					var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+					var ii_max = Math.ceil(by1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+				var foundY = false;
+				var s = 0.;
+				var t = 0.;
+				var sxx = 0.;
+				var txx = 0.;
+				var this2;
+				if(bx > bx1) {
+					if(bx > cx1) {
+						var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+						var ii_max = Math.ceil(bx);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					} else {
+						var ii_min = Math.floor(bx1);
+						var ii_max = Math.ceil(cx1);
+						var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+						this2 = this3;
+					}
+				} else if(bx1 > cx1) {
+					var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+					var ii_max = Math.ceil(bx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+				var _g_min = this2.start;
+				var _g_max = this2.max;
+				while(_g_min < _g_max) {
+					var x = _g_min++;
+					sxx = sx * x;
+					txx = tx * x;
+					foundY = false;
+					var _g_min1 = yIter3.start;
+					var _g_max1 = yIter3.max;
+					while(_g_min1 < _g_max1) {
+						var y = _g_min1++;
+						s = s0 + sxx + sy * y;
+						t = t0 + txx + ty * y;
+						if(s <= 0 || t <= 0) {
+							if(foundY) {
+								break;
+							}
+						} else if(s + t < A) {
+							var x1 = x % tileImage.width;
+							var y1 = y % tileImage.height;
+							var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+							var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+							var this2 = color;
+							var c1 = this2;
+							if((c1 >> 24 & 255) < 254 && this1.transparent) {
+								var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+								var this3 = this1.image[location];
+								var this4 = this3;
+								var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+								var this6 = this5 >> 24 & 255;
+								var a1 = this6 == 0 ? 0. : this6 / 255;
+								var this7 = this5 >> 16 & 255;
+								var r1 = this7 == 0 ? 0. : this7 / 255;
+								var this8 = this5 >> 8 & 255;
+								var g1 = this8 == 0 ? 0. : this8 / 255;
+								var this9 = this5 & 255;
+								var b1 = this9 == 0 ? 0. : this9 / 255;
+								var this10 = color >> 24 & 255;
+								var a2 = this10 == 0 ? 0. : this10 / 255;
+								var this11 = color >> 16 & 255;
+								var r2 = this11 == 0 ? 0. : this11 / 255;
+								var this12 = color >> 8 & 255;
+								var g2 = this12 == 0 ? 0. : this12 / 255;
+								var this13 = color & 255;
+								var b2 = this13 == 0 ? 0. : this13 / 255;
+								var a3 = a1 * (1 - a2);
+								var r = 255 * (r1 * a3 + r2 * a2) | 0;
+								var g = 255 * (g1 * a3 + g2 * a2) | 0;
+								var b = 255 * (b1 * a3 + b2 * a2) | 0;
+								var a = 255 * (a3 + a2) | 0;
+								var blended = a << 24 | r << 16 | g << 8 | b;
+								this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+							} else {
+								this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+							}
+							foundY = true;
+						} else if(foundY) {
+							break;
+						}
+					}
+				}
+				if(hasHit2 == false) {
+					var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+				}
+				if(hasHit1 == true) {
+					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+				}
+			}
+		}
+		this.toggleDraw = !this.toggleDraw;
+		this.x0 = x2;
+		this.y0 = y2;
+	}
+	,lineTo: function(x2,y2) {
+		var oldInfo = this.info;
+		var this1 = this.temp;
+		var px = this.x0 * this.scaleX + this.translateX;
+		var py = this.y0 * this.scaleY + this.translateY;
+		var tileImage = this.tileImageStroke;
+		var hasHit = true;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var o = y2 * this.scaleY + this.translateY - py;
+		var a = x2 * this.scaleX + this.translateX - px;
+		var h = Math.pow(o * o + a * a,0.5);
+		var theta = Math.atan2(o,a);
+		var hasHit1 = hasHit;
+		var debugCorners = false;
+		if(debugCorners == null) {
+			debugCorners = false;
+		}
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var radius = this.strokeWidth / 2;
+		var dx = 0.1;
+		var dy = radius;
+		var cx = h;
+		var cy = radius;
+		var bx = h;
+		var by = -radius;
+		var ax = 0.1;
+		var ay = -radius;
+		var temp = 0.;
+		temp = px + (ax * cos - ay * sin);
+		ay = py + (ay * cos + ax * sin);
+		ax = temp;
+		temp = px + (bx * cos - by * sin);
+		by = py + (by * cos + bx * sin);
+		bx = temp;
+		temp = px + (cx * cos - cy * sin);
+		cy = py + (cy * cos + cx * sin);
+		cx = temp;
+		temp = px + (dx * cos - dy * sin);
+		dy = py + (dy * cos + dx * sin);
+		dx = temp;
+		if(debugCorners) {
+			var x = ax - 6.;
+			var y = ay - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -65536;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 255;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = bx - 6.;
+			var y = by - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16711936;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 255;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 0;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = cx - 6.;
+			var y = cy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -16776961;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 0;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 255;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+			var x = dx - 6.;
+			var y = dy - 6.;
+			var p = x | 0;
+			var xx = p;
+			var q = y | 0;
+			var maxX = x + 12 | 0;
+			var maxY = y + 12 | 0;
+			while(true) {
+				var x = p++;
+				var this2 = -1048336;
+				var c = this2;
+				if((c >> 24 & 255) < 254 && this1.transparent) {
+					var location = this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0;
+					var this3 = this1.image[location];
+					var this4 = this3;
+					var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+					var this6 = this5 >> 24 & 255;
+					var a1 = this6 == 0 ? 0. : this6 / 255;
+					var this7 = this5 >> 16 & 255;
+					var r1 = this7 == 0 ? 0. : this7 / 255;
+					var this8 = this5 >> 8 & 255;
+					var g1 = this8 == 0 ? 0. : this8 / 255;
+					var this9 = this5 & 255;
+					var b1 = this9 == 0 ? 0. : this9 / 255;
+					var this10 = 255;
+					var a2 = this10 == 0 ? 0. : this10 / 255;
+					var this11 = 240;
+					var r2 = this11 == 0 ? 0. : this11 / 255;
+					var this12 = 0;
+					var g2 = this12 == 0 ? 0. : this12 / 255;
+					var this13 = 240;
+					var b2 = this13 == 0 ? 0. : this13 / 255;
+					var a3 = a1 * (1 - a2);
+					var r = 255 * (r1 * a3 + r2 * a2) | 0;
+					var g = 255 * (g1 * a3 + g2 * a2) | 0;
+					var b = 255 * (b1 * a3 + b2 * a2) | 0;
+					var a = 255 * (a3 + a2) | 0;
+					var blended = a << 24 | r << 16 | g << 8 | b;
+					this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+				} else {
+					this1.image[this1.useVirtualPos ? (q - this1.virtualY) * this1.width + x - this1.virtualX | 0 : q * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				}
+				if(p > maxX) {
+					p = xx;
+					++q;
+				}
+				if(q > maxY) {
+					break;
+				}
+			}
+		}
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx1 = bx;
+		var by1 = by;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = ay * cx1 - ax * cy1;
+		var sx = cy1 - ay;
+		var sy = ax - cx1;
+		var t0 = ax * by1 - ay * bx1;
+		var tx = ay - by1;
+		var ty = bx1 - ax;
+		var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(ay > by1) {
+			if(ay > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(ay);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+			var ii_max = Math.ceil(by1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(ay);
+			var ii_max = Math.ceil(cy1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this2;
+		if(ax > bx1) {
+			if(ax > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(ax);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+			var ii_max = Math.ceil(bx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(ax);
+			var ii_max = Math.ceil(cx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this2 = color;
+					var c1 = this2;
+					if((c1 >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+		}
+		var bx1 = cx;
+		var by1 = cy;
+		var cx1 = dx;
+		var cy1 = dy;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by1;
+			bx1 = cx1;
+			by1 = cy1;
+			cx1 = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = by * cx1 - bx * cy1;
+		var sx = cy1 - by;
+		var sy = bx - cx1;
+		var t0 = bx * by1 - by * bx1;
+		var tx = by - by1;
+		var ty = bx1 - bx;
+		var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+		var yIter3;
+		if(by > by1) {
+			if(by > cy1) {
+				var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+				var ii_max = Math.ceil(by);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by1);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+		} else if(by1 > cy1) {
+			var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+			var ii_max = Math.ceil(by1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		} else {
+			var ii_min = Math.floor(by);
+			var ii_max = Math.ceil(cy1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this2;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this2;
+		if(bx > bx1) {
+			if(bx > cx1) {
+				var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+		} else if(bx1 > cx1) {
+			var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx1);
+			var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this2 = this3;
+		}
+		var _g_min = this2.start;
+		var _g_max = this2.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this2 = color;
+					var c1 = this2;
+					if((c1 >> 24 & 255) < 254 && this1.transparent) {
+						var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+						var this3 = this1.image[location];
+						var this4 = this3;
+						var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+						var this6 = this5 >> 24 & 255;
+						var a1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this5 >> 16 & 255;
+						var r1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this5 >> 8 & 255;
+						var g1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = this5 & 255;
+						var b1 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 24 & 255;
+						var a2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 16 & 255;
+						var r2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color >> 8 & 255;
+						var g2 = this12 == 0 ? 0. : this12 / 255;
+						var this13 = color & 255;
+						var b2 = this13 == 0 ? 0. : this13 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+		}
+		var tmp;
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			tmp = v;
+		} else {
+			tmp = null;
+		}
+		this.info = tmp;
+		if(this.info != null && oldInfo != null) {
+			var this1 = this.temp;
+			var ax = oldInfo.bx * this.scaleX + this.translateX;
+			var ay = oldInfo.by * this.scaleY + this.translateY;
+			var bx = this.info.ax * this.scaleX + this.translateX;
+			var by = this.info.ay * this.scaleY + this.translateY;
+			var cx = this.info.dx * this.scaleX + this.translateX;
+			var cy = this.info.dy * this.scaleY + this.translateY;
+			var dx = oldInfo.cx * this.scaleX + this.translateX;
+			var dy = oldInfo.cy * this.scaleY + this.translateY;
+			var tileImage = this.tileImageStroke;
+			var hasHit = true;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
+			}
+			var bx1 = bx;
+			var by1 = by;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = ay * cx1 - ax * cy1;
+			var sx = cy1 - ay;
+			var sy = ax - cx1;
+			var t0 = ax * by1 - ay * bx1;
+			var tx = ay - by1;
+			var ty = bx1 - ax;
+			var A = -by1 * cx1 + ay * (-bx1 + cx1) + ax * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(ay > by1) {
+				if(ay > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(ay);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = ay > cy1 ? Math.floor(cy1) : Math.ceil(ay);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(ay);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(ax > bx1) {
+				if(ax > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(ax);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = ax > cx1 ? Math.floor(cx1) : Math.ceil(ax);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(ax);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
+			}
+			var bx1 = cx;
+			var by1 = cy;
+			var cx1 = dx;
+			var cy1 = dy;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
+			}
+			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
+			if(!adjustWinding) {
+				var bx_ = bx1;
+				var by_ = by1;
+				bx1 = cx1;
+				by1 = cy1;
+				cx1 = bx_;
+				cy1 = by_;
+			}
+			var hasHit2 = hasHit;
+			if(hasHit2 == null) {
+				hasHit2 = false;
+			}
+			var s0 = by * cx1 - bx * cy1;
+			var sx = cy1 - by;
+			var sy = bx - cx1;
+			var t0 = bx * by1 - by * bx1;
+			var tx = by - by1;
+			var ty = bx1 - bx;
+			var A = -by1 * cx1 + by * (-bx1 + cx1) + bx * (by1 - cy1) + bx1 * cy1;
+			var yIter3;
+			if(by > by1) {
+				if(by > cy1) {
+					var ii_min = by1 > cy1 ? Math.floor(cy1) : Math.floor(by1);
+					var ii_max = Math.ceil(by);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				} else {
+					var ii_min = Math.floor(by1);
+					var ii_max = Math.ceil(cy1);
+					var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					yIter3 = this2;
+				}
+			} else if(by1 > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.ceil(by);
+				var ii_max = Math.ceil(by1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this2;
+			}
+			var foundY = false;
+			var s = 0.;
+			var t = 0.;
+			var sxx = 0.;
+			var txx = 0.;
+			var this2;
+			if(bx > bx1) {
+				if(bx > cx1) {
+					var ii_min = bx1 > cx1 ? Math.floor(cx1) : Math.floor(bx1);
+					var ii_max = Math.ceil(bx);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				} else {
+					var ii_min = Math.floor(bx1);
+					var ii_max = Math.ceil(cx1);
+					var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+					this2 = this3;
+				}
+			} else if(bx1 > cx1) {
+				var ii_min = bx > cx1 ? Math.floor(cx1) : Math.ceil(bx);
+				var ii_max = Math.ceil(bx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx1);
+				var this3 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this2 = this3;
+			}
+			var _g_min = this2.start;
+			var _g_max = this2.max;
+			while(_g_min < _g_max) {
+				var x = _g_min++;
+				sxx = sx * x;
+				txx = tx * x;
+				foundY = false;
+				var _g_min1 = yIter3.start;
+				var _g_max1 = yIter3.max;
+				while(_g_min1 < _g_max1) {
+					var y = _g_min1++;
+					s = s0 + sxx + sy * y;
+					t = t0 + txx + ty * y;
+					if(s <= 0 || t <= 0) {
+						if(foundY) {
+							break;
+						}
+					} else if(s + t < A) {
+						var x1 = x % tileImage.width;
+						var y1 = y % tileImage.height;
+						var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+						var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+						var this2 = color;
+						var c1 = this2;
+						if((c1 >> 24 & 255) < 254 && this1.transparent) {
+							var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
+							var this3 = this1.image[location];
+							var this4 = this3;
+							var this5 = pixelimage_Endian_isLittleEndian ? (this4 >> 24 & 255) << 24 | (this4 & 255) << 16 | (this4 >> 8 & 255) << 8 | this4 >> 16 & 255 : this4;
+							var this6 = this5 >> 24 & 255;
+							var a1 = this6 == 0 ? 0. : this6 / 255;
+							var this7 = this5 >> 16 & 255;
+							var r1 = this7 == 0 ? 0. : this7 / 255;
+							var this8 = this5 >> 8 & 255;
+							var g1 = this8 == 0 ? 0. : this8 / 255;
+							var this9 = this5 & 255;
+							var b1 = this9 == 0 ? 0. : this9 / 255;
+							var this10 = color >> 24 & 255;
+							var a2 = this10 == 0 ? 0. : this10 / 255;
+							var this11 = color >> 16 & 255;
+							var r2 = this11 == 0 ? 0. : this11 / 255;
+							var this12 = color >> 8 & 255;
+							var g2 = this12 == 0 ? 0. : this12 / 255;
+							var this13 = color & 255;
+							var b2 = this13 == 0 ? 0. : this13 / 255;
+							var a3 = a1 * (1 - a2);
+							var r = 255 * (r1 * a3 + r2 * a2) | 0;
+							var g = 255 * (g1 * a3 + g2 * a2) | 0;
+							var b = 255 * (b1 * a3 + b2 * a2) | 0;
+							var a = 255 * (a3 + a2) | 0;
+							var blended = a << 24 | r << 16 | g << 8 | b;
+							this1.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+						} else {
+							this1.image[this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+						}
+						foundY = true;
+					} else if(foundY) {
+						break;
+					}
+				}
+			}
+			if(hasHit2 == false) {
+				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
+			}
+			if(hasHit1 == true) {
+				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			}
+		}
+		this.x0 = x2;
+		this.y0 = y2;
+		this.toggleDraw = true;
+	}
+	,moveTo: function(x1,y1) {
+		this.x0 = x1;
+		this.y0 = y1;
+		this.info = null;
+		this.toggleDraw = true;
+	}
+	,__class__: pixelimage_triGML_patternShape_PathElementPattern
+});
+var pixelimage_triGML_patternShape_QuadrilateralPattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,x1,y1,x2,y2,x3,y3,x4,y4) {
+	if(y4 == null) {
+		y4 = 0.;
+	}
+	if(x4 == null) {
+		x4 = 0.;
+	}
+	if(y3 == null) {
+		y3 = 0.;
+	}
+	if(x3 == null) {
+		x3 = 0.;
+	}
+	if(y2 == null) {
+		y2 = 0.;
+	}
+	if(x2 == null) {
+		x2 = 0.;
+	}
+	if(y1 == null) {
+		y1 = 0.;
+	}
+	if(x1 == null) {
+		x1 = 0.;
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+	this.x3 = x3;
+	this.y3 = y3;
+	this.x4 = x4;
+	this.y4 = y4;
+};
+pixelimage_triGML_patternShape_QuadrilateralPattern.__name__ = "pixelimage.triGML.patternShape.QuadrilateralPattern";
+pixelimage_triGML_patternShape_QuadrilateralPattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_QuadrilateralPattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "x1":
+			this.x1 = parseFloat(value);
+			break;
+		case "x2":
+			this.x2 = parseFloat(value);
+			break;
+		case "x3":
+			this.x3 = parseFloat(value);
+			break;
+		case "x4":
+			this.x4 = parseFloat(value);
+			break;
+		case "y1":
+			this.y1 = parseFloat(value);
+			break;
+		case "y2":
+			this.y2 = parseFloat(value);
+			break;
+		case "y3":
+			this.y3 = parseFloat(value);
+			break;
+		case "y4":
+			this.y4 = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var a = this.x1;
+		var b = this.x2;
+		var c = this.x3;
+		var d = this.x4;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		var iterX = this1;
+		var a = this.y1;
+		var b = this.y2;
+		var c = this.y3;
+		var d = this.y4;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		var iterY = this1;
+		var left = iterX.start;
+		var top = iterY.start;
+		var width = iterX.max - left;
+		var height = iterY.max - top;
+		var w = Math.ceil(width);
+		var h = Math.ceil(height);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		this.buildPatternTemplates();
+		var rx = width / 2;
+		var ry = height / 2;
+		var x1_ = this.x1 - left;
+		var x2_ = this.x2 - left;
+		var x3_ = this.x2 - left;
+		var x4_ = this.x4 - left;
+		var y1_ = this.y1 - top;
+		var y2_ = this.y2 - top;
+		var y3_ = this.y3 - top;
+		var y4_ = this.y4 - top;
+		var tileImage = this.tileImageStroke;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx = x2_;
+		var by = y2_;
+		var cx = x4_;
+		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y1_ * cx - x1_ * cy;
+		var sx = cy - y1_;
+		var sy = x1_ - cx;
+		var t0 = x1_ * by - y1_ * bx;
+		var tx = y1_ - by;
+		var ty = bx - x1_;
+		var A = -by * cx + y1_ * (-bx + cx) + x1_ * (by - cy) + bx * cy;
+		var yIter3;
+		if(y1_ > by) {
+			if(y1_ > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(y1_);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = y1_ > cy ? Math.floor(cy) : Math.ceil(y1_);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y1_);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(x1_ > bx) {
+			if(x1_ > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(x1_);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > cx) {
+			var ii_min = x1_ > cx ? Math.floor(cx) : Math.ceil(x1_);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(x1_);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
+		}
+		var bx = x3_;
+		var by = y3_;
+		var cx = x4_;
+		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x2_ * by - bx * y2_ + (bx * cy - cx * by) + (cx * y2_ - x2_ * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y2_ * cx - x2_ * cy;
+		var sx = cy - y2_;
+		var sy = x2_ - cx;
+		var t0 = x2_ * by - y2_ * bx;
+		var tx = y2_ - by;
+		var ty = bx - x2_;
+		var A = -by * cx + y2_ * (-bx + cx) + x2_ * (by - cy) + bx * cy;
+		var yIter3;
+		if(y2_ > by) {
+			if(y2_ > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(y2_);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = y2_ > cy ? Math.floor(cy) : Math.ceil(y2_);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y2_);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(x2_ > bx) {
+			if(x2_ > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(x2_);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > cx) {
+			var ii_min = x2_ > cx ? Math.floor(cx) : Math.ceil(x2_);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(x2_);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x2_,y2_,bx,by,cx,cy);
+		}
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
+		}
+		x1_ += this.strokeWidth;
+		x2_ += this.strokeWidth;
+		x3_ += this.strokeWidth;
+		x4_ += this.strokeWidth;
+		y1_ += this.strokeWidth;
+		y2_ += this.strokeWidth;
+		y3_ += this.strokeWidth;
+		y4_ += this.strokeWidth;
+		var tileImage = this.tileImageFill;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var bx = x2_;
+		var by = y2_;
+		var cx = x4_;
+		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x1_ * by - bx * y1_ + (bx * cy - cx * by) + (cx * y1_ - x1_ * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y1_ * cx - x1_ * cy;
+		var sx = cy - y1_;
+		var sy = x1_ - cx;
+		var t0 = x1_ * by - y1_ * bx;
+		var tx = y1_ - by;
+		var ty = bx - x1_;
+		var A = -by * cx + y1_ * (-bx + cx) + x1_ * (by - cy) + bx * cy;
+		var yIter3;
+		if(y1_ > by) {
+			if(y1_ > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(y1_);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = y1_ > cy ? Math.floor(cy) : Math.ceil(y1_);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y1_);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(x1_ > bx) {
+			if(x1_ > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(x1_);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > cx) {
+			var ii_min = x1_ > cx ? Math.floor(cx) : Math.ceil(x1_);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(x1_);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
+		}
+		var bx = x3_;
+		var by = y3_;
+		var cx = x4_;
+		var cy = y4_;
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var adjustWinding = x2_ * by - bx * y2_ + (bx * cy - cx * by) + (cx * y2_ - x2_ * cy) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx;
+			var by_ = by;
+			bx = cx;
+			by = cy;
+			cx = bx_;
+			cy = by_;
+		}
+		var hasHit2 = hasHit1;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y2_ * cx - x2_ * cy;
+		var sx = cy - y2_;
+		var sy = x2_ - cx;
+		var t0 = x2_ * by - y2_ * bx;
+		var tx = y2_ - by;
+		var ty = bx - x2_;
+		var A = -by * cx + y2_ * (-bx + cx) + x2_ * (by - cy) + bx * cy;
+		var yIter3;
+		if(y2_ > by) {
+			if(y2_ > cy) {
+				var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
+				var ii_max = Math.ceil(y2_);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy) {
+			var ii_min = y2_ > cy ? Math.floor(cy) : Math.ceil(y2_);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y2_);
+			var ii_max = Math.ceil(cy);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(x2_ > bx) {
+			if(x2_ > cx) {
+				var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
+				var ii_max = Math.ceil(x2_);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx > cx) {
+			var ii_min = x2_ > cx ? Math.floor(cx) : Math.ceil(x2_);
+			var ii_max = Math.ceil(bx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(x2_);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x2_,y2_,bx,by,cx,cy);
+		}
+		if(hasHit == true) {
+			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
+		}
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x = left + dx;
+					var y = top + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x - pixelImage.virtualX | 0 : y * pixelImage.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,__class__: pixelimage_triGML_patternShape_QuadrilateralPattern
 });
 var pixelimage_triGML_patternShape_RectanglePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,width,height,rounded) {
 	if(rounded == null) {
@@ -20438,7 +35644,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				}
 				var hasHit1 = hasHit;
 				if(hasHit1 == null) {
-					hasHit1 = true;
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by = 0;
@@ -20730,7 +35936,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				if(hasHit2 == false) {
 					var v = new pixelimage_algo_HitTri(bx,0,bx1,by,cx,cy1);
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(0,0,bx,0,bx,cy,0,cy);
 				}
 			} else {
@@ -20795,7 +36001,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by = y;
@@ -21087,7 +36293,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			if(hasHit2 == false) {
 				var v = new pixelimage_algo_HitTri(bx,y,bx1,by,cx,cy1);
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(x,y,bx,y,bx,cy,x,cy);
 			}
 		} else {
@@ -21306,7 +36512,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				}
 				var hasHit1 = hasHit;
 				if(hasHit1 == null) {
-					hasHit1 = true;
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by = 0;
@@ -21598,7 +36804,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				if(hasHit2 == false) {
 					var v = new pixelimage_algo_HitTri(bx,0,bx1,by,cx,cy1);
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(x,0,bx,0,bx,cy,x,cy);
 				}
 				var cy = dy;
@@ -21788,7 +36994,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				}
 				var hasHit1 = hasHit;
 				if(hasHit1 == null) {
-					hasHit1 = true;
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by = y;
@@ -22080,7 +37286,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				if(hasHit2 == false) {
 					var v = new pixelimage_algo_HitTri(bx,y,bx1,by,cx,cy1);
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(0,y,bx,y,bx,cy,0,cy);
 				}
 				var cx = dx;
@@ -22270,7 +37476,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				}
 				var hasHit1 = hasHit;
 				if(hasHit1 == null) {
-					hasHit1 = true;
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by = lowerY;
@@ -22562,7 +37768,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 				if(hasHit2 == false) {
 					var v = new pixelimage_algo_HitTri(bx,lowerY,bx1,by,cx,cy1);
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(x,lowerY,bx,lowerY,bx,cy,x,cy);
 				}
 				var targetError = 1.05;
@@ -22938,7 +38144,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					if(hasHit1 == false) {
+					if(hasHit1 == true) {
 						var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 					}
 					lastX = nextX;
@@ -23161,7 +38367,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					if(hasHit1 == false) {
+					if(hasHit1 == true) {
 						var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 					}
 					lastX = nextX;
@@ -23384,7 +38590,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					if(hasHit1 == false) {
+					if(hasHit1 == true) {
 						var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 					}
 					lastX = nextX;
@@ -23606,7 +38812,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 							}
 						}
 					}
-					if(hasHit1 == false) {
+					if(hasHit1 == true) {
 						var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 					}
 					lastX = nextX;
@@ -23829,7 +39035,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by = y;
@@ -24121,7 +39327,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			if(hasHit2 == false) {
 				var v = new pixelimage_algo_HitTri(bx,y,bx1,by,cx,cy1);
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(x1,y,bx,y,bx,cy,x1,cy);
 			}
 			var cy = y + dy;
@@ -24311,7 +39517,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by = y1;
@@ -24603,7 +39809,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			if(hasHit2 == false) {
 				var v = new pixelimage_algo_HitTri(bx,y1,bx1,by,cx,cy1);
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(x,y1,bx,y1,bx,cy,x,cy);
 			}
 			var cx = x + dx;
@@ -24793,7 +39999,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			}
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by = lowerY;
@@ -25085,7 +40291,7 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 			if(hasHit2 == false) {
 				var v = new pixelimage_algo_HitTri(bx,lowerY,bx1,by,cx,cy1);
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(x1,lowerY,bx,lowerY,bx,cy,x1,cy);
 			}
 			var targetError = 1.05;
@@ -25268,6 +40474,784 @@ pixelimage_triGML_patternShape_RectanglePattern.prototype = $extend(pixelimage_t
 		}
 	}
 	,__class__: pixelimage_triGML_patternShape_RectanglePattern
+});
+var pixelimage_triGML_patternShape_SquarePattern = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale,left,top,diameter) {
+	if(diameter == null) {
+		diameter = 1.;
+	}
+	if(top == null) {
+		top = 0.;
+	}
+	if(left == null) {
+		left = 0.;
+	}
+	if(fillPatternScale == null) {
+		fillPatternScale = 1;
+	}
+	if(fillPatternAcross == null) {
+		fillPatternAcross = true;
+	}
+	if(fillPatternHeight == null) {
+		fillPatternHeight = 16;
+	}
+	if(fillPatternWidth == null) {
+		fillPatternWidth = 16;
+	}
+	if(strokePatternScale == null) {
+		strokePatternScale = 1;
+	}
+	if(strokePatternAcross == null) {
+		strokePatternAcross = true;
+	}
+	if(fillColor1 == null) {
+		fillColor1 = 0;
+	}
+	if(fillColor0 == null) {
+		fillColor0 = 0;
+	}
+	if(strokeColor1 == null) {
+		strokeColor1 = 0;
+	}
+	if(strokeColor0 == null) {
+		strokeColor0 = 0;
+	}
+	if(strokeWidth == null) {
+		strokeWidth = 1.;
+	}
+	if(strokeColor == null) {
+		strokeColor = 0;
+	}
+	if(visibility == null) {
+		visibility = true;
+	}
+	if(opacity == null) {
+		opacity = 1.;
+	}
+	pixelimage_triGML_coreShape_PatternShape.call(this,opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,strokeColor0,strokeColor1,fillColor0,fillColor1,strokePatternFill,strokePatternWidth,strokePatternHeight,strokePatternAcross,strokePatternScale,fillPatternFill,fillPatternWidth,fillPatternHeight,fillPatternAcross,fillPatternScale);
+	this.left = left;
+	this.top = top;
+	this.diameter = diameter;
+};
+pixelimage_triGML_patternShape_SquarePattern.__name__ = "pixelimage.triGML.patternShape.SquarePattern";
+pixelimage_triGML_patternShape_SquarePattern.__super__ = pixelimage_triGML_coreShape_PatternShape;
+pixelimage_triGML_patternShape_SquarePattern.prototype = $extend(pixelimage_triGML_coreShape_PatternShape.prototype,{
+	setParameter: function(name,value) {
+		switch(name) {
+		case "diameter":
+			this.diameter = parseFloat(value);
+			break;
+		case "left":
+			this.left = parseFloat(value);
+			break;
+		case "top":
+			this.top = parseFloat(value);
+			break;
+		default:
+			pixelimage_triGML_coreShape_PatternShape.prototype.setParameter.call(this,name,value);
+		}
+	}
+	,render: function(pixelImage) {
+		var w = Math.ceil(this.diameter);
+		var h = Math.ceil(this.diameter);
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
+		var temp = this2;
+		temp.transparent = false;
+		this.buildPatternTemplates();
+		this.buildSquare(temp);
+		var x = this.left | 0;
+		var y = this.top | 0;
+		var _g = 0;
+		var _g1 = temp.height;
+		while(_g < _g1) {
+			var dy = _g++;
+			var _g2 = 0;
+			var _g3 = temp.width;
+			while(_g2 < _g3) {
+				var dx = _g2++;
+				var c = temp.image[temp.useVirtualPos ? (dy - temp.virtualY) * temp.width + dx - temp.virtualX | 0 : dy * temp.width + dx | 0];
+				var col = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+				if(temp.useMask && temp.mask != null) {
+					var this1 = temp.mask;
+					var c1 = this1.image[this1.useVirtualPos ? (dy - this1.virtualY) * this1.width + dx - this1.virtualX | 0 : dy * this1.width + dx | 0];
+					var this2 = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					var maskPixel = this2;
+					var this3 = col;
+					var this4 = this3;
+					if(maskPixel == 0) {
+						var this5 = this4;
+						col = this5;
+					} else {
+						var this6 = maskPixel >> 24 & 255;
+						var m0 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = maskPixel >> 16 & 255;
+						var m1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = maskPixel >> 8 & 255;
+						var m2 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = maskPixel & 255;
+						var m3 = this9 == 0 ? 0. : this9 / 255;
+						var ch0 = (1. - m0) * (this4 >> 24 & 255) | 0;
+						var ch1 = (1. - m1) * (this4 >> 16 & 255) | 0;
+						var ch2 = (1. - m2) * (this4 >> 8 & 255) | 0;
+						var ch3 = (1. - m3) * (this4 & 255) | 0;
+						col = Math.round(ch0 * 255) << 24 | Math.round(ch1 * 255) << 16 | Math.round(ch2 * 255) << 8 | Math.round(ch3 * 255);
+					}
+				}
+				if(col != 0) {
+					var x1 = x + dx;
+					var y1 = y + dy;
+					var this10 = col;
+					var c2 = this10;
+					if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
+						var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
+						var this11 = pixelImage.image[location];
+						var this12 = this11;
+						var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
+						var this14 = this13 >> 24 & 255;
+						var a1 = this14 == 0 ? 0. : this14 / 255;
+						var this15 = this13 >> 16 & 255;
+						var r1 = this15 == 0 ? 0. : this15 / 255;
+						var this16 = this13 >> 8 & 255;
+						var g1 = this16 == 0 ? 0. : this16 / 255;
+						var this17 = this13 & 255;
+						var b1 = this17 == 0 ? 0. : this17 / 255;
+						var this18 = col >> 24 & 255;
+						var a2 = this18 == 0 ? 0. : this18 / 255;
+						var this19 = col >> 16 & 255;
+						var r2 = this19 == 0 ? 0. : this19 / 255;
+						var this20 = col >> 8 & 255;
+						var g2 = this20 == 0 ? 0. : this20 / 255;
+						var this21 = col & 255;
+						var b2 = this21 == 0 ? 0. : this21 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+					}
+				}
+			}
+		}
+		temp = null;
+		return pixelimage_triGML_coreShape_PatternShape.prototype.render.call(this,pixelImage);
+	}
+	,buildSquare: function(temp) {
+		var tileImage = this.tileImageStroke;
+		var bx = this.diameter;
+		var cy = this.diameter;
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var bx1 = bx;
+		var by = 0.;
+		var cx = 0.;
+		var cy1 = cy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = 0. * by - bx1 * 0. + (bx1 * cy1 - cx * by) + (cx * 0. - 0. * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by;
+			bx1 = cx;
+			by = cy1;
+			cx = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = 0. * cx - 0. * cy1;
+		var sx = cy1;
+		var sy = 0. - cx;
+		var t0 = 0. * by - 0. * bx1;
+		var tx = 0. - by;
+		var ty = bx1;
+		var A = -by * cx + 0. * (-bx1 + cx) + 0. * (by - cy1) + bx1 * cy1;
+		var yIter3;
+		if(0. > by) {
+			if(0. > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+				var ii_max = 0;
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy1) {
+			var ii_min = 0. > cy1 ? Math.floor(cy1) : 0;
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = 0;
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(0. > bx1) {
+			if(0. > cx) {
+				var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+				var ii_max = 0;
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx) {
+			var ii_min = 0. > cx ? Math.floor(cx) : 0;
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = 0;
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(0.,0.,bx1,by,cx,cy1);
+		}
+		var bx1 = bx;
+		var by = cy;
+		var cx = 0.;
+		var cy1 = cy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = bx * by - bx1 * 0. + (bx1 * cy1 - cx * by) + (cx * 0. - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by;
+			bx1 = cx;
+			by = cy1;
+			cx = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = 0. * cx - bx * cy1;
+		var sx = cy1;
+		var sy = bx - cx;
+		var t0 = bx * by - 0. * bx1;
+		var tx = 0. - by;
+		var ty = bx1 - bx;
+		var A = -by * cx + 0. * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+		var yIter3;
+		if(0. > by) {
+			if(0. > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+				var ii_max = 0;
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy1) {
+			var ii_min = 0. > cy1 ? Math.floor(cy1) : 0;
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = 0;
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx) {
+				var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx) {
+			var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x = _g_min++;
+			sxx = sx * x;
+			txx = tx * x;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y = _g_min1++;
+				s = s0 + sxx + sy * y;
+				t = t0 + txx + ty * y;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x1 = x % tileImage.width;
+					var y1 = y % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y1 - tileImage.virtualY) * tileImage.width + x1 - tileImage.virtualX | 0 : y1 * tileImage.width + x1 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y - temp.virtualY) * temp.width + x - temp.virtualX | 0 : y * temp.width + x | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,0.,bx1,by,cx,cy1);
+		}
+		if(hasHit1 == true) {
+			var v = new pixelimage_algo_HitQuad(0.,0.,bx,0.,bx,cy,0.,cy);
+		}
+		var x = this.strokeWidth;
+		var y = this.strokeWidth;
+		var tileImage = this.tileImageFill;
+		var bx = x + (this.diameter - 2 * this.strokeWidth);
+		var cy = y + (this.diameter - 2 * this.strokeWidth);
+		var hasHit = false;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var hasHit1 = hasHit;
+		if(hasHit1 == null) {
+			hasHit1 = false;
+		}
+		var bx1 = bx;
+		var by = y;
+		var cx = x;
+		var cy1 = cy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = x * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - x * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by;
+			bx1 = cx;
+			by = cy1;
+			cx = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y * cx - x * cy1;
+		var sx = cy1 - y;
+		var sy = x - cx;
+		var t0 = x * by - y * bx1;
+		var tx = y - by;
+		var ty = bx1 - x;
+		var A = -by * cx + y * (-bx1 + cx) + x * (by - cy1) + bx1 * cy1;
+		var yIter3;
+		if(y > by) {
+			if(y > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+				var ii_max = Math.ceil(y);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy1) {
+			var ii_min = y > cy1 ? Math.floor(cy1) : Math.ceil(y);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(x > bx1) {
+			if(x > cx) {
+				var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+				var ii_max = Math.ceil(x);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx) {
+			var ii_min = x > cx ? Math.floor(cx) : Math.ceil(x);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(x);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x1 = _g_min++;
+			sxx = sx * x1;
+			txx = tx * x1;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y1 = _g_min1++;
+				s = s0 + sxx + sy * y1;
+				t = t0 + txx + ty * y1;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x2 = x1 % tileImage.width;
+					var y2 = y1 % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y2 - tileImage.virtualY) * tileImage.width + x2 - tileImage.virtualX | 0 : y2 * tileImage.width + x2 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y1 - temp.virtualY) * temp.width + x1 - temp.virtualX | 0 : y1 * temp.width + x1 | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y1 - temp.virtualY) * temp.width + x1 - temp.virtualX | 0 : y1 * temp.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(x,y,bx1,by,cx,cy1);
+		}
+		var bx1 = bx;
+		var by = cy;
+		var cx = x;
+		var cy1 = cy;
+		var hasHit = hasHit1;
+		if(hasHit == null) {
+			hasHit = false;
+		}
+		var adjustWinding = bx * by - bx1 * y + (bx1 * cy1 - cx * by) + (cx * y - bx * cy1) > 0;
+		if(!adjustWinding) {
+			var bx_ = bx1;
+			var by_ = by;
+			bx1 = cx;
+			by = cy1;
+			cx = bx_;
+			cy1 = by_;
+		}
+		var hasHit2 = hasHit;
+		if(hasHit2 == null) {
+			hasHit2 = false;
+		}
+		var s0 = y * cx - bx * cy1;
+		var sx = cy1 - y;
+		var sy = bx - cx;
+		var t0 = bx * by - y * bx1;
+		var tx = y - by;
+		var ty = bx1 - bx;
+		var A = -by * cx + y * (-bx1 + cx) + bx * (by - cy1) + bx1 * cy1;
+		var yIter3;
+		if(y > by) {
+			if(y > cy1) {
+				var ii_min = by > cy1 ? Math.floor(cy1) : Math.floor(by);
+				var ii_max = Math.ceil(y);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			} else {
+				var ii_min = Math.floor(by);
+				var ii_max = Math.ceil(cy1);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				yIter3 = this1;
+			}
+		} else if(by > cy1) {
+			var ii_min = y > cy1 ? Math.floor(cy1) : Math.ceil(y);
+			var ii_max = Math.ceil(by);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		} else {
+			var ii_min = Math.floor(y);
+			var ii_max = Math.ceil(cy1);
+			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			yIter3 = this1;
+		}
+		var foundY = false;
+		var s = 0.;
+		var t = 0.;
+		var sxx = 0.;
+		var txx = 0.;
+		var this1;
+		if(bx > bx1) {
+			if(bx > cx) {
+				var ii_min = bx1 > cx ? Math.floor(cx) : Math.floor(bx1);
+				var ii_max = Math.ceil(bx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			} else {
+				var ii_min = Math.floor(bx1);
+				var ii_max = Math.ceil(cx);
+				var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				this1 = this2;
+			}
+		} else if(bx1 > cx) {
+			var ii_min = bx > cx ? Math.floor(cx) : Math.ceil(bx);
+			var ii_max = Math.ceil(bx1);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		} else {
+			var ii_min = Math.floor(bx);
+			var ii_max = Math.ceil(cx);
+			var this2 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+			this1 = this2;
+		}
+		var _g_min = this1.start;
+		var _g_max = this1.max;
+		while(_g_min < _g_max) {
+			var x1 = _g_min++;
+			sxx = sx * x1;
+			txx = tx * x1;
+			foundY = false;
+			var _g_min1 = yIter3.start;
+			var _g_max1 = yIter3.max;
+			while(_g_min1 < _g_max1) {
+				var y1 = _g_min1++;
+				s = s0 + sxx + sy * y1;
+				t = t0 + txx + ty * y1;
+				if(s <= 0 || t <= 0) {
+					if(foundY) {
+						break;
+					}
+				} else if(s + t < A) {
+					var x2 = x1 % tileImage.width;
+					var y2 = y1 % tileImage.height;
+					var c = tileImage.image[tileImage.useVirtualPos ? (y2 - tileImage.virtualY) * tileImage.width + x2 - tileImage.virtualX | 0 : y2 * tileImage.width + x2 | 0];
+					var color = pixelimage_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+					var this1 = color;
+					var c1 = this1;
+					if((c1 >> 24 & 255) < 254 && temp.transparent) {
+						var location = temp.useVirtualPos ? (y1 - temp.virtualY) * temp.width + x1 - temp.virtualX | 0 : y1 * temp.width + x1 | 0;
+						var this2 = temp.image[location];
+						var this3 = this2;
+						var this4 = pixelimage_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+						var this5 = this4 >> 24 & 255;
+						var a1 = this5 == 0 ? 0. : this5 / 255;
+						var this6 = this4 >> 16 & 255;
+						var r1 = this6 == 0 ? 0. : this6 / 255;
+						var this7 = this4 >> 8 & 255;
+						var g1 = this7 == 0 ? 0. : this7 / 255;
+						var this8 = this4 & 255;
+						var b1 = this8 == 0 ? 0. : this8 / 255;
+						var this9 = color >> 24 & 255;
+						var a2 = this9 == 0 ? 0. : this9 / 255;
+						var this10 = color >> 16 & 255;
+						var r2 = this10 == 0 ? 0. : this10 / 255;
+						var this11 = color >> 8 & 255;
+						var g2 = this11 == 0 ? 0. : this11 / 255;
+						var this12 = color & 255;
+						var b2 = this12 == 0 ? 0. : this12 / 255;
+						var a3 = a1 * (1 - a2);
+						var r = 255 * (r1 * a3 + r2 * a2) | 0;
+						var g = 255 * (g1 * a3 + g2 * a2) | 0;
+						var b = 255 * (b1 * a3 + b2 * a2) | 0;
+						var a = 255 * (a3 + a2) | 0;
+						var blended = a << 24 | r << 16 | g << 8 | b;
+						temp.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
+					} else {
+						temp.image[temp.useVirtualPos ? (y1 - temp.virtualY) * temp.width + x1 - temp.virtualX | 0 : y1 * temp.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+					}
+					foundY = true;
+				} else if(foundY) {
+					break;
+				}
+			}
+		}
+		if(hasHit2 == false) {
+			var v = new pixelimage_algo_HitTri(bx,y,bx1,by,cx,cy1);
+		}
+		if(hasHit1 == true) {
+			var v = new pixelimage_algo_HitQuad(x,y,bx,y,bx,cy,x,cy);
+		}
+	}
+	,__class__: pixelimage_triGML_patternShape_SquarePattern
 });
 var pixelimage_triGML_shape_ArcShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,left,top,width,height,startAngle,sweepAngle,arcType) {
 	if(arcType == null) {
@@ -25653,7 +41637,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var ax = this.rx;
@@ -25796,7 +41780,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 		} else {
@@ -25953,7 +41937,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit == false) {
+			if(hasHit == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
 			}
 			var ax = this.rx;
@@ -26109,7 +42093,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit == false) {
+			if(hasHit == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx2,by2,cx2,cy2);
 			}
 			var color = this.strokeColor;
@@ -26147,7 +42131,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			dx = temp1;
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
@@ -26287,7 +42271,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx,cy);
 			}
 			var bx1 = cx1;
@@ -26428,10 +42412,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx,cy);
 			}
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
 			}
 		}
@@ -26611,7 +42595,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 			var triHit;
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				triHit = v;
 			} else {
@@ -26766,7 +42750,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			}
 		}
 		var triHit;
-		if(hasHit == false) {
+		if(hasHit == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			triHit = v;
 		} else {
@@ -26947,7 +42931,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 			var triHit;
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				triHit = v;
 			} else {
@@ -27102,7 +43086,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 			}
 		}
 		var triHit;
-		if(hasHit == false) {
+		if(hasHit == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			triHit = v;
 		} else {
@@ -27157,7 +43141,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		dx = temp1;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -27297,7 +43281,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx2,cy2);
 		}
 		var bx1 = cx1;
@@ -27438,10 +43422,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx2,cy2);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx1,cy1,dx,dy);
 		}
 		var px = this.rx;
@@ -27481,7 +43465,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 		dx = temp1;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -27621,7 +43605,7 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -27762,10 +43746,10 @@ pixelimage_triGML_shape_ArcShape.prototype = $extend(pixelimage_triGML_coreShape
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 	}
@@ -28116,7 +44100,7 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -28267,7 +44251,7 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -28474,7 +44458,7 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -28625,7 +44609,7 @@ pixelimage_triGML_shape_CircleShape.prototype = $extend(pixelimage_triGML_coreSh
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -28906,7 +44890,7 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -29057,7 +45041,7 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -29264,7 +45248,7 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -29415,7 +45399,7 @@ pixelimage_triGML_shape_EllipseShape.prototype = $extend(pixelimage_triGML_coreS
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(innerCx,innerCy,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -29705,7 +45689,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			dx = temp;
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
@@ -29845,7 +45829,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
@@ -29986,11 +45970,11 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
 			var tmp;
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				tmp = v;
 			} else {
@@ -30008,17 +45992,21 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				var dx = oldInfo.cx * this.scaleX + this.translateX;
 				var dy = oldInfo.cy * this.scaleY + this.translateY;
 				var color = this.strokeColor;
-				var hasHit = false;
+				var hasHit = true;
 				if(hasHit == null) {
-					hasHit = true;
+					hasHit = false;
+				}
+				var hasHit1 = hasHit;
+				if(hasHit1 == null) {
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by1 = by;
 				var cx1 = dx;
 				var cy1 = dy;
-				var hasHit1 = hasHit;
-				if(hasHit1 == null) {
-					hasHit1 = false;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
 				}
 				var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 				if(!adjustWinding) {
@@ -30029,7 +46017,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					cx1 = bx_;
 					cy1 = by_;
 				}
-				var hasHit2 = hasHit1;
+				var hasHit2 = hasHit;
 				if(hasHit2 == null) {
 					hasHit2 = false;
 				}
@@ -30150,16 +46138,16 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
 				var bx1 = cx;
 				var by1 = cy;
 				var cx1 = dx;
 				var cy1 = dy;
-				var hasHit1 = hasHit;
-				if(hasHit1 == null) {
-					hasHit1 = false;
+				var hasHit = hasHit1;
+				if(hasHit == null) {
+					hasHit = false;
 				}
 				var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 				if(!adjustWinding) {
@@ -30170,7 +46158,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					cx1 = bx_;
 					cy1 = by_;
 				}
-				var hasHit2 = hasHit1;
+				var hasHit2 = hasHit;
 				if(hasHit2 == null) {
 					hasHit2 = false;
 				}
@@ -30291,10 +46279,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 				}
-				if(hasHit == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
@@ -30343,7 +46331,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -30483,7 +46471,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -30624,11 +46612,11 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
 		var tmp;
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			tmp = v;
 		} else {
@@ -30646,17 +46634,21 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var color = this.strokeColor;
-			var hasHit = false;
+			var hasHit = true;
 			if(hasHit == null) {
-				hasHit = true;
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
@@ -30667,7 +46659,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -30788,16 +46780,16 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 			if(!adjustWinding) {
@@ -30808,7 +46800,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -30929,10 +46921,10 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
-			if(hasHit == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
@@ -30948,7 +46940,7 @@ pixelimage_triGML_shape_PathElementShape.prototype = $extend(pixelimage_triGML_c
 	}
 	,__class__: pixelimage_triGML_shape_PathElementShape
 });
-var pixelimage_triGML_shape_QuadShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,x1,y1,x2,y2,x3,y3,x4,y4) {
+var pixelimage_triGML_shape_QuadrilateralShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,x1,y1,x2,y2,x3,y3,x4,y4) {
 	if(y4 == null) {
 		y4 = 0.;
 	}
@@ -30998,9 +46990,9 @@ var pixelimage_triGML_shape_QuadShape = function(opacity,visibility,strokeColor,
 	this.x4 = x4;
 	this.y4 = y4;
 };
-pixelimage_triGML_shape_QuadShape.__name__ = "pixelimage.triGML.shape.QuadShape";
-pixelimage_triGML_shape_QuadShape.__super__ = pixelimage_triGML_coreShape_FillShape;
-pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShape_FillShape.prototype,{
+pixelimage_triGML_shape_QuadrilateralShape.__name__ = "pixelimage.triGML.shape.QuadrilateralShape";
+pixelimage_triGML_shape_QuadrilateralShape.__super__ = pixelimage_triGML_coreShape_FillShape;
+pixelimage_triGML_shape_QuadrilateralShape.prototype = $extend(pixelimage_triGML_coreShape_FillShape.prototype,{
 	setParameter: function(name,value) {
 		switch(name) {
 		case "x1":
@@ -31105,7 +47097,7 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		var color = this.strokeColor;
 		var hasHit = false;
 		if(hasHit == null) {
-			hasHit = true;
+			hasHit = false;
 		}
 		var bx = x2_;
 		var by = y2_;
@@ -31245,7 +47237,7 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
 		var bx = x3_;
@@ -31386,10 +47378,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(x2_,y2_,bx,by,cx,cy);
 		}
-		if(hasHit == false) {
+		if(hasHit == true) {
 			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
 		}
 		x1_ += this.strokeWidth;
@@ -31403,7 +47395,7 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		var color = this.fill;
 		var hasHit = false;
 		if(hasHit == null) {
-			hasHit = true;
+			hasHit = false;
 		}
 		var bx = x2_;
 		var by = y2_;
@@ -31543,7 +47535,7 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(x1_,y1_,bx,by,cx,cy);
 		}
 		var bx = x3_;
@@ -31684,10 +47676,10 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(x2_,y2_,bx,by,cx,cy);
 		}
-		if(hasHit == false) {
+		if(hasHit == true) {
 			var v = new pixelimage_algo_HitQuad(x1_,y1_,x2_,y2_,x3_,y3_,x4_,y4_);
 		}
 		var _g = 0;
@@ -31768,7 +47760,7 @@ pixelimage_triGML_shape_QuadShape.prototype = $extend(pixelimage_triGML_coreShap
 		temp = null;
 		return pixelimage_triGML_coreShape_FillShape.prototype.render.call(this,pixelImage);
 	}
-	,__class__: pixelimage_triGML_shape_QuadShape
+	,__class__: pixelimage_triGML_shape_QuadrilateralShape
 });
 var pixelimage_triGML_shape_RectangleShape = function(opacity,visibility,strokeColor,strokeWidth,strokeDashGapArray,fill,left,top,width,height,rounded) {
 	if(rounded == null) {
@@ -32220,7 +48212,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -32443,7 +48435,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 				}
 				lastX = nextX;
@@ -32666,7 +48658,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 				}
 				lastX = nextX;
@@ -32888,7 +48880,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -33091,7 +49083,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,cy,bx,by,cx1,cy1);
 				}
 				lastX = nextX;
@@ -33314,7 +49306,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(farX,cy,bx,by,cx,cy1);
 				}
 				lastX = nextX;
@@ -33537,7 +49529,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(cx,lowerY,bx,by,cx1,cy);
 				}
 				lastX = nextX;
@@ -33759,7 +49751,7 @@ pixelimage_triGML_shape_RectangleShape.prototype = $extend(pixelimage_triGML_cor
 						}
 					}
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitTri(farX,lowerY,bx,by,cx,cy);
 				}
 				lastX = nextX;
@@ -34337,7 +50329,7 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitTri(a0x_,a0y_,bx,by,cx,cy);
 		}
 		var color = this.strokeColor;
@@ -34479,7 +50471,7 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitTri(a1x_,a1y_,bx,by,cx,cy);
 		}
 		var color = this.fill;
@@ -34621,7 +50613,7 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitTri(_a0x,_a0y,bx,by,cx,cy);
 		}
 		var color = this.fill;
@@ -34763,7 +50755,7 @@ pixelimage_triGML_shape_Star6Shape.prototype = $extend(pixelimage_triGML_coreSha
 				}
 			}
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitTri(_a1x,_a1y,bx,by,cx,cy);
 		}
 		var x = this.left | 0;
@@ -35059,7 +51051,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx,by,cx,cy);
 		}
 		var px = this.x1;
@@ -35099,7 +51091,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -35239,7 +51231,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -35380,10 +51372,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 		var px = this.x2;
@@ -35423,7 +51415,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -35563,7 +51555,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -35704,10 +51696,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 		var px = this.x3;
@@ -35747,7 +51739,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -35887,7 +51879,7 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -36028,10 +52020,10 @@ pixelimage_triGML_shape_TriangleShape.prototype = $extend(pixelimage_triGML_core
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 		}
 		return pixelimage_triGML_coreShape_FillShape.prototype.render.call(this,pixelImage);
@@ -36273,7 +52265,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 			dx = temp;
 			var hasHit1 = hasHit;
 			if(hasHit1 == null) {
-				hasHit1 = true;
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
@@ -36413,7 +52405,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
@@ -36554,11 +52546,11 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
 			var tmp;
-			if(hasHit1 == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				tmp = v;
 			} else {
@@ -36582,7 +52574,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 				}
 				var hasHit1 = hasHit;
 				if(hasHit1 == null) {
-					hasHit1 = true;
+					hasHit1 = false;
 				}
 				var bx1 = bx;
 				var by1 = by;
@@ -36722,7 +52714,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 				}
 				var bx1 = cx;
@@ -36863,10 +52855,10 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 						}
 					}
 				}
-				if(hasHit2 == false) {
+				if(hasHit2 == true) {
 					var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 				}
-				if(hasHit1 == false) {
+				if(hasHit1 == true) {
 					var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 				}
 			}
@@ -36915,7 +52907,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 		dx = temp;
 		var hasHit1 = hasHit;
 		if(hasHit1 == null) {
-			hasHit1 = true;
+			hasHit1 = false;
 		}
 		var bx1 = bx;
 		var by1 = by;
@@ -37055,7 +53047,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 		}
 		var bx1 = cx;
@@ -37196,11 +53188,11 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 				}
 			}
 		}
-		if(hasHit2 == false) {
+		if(hasHit2 == true) {
 			var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 		}
 		var tmp;
-		if(hasHit1 == false) {
+		if(hasHit1 == true) {
 			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			tmp = v;
 		} else {
@@ -37218,17 +53210,21 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 			var dx = oldInfo.cx * this.scaleX + this.translateX;
 			var dy = oldInfo.cy * this.scaleY + this.translateY;
 			var color = this.strokeColor;
-			var hasHit = false;
+			var hasHit = true;
 			if(hasHit == null) {
-				hasHit = true;
+				hasHit = false;
+			}
+			var hasHit1 = hasHit;
+			if(hasHit1 == null) {
+				hasHit1 = false;
 			}
 			var bx1 = bx;
 			var by1 = by;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = ax * by1 - bx1 * ay + (bx1 * cy1 - cx1 * by1) + (cx1 * ay - ax * cy1) > 0;
 			if(!adjustWinding) {
@@ -37239,7 +53235,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -37360,16 +53356,16 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(ax,ay,bx1,by1,cx1,cy1);
 			}
 			var bx1 = cx;
 			var by1 = cy;
 			var cx1 = dx;
 			var cy1 = dy;
-			var hasHit1 = hasHit;
-			if(hasHit1 == null) {
-				hasHit1 = false;
+			var hasHit = hasHit1;
+			if(hasHit == null) {
+				hasHit = false;
 			}
 			var adjustWinding = bx * by1 - bx1 * by + (bx1 * cy1 - cx1 * by1) + (cx1 * by - bx * cy1) > 0;
 			if(!adjustWinding) {
@@ -37380,7 +53376,7 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 				cx1 = bx_;
 				cy1 = by_;
 			}
-			var hasHit2 = hasHit1;
+			var hasHit2 = hasHit;
 			if(hasHit2 == null) {
 				hasHit2 = false;
 			}
@@ -37501,10 +53497,10 @@ pixelimage_triGML_shape_VePathElementShape.prototype = $extend(pixelimage_triGML
 					}
 				}
 			}
-			if(hasHit2 == false) {
+			if(hasHit2 == true) {
 				var v = new pixelimage_algo_HitTri(bx,by,bx1,by1,cx1,cy1);
 			}
-			if(hasHit == false) {
+			if(hasHit1 == true) {
 				var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
 			}
 		}
@@ -37606,6 +53602,7 @@ var pixelimage_triGML_coreShape_XMLshapeSamples_cubicCurveTest = "<CubicCurveSha
 var pixelimage_triGML_coreShape_XMLshapeSamples_ellipseTest = "<EllipseShape \n                        top=\"100\" \n                        width=\"200\" \n                        height=\"50\" \n                        strokeColor=\"0xFF0000\" strokeWidth=\"1\" \n                        fill=\"0xFF00FF00\">\n                    </EllipseShape>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_lineGradientTest = "<LineGradient \n                        x1=\"100\" y1=\"300\" \n                        x2=\"300\" y2=\"120\" \n                        strokewidth=\"1\" \n                        colorA=\"0xFF0000\" colorB=\"0xa00cc0\" colorC=\"0x0fa00f\" colorD=\"0x000fff\">\n                    </LineGradient>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_lineShapeTest = "<LineShape \n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </LineShape>";
+var pixelimage_triGML_coreShape_XMLshapeSamples_arrowShapeTest = "<ArrowShape\n                        both=\"true\"\n                        x1=\"100\" y1=\"300\" \n                        x2=\"360\" y2=\"120\" \n                        strokeWidth=\"30\" strokeColor=\"0xffFF0000\">\n                    </ArrowShape>";
 var pixelimage_triGML_coreShape_XMLshapeSamples_quadtest_d = "M200,300 Q400,50 600,300 T1000,300,L50,50 L20,20 L100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_triGML_coreShape_XMLshapeSamples_cubictest_d = "M100,200 C100,100 250,100 250,200S400,300 400,200";
 var pixelimage_triGML_coreShape_XMLshapeSamples_pathElementQuadTest = "<PathElementShape \n                        pathData=\"" + pixelimage_triGML_coreShape_XMLshapeSamples_quadtest_d + "\" \n                        strokeWidth=\"10\" strokeColor=\"0xFFFF0000\" \n                        fill=\"0x0000ff\">\n                    </PathElementShape>";

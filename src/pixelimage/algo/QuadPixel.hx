@@ -10,12 +10,12 @@ function fillQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
                  , cx: Float, cy: Float
                  , dx: Float, dy: Float 
                  , color: Int
-                 , hasHit: Bool = true ): Null<HitQuad>{
+                 , hasHit: Bool = false ): Null<HitQuad>{
     // tri e - a b d
     // tri f - b c d
     fillTriangle( pixelImage, ax, ay, bx, by, dx, dy, color, hasHit );
     fillTriangle( pixelImage, bx, by, cx, cy, dx, dy, color, hasHit );
-    return if( hasHit == false ){
+    return if( hasHit == true ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;
     } else {
@@ -29,12 +29,12 @@ function tileQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
                  , cx: Float, cy: Float
                  , dx: Float, dy: Float 
                  , tileImage: Pixelimage
-                 , hasHit: Bool = true ): Null<HitQuad>{
+                 , hasHit: Bool = false ): Null<HitQuad>{
     // tri e - a b d
     // tri f - b c d
     tileTriangle( pixelImage, ax, ay, bx, by, dx, dy, tileImage, hasHit );
     tileTriangle( pixelImage, bx, by, cx, cy, dx, dy, tileImage, hasHit );
-    return if( hasHit == false ){
+    return if( hasHit == true ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;
     } else {
@@ -48,12 +48,12 @@ function fillGradQuadrilateral( pixelImage: Pixelimage
                                 , bx: Float, by: Float, colorB: Pixel32
                                 , cx: Float, cy: Float, colorC: Pixel32 
                                 , dx: Float, dy: Float, colorD: Pixel32
-                                , hasHit: Bool = true ): Null<HitQuad>{
+                                , hasHit: Bool = false ): Null<HitQuad>{
     // tri e - a b d
     // tri f - b c d
     fillGradTriangle( pixelImage, ax, ay, colorA, bx, by, colorB, dx, dy, colorD, hasHit );
     fillGradTriangle( pixelImage, bx, by, colorB, cx, cy, colorC, dx, dy, colorD );
-    return if( hasHit == false ){
+    return if( hasHit == true ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;
     } else {
