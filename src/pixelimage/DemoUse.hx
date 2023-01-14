@@ -3,6 +3,7 @@ package pixelimage;
 import htmlHelper.canvas.CanvasSetup;
 import htmlHelper.canvas.Surface;
 import pixelimage.Pixelimage;
+import js.html.ImageElement;
 import vision.Vision;
 import vision.ds.Kernal2D;
 import pixelimage.formats.VisionImage;
@@ -10,19 +11,45 @@ import pixelimage.triGML.*;
 import pixelimage.triGML.pattern.*;
 import pixelimage.triGML.coreShape.XMLshape;
 import pixelimage.triGML.coreShape.XMLshapeSamples;
+import htmlHelper.tools.ImageLoader;
+import pixelimage.fontImage.TestLem;
+import pixelimage.fontImage.OneDfont;
 
 function main() new DemoUse();
 class DemoUse {
 
     public var canvasSetup = new CanvasSetup();
-    
+    var imageLoader: ImageLoader;
+    var img: ImageElement;
+    var p: Pixelimage;
+    var g: Surface;
     public function new(){
         trace( 'Pixelimage example on Canvas' );
-        var g   = canvasSetup.surface;
-        var p = new Pixelshape( 1024*4, 768*4 );
+        g   = canvasSetup.surface;
+        p = new Pixelshape( 1024*4, 768*4 );
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
-        var count = 0;
+        imageLoader = new ImageLoader( [], setup );
+        imageLoader.loadEncoded( [ lemBlue(), lemRed(), lemYellow(), lemCyan(), lemPurple(), lemOrange(), lemGreen() ]
+                                , [ 'lemBlue', 'lemRed', 'lemYellow', 'lemCyan', 'lemPurple', 'lemOrange', 'lemGreen' ] );
+	}
+
+	private function setup():Void {
+        trace( 'loaded in base64 1 D font images lemColors ' );
+	var images: haxe.ds.StringMap<ImageElement> = imageLoader.images;
+        img = images.get( 'lemRed' );
+        var canvasFont            = js.Browser.document.createCanvasElement();
+        canvasFont.width      = img.width;
+        canvasFont.height     = img.height;
+        canvasFont.getContext2d().drawImage( img, 0, 0, img.width, img.height );
+        var piFontSrc = new Pixelimage( img.width, img.height );
+        piFontSrc.transparent = false;
+        piFontSrc.drawFromContext( canvasFont.getContext2d(),0,0);
+        var piFont = new OneDfont( piFontSrc );
+        var helloPixel = piFont.drawString( 'Hello pixelimage!' ); 
+        var scaled = helloPixel.scaleUpInt(10,10);
+        p.putPixelImage( scaled, 100, 100 );
+          //var count = 0;
         /*
         var px = 400.;
         var py = 400.;
@@ -41,14 +68,14 @@ class DemoUse {
         
         //for( aShape in shapeTestArr() ){
             //if( count > 3 ) break;
-            var aShape = shapeTestArr()[0];
+            // var aShape = shapeTestArr()[0];
             /*
             var data = aShape.split('\n');
             for( i in 0...data.length ) data[ i ] = StringTools.trim(data[ i ]);
             var str = data.join(' ');
             XMLshape.withString( p, str );*/
-            XMLshape.withString( p, aShape );
-            count++;
+            // XMLshape.withString( p, aShape );
+            // count++;
         //}
         
         /*

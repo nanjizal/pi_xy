@@ -110,7 +110,7 @@ var arrowThickGradientTest: String =
                     '<ArrowThickGradient
                         flare="true"
                         reverseFlare="true"
-                        both="false"
+                        both="true"
                         x1="100" y1="300" 
                         x2="360" y2="120" 
                         arrowWidth="60"

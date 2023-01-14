@@ -889,6 +889,19 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             }
         }
     }
+    inline public
+    function putPixelImageRect( pixelImage: Pixelimage, x: Int, y: Int, rectLeft: Int, rectTop: Int, rectRight: Int, rectBottom: Int, ?useAvaliableMask = true ){
+        for( dy in rectTop...rectBottom ){
+            for( dx in rectLeft...rectRight ){
+                var col = pixelImage.getARGB( dx, dy );
+                if( pixelImage.hasMask && useAvaliableMask && pixelImage.mask != null ){
+                    var maskPixel = new Pixel32( pixelImage.mask.getARGB( dx, dy ) );
+                    col = new Pixel32( col ).maskPixel( maskPixel );
+                }
+                if( col != 0 ) setARGB( x + dx - rectLeft, y + dy - rectTop, col );
+            }
+        }
+    }
     /**
         Currently library only supports Javascript target and puts the UInt32Array on the canvas context
         hope to add c++ and some toolkits later.
