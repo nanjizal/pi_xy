@@ -1,6 +1,22 @@
 package pixelimage.fontImage;
 
 @:structInit
+class CharPlacement1D {
+    public var currX:   Int;
+    public var currY:   Int;
+    public var minX:    Int;
+    public var maxX:    Int;
+    inline
+    public function new( currX: Int, currY: Int, minX: Int, maxX: Int ){
+        this.currX = currX;
+        this.currY = currY;
+        this.minX  = minX;
+        this.maxX  = maxX;
+    }
+}
+
+
+@:structInit
 class OneDfont{
     public var fontImage:     Pixelimage;
     public var startingAscii: Int;
@@ -28,8 +44,8 @@ class OneDfont{
             }
         }
     }
-    inline 
-    public function drawString( str: String, spacingX: Int = 0 ): Pixelimage {
+    inline
+    public function createPlacement( str: String, spacingX: Int = 0 ): Array<CharPlacement1D>{
         var code: Int = 33;
         var position: Int = 33;
         var lastLetters = markers.length - 1;
@@ -39,7 +55,7 @@ class OneDfont{
         var rectBottom = fontImage.height;
         var charWidth = 0;
         var charWidthLast = 0;
-        var charPos = new Array<{ rectLeft: Int, rectRight: Int, currPos: Int }>();
+        var charPos = new Array<CharPlacement1D>();
         var totWidth = 0;
         var lastLetter = '';
         var finalPos = markers.length-2;
@@ -65,16 +81,57 @@ class OneDfont{
                     }
                 }
             }
-            var info: { rectLeft: Int, rectRight: Int, currPos: Int } = { rectLeft: rectLeft, rectRight: rectRight, currPos: currPos };
+            var info: CharPlacement1D = { minX: rectLeft, maxX: rectRight, currX: currPos, currY: 0 };
             charPos[ charPos.length ] = info;
             lastLetter = nextLetter;
             charWidthLast = charWidth;
         }
         currPos += charWidthLast + spacingX;
-        var pixelImage = new Pixelimage( currPos, rectBottom-1 );
+        return charPos;
+    }
+    /**
+        This is used to draw strings, but it is useful that 
+        createPlacement and drawPlacement can be used separately 
+        to allow for instance curved y placement
+    **/
+    inline 
+    public function drawString( str: String, spacingX: Int = 0 ): Pixelimage {
+        var charPos = createPlacement( str, spacingX );
+        var pixelImage = new Pixelimage( widthArrCharPlacement1D( charPos ), fontImage.height-1 );
         pixelImage.transparent = false;
+        return drawPlacement( pixelImage, charPos );
+    }
+    inline
+    public function drawCurveY( charPos: Array<CharPlacement1D>, fy: ( x: Int ) -> Int ): Pixelimage {
+        var l = charPos.length;
+        var info: CharPlacement1D;
+        var minY = 0;
+        var maxY = 0;
+        var currY = 0;
+        // change y to follow curve.
+        for( i in 0...l ){
+            info = charPos[ i ];
+            currY = fy( info.currX + ( info.maxX - info.minX ) );
+            if( currY > maxY ) maxY = currY;
+            if( currY < 0 ) minY = currY;
+            info.currY = currY;
+        }
+        var pixelImage = new Pixelimage( widthArrCharPlacement1D( charPos ), maxY - minY + fontImage.height-1 );
+        pixelImage.transparent = false;
+        return drawPlacement( pixelImage, charPos, -minY );
+    }
+    inline
+    public function widthArrCharPlacement1D( charPos: Array<CharPlacement1D> ){
+        var last = charPos[ charPos.length - 1 ];
+        var width = last.currX + ( last.maxX - last.minX ); 
+        return width;
+    }
+    inline
+    public function drawPlacement( pixelImage: Pixelimage, charPos: Array<CharPlacement1D>, yOffSet: Int = 0): Pixelimage {
+        var rectBottom = fontImage.height;
+        var rectTop    = 1; 
         for( info in charPos ){
-            pixelImage.putPixelImageRect( fontImage, info.currPos, 0, info.rectLeft, 1, info.rectRight, rectBottom );
+            pixelImage.putPixelImageRect( fontImage, info.currX, info.currY + yOffSet, info.minX, rectTop, info.maxX, rectBottom );
         }
         return pixelImage;
     }

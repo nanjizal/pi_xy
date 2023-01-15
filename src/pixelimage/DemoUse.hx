@@ -46,7 +46,12 @@ class DemoUse {
         piFontSrc.transparent = false;
         piFontSrc.drawFromContext( canvasFont.getContext2d(),0,0);
         var piFont = new OneDfont( piFontSrc );
-        var helloPixel = piFont.drawString( 'Hello pixelimage!' ); 
+        var fy = function( x: Int ): Int {
+          return Std.int( 4*Math.sin( x/10 ) );
+        }
+        var charPos = piFont.createPlacement( 'Hello pixelimage' );
+        var helloPixel = piFont.drawCurveY( charPos, fy );
+        //var helloPixel = piFont.drawString( 'Hello pixelimage!' ); 
         var scaled = helloPixel.scaleUpInt(10,10);
         p.putPixelImage( scaled, 100, 100 );
           //var count = 0;

@@ -341,6 +341,9 @@ pixelimage_DemoUse.prototype = {
 		var temp = new Uint32Array(data.buffer);
 		piFontSrc.image = temp;
 		var piFont = new pixelimage_fontImage_OneDfont(piFontSrc);
+		var fy = function(x) {
+			return 4 * Math.sin(x / 10) | 0;
+		};
 		var code = 33;
 		var position = 33;
 		var lastLetters = piFont.markers.length - 1;
@@ -355,16 +358,16 @@ pixelimage_DemoUse.prototype = {
 		var nextLetter = "";
 		var currPos = 0;
 		var _g = 0;
-		var _g1 = "Hello pixelimage!".length;
+		var _g1 = "Hello pixelimage".length;
 		while(_g < _g1) {
 			var letter = _g++;
-			code = HxOverrides.cca("Hello pixelimage!",letter);
-			nextLetter = "Hello pixelimage!".charAt(letter);
+			code = HxOverrides.cca("Hello pixelimage",letter);
+			nextLetter = "Hello pixelimage".charAt(letter);
 			position = code - piFont.startingAscii;
 			if(position >= finalPos || position < 0) {
 				position = finalPos;
 				if(nextLetter != " ") {
-					haxe_Log.trace("character not found " + "Hello pixelimage!".charAt(letter),{ fileName : "src/pixelimage/fontImage/OneDfont.hx", lineNumber : 54, className : "pixelimage.fontImage.OneDfont", methodName : "drawString"});
+					haxe_Log.trace("character not found " + "Hello pixelimage".charAt(letter),{ fileName : "src/pixelimage/fontImage/OneDfont.hx", lineNumber : 70, className : "pixelimage.fontImage.OneDfont", methodName : "createPlacement"});
 				}
 			}
 			rectLeft = piFont.markers[position];
@@ -379,26 +382,56 @@ pixelimage_DemoUse.prototype = {
 					}
 				}
 			}
-			var info = { rectLeft : rectLeft, rectRight : rectRight, currPos : currPos};
+			var info = new pixelimage_fontImage_CharPlacement1D(currPos,0,rectLeft,rectRight);
 			charPos[charPos.length] = info;
 			lastLetter = nextLetter;
 			charWidthLast = charWidth;
 		}
 		currPos += charWidthLast;
-		var h = rectBottom - 1;
-		var this1 = new Uint32Array(currPos * h | 0);
-		var this2 = new pixelimage_ImageStruct(currPos,h,this1);
+		var charPos1 = charPos;
+		var l = charPos1.length;
+		var info;
+		var minY = 0;
+		var maxY = 0;
+		var currY = 0;
+		var _g = 0;
+		var _g1 = l;
+		while(_g < _g1) {
+			var i = _g++;
+			info = charPos1[i];
+			currY = fy(info.currX + (info.maxX - info.minX));
+			if(currY > maxY) {
+				maxY = currY;
+			}
+			if(currY < 0) {
+				minY = currY;
+			}
+			info.currY = currY;
+		}
+		var last = charPos1[charPos1.length - 1];
+		var width = last.currX + (last.maxX - last.minX);
+		var w = width;
+		var h = maxY - minY + piFont.fontImage.height - 1;
+		var this1 = new Uint32Array(w * h | 0);
+		var this2 = new pixelimage_ImageStruct(w,h,this1);
 		var pixelImage = this2;
 		pixelImage.transparent = false;
+		var yOffSet = -minY;
+		if(yOffSet == null) {
+			yOffSet = 0;
+		}
+		var rectBottom = piFont.fontImage.height;
+		var rectTop = 1;
 		var _g = 0;
-		while(_g < charPos.length) {
-			var info = charPos[_g];
+		while(_g < charPos1.length) {
+			var info = charPos1[_g];
 			++_g;
 			var pixelImage1 = piFont.fontImage;
-			var x = info.currPos;
-			var rectLeft = info.rectLeft;
-			var rectRight = info.rectRight;
-			var _g1 = 1;
+			var x = info.currX;
+			var y = info.currY + yOffSet;
+			var rectLeft = info.minX;
+			var rectRight = info.maxX;
+			var _g1 = rectTop;
 			var _g2 = rectBottom;
 			while(_g1 < _g2) {
 				var dy = _g1++;
@@ -436,11 +469,11 @@ pixelimage_DemoUse.prototype = {
 					}
 					if(col != 0) {
 						var x1 = x + dx - rectLeft;
-						var y = dy - 1;
+						var y1 = y + dy - rectTop;
 						var this10 = col;
 						var c2 = this10;
 						if((c2 >> 24 & 255) < 254 && pixelImage.transparent) {
-							var location = pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y * pixelImage.width + x1 | 0;
+							var location = pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0;
 							var this11 = pixelImage.image[location];
 							var this12 = this11;
 							var this13 = pixelimage_Endian_isLittleEndian ? (this12 >> 24 & 255) << 24 | (this12 & 255) << 16 | (this12 >> 8 & 255) << 8 | this12 >> 16 & 255 : this12;
@@ -468,7 +501,7 @@ pixelimage_DemoUse.prototype = {
 							var blended = a << 24 | r << 16 | g << 8 | b;
 							pixelImage.image[location] = pixelimage_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended;
 						} else {
-							pixelImage.image[pixelImage.useVirtualPos ? (y - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
+							pixelImage.image[pixelImage.useVirtualPos ? (y1 - pixelImage.virtualY) * pixelImage.width + x1 - pixelImage.virtualX | 0 : y1 * pixelImage.width + x1 | 0] = pixelimage_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2;
 						}
 					}
 				}
@@ -705,6 +738,13 @@ pixelimage_Pixelimage.setRelativePosition = function(this1,x,y,update) {
 	this1.virtualX = x;
 	this1.virtualY = y;
 };
+var pixelimage_fontImage_CharPlacement1D = function(currX,currY,minX,maxX) {
+	this.currX = currX;
+	this.currY = currY;
+	this.minX = minX;
+	this.maxX = maxX;
+};
+pixelimage_fontImage_CharPlacement1D.__name__ = true;
 var pixelimage_fontImage_OneDfont = function(fontImage,startingAscii,markerColor,pairOffset) {
 	if(markerColor == null) {
 		markerColor = -1;
