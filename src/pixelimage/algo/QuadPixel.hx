@@ -61,6 +61,25 @@ function fillGradQuadrilateral( pixelImage: Pixelimage
     }
 }
 
+inline
+function uvQuadrilateral( pixelImage: Pixelimage, texture: PixelTexture
+                        , ax: Float, ay: Float, au: Float, av: Float
+                        , bx: Float, by: Float, bu: Float, bv: Float
+                        , cx: Float, cy: Float, cu: Float, cv: Float 
+                        , dx: Float, dy: Float, du: Float, dv: Float
+                        , hasHit: Bool = false ): Null<HitQuad>{
+    // tri e - a b d
+    // tri f - b c d
+    uvTriangle( pixelImage, texture, ax, ay, au, av, bx, by, bu, bv, dx, dy, du, dv, hasHit );
+    uvTriangle( pixelImage, texture, bx, by, bu, bv, cx, cy, cu, cv, dx, dy, du, dv );
+    return if( hasHit == true ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
 class QuadPixel {
     /**
        <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field

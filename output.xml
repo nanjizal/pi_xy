@@ -40527,23 +40527,23 @@
 		<p><x path="pixelimage.Pixelimage"/></p>
 		<g><x path="htmlHelper.canvas.Surface"/></g>
 		<setup set="method" line="37"><f a=""><x path="Void"/></f></setup>
-		<drawRadials public="1" set="method" line="126"><f a="p">
+		<drawRadials public="1" set="method" line="131"><f a="p">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="Void"/>
 </f></drawRadials>
-		<simonSays public="1" set="method" line="131"><f a="p">
+		<simonSays public="1" set="method" line="136"><f a="p">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="Void"/>
 </f></simonSays>
-		<drawGridMask public="1" set="method" line="135"><f a="p">
+		<drawGridMask public="1" set="method" line="140"><f a="p">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Void"/>
 </f></drawGridMask>
-		<drawGrid public="1" set="method" line="142"><f a="p">
+		<drawGrid public="1" set="method" line="147"><f a="p">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="Void"/>
 </f></drawGrid>
-		<drawAlphaTriangle public="1" set="method" line="146"><f a="p">
+		<drawAlphaTriangle public="1" set="method" line="151"><f a="p">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="Void"/>
 </f></drawAlphaTriangle>
@@ -40604,6 +40604,34 @@
 			<m n=":directlyUsed"/>
 			<m n=":structInit"/>
 		</meta>
+	</class>
+	<class path="pixelimage.PixelTexture" params="" file="src/pixelimage/PixelTexture.hx">
+		<minX public="1"><x path="Int"/></minX>
+		<maxX public="1"><x path="Int"/></maxX>
+		<minY public="1"><x path="Int"/></minY>
+		<maxY public="1"><x path="Int"/></maxY>
+		<width><x path="Int"/></width>
+		<height><x path="Int"/></height>
+		<sx><x path="Float"/></sx>
+		<sy><x path="Float"/></sy>
+		<pixelImage public="1"><x path="pixelimage.Pixelimage"/></pixelImage>
+		<getARGB public="1" set="method" line="52"><f a="u:v">
+	<x path="Float"/>
+	<x path="Float"/>
+	<x path="Int"/>
+</f></getARGB>
+		<new public="1" set="method" line="15">
+			<f a="pixelImage:?minX:?maxX:?minY:?maxY" v=":0:-1:0:-1">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ maxY : -1, minY : 0, maxX : -1, minX : 0 }</e></m></meta>
+		</new>
+		<meta><m n=":structInit"/></meta>
 	</class>
 	<abstract path="pixelimage.Pixelimage" params="" file="src/pixelimage/Pixelimage.hx">
 		<from><icast><c path="pixelimage.ImageStruct"/></icast></from>
@@ -41007,7 +41035,28 @@
 		<haxe_doc>creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
         with respective colors after coordinate pairs</haxe_doc>
 	</fillGradTri>
-	<sweepGradTri public="1" get="inline" set="null" line="484" static="1">
+	<fillUVTri public="1" get="inline" set="null" line="484" static="1">
+		<f a="this:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v="::::::::::::::true">
+			<c path="pixelimage.ImageStruct"/>
+			<c path="pixelimage.PixelTexture"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Bool"/>
+			<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+		</f>
+		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
+	</fillUVTri>
+	<sweepGradTri public="1" get="inline" set="null" line="491" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:colA:colB:colC:?hasHit" v="::::::::::false">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41024,7 +41073,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepGradTri>
-	<fillRadialPie public="1" get="inline" set="null" line="499" static="1">
+	<fillRadialPie public="1" get="inline" set="null" line="506" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:centreColor:outerColor:?hasHit:?targetError" v=":::::::::false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41041,7 +41090,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</fillRadialPie>
-	<tileRect public="1" get="inline" set="null" line="537" static="1">
+	<tileRect public="1" get="inline" set="null" line="544" static="1">
 		<f a="this:x:y:wid:hi:tileImage:?hasHit" v="::::::false">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41054,7 +41103,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</tileRect>
-	<fillGradRect public="1" get="inline" set="null" line="548" static="1">
+	<fillGradRect public="1" get="inline" set="null" line="555" static="1">
 		<f a="this:x:y:wid:hi:colorA:colorB:colorC:colorD">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41078,7 +41127,7 @@
 		</f>
 		<haxe_doc>uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours</haxe_doc>
 	</fillGradRect>
-	<fillGradQuad public="1" get="inline" set="null" line="569" static="1">
+	<fillGradQuad public="1" get="inline" set="null" line="576" static="1">
 		<f a="this:ax:ay:colorA:bx:by:colorB:cx:cy:colorC:dx:dy:colorD:?hasHit" v=":::::::::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41103,7 +41152,32 @@
         a better render maybe possible see commented out code in algo.QuadPixel and lerp code in algo.GeomPixel
         ( better render approach compiles but does not yet work, maybe easy? ).</haxe_doc>
 	</fillGradQuad>
-	<fillLine public="1" get="inline" set="null" line="580" static="1">
+	<fillUVQuad public="1" get="inline" set="null" line="586" static="1">
+		<f a="this:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:dx:dy:du:dv:?hasHit" v="::::::::::::::::::true">
+			<c path="pixelimage.ImageStruct"/>
+			<c path="pixelimage.PixelTexture"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Bool"/>
+			<x path="Null"><c path="pixelimage.algo.HitQuad"/></x>
+		</f>
+		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
+	</fillUVQuad>
+	<fillLine public="1" get="inline" set="null" line="597" static="1">
 		<f a="this:px:py:qx:qy:thick:color:?hasHit:?debugCorners" v=":::::::true:false">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41120,7 +41194,7 @@
 		<haxe_doc>provides a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development</haxe_doc>
 	</fillLine>
-	<fillArrow public="1" get="inline" set="null" line="592" static="1">
+	<fillArrow public="1" get="inline" set="null" line="609" static="1">
 		<f a="this:px:py:qx:qy:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::false:false:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41137,7 +41211,7 @@
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
 	</fillArrow>
-	<fillArrowBoth public="1" get="inline" set="null" line="598" static="1">
+	<fillArrowBoth public="1" get="inline" set="null" line="615" static="1">
 		<f a="this:px:py:qx:qy:thick:color:?hasHit" v=":::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41151,7 +41225,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</fillArrowBoth>
-	<fillFixArrow public="1" get="inline" set="null" line="603" static="1">
+	<fillFixArrow public="1" get="inline" set="null" line="620" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::::false:false:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41169,7 +41243,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</fillFixArrow>
-	<fillFixArrowBoth public="1" get="inline" set="null" line="609" static="1">
+	<fillFixArrowBoth public="1" get="inline" set="null" line="626" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?hasHit" v=":::::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41185,7 +41259,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</fillFixArrowBoth>
-	<gradThickArrow public="1" get="inline" set="null" line="616" static="1">
+	<gradThickArrow public="1" get="inline" set="null" line="633" static="1">
 		<f a="this:px:py:qx:qy:thick:color1:color2:?flare:reverseFlare:?hasHit" v="::::::::false::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41202,7 +41276,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, flare : false }</e></m></meta>
 	</gradThickArrow>
-	<gradThickArrowBoth public="1" get="inline" set="null" line="621" static="1">
+	<gradThickArrowBoth public="1" get="inline" set="null" line="638" static="1">
 		<f a="this:px:py:qx:qy:thick:color1:color2:?hasHit" v="::::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41217,7 +41291,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</gradThickArrowBoth>
-	<gradThickFixArrow public="1" get="inline" set="null" line="626" static="1">
+	<gradThickFixArrow public="1" get="inline" set="null" line="643" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?flare:?reverseFlare:?hasHit" v="::::::::::false:false:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41236,7 +41310,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</gradThickFixArrow>
-	<gradThickFixArrowBoth public="1" get="inline" set="null" line="631" static="1">
+	<gradThickFixArrowBoth public="1" get="inline" set="null" line="648" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?hasHit" v="::::::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41253,7 +41327,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</gradThickFixArrowBoth>
-	<tileLine public="1" get="inline" set="null" line="642" static="1">
+	<tileLine public="1" get="inline" set="null" line="659" static="1">
 		<f a="this:px:py:qx:qy:thick:tileImage:?hasHit:?debugCorners" v=":::::::false:false">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41270,7 +41344,7 @@
 		<haxe_doc>tiles a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development</haxe_doc>
 	</tileLine>
-	<fillGradLine public="1" get="inline" set="null" line="659" static="1">
+	<fillGradLine public="1" get="inline" set="null" line="676" static="1">
 		<f a="this:px:py:qx:qy:thick:colorA:colorB:colorC:colorD:?hasHit:?debugCorners" v="::::::::::false:false">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41291,7 +41365,7 @@
         the four colors are arranged clockwise a,b,c,d
         debug corners draws coloured squares on the corners for development</haxe_doc>
 	</fillGradLine>
-	<fillEllipseTri public="1" get="inline" set="null" line="674" static="1">
+	<fillEllipseTri public="1" get="inline" set="null" line="691" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41309,7 +41383,7 @@
         drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
         setup so large ellipses automatically use more sides.</haxe_doc>
 	</fillEllipseTri>
-	<tileEllipseTri public="1" get="inline" set="null" line="683" static="1">
+	<tileEllipseTri public="1" get="inline" set="null" line="700" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41324,7 +41398,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, phi : 0 }</e></m></meta>
 	</tileEllipseTri>
-	<lineEllipseTri public="1" get="inline" set="null" line="701" static="1">
+	<lineEllipseTri public="1" get="inline" set="null" line="718" static="1">
 		<f a="this:cx:cy:rx:ry:drx:dry:color:?phi:?printSides:?targetError" v="::::::::0:false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41347,7 +41421,7 @@
         setup so large ellipses automatically use more sides.
         for phi rotated ellipses it over estimates the temp pixelimage to be safe</haxe_doc>
 	</lineEllipseTri>
-	<fillRadialEllipseTri public="1" get="inline" set="null" line="740" static="1">
+	<fillRadialEllipseTri public="1" get="inline" set="null" line="757" static="1">
 		<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::0.:0.:0:false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41368,7 +41442,7 @@
         colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
         there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse</haxe_doc>
 	</fillRadialEllipseTri>
-	<lineRadialEllipseTri public="1" get="inline" set="null" line="756" static="1">
+	<lineRadialEllipseTri public="1" get="inline" set="null" line="773" static="1">
 		<f a="this:cx:cy:rx:ry:drx:dry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::::0.:0.:0:false:1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41390,7 +41464,7 @@
 		<haxe_doc>radial ellipse thick line 
         @see fillRadialEllipseTri</haxe_doc>
 	</lineRadialEllipseTri>
-	<fillRadialRectangle public="1" get="inline" set="null" line="795" static="1">
+	<fillRadialRectangle public="1" get="inline" set="null" line="812" static="1">
 		<f a="this:x:y:wid:hi:colorIn:colorOut:?gx:?gy" v=":::::::0:0">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41407,7 +41481,7 @@
 		<haxe_doc>provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
         @:see fillRadialEllipseTri</haxe_doc>
 	</fillRadialRectangle>
-	<fillQuadrant public="1" get="inline" set="null" line="814" static="1">
+	<fillQuadrant public="1" get="inline" set="null" line="831" static="1">
 		<f a="this:cx:cy:rx:ry:startAngle:color:?phi:?targetError" v="::::::::1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41423,7 +41497,7 @@
 		<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 		<haxe_doc>fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 	</fillQuadrant>
-	<tileQuadrant public="1" get="inline" set="null" line="824" static="1">
+	<tileQuadrant public="1" get="inline" set="null" line="841" static="1">
 		<f a="this:cx:cy:rx:ry:startAngle:tileImage:?phi:?targetError" v="::::::::1.05">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41439,7 +41513,7 @@
 		<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 		<haxe_doc>tiles Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 	</tileQuadrant>
-	<fillPolyBuild public="1" get="inline" set="null" line="839" static="1">
+	<fillPolyBuild public="1" get="inline" set="null" line="856" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41460,7 +41534,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 	</fillPolyBuild>
-	<tilePolyBuild public="1" get="inline" set="null" line="854" static="1">
+	<tilePolyBuild public="1" get="inline" set="null" line="871" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41481,7 +41555,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 	</tilePolyBuild>
-	<fillRadialPolyon public="1" get="inline" set="null" line="868" static="1">
+	<fillRadialPolyon public="1" get="inline" set="null" line="885" static="1">
 		<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?sides:?cornerUp" v=":::::::0.:0.:0.:36:true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="Float"/>
@@ -41501,7 +41575,7 @@
 		<haxe_doc>@see fillPolyBuild
         this is a version with radial gradient applied so the centre is one color, but only used gradient triangles so limited</haxe_doc>
 	</fillRadialPolyon>
-	<putPixelImage public="1" get="inline" set="null" line="878" static="1">
+	<putPixelImage public="1" get="inline" set="null" line="895" static="1">
 		<f a="this:pixelImage:x:y:?useAvaliableMask" v="::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="pixelimage.Pixelimage"/>
@@ -41516,7 +41590,7 @@
         this is used also internally so that shapes can be composed with transparent false 
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.</haxe_doc>
 	</putPixelImage>
-	<putPixelImageRect public="1" get="inline" set="null" line="893" static="1">
+	<putPixelImageRect public="1" get="inline" set="null" line="910" static="1">
 		<f a="this:pixelImage:x:y:rectLeft:rectTop:rectRight:rectBottom:?useAvaliableMask" v="::::::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<x path="pixelimage.Pixelimage"/>
@@ -41531,7 +41605,7 @@
 		</f>
 		<meta><m n=":value"><e>{ useAvaliableMask : true }</e></m></meta>
 	</putPixelImageRect>
-	<drawToContext public="1" get="inline" set="null" line="911" static="1">
+	<drawToContext public="1" get="inline" set="null" line="928" static="1">
 		<f a="this:ctx:x:y:?useAvaliableMask" v="::::true">
 			<c path="pixelimage.ImageStruct"/>
 			<c path="js.html.CanvasRenderingContext2D"/>
@@ -41544,27 +41618,27 @@
 		<haxe_doc>Currently library only supports Javascript target and puts the UInt32Array on the canvas context
         hope to add c++ and some toolkits later.</haxe_doc>
 	</drawToContext>
-	<drawFromContext public="1" get="inline" set="null" line="933" static="1"><f a="this:ctx:x:y">
+	<drawFromContext public="1" get="inline" set="null" line="950" static="1"><f a="this:ctx:x:y">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="js.html.CanvasRenderingContext2D"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></drawFromContext>
-	<transferClone public="1" get="inline" set="null" line="943" static="1"><f a="this">
+	<transferClone public="1" get="inline" set="null" line="960" static="1"><f a="this">
 	<c path="pixelimage.ImageStruct"/>
 	<x path="pixelimage.Pixelimage"/>
 </f></transferClone>
-	<transferIn public="1" get="inline" set="null" line="951" static="1"><f a="this:p">
+	<transferIn public="1" get="inline" set="null" line="968" static="1"><f a="this:p">
 	<c path="pixelimage.ImageStruct"/>
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Void"/>
 </f></transferIn>
-	<getBytes public="1" get="inline" set="null" line="957" static="1"><f a="this">
+	<getBytes public="1" get="inline" set="null" line="974" static="1"><f a="this">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 </f></getBytes>
-	<fromBytes public="1" get="inline" set="null" line="961" static="1"><f a="this:bytes:pos">
+	<fromBytes public="1" get="inline" set="null" line="978" static="1"><f a="this:bytes:pos">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 	<x path="Int"/>
@@ -41970,7 +42044,28 @@
 			<haxe_doc>creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
         with respective colors after coordinate pairs</haxe_doc>
 		</fillGradTri>
-		<sweepGradTri public="1" get="inline" set="null" line="484" static="1">
+		<fillUVTri public="1" get="inline" set="null" line="484" static="1">
+			<f a="this:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v="::::::::::::::true">
+				<c path="pixelimage.ImageStruct"/>
+				<c path="pixelimage.PixelTexture"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
+		</fillUVTri>
+		<sweepGradTri public="1" get="inline" set="null" line="491" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:colA:colB:colC:?hasHit" v="::::::::::false">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -41987,7 +42082,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepGradTri>
-		<fillRadialPie public="1" get="inline" set="null" line="499" static="1">
+		<fillRadialPie public="1" get="inline" set="null" line="506" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:centreColor:outerColor:?hasHit:?targetError" v=":::::::::false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42004,7 +42099,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</fillRadialPie>
-		<tileRect public="1" get="inline" set="null" line="537" static="1">
+		<tileRect public="1" get="inline" set="null" line="544" static="1">
 			<f a="this:x:y:wid:hi:tileImage:?hasHit" v="::::::false">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42017,7 +42112,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileRect>
-		<fillGradRect public="1" get="inline" set="null" line="548" static="1">
+		<fillGradRect public="1" get="inline" set="null" line="555" static="1">
 			<f a="this:x:y:wid:hi:colorA:colorB:colorC:colorD">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42041,7 +42136,7 @@
 			</f>
 			<haxe_doc>uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours</haxe_doc>
 		</fillGradRect>
-		<fillGradQuad public="1" get="inline" set="null" line="569" static="1">
+		<fillGradQuad public="1" get="inline" set="null" line="576" static="1">
 			<f a="this:ax:ay:colorA:bx:by:colorB:cx:cy:colorC:dx:dy:colorD:?hasHit" v=":::::::::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42066,7 +42161,32 @@
         a better render maybe possible see commented out code in algo.QuadPixel and lerp code in algo.GeomPixel
         ( better render approach compiles but does not yet work, maybe easy? ).</haxe_doc>
 		</fillGradQuad>
-		<fillLine public="1" get="inline" set="null" line="580" static="1">
+		<fillUVQuad public="1" get="inline" set="null" line="586" static="1">
+			<f a="this:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:dx:dy:du:dv:?hasHit" v="::::::::::::::::::true">
+				<c path="pixelimage.ImageStruct"/>
+				<c path="pixelimage.PixelTexture"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitQuad"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
+		</fillUVQuad>
+		<fillLine public="1" get="inline" set="null" line="597" static="1">
 			<f a="this:px:py:qx:qy:thick:color:?hasHit:?debugCorners" v=":::::::true:false">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42083,7 +42203,7 @@
 			<haxe_doc>provides a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development</haxe_doc>
 		</fillLine>
-		<fillArrow public="1" get="inline" set="null" line="592" static="1">
+		<fillArrow public="1" get="inline" set="null" line="609" static="1">
 			<f a="this:px:py:qx:qy:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::false:false:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42100,7 +42220,7 @@
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 			<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
 		</fillArrow>
-		<fillArrowBoth public="1" get="inline" set="null" line="598" static="1">
+		<fillArrowBoth public="1" get="inline" set="null" line="615" static="1">
 			<f a="this:px:py:qx:qy:thick:color:?hasHit" v=":::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42114,7 +42234,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</fillArrowBoth>
-		<fillFixArrow public="1" get="inline" set="null" line="603" static="1">
+		<fillFixArrow public="1" get="inline" set="null" line="620" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::::false:false:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42132,7 +42252,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</fillFixArrow>
-		<fillFixArrowBoth public="1" get="inline" set="null" line="609" static="1">
+		<fillFixArrowBoth public="1" get="inline" set="null" line="626" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?hasHit" v=":::::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42148,7 +42268,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</fillFixArrowBoth>
-		<gradThickArrow public="1" get="inline" set="null" line="616" static="1">
+		<gradThickArrow public="1" get="inline" set="null" line="633" static="1">
 			<f a="this:px:py:qx:qy:thick:color1:color2:?flare:reverseFlare:?hasHit" v="::::::::false::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42165,7 +42285,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, flare : false }</e></m></meta>
 		</gradThickArrow>
-		<gradThickArrowBoth public="1" get="inline" set="null" line="621" static="1">
+		<gradThickArrowBoth public="1" get="inline" set="null" line="638" static="1">
 			<f a="this:px:py:qx:qy:thick:color1:color2:?hasHit" v="::::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42180,7 +42300,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</gradThickArrowBoth>
-		<gradThickFixArrow public="1" get="inline" set="null" line="626" static="1">
+		<gradThickFixArrow public="1" get="inline" set="null" line="643" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?flare:?reverseFlare:?hasHit" v="::::::::::false:false:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42199,7 +42319,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</gradThickFixArrow>
-		<gradThickFixArrowBoth public="1" get="inline" set="null" line="631" static="1">
+		<gradThickFixArrowBoth public="1" get="inline" set="null" line="648" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?hasHit" v="::::::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42216,7 +42336,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</gradThickFixArrowBoth>
-		<tileLine public="1" get="inline" set="null" line="642" static="1">
+		<tileLine public="1" get="inline" set="null" line="659" static="1">
 			<f a="this:px:py:qx:qy:thick:tileImage:?hasHit:?debugCorners" v=":::::::false:false">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42233,7 +42353,7 @@
 			<haxe_doc>tiles a thick line using two triangles vector p, q
         debug corners draws coloured squares on the corners for development</haxe_doc>
 		</tileLine>
-		<fillGradLine public="1" get="inline" set="null" line="659" static="1">
+		<fillGradLine public="1" get="inline" set="null" line="676" static="1">
 			<f a="this:px:py:qx:qy:thick:colorA:colorB:colorC:colorD:?hasHit:?debugCorners" v="::::::::::false:false">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42254,7 +42374,7 @@
         the four colors are arranged clockwise a,b,c,d
         debug corners draws coloured squares on the corners for development</haxe_doc>
 		</fillGradLine>
-		<fillEllipseTri public="1" get="inline" set="null" line="674" static="1">
+		<fillEllipseTri public="1" get="inline" set="null" line="691" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42272,7 +42392,7 @@
         drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
         setup so large ellipses automatically use more sides.</haxe_doc>
 		</fillEllipseTri>
-		<tileEllipseTri public="1" get="inline" set="null" line="683" static="1">
+		<tileEllipseTri public="1" get="inline" set="null" line="700" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42287,7 +42407,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, phi : 0 }</e></m></meta>
 		</tileEllipseTri>
-		<lineEllipseTri public="1" get="inline" set="null" line="701" static="1">
+		<lineEllipseTri public="1" get="inline" set="null" line="718" static="1">
 			<f a="this:cx:cy:rx:ry:drx:dry:color:?phi:?printSides:?targetError" v="::::::::0:false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42310,7 +42430,7 @@
         setup so large ellipses automatically use more sides.
         for phi rotated ellipses it over estimates the temp pixelimage to be safe</haxe_doc>
 		</lineEllipseTri>
-		<fillRadialEllipseTri public="1" get="inline" set="null" line="740" static="1">
+		<fillRadialEllipseTri public="1" get="inline" set="null" line="757" static="1">
 			<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::0.:0.:0:false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42331,7 +42451,7 @@
         colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
         there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse</haxe_doc>
 		</fillRadialEllipseTri>
-		<lineRadialEllipseTri public="1" get="inline" set="null" line="756" static="1">
+		<lineRadialEllipseTri public="1" get="inline" set="null" line="773" static="1">
 			<f a="this:cx:cy:rx:ry:drx:dry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::::0.:0.:0:false:1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42353,7 +42473,7 @@
 			<haxe_doc>radial ellipse thick line 
         @see fillRadialEllipseTri</haxe_doc>
 		</lineRadialEllipseTri>
-		<fillRadialRectangle public="1" get="inline" set="null" line="795" static="1">
+		<fillRadialRectangle public="1" get="inline" set="null" line="812" static="1">
 			<f a="this:x:y:wid:hi:colorIn:colorOut:?gx:?gy" v=":::::::0:0">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42370,7 +42490,7 @@
 			<haxe_doc>provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
         @:see fillRadialEllipseTri</haxe_doc>
 		</fillRadialRectangle>
-		<fillQuadrant public="1" get="inline" set="null" line="814" static="1">
+		<fillQuadrant public="1" get="inline" set="null" line="831" static="1">
 			<f a="this:cx:cy:rx:ry:startAngle:color:?phi:?targetError" v="::::::::1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42386,7 +42506,7 @@
 			<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 			<haxe_doc>fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 		</fillQuadrant>
-		<tileQuadrant public="1" get="inline" set="null" line="824" static="1">
+		<tileQuadrant public="1" get="inline" set="null" line="841" static="1">
 			<f a="this:cx:cy:rx:ry:startAngle:tileImage:?phi:?targetError" v="::::::::1.05">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42402,7 +42522,7 @@
 			<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 			<haxe_doc>tiles Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 		</tileQuadrant>
-		<fillPolyBuild public="1" get="inline" set="null" line="839" static="1">
+		<fillPolyBuild public="1" get="inline" set="null" line="856" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42423,7 +42543,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 		</fillPolyBuild>
-		<tilePolyBuild public="1" get="inline" set="null" line="854" static="1">
+		<tilePolyBuild public="1" get="inline" set="null" line="871" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42444,7 +42564,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 		</tilePolyBuild>
-		<fillRadialPolyon public="1" get="inline" set="null" line="868" static="1">
+		<fillRadialPolyon public="1" get="inline" set="null" line="885" static="1">
 			<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?sides:?cornerUp" v=":::::::0.:0.:0.:36:true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="Float"/>
@@ -42464,7 +42584,7 @@
 			<haxe_doc>@see fillPolyBuild
         this is a version with radial gradient applied so the centre is one color, but only used gradient triangles so limited</haxe_doc>
 		</fillRadialPolyon>
-		<putPixelImage public="1" get="inline" set="null" line="878" static="1">
+		<putPixelImage public="1" get="inline" set="null" line="895" static="1">
 			<f a="this:pixelImage:x:y:?useAvaliableMask" v="::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -42479,7 +42599,7 @@
         this is used also internally so that shapes can be composed with transparent false 
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.</haxe_doc>
 		</putPixelImage>
-		<putPixelImageRect public="1" get="inline" set="null" line="893" static="1">
+		<putPixelImageRect public="1" get="inline" set="null" line="910" static="1">
 			<f a="this:pixelImage:x:y:rectLeft:rectTop:rectRight:rectBottom:?useAvaliableMask" v="::::::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -42494,7 +42614,7 @@
 			</f>
 			<meta><m n=":value"><e>{ useAvaliableMask : true }</e></m></meta>
 		</putPixelImageRect>
-		<drawToContext public="1" get="inline" set="null" line="911" static="1">
+		<drawToContext public="1" get="inline" set="null" line="928" static="1">
 			<f a="this:ctx:x:y:?useAvaliableMask" v="::::true">
 				<c path="pixelimage.ImageStruct"/>
 				<c path="js.html.CanvasRenderingContext2D"/>
@@ -42507,27 +42627,27 @@
 			<haxe_doc>Currently library only supports Javascript target and puts the UInt32Array on the canvas context
         hope to add c++ and some toolkits later.</haxe_doc>
 		</drawToContext>
-		<drawFromContext public="1" get="inline" set="null" line="933" static="1"><f a="this:ctx:x:y">
+		<drawFromContext public="1" get="inline" set="null" line="950" static="1"><f a="this:ctx:x:y">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="js.html.CanvasRenderingContext2D"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></drawFromContext>
-		<transferClone public="1" get="inline" set="null" line="943" static="1"><f a="this">
+		<transferClone public="1" get="inline" set="null" line="960" static="1"><f a="this">
 	<c path="pixelimage.ImageStruct"/>
 	<x path="pixelimage.Pixelimage"/>
 </f></transferClone>
-		<transferIn public="1" get="inline" set="null" line="951" static="1"><f a="this:p">
+		<transferIn public="1" get="inline" set="null" line="968" static="1"><f a="this:p">
 	<c path="pixelimage.ImageStruct"/>
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Void"/>
 </f></transferIn>
-		<getBytes public="1" get="inline" set="null" line="957" static="1"><f a="this">
+		<getBytes public="1" get="inline" set="null" line="974" static="1"><f a="this">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 </f></getBytes>
-		<fromBytes public="1" get="inline" set="null" line="961" static="1"><f a="this:bytes:pos">
+		<fromBytes public="1" get="inline" set="null" line="978" static="1"><f a="this:bytes:pos">
 	<c path="pixelimage.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 	<x path="Int"/>
@@ -44208,7 +44328,7 @@
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.]]></haxe_doc>
 		</_fillGradQuadrilateral>
-		<new public="1" set="method" line="64">
+		<new public="1" set="method" line="83">
 			<f a=""><x path="Void"/></f>
 			<meta><m n=":compilerGenerated"/></meta>
 		</new>
@@ -44268,6 +44388,31 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillGradQuadrilateral>
+		<uvQuadrilateral public="1" get="inline" set="null" line="70" static="1">
+			<f a="pixelImage:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:dx:dy:du:dv:?hasHit" v="::::::::::::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<c path="pixelimage.PixelTexture"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitQuad"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</uvQuadrilateral>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
 	<class path="pixelimage.algo._QuadrantPixel.QuadrantPixel_Fields_" params="" file="src/pixelimage/algo/QuadrantPixel.hx" private="1" module="pixelimage.algo.QuadrantPixel" final="1">
@@ -44528,7 +44673,7 @@
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">fillGradTriangle</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.]]></haxe_doc>
 		</_fillGradTriangle>
-		<new public="1" set="method" line="209">
+		<new public="1" set="method" line="249">
 			<f a=""><x path="Void"/></f>
 			<meta><m n=":compilerGenerated"/></meta>
 		</new>
@@ -44613,7 +44758,45 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillGradTriangle>
+		<uvTriangle public="1" get="inline" set="null" line="214" static="1">
+			<f a="pixelimage:texture:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v="::::::::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<c path="pixelimage.PixelTexture"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</uvTriangle>
 		<meta><m n=":directlyUsed"/></meta>
+	</class>
+	<class path="pixelimage.fontImage.CharPlacement1D" params="" file="src/pixelimage/fontImage/OneDfont.hx" module="pixelimage.fontImage.OneDfont">
+		<currX public="1"><x path="Int"/></currX>
+		<currY public="1"><x path="Int"/></currY>
+		<minX public="1"><x path="Int"/></minX>
+		<maxX public="1"><x path="Int"/></maxX>
+		<new public="1" get="inline" set="null" line="10"><f a="currX:currY:minX:maxX">
+	<x path="Int"/>
+	<x path="Int"/>
+	<x path="Int"/>
+	<x path="Int"/>
+	<x path="Void"/>
+</f></new>
+		<meta>
+			<m n=":directlyUsed"/>
+			<m n=":structInit"/>
+		</meta>
 	</class>
 	<class path="pixelimage.fontImage.OneDfont" params="" file="src/pixelimage/fontImage/OneDfont.hx">
 		<fontImage public="1"><x path="pixelimage.Pixelimage"/></fontImage>
@@ -44624,16 +44807,48 @@
 			<c path="Array"><x path="Int"/></c>
 			<meta><m n=":value"><e>[]</e></m></meta>
 		</markers>
-		<findMarkers get="inline" set="null" line="22"><f a=""><x path="Void"/></f></findMarkers>
-		<drawString public="1" get="inline" set="null" line="32">
+		<findMarkers get="inline" set="null" line="38"><f a=""><x path="Void"/></f></findMarkers>
+		<createPlacement public="1" get="inline" set="null" line="48">
+			<f a="str:?spacingX" v=":0">
+				<c path="String"/>
+				<x path="Int"/>
+				<c path="Array"><c path="pixelimage.fontImage.CharPlacement1D"/></c>
+			</f>
+			<meta><m n=":value"><e>{ spacingX : 0 }</e></m></meta>
+		</createPlacement>
+		<drawString public="1" get="inline" set="null" line="98">
 			<f a="str:?spacingX" v=":0">
 				<c path="String"/>
 				<x path="Int"/>
 				<x path="pixelimage.Pixelimage"/>
 			</f>
 			<meta><m n=":value"><e>{ spacingX : 0 }</e></m></meta>
+			<haxe_doc>This is used to draw strings, but it is useful that 
+        createPlacement and drawPlacement can be used separately 
+        to allow for instance curved y placement</haxe_doc>
 		</drawString>
-		<new public="1" set="method" line="14">
+		<drawCurveY public="1" get="inline" set="null" line="105"><f a="charPos:fy">
+	<c path="Array"><c path="pixelimage.fontImage.CharPlacement1D"/></c>
+	<f a="x">
+		<x path="Int"/>
+		<x path="Int"/>
+	</f>
+	<x path="pixelimage.Pixelimage"/>
+</f></drawCurveY>
+		<widthArrCharPlacement1D public="1" get="inline" set="null" line="124"><f a="charPos">
+	<c path="Array"><c path="pixelimage.fontImage.CharPlacement1D"/></c>
+	<x path="Int"/>
+</f></widthArrCharPlacement1D>
+		<drawPlacement public="1" get="inline" set="null" line="130">
+			<f a="pixelImage:charPos:?yOffSet" v="::0">
+				<x path="pixelimage.Pixelimage"/>
+				<c path="Array"><c path="pixelimage.fontImage.CharPlacement1D"/></c>
+				<x path="Int"/>
+				<x path="pixelimage.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ yOffSet : 0 }</e></m></meta>
+		</drawPlacement>
+		<new public="1" set="method" line="30">
 			<f a="fontImage:?startingAscii:?markerColor:?pairOffset" v=":33:0xFFFFFFFF:null">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Int"/>

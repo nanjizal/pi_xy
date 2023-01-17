@@ -478,6 +478,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         return fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     public inline
+    function fillUVTri( texture: PixelTexture, ax: Float, ay: Float, au: Float, av: Float
+                      , bx: Float, by: Float, bu: Float, bv: Float
+                      , cx: Float, cy: Float, cu: Float, cv: Float
+                     , hasHit: Bool = true ): Null<HitTri> {
+        return uvTriangle( this, texture, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv );
+    }
+    public inline
     function sweepGradTri( ax: Float, ay: Float, rx: Float, ry: Float
                         , startRadian: Float, sweepRadian: Float
                         , colA: Pixel32, colB: Pixel32, colC: Pixel32
@@ -570,6 +577,16 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // tri e - a b d
         // tri f - b c d
         return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
+    }
+    public inline
+    function fillUVQuad( texture: PixelTexture, ax: Float, ay: Float, au: Float, av: Float
+                         , bx: Float, by: Float, bu: Float, bv: Float
+                         , cx: Float, cy: Float, cu: Float, cv: Float
+                         , dx: Float, dy: Float, du: Float, dv: Float
+                         , hasHit: Bool = true ): Null<HitQuad> {
+        // tri e - a b d
+        // tri f - b c d
+        return uvQuadrilateral( this, texture, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv, dx, dy, du, dv, hasHit );
     }
     /**
         provides a thick line using two triangles vector p, q

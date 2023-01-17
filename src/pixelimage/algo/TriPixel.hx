@@ -206,6 +206,46 @@ import pixelimage.algo.HitTri;
         }   
     }
 
+    inline
+    function uvTriangle( pixelimage: Pixelimage, texture: PixelTexture
+                        , ax: Float, ay: Float, au: Float, av: Float
+                        , bx: Float, by: Float, bu: Float, bv: Float
+                        , cx: Float, cy: Float, cu: Float, cv: Float
+                        , hasHit: Bool = false ): Null<HitTri>{
+        var bcx = bx - cx;
+        var bcy = by - cy;
+        var acx = ax - cx; 
+        var acy = ay - cy;
+        // Had to re-arrange algorithm to work so dot names may not quite make sense.
+        var dot11 = dotSame( bcx, bcy );
+        var dot12 = dot( bcx, bcy, acx, acy );
+        var dot22 = dotSame( acx, acy );
+        var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+        for( px in boundIterator3( cx, bx, ax ) ){
+            var pcx = px - cx;
+            for( py in boundIterator3( cy, by, ay ) ){
+                var pcy = py - cy;
+                var dot31 = dot( pcx, pcy, bcx, bcy );
+                var dot32 = dot( pcx, pcy, acx, acy );
+                var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+                var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+                var ratioC = 1.0 - ratioB - ratioA;
+                if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
+                    var u = au*ratioA + bu*ratioB + cu*ratioC;
+                    var v = av*ratioA + bv*ratioB + cv*ratioC;
+                    var col = texture.getARGB( u, v );
+                    pixelimage.setARGB( px, py, col );
+                }
+            }
+        }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
+        }   
+    }
+
 class TriPixel{
     /**
        <font color="LightPink" font-weight:"Bold">fillTriUnsafe</font> module level field
