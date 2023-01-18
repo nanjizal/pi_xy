@@ -14,6 +14,10 @@ import pixelimage.triGML.coreShape.XMLshapeSamples;
 import htmlHelper.tools.ImageLoader;
 import pixelimage.fontImage.TestLem;
 import pixelimage.fontImage.OneDfont;
+import pixelimage.textureImage.TestTiger;
+import pixelimage.PixelTexture;
+import pixelimage.algo.GeomPix;
+
 
 function main() new DemoUse();
 class DemoUse {
@@ -21,6 +25,7 @@ class DemoUse {
     public var canvasSetup = new CanvasSetup();
     var imageLoader: ImageLoader;
     var img: ImageElement;
+    var tiger: ImageElement;
     var p: Pixelimage;
     var g: Surface;
     public function new(){
@@ -30,21 +35,74 @@ class DemoUse {
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
         imageLoader = new ImageLoader( [], setup );
-        imageLoader.loadEncoded( [ lemBlue(), lemRed(), lemYellow(), lemCyan(), lemPurple(), lemOrange(), lemGreen() ]
-                                , [ 'lemBlue', 'lemRed', 'lemYellow', 'lemCyan', 'lemPurple', 'lemOrange', 'lemGreen' ] );
+        imageLoader.loadEncoded( [ lemBlue(), lemRed(), lemYellow(), lemCyan(), lemPurple(), lemOrange(), lemGreen(), testTiger() ]
+                                , [ 'lemBlue', 'lemRed', 'lemYellow', 'lemCyan', 'lemPurple', 'lemOrange', 'lemGreen', 'testTiger' ] );
 	}
 
 	private function setup():Void {
         trace( 'loaded in base64 1 D font images lemColors ' );
-	var images: haxe.ds.StringMap<ImageElement> = imageLoader.images;
-        img = images.get( 'lemRed' );
-        var canvasFont            = js.Browser.document.createCanvasElement();
+	    var images: haxe.ds.StringMap<ImageElement> = imageLoader.images;
+        tiger = images.get( 'testTiger' );
+        var pixelImageTex = Pixelimage.imageElementToPixels( tiger );
+        var pixelTexture = new PixelTexture( pixelImageTex );
+        p.tileTri( 500., 0., 1000., 0., 500., 500., pixelImageTex );
+
+        var ax = 0.;
+        var ay = 0.;
+        var bx = 500.;
+        var by = 0.;
+        var cx = 500.;
+        var cy = 500.;
+        var dx = 0.;
+        var dy = 500.;
+        ax -= 250;
+        ay -= 250;
+        bx -= 250;
+        by -= 250;
+        cx -= 250;
+        cy -= 250;
+        dx -= 250;
+        dy -= 250;
+        var theta = 10*Math.PI/180;
+        var sin = Math.sin( theta );
+        var cos = Math.cos( theta );
+        var temp = ax;
+        ax = rotX( temp, ay, sin, cos );
+        ay = rotY( temp, ay, sin, cos );
+        var temp = bx;
+        bx = rotX( temp, by, sin, cos );
+        by = rotY( temp, by, sin, cos );
+        var temp = cx;
+        cx = rotX( temp, cy, sin, cos );
+        cy = rotY( temp, cy, sin, cos );
+        var temp = dx;
+        dx = rotX( temp, dy, sin, cos );
+        dy = rotY( temp, dy, sin, cos );
+        ax += 400;
+        ay += 400;
+        bx += 400;
+        by += 400;
+        cx += 400;
+        cy += 400;
+        dx += 400;
+        dy += 400;
+        p.fillUVTri( pixelTexture, ax, ay, 1., 0., bx, by, 0., 0., cx, cy, 1., 1. );
+        p.fillUVTri( pixelTexture, dx, dy, 1., 1., cx, cy, 0., 1., ax, ay, 0., 0. );
+
+        /*p.fillUVQuad( pixelTexture, 0., 0.,     0.1, 0.1
+                                  , 500., 0.,   0.9, 0.1
+                                  , 500., 500., 0.9, 0.9
+                                  , 0., 500.,   0.1, 0.9 );/
+
+        /*
+        img   = images.get( 'lemRed' );
+        var canvasFont        = js.Browser.document.createCanvasElement();
         canvasFont.width      = img.width;
         canvasFont.height     = img.height;
         canvasFont.getContext2d().drawImage( img, 0, 0, img.width, img.height );
         var piFontSrc = new Pixelimage( img.width, img.height );
         piFontSrc.transparent = false;
-        piFontSrc.drawFromContext( canvasFont.getContext2d(),0,0);
+        piFontSrc.drawFromContext( canvasFont.getContext2d(), 0, 0 );
         var piFont = new OneDfont( piFontSrc );
         var fy = function( x: Int ): Int {
           return Std.int( 4*Math.sin( x/10 ) );
@@ -54,6 +112,7 @@ class DemoUse {
         //var helloPixel = piFont.drawString( 'Hello pixelimage!' ); 
         var scaled = helloPixel.scaleUpInt(10,10);
         p.putPixelImage( scaled, 100, 100 );
+        */
           //var count = 0;
         /*
         var px = 400.;

@@ -955,6 +955,18 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var temp = new js.lib.Uint32Array( data.buffer );
         this.image = cast temp;
     }
+    inline 
+    public static function imageElementToPixels( img: js.html.ImageElement ): Pixelimage {
+        var canvas        = js.Browser.document.createCanvasElement();
+        canvas.width      = img.width;
+        canvas.height     = img.height;
+        canvas.getContext2d().drawImage( img, 0, 0, img.width, img.height );
+        var pixelImage    = new Pixelimage( img.width, img.height );
+        pixelImage.transparent = false;
+        pixelImage.drawFromContext( canvas.getContext2d(), 0, 0 );
+        canvas            = null;
+        return pixelImage; 
+    }
     #end
     inline
     public function transferClone(): Pixelimage {

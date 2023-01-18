@@ -23,8 +23,9 @@ class PixelTexture {
         if( minY < pixelImage.height && minY > 0 ){
             this.minY = minY;
         } else {
-            this.minX = 0;
+            this.minY = 0;
         }
+
         if( maxX < pixelImage.width && maxX > 0 ){
             if( maxX < minX ){
                 this.maxX = pixelImage.width;
@@ -34,24 +35,28 @@ class PixelTexture {
         } else {
             this.maxX = pixelImage.width;
         }
-        if( maxX < pixelImage.width && maxX > 0 ){
-            if( maxX < minX ){
-                this.maxX = pixelImage.width;
+        if( maxY < pixelImage.height && maxY > 0 ){
+            if( maxY < minY ){
+                trace('1');
+                this.maxY = pixelImage.height;
             } else {
-                this.maxX = maxX;
+                trace('2');
+                this.maxY = maxY;
             }
         } else {
-            this.maxX = pixelImage.width;
+            trace('3');
+            this.maxY = pixelImage.height;
         }
         width  = this.maxX - this.minX;
-        height = this.maxY - this.maxY;
+        height = this.maxY - this.minY;
+        trace( 'width '+ width + ', height ' + height + ' maxY ' + maxY + ', minY ' + minY );
         sx = 1/width;
         sy = 1/height;
     }
     // no bounds checking assume is is always within 0 -> 1 for u and v
     public function getARGB( u: Float, v: Float ){
-        var x = Std.int( u*sx + minX );
-        var y = Std.int( v*sy + minY );
+        var x = Std.int( u*width + minX );
+        var y = Std.int( v*height + minY );
         return pixelImage.getARGB( x, y );
     }
 }

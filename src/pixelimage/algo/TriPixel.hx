@@ -225,8 +225,8 @@ import pixelimage.algo.HitTri;
             var pcx = px - cx;
             for( py in boundIterator3( cy, by, ay ) ){
                 var pcy = py - cy;
-                var dot31 = dot( pcx, pcy, bcx, bcy );
-                var dot32 = dot( pcx, pcy, acx, acy );
+                var dot31  = dot( pcx, pcy, bcx, bcy );
+                var dot32  = dot( pcx, pcy, acx, acy );
                 var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
                 var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
                 var ratioC = 1.0 - ratioB - ratioA;
