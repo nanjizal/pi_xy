@@ -3,6 +3,7 @@ package pixelimage.algo;
 import pixelimage.pixel.Pixel32;
 import pixelimage.algo.TriPixel;
 import pixelimage.algo.HitTri;
+import pixelimage.algo.GeomPix;
 
 inline
 function fillQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
@@ -62,16 +63,15 @@ function fillGradQuadrilateral( pixelImage: Pixelimage
 }
 
 inline
-function uvQuadrilateral( pixelImage: Pixelimage, texture: PixelTexture
-                        , ax: Float, ay: Float, au: Float, av: Float
-                        , bx: Float, by: Float, bu: Float, bv: Float
-                        , cx: Float, cy: Float, cu: Float, cv: Float 
-                        , dx: Float, dy: Float, du: Float, dv: Float
-                        , hasHit: Bool = false ): Null<HitQuad>{
-    // tri e - a b d
-    // tri f - b c d
-    uvTriangle( pixelImage, texture, ax, ay, au, av, bx, by, bu, bv, dx, dy, du, dv, hasHit );
-    uvTriangle( pixelImage, texture, bx, by, bu, bv, cx, cy, cu, cv, dx, dy, du, dv );
+function imgQuadrilateral( pixelImage: Pixelimage
+                         , texture: Pixelimage, win: RectangleWindow
+                         , ax: Float, ay: Float
+                         , bx: Float, by: Float
+                         , cx: Float, cy: Float
+                         , dx: Float, dy: Float 
+                         , hasHit: Bool = false ): Null<HitQuad>{
+    topRightImgTri(   pixelImage, texture, win, ax, ay, bx, by, cx, cy, hasHit );
+    bottomLeftImgTri( pixelImage, texture, win, dx, dy, cx, cy, ax, ay, hasHit );
     return if( hasHit == true ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;

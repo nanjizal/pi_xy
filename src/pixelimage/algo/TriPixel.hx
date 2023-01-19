@@ -205,9 +205,24 @@ import pixelimage.algo.HitTri;
             null;
         }   
     }
-
     inline
-    function uvTriangle( pixelimage: Pixelimage, texture: PixelTexture
+    function topRightImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                            , ax: Float, ay: Float
+                            , bx: Float, by: Float
+                            , cx: Float, cy: Float
+                            , hasHit: Bool = false ): Null<HitTri>{
+        return uvTriangle( pixelimage, texture, win, ax, ay, 1., 0., bx, by, 0., 0., cx, cy, 1., 1. );                      
+    }
+    inline
+    function bottomLeftImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                            , dx: Float, dy: Float
+                            , cx: Float, cy: Float
+                            , ax: Float, ay: Float
+                            , hasHit: Bool = false ): Null<HitTri>{
+        return uvTriangle( pixelimage, texture, win, dx, dy, 1., 1., cx, cy, 0., 1., ax, ay, 0., 0. );                     
+    }
+    inline
+    function uvTriangle( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                         , ax: Float, ay: Float, au: Float, av: Float
                         , bx: Float, by: Float, bu: Float, bv: Float
                         , cx: Float, cy: Float, cu: Float, cv: Float
@@ -221,6 +236,7 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+
         for( px in boundIterator3( cx, bx, ax ) ){
             var pcx = px - cx;
             for( py in boundIterator3( cy, by, ay ) ){
@@ -233,7 +249,9 @@ import pixelimage.algo.HitTri;
                 if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
                     var u = au*ratioA + bu*ratioB + cu*ratioC;
                     var v = av*ratioA + bv*ratioB + cv*ratioC;
-                    var col = texture.getARGB( u, v );
+                    var x = Std.int( u*win.width + win.x );
+                    var y = Std.int( v*win.height + win.y );
+                    var col = texture.getARGB( x, y );
                     pixelimage.setARGB( px, py, col );
                 }
             }
