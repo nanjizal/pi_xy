@@ -206,7 +206,7 @@ import pixelimage.algo.HitTri;
         }   
     }
     inline
-    function topRightImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function topRightImgTriFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , ax: Float, ay: Float
                             , bx: Float, by: Float
                             , cx: Float, cy: Float
@@ -214,15 +214,19 @@ import pixelimage.algo.HitTri;
         return uvTriangle( pixelimage, texture, win, ax, ay, 1., 0., bx, by, 0., 0., cx, cy, 1., 1. );                      
     }
     inline
-    function bottomLeftImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function bottomLeftImgTriFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , dx: Float, dy: Float
                             , cx: Float, cy: Float
                             , ax: Float, ay: Float
                             , hasHit: Bool = false ): Null<HitTri>{
         return uvTriangle( pixelimage, texture, win, dx, dy, 1., 1., cx, cy, 0., 1., ax, ay, 0., 0. );                     
     }
+    /**
+        This is the first attempt at UV mapping it does not swap A B and so does not work properly, but can be used with fudged triangles above.
+        Likely will remove in future but keeping incase it is useful for edge cases.
+    **/
     inline
-    function uvTriangle( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function uvTriangleFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                         , ax: Float, ay: Float, au: Float, av: Float
                         , bx: Float, by: Float, bu: Float, bv: Float
                         , cx: Float, cy: Float, cu: Float, cv: Float
@@ -263,6 +267,77 @@ import pixelimage.algo.HitTri;
             null;
         }   
     }
+    inline
+    function topLeftImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                            , ax: Float, ay: Float
+                            , bx: Float, by: Float
+                            , dx: Float, dy: Float
+                            , hasHit: Bool = false ): Null<HitTri>{
+        // tri e - a b d
+        // tri f - b c d                        
+        return uvTriangle( pixelimage, texture, win, ax, ay, 0., 0., bx, by, 1, 0., dx, dy, 0., 1. );                      
+    }
+    inline
+    function bottomRightImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                            , bx: Float, by: Float
+                            , cx: Float, cy: Float
+                            , dx: Float, dy: Float
+                            , hasHit: Bool = false ): Null<HitTri>{
+        // tri e - a b d
+        // tri f - b c d                         
+        return uvTriangle( pixelimage, texture, win, bx, by, 1., 0., cx, cy, 1., 1., dx, dy, 0., 1. );                     
+    }
+    inline
+    function uvTriangle( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                        , ax: Float, ay: Float, au: Float, av: Float
+                        , bx: Float, by: Float, bu: Float, bv: Float
+                        , cx: Float, cy: Float, cu: Float, cv: Float
+                        , hasHit: Bool = false ): Null<HitTri>{
+    // switch A B as per gradient ( consider xor's )
+        var temp = au;
+        au = bu;
+        bu = temp;
+        temp = av;
+        av = bv;
+        bv = temp;
+        //
+        var bcx = bx - cx;
+        var bcy = by - cy;
+        var acx = ax - cx; 
+        var acy = ay - cy;
+        // Had to re-arrange algorithm to work so dot names may not quite make sense.
+        var dot11 = dotSame( bcx, bcy );
+        var dot12 = dot( bcx, bcy, acx, acy );
+        var dot22 = dotSame( acx, acy );
+        var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+
+        for( px in boundIterator3( cx, bx, ax ) ){
+            var pcx = px - cx;
+            for( py in boundIterator3( cy, by, ay ) ){
+                var pcy = py - cy;
+                var dot31  = dot( pcx, pcy, bcx, bcy );
+                var dot32  = dot( pcx, pcy, acx, acy );
+                var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+                var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+                var ratioC = 1.0 - ratioB - ratioA;
+                if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
+                    var u = au*ratioA + bu*ratioB + cu*ratioC;
+                    var v = av*ratioA + bv*ratioB + cv*ratioC;
+                    var x = Std.int( u*win.width + win.x );
+                    var y = Std.int( v*win.height + win.y );
+                    var col = texture.getARGB( x, y );
+                    pixelimage.setARGB( px, py, col );
+                }
+            }
+        }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
+        }   
+    }
+
 
 // EXPERIMENTAL !!!  work in progress
 inline
@@ -274,6 +349,14 @@ function uvTriangleTexture3( pixelimage: Pixelimage
                     , bx: Float, by: Float, bu: Float, bv: Float
                     , cx: Float, cy: Float, cu: Float, cv: Float
                     , hasHit: Bool = false ): Null<HitTri>{
+    // switch A B as per gradient ( consider xor's )
+    var temp = au;
+    au = bu;
+    bu = temp;
+    temp = av;
+    av = bv;
+    bv = temp;
+
     var bcx = bx - cx;
     var bcy = by - cy;
     var acx = ax - cx; 
@@ -283,11 +366,13 @@ function uvTriangleTexture3( pixelimage: Pixelimage
     var dot12 = dot( bcx, bcy, acx, acy );
     var dot22 = dotSame( acx, acy );
     var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
-    var colA: Float = 0.;
-    var colB: Float = 0.;
-    var colC: Float = 0.;
-    var u: Int = 0;
-    var v: Int = 0;
+    var colA: Int = 0;
+    var colB: Int = 0;
+    var colC: Int = 0;
+    var u: Float = 0.;
+    var v: Float = 0.;
+    var x: Int = 0;
+    var y: Int = 0;
     var col: Int;
     for( px in boundIterator3( cx, bx, ax ) ){
         var pcx = px - cx;
@@ -303,26 +388,27 @@ function uvTriangleTexture3( pixelimage: Pixelimage
                 v = av*ratioA + bv*ratioB + cv*ratioC;
                 x = Std.int( u*winA.width + winA.x );
                 y = Std.int( v*winA.height + winA.y );
-                colA = textureaA.getARGB( x, y );
+                colA = textureA.getARGB( x, y );
                 x = Std.int( u*winB.width + winB.x );
                 y = Std.int( v*winB.height + winB.y );
-                colB = textureaB.getARGB( x, y );
+                colB = textureB.getARGB( x, y );
                 x = Std.int( u*winC.width + winC.x );
                 y = Std.int( v*winC.height + winC.y );
-                colC = textureaC.getARGB( x, y );
+                colC = textureC.getARGB( x, y );
                 // need to check the right a, b, c setup
-                var aA = ( colB >> 24 ) & 0xFF;
-                var rA = ( colB >> 16 ) & 0xFF;
-                var gA = ( colB >> 8 ) & 0xFF;
-                var bA = colB & 0xFF;
-                var aB = ( colA >> 24 ) & 0xFF;
-                var rB = ( colA >> 16 ) & 0xFF;
-                var gB = ( colA >> 8 ) & 0xFF;
-                var bB = colA & 0xFF;
-                var aC = ( colC >> 24 ) & 0xFF;
-                var rC = ( colC >> 16 ) & 0xFF;
-                var gC = ( colC >> 8 ) & 0xFF;
-                var bC = colC & 0xFF;
+                // unsure if this is correct
+                var aA: Int = ( colB >> 24 ) & 0xFF;
+                var rA: Int = ( colB >> 16 ) & 0xFF;
+                var gA: Int = ( colB >> 8 ) & 0xFF;
+                var bA: Int = colB & 0xFF;
+                var aB: Int = ( colA >> 24 ) & 0xFF;
+                var rB: Int = ( colA >> 16 ) & 0xFF;
+                var gB: Int = ( colA >> 8 ) & 0xFF;
+                var bB: Int = colA & 0xFF;
+                var aC: Int = ( colC >> 24 ) & 0xFF;
+                var rC: Int = ( colC >> 16 ) & 0xFF;
+                var gC: Int = ( colC >> 8 ) & 0xFF;
+                var bC: Int = colC & 0xFF;
                 var a = PixelChannel.boundChannel( aA*ratioA + aB*ratioB + aC*ratioC );
                 var r = PixelChannel.boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
                 var g = PixelChannel.boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );

@@ -118,7 +118,7 @@ import pixelimage.Pixelimage;
         }
     }
 
-        // phi controls rotation
+    // phi controls rotation
     // cornerUp is to rotate the structure before phi so top is flat.
     inline
     function fillRadialPolyBuild( pixelimage: Pixelimage

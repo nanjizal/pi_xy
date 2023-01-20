@@ -15,6 +15,7 @@ import htmlHelper.tools.ImageLoader;
 import pixelimage.fontImage.TestLem;
 import pixelimage.fontImage.OneDfont;
 import pixelimage.textureImage.TestTiger;
+import pixelimage.textureImage.TestNineSlice;
 import pixelimage.algo.GeomPix;
 
 
@@ -24,7 +25,8 @@ class DemoUse {
     public var canvasSetup = new CanvasSetup();
     var imageLoader: ImageLoader;
     var img: ImageElement;
-    var tiger: ImageElement;
+    // var tiger: ImageElement;
+    var nineSliceImg: ImageElement;
     var p: Pixelimage;
     var g: Surface;
     public function new(){
@@ -34,20 +36,27 @@ class DemoUse {
         p.transparent = true;
         p.setRelativePosition( 0, 0 );
         imageLoader = new ImageLoader( [], setup );
-        imageLoader.loadEncoded( [ lemBlue(), lemRed(), lemYellow(), lemCyan(), lemPurple(), lemOrange(), lemGreen(), testTiger() ]
-                                , [ 'lemBlue', 'lemRed', 'lemYellow', 'lemCyan', 'lemPurple', 'lemOrange', 'lemGreen', 'testTiger' ] );
+        imageLoader.loadEncoded( [ lemBlue(), lemRed(), lemYellow(), lemCyan(), lemPurple(), lemOrange(), lemGreen(), testTiger(), testNineSliceButton() ]
+                                , [ 'lemBlue', 'lemRed', 'lemYellow', 'lemCyan', 'lemPurple', 'lemOrange', 'lemGreen', 'testTiger', 'nineSliceButton' ] );
 	}
 
 	private function setup():Void {
         trace( 'loaded in base64 1 D font images lemColors ' );
 	    var images: haxe.ds.StringMap<ImageElement> = imageLoader.images;
+         nineSliceImg = images.get( 'nineSliceButton' );
+         var nineSliceTex = Pixelimage.imageElementToPixels( nineSliceImg );
+         var win = new RectangleWindow( 0, 0, nineSliceTex.width, nineSliceTex.height );
+         // see https://github.com/TrilateralX/HyperKitGLsamples/blob/main/src/hyperkitGLsamples/nineSlice/Main.hx#L119
+         // 1024, 1024, 200, 200, 600, 600
+         p.imgNineSlice( nineSliceTex, win, 400, 400, 512, 512, 100, 100, 300, 300, 512, 512, 150, 150, 250, 250 );
+      /*
         tiger = images.get( 'testTiger' );
         var pixelImageTex = Pixelimage.imageElementToPixels( tiger );
         //p.tileTri( 500., 0., 1000., 0., 500., 500., pixelImageTex );
         var win = new RectangleWindow( 0, 0, pixelImageTex.width, pixelImageTex.height );
         var theta = -25*Math.PI/180;
-        p.imgRect( pixelImageTex, win, 400, 400, 500, 500, theta, 0, 0, 40 );
-
+        p.imgRect( pixelImageTex, win, 400, 400, 500, 500, theta, 0, 0, 40, 2, 2 );
+     */
         /*
         img   = images.get( 'lemRed' );
         var canvasFont        = js.Browser.document.createCanvasElement();

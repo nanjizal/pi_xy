@@ -49,7 +49,7 @@ import pixelimage.algo.CirclePixel;
          }
      }
 
-         /**
+    /**
      * fillQuadrant draws a quarter arc.
      * 
      **/

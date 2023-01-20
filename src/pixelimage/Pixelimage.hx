@@ -579,6 +579,18 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // tri f - b c d
         return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
     }
+    /*
+        works with image Fudge of UV values, deprediated unless turns out useful in edge cases.
+     */
+    public inline
+    function imgQuadFudge( texture: Pixelimage, win: RectangleWindow
+                    , ax: Float, ay: Float
+                    , bx: Float, by: Float
+                    , cx: Float, cy: Float
+                    , dx: Float, dy: Float
+                    , hasHit: Bool = true ): Null<HitQuad> {
+        return imgQuadrilateralFudge( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
+    }
     public inline
     function imgQuad( texture: Pixelimage, win: RectangleWindow
                     , ax: Float, ay: Float
@@ -589,7 +601,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         return imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
     }
     public inline
-    function imgRect( texture: Pixelimage, win: RectangleWindow
+    function imgRectFudge( texture: Pixelimage, win: RectangleWindow
                       , x: Float, y: Float, wid: Float, hi: Float
                       , theta: Float = 0., centreX: Float = 0., centreY: Float = 0.
                       , skewX: Float = 0., skewY: Float = 0.
@@ -645,7 +657,107 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             dx += centreX;
             dy += centreY;
         }
+        return imgQuadFudge( texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
+    }
+    public inline
+    function imgRect( texture: Pixelimage, win: RectangleWindow
+                      , x: Float, y: Float, wid: Float, hi: Float
+                      , theta: Float = 0., centreX: Float = 0., centreY: Float = 0.
+                      , skewX: Float = 0., skewY: Float = 0.
+                      , scaleX: Float = 1., scaleY: Float = 1.
+                      , hasHit: Bool = true ): Null<HitQuad> {
+        var ax = x;
+        var ay = y;
+        if( theta != 0. ){
+            centreX = x + wid/2 + centreX;
+            centreY = y + hi/2  + centreY;
+            ax -= centreX;
+            ay -= centreY;
+        }
+        var bx = ax + wid;
+        var by = ay;
+        var cx = bx;
+        var cy = ay + hi;
+        var dx = ax;
+        var dy = cy;
+        // skew does not really cope well with offx and offy changes?
+        if( skewX != 0. ){
+            ax += skewX;
+            bx += skewX;
+            cx -= skewX;
+            dx -= skewX;
+        }
+        if( skewY != 0. ){
+            ay -= skewY;
+            dy -= skewY;
+            by += skewY;
+            cy += skewY;
+        }
+        if( scaleX != 1 ){
+            ax *= scaleX;
+            bx *= scaleX;
+            cx *= scaleX;
+            dx *= scaleX;
+        }
+        if( scaleY != 1. ){
+            ay *= scaleY;
+            bx *= scaleY;
+            cx *= scaleY;
+            dx *= scaleY;
+        }
+        if( theta != 0 ){
+            var sin = Math.sin( theta );
+            var cos = Math.cos( theta );
+            var temp = ax;
+            ax = rotX( temp, ay, sin, cos );
+            ay = rotY( temp, ay, sin, cos );
+            var temp = bx;
+            bx = rotX( temp, by, sin, cos );
+            by = rotY( temp, by, sin, cos );
+            var temp = cx;
+            cx = rotX( temp, cy, sin, cos );
+            cy = rotY( temp, cy, sin, cos );
+            var temp = dx;
+            dx = rotX( temp, dy, sin, cos );
+            dy = rotY( temp, dy, sin, cos );
+            ax += centreX;
+            ay += centreY;
+            bx += centreX;
+            by += centreY;
+            cx += centreX;
+            cy += centreY;
+            dx += centreX;
+            dy += centreY;
+        }
         return imgQuad( texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
+    }
+    
+    public inline
+    function imgNineSlice( texture:  Pixelimage, win:   RectangleWindow
+                         , x:        Float,      y:     Float
+                         , wid:      Float,      hi:    Float
+                         , left:     Float,      top:   Float
+                         , fat:      Float,      tall:  Float
+                         , widNew:    Float,      hiNew:    Float
+                         , leftNew:     Float,      topNew:   Float
+                         , fatNew:      Float,      tallNew:  Float
+                         , hasHit:   Bool = false ): Null<HitQuad>{
+        var temp = new Pixelimage( Std.int( wid ), Std.int( hi ) );
+        temp.transparent = false;
+        var hit: Null<HitQuad> = imageNineSlice( temp, texture, win, 0, 0, wid, hi, left, top, fat, tall, widNew, hiNew, leftNew, topNew, fatNew, tallNew,  hasHit );
+        putPixelImage( temp, Std.int( x ), Std.int( y ) );
+        temp = null;
+        if( hit != null ){
+            hit.ax += x;
+            hit.ay += y;
+            hit.bx += x;
+            hit.by += y;
+            hit.cx += x;
+            hit.cy += y;
+            hit.dx += x;
+            hit.dy += y;
+        }
+        return hit;
     }
     /**
         provides a thick line using two triangles vector p, q
