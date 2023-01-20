@@ -48,7 +48,12 @@ class DemoUse {
          var win = new RectangleWindow( 0, 0, nineSliceTex.width, nineSliceTex.height );
          // see https://github.com/TrilateralX/HyperKitGLsamples/blob/main/src/hyperkitGLsamples/nineSlice/Main.hx#L119
          // 1024, 1024, 200, 200, 600, 600
+         //var temp = new Pixelimage( 400, 400 );
          p.imgNineSlice( nineSliceTex, win, 400, 400, 512, 512, 100, 100, 300, 300, 512, 512, 150, 150, 250, 250 );
+         /*
+         var theta = -25*Math.PI/180;
+         win = new RectangleWindow( 0, 0, 512, 512 );
+         p.imgRect( temp, win, 400, 400, 512, 512, theta, 0, 0 );
       /*
         tiger = images.get( 'testTiger' );
         var pixelImageTex = Pixelimage.imageElementToPixels( tiger );
