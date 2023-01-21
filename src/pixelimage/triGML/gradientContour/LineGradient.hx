@@ -30,6 +30,8 @@ class LineGradient extends BasicGradient {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
+            case 'strokeWidth':
+                strokeWidth = Std.parseFloat( value );
             case 'x1':
                 x1 = Std.parseFloat( value );
             case 'y1':
