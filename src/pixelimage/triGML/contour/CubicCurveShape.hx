@@ -66,6 +66,7 @@ class CubicCurveShape extends FillShape {
         var drawing = new DrawShapeHelper( pixelImage, strokeWidth, strokeColor );
         drawing.moveTo( x1, y1 );
         drawing.curveTo( x2, y2, x3, y3, x4, y4 );
+        trace( 'render CubicCurveShape' );
         return super.render( pixelImage );
     }
 }
