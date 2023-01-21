@@ -165,7 +165,7 @@ function rotateTileLineFlare( pixelImage: Pixelimage
     var bx = h;
     var by = -radius2;
     var ax = 0.1;
-    var ay = -radius1;
+    var ay = -radius1   ;
     var temp = 0.;
     temp = px + rotX( ax, ay, sin, cos );
     ay = py + rotY( ax, ay, sin, cos );

@@ -78,7 +78,7 @@ class BoundIterator {
     public var _boundIterator4:( a: Float, b: Float, c: Float, d: Float ) -> IteratorRange = boundIterator4;
 
     /**
-       <font color="LightPink" font-weight:"Bold">fillGrad4RoundRectangle</font> module level field
+       <font color="LightPink" font-weight:"Bold">boundIteratorX</font> module level field
     **/
     public var _boundIteratorX:( pMin: Array<Float>, pMax: Array<Float> ) -> IteratorRange = boundIteratorX;
 

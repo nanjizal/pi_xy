@@ -43,6 +43,9 @@ class CubicCurveShape extends FillShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
+            case 'thru':
+                var bools = StringTools.trim( value ).toLowerCase();
+                thru = ( bools == 'true' || bools == '1' )? true: false; 
             case 'x1':
                 x1 = Std.parseFloat( value );
             case 'y1':
