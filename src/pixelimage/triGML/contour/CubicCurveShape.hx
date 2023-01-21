@@ -21,7 +21,6 @@ class CubicCurveShape extends FillShape {
                         /*strokeStart: Round*/
                         /*strokeEnd: Round*/
                         , fill = 0x000000
-                        , thru = false
                         , x1 = 0.
                         , y1 = 0.
                         , x2 = 0.
@@ -43,9 +42,6 @@ class CubicCurveShape extends FillShape {
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
-            case 'thru':
-                var bools = StringTools.trim( value ).toLowerCase();
-                thru = ( bools == 'true' || bools == '1' )? true: false; 
             case 'x1':
                 x1 = Std.parseFloat( value );
             case 'y1':
