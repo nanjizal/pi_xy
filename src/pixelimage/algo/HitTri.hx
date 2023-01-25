@@ -11,7 +11,7 @@ class HitTri implements IhitObj {
     public var by: Float;
     public var cx: Float;
     public var cy: Float;
-
+    public var preCalculated: Bool;
     var s0: Float;
     var sx: Float;
     var sy: Float;
@@ -25,7 +25,7 @@ class HitTri implements IhitObj {
     inline
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float
-                       , cx: Float, cy: Float ){
+                       , cx: Float, cy: Float, preCalculated: Bool = true ){
         var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
         if( !adjustWinding ){
             var bx_ = bx;
@@ -41,7 +41,13 @@ class HitTri implements IhitObj {
         this.by = by;
         this.cx = cx;
         this.cy = cy;
-
+        this.preCalculated = preCalculated;
+        if( preCalculated ){
+            preCalculateValues();
+        }
+    }
+    inline 
+    public function preCalculateValues(){
         s0 = ay*cx - ax*cy;
         sx = cy - ay;
         sy = ax - cx;
@@ -52,6 +58,7 @@ class HitTri implements IhitObj {
         xIter3 = boundIterator3( ax, bx, cx );
         yIter3 = boundIterator3( ay, by, cy );
     }
+
     inline 
     public function hit( x: Float, y: Float ): Bool {
         return if( xIter3.containsF( x ) && yIter3.containsF( y ) ){

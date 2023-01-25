@@ -2,6 +2,8 @@
 
 Currently adding hittest to shapes, and improving triGML markup. Not yet ready for production WIP.
 
+[ samples wip > ](https://nanjizal.github.io/pixelimage-samples) 
+
 [ demo showUsed > ](https://nanjizal.github.io/pixelimage/showUsed/index.html)
 
 [ demo bin > ](https://nanjizal.github.io/pixelimage/bin/index.html)

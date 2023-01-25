@@ -5,6 +5,7 @@ import pixelimage.Pixelimage;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
+import pixelimage.algo.HitQuad;
 
 @:structInit
 class DrawShapeHelper implements ILinePathContext {
@@ -19,7 +20,8 @@ class DrawShapeHelper implements ILinePathContext {
     var scaleX: Float;
     var scaleY: Float;
     var pixelImage: Pixelimage;
-    var info: {ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float, dx: Float, dy: Float };
+    var info: HitQuad;
+    var oldInfo: HitQuad;
     public function new( pixelImage: Pixelimage
                         , strokeWidth: Float
                         , strokeColor: Int
@@ -39,7 +41,7 @@ class DrawShapeHelper implements ILinePathContext {
     public
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
-            var oldInfo = info;
+            oldInfo = info;
             info = pixelImage.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
                                       , x2*scaleX + translateX, y2*scaleY + translateY 
                                       , strokeWidth, strokeColor, true );
@@ -59,7 +61,7 @@ class DrawShapeHelper implements ILinePathContext {
     }
     public
     function lineTo( x2: Float, y2: Float ){
-        var oldInfo = info;
+        oldInfo = info;
         info = pixelImage.fillLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth, strokeColor, true );
@@ -92,5 +94,22 @@ class DrawShapeHelper implements ILinePathContext {
     public
     function quadThru( x2: Float, y2: Float, x3: Float, y3: Float ){
         svgLinePath.quadThru( x2, y2, x3, y3 );
+    }
+    public inline
+    function archBezier( distance: Float, distance2: Float, radius: Float ){            
+        var nx = x + distance*Math.cos( rotation );
+        var ny = y + distance*Math.sin( rotation );
+        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+        svgLinePath.quadThru( thruX, thruY, nx, ny );
+    }
+    public inline
+    function triangleArch(  distance: Float, distance2: Float, radius: Float ){
+        var nx = x + distance*Math.cos( rotation );
+        var ny = y + distance*Math.sin( rotation );
+        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+        svgLinePath.lineTo( thruX, thruY );
+        svgLinePath.lineTo( nx, ny );
     }
 }
