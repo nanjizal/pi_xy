@@ -1,5 +1,6 @@
 package pixelimage.triGML.shape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
@@ -17,7 +18,7 @@ class VePathElementShape extends FillShape implements ILinePathContext {
     public var sp: SvgLinePath;
     var x0: Float = 0.;
     var y0: Float = 0.;
-    var temp: Pixelimage;
+    var temp: Pixelshape;
 
     var toggleDraw = true;
     var info: { ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float, dx: Float, dy: Float };
@@ -67,9 +68,9 @@ class VePathElementShape extends FillShape implements ILinePathContext {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         //trace( 'render pathData ' + pathData );
-        temp = new Pixelimage( Math.ceil( pixelImage.width ), Math.ceil( pixelImage.height ) );
+        temp = new Pixelshape( Math.ceil( pixelShape.width ), Math.ceil( pixelShape.height ) );
         temp.transparent = true;
         var lc = strokeColors.length;
         var ls = strokeWidths.length;
@@ -82,11 +83,11 @@ class VePathElementShape extends FillShape implements ILinePathContext {
             i--;
             drawing();
         }
-        pixelImage.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
+        pixelShape.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
         temp = null;
         //var sp2 = new SvgLinePath( new LinePathContextTrace() );
         //sp2.parse( pathData );
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     public
     function drawing(){

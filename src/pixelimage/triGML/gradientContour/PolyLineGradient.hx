@@ -1,5 +1,6 @@
 package pixelimage.triGML.gradientContour;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.BasicGradient;
 
 enum abstract ColorDirection( String ){
@@ -40,11 +41,11 @@ class PolyLineGradient extends BasicGradient {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         {
             var l = points.length;
-            if( l < 4 ) return pixelImage;
-            if( l%2 != 0 ) return pixelImage;
+            if( l < 4 ) return pixelShape;
+            if( l%2 != 0 ) return pixelShape;
             var i = 0;
             var x = 0.;
             var y = 0.;
@@ -87,10 +88,10 @@ class PolyLineGradient extends BasicGradient {
                     colorCount++;
                     if( colorCount >= colorLen ) colorCount = 0;
                 }
-                pixelImage.fillGradLine( x, y, nextX, nextY, strokeWidth, colorA, colorB, colorC, colorD );
+                pixelShape.fillGradLine( x, y, nextX, nextY, strokeWidth, colorA, colorB, colorC, colorD );
             }
             
         }
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

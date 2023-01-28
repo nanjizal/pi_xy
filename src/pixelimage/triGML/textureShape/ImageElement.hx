@@ -1,5 +1,6 @@
 package pixelimage.triGML.textureShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 
 @:structInit
@@ -46,8 +47,8 @@ class ImageElement extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage ): Pixelimage {
+    public override function render( pixelShape ): Pixelshape {
         trace( 'Not implemented yet ');
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

@@ -521,7 +521,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(0,0,leftX,0,0,topY);
+			var v = new pixelimage_algo_HitTri(0,0,leftX,0,0,topY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -652,10 +652,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,0,leftX,topY,0,topY);
+			var v = new pixelimage_algo_HitTri(leftX,0,leftX,topY,0,topY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(0,0,leftX,0,leftX,topY,0,topY);
+			var v = new pixelimage_algo_HitQuad(0,0,leftX,0,leftX,topY,0,topY,true);
 		}
 		au = bu;
 		bu = 400 * sw;
@@ -819,7 +819,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,0,rightX,0,leftX,topY);
+			var v = new pixelimage_algo_HitTri(leftX,0,rightX,0,leftX,topY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -950,10 +950,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,0,rightX,topY,leftX,topY);
+			var v = new pixelimage_algo_HitTri(rightX,0,rightX,topY,leftX,topY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(leftX,0,rightX,0,rightX,topY,leftX,topY);
+			var v = new pixelimage_algo_HitQuad(leftX,0,rightX,0,rightX,topY,leftX,topY,true);
 		}
 		au = bu;
 		bu = 1.;
@@ -1119,7 +1119,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,0,bx1,0,rightX,topY);
+			var v = new pixelimage_algo_HitTri(rightX,0,bx1,0,rightX,topY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -1250,10 +1250,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(bx1,0,cx1,topY,rightX,topY);
+			var v = new pixelimage_algo_HitTri(bx1,0,cx1,topY,rightX,topY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(rightX,0,bx1,0,cx1,topY,rightX,topY);
+			var v = new pixelimage_algo_HitQuad(rightX,0,bx1,0,cx1,topY,rightX,topY,true);
 		}
 		av = 100 * sh;
 		bu = 100 * sw;
@@ -1419,7 +1419,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(0,ay1,leftX,by1,0,bottomY);
+			var v = new pixelimage_algo_HitTri(0,ay1,leftX,by1,0,bottomY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -1550,10 +1550,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,by1,leftX,cy1,0,bottomY);
+			var v = new pixelimage_algo_HitTri(leftX,by1,leftX,cy1,0,bottomY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(0,ay1,leftX,by1,leftX,cy1,0,bottomY);
+			var v = new pixelimage_algo_HitQuad(0,ay1,leftX,by1,leftX,cy1,0,bottomY,true);
 		}
 		au = bu;
 		bu = 400 * sw;
@@ -1725,7 +1725,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,ay1,rightX,by1,leftX,bottomY);
+			var v = new pixelimage_algo_HitTri(leftX,ay1,rightX,by1,leftX,bottomY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -1856,10 +1856,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,by1,rightX,cy1,leftX,bottomY);
+			var v = new pixelimage_algo_HitTri(rightX,by1,rightX,cy1,leftX,bottomY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(leftX,ay1,rightX,by1,rightX,cy1,leftX,bottomY);
+			var v = new pixelimage_algo_HitQuad(leftX,ay1,rightX,by1,rightX,cy1,leftX,bottomY,true);
 		}
 		au = bu;
 		bu = 1.;
@@ -2033,7 +2033,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,ay1,bx1,by1,rightX,bottomY);
+			var v = new pixelimage_algo_HitTri(rightX,ay1,bx1,by1,rightX,bottomY,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -2164,10 +2164,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(bx1,by1,cx1,cy1,rightX,bottomY);
+			var v = new pixelimage_algo_HitTri(bx1,by1,cx1,cy1,rightX,bottomY,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(rightX,ay1,bx1,by1,cx1,cy1,rightX,bottomY);
+			var v = new pixelimage_algo_HitQuad(rightX,ay1,bx1,by1,cx1,cy1,rightX,bottomY,true);
 		}
 		av = 400 * sh;
 		bu = 100 * sw;
@@ -2332,7 +2332,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(0,bottomY,leftX,bottomY,0,dy1);
+			var v = new pixelimage_algo_HitTri(0,bottomY,leftX,bottomY,0,dy1,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -2463,10 +2463,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,bottomY,leftX,cy1,0,dy1);
+			var v = new pixelimage_algo_HitTri(leftX,bottomY,leftX,cy1,0,dy1,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(0,bottomY,leftX,bottomY,leftX,cy1,0,dy1);
+			var v = new pixelimage_algo_HitQuad(0,bottomY,leftX,bottomY,leftX,cy1,0,dy1,true);
 		}
 		au = bu;
 		bu = 400 * sw;
@@ -2637,7 +2637,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(leftX,bottomY,rightX,bottomY,leftX,dy1);
+			var v = new pixelimage_algo_HitTri(leftX,bottomY,rightX,bottomY,leftX,dy1,true);
 		}
 		var au1 = bu1;
 		var av1 = bv;
@@ -2768,10 +2768,10 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,bottomY,rightX,cy1,leftX,dy1);
+			var v = new pixelimage_algo_HitTri(rightX,bottomY,rightX,cy1,leftX,dy1,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(leftX,bottomY,rightX,bottomY,rightX,cy1,leftX,dy1);
+			var v = new pixelimage_algo_HitQuad(leftX,bottomY,rightX,bottomY,rightX,cy1,leftX,dy1,true);
 		}
 		au = bu;
 		bu = 1.;
@@ -2944,7 +2944,7 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(rightX,bottomY,bx1,bottomY,rightX,dy1);
+			var v = new pixelimage_algo_HitTri(rightX,bottomY,bx1,bottomY,rightX,dy1,true);
 		}
 		var au = bu1;
 		var av = bv;
@@ -3075,14 +3075,14 @@ pixelimage_DemoUse.prototype = {
 			}
 		}
 		if(hasHit2 == false) {
-			var v = new pixelimage_algo_HitTri(bx1,bottomY,cx1,cy1,rightX,dy1);
+			var v = new pixelimage_algo_HitTri(bx1,bottomY,cx1,cy1,rightX,dy1,true);
 		}
 		if(hasHit1 == true) {
-			var v = new pixelimage_algo_HitQuad(rightX,bottomY,bx1,bottomY,cx1,cy1,rightX,dy1);
+			var v = new pixelimage_algo_HitQuad(rightX,bottomY,bx1,bottomY,cx1,cy1,rightX,dy1,true);
 		}
 		var hit;
 		if(hasHit == true) {
-			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy);
+			var v = new pixelimage_algo_HitQuad(ax,ay,bx,by,cx,cy,dx,dy,true);
 			hit = v;
 		} else {
 			hit = null;
@@ -3263,7 +3263,10 @@ pixelimage_Pixelimage.setRelativePosition = function(this1,x,y,update) {
 	this1.virtualX = x;
 	this1.virtualY = y;
 };
-var pixelimage_algo_HitQuad = function(ax,ay,bx,by,cx,cy,dx,dy) {
+var pixelimage_algo_HitQuad = function(ax,ay,bx,by,cx,cy,dx,dy,preCalculated) {
+	if(preCalculated == null) {
+		preCalculated = true;
+	}
 	this.ax = ax;
 	this.ay = ay;
 	this.bx = bx;
@@ -3272,53 +3275,66 @@ var pixelimage_algo_HitQuad = function(ax,ay,bx,by,cx,cy,dx,dy) {
 	this.cy = cy;
 	this.dx = dx;
 	this.dy = dy;
-	this.triABD = new pixelimage_algo_HitTri(ax,ay,bx,by,dx,dy);
-	this.triBCD = new pixelimage_algo_HitTri(bx,by,cx,cy,dx,dy);
-	var min = Math.floor(ax);
-	var max = Math.ceil(ax);
-	if(bx < min) {
-		min = Math.floor(bx);
-	} else if(bx > max) {
-		max = Math.ceil(bx);
+	if(preCalculated) {
+		this.triABD = new pixelimage_algo_HitTri(this.ax,this.ay,this.bx,this.by,this.dx,this.dy,true);
+		this.triBCD = new pixelimage_algo_HitTri(this.bx,this.by,this.cx,this.cy,this.dx,this.dy,true);
+		var a = this.ax;
+		var b = this.bx;
+		var c = this.cx;
+		var d = this.dx;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		this.xIter4 = this1;
+		var a = this.ay;
+		var b = this.by;
+		var c = this.cy;
+		var d = this.dy;
+		var min = Math.floor(a);
+		var max = Math.ceil(a);
+		if(b < min) {
+			min = Math.floor(b);
+		} else if(b > max) {
+			max = Math.ceil(b);
+		}
+		if(c < min) {
+			min = Math.floor(c);
+		} else if(c > max) {
+			max = Math.ceil(c);
+		}
+		if(d < min) {
+			min = Math.floor(d);
+		} else if(d > max) {
+			max = Math.ceil(d);
+		}
+		var ii_min = min;
+		var ii_max = max;
+		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+		this.yIter4 = this1;
 	}
-	if(cx < min) {
-		min = Math.floor(cx);
-	} else if(cx > max) {
-		max = Math.ceil(cx);
-	}
-	if(dx < min) {
-		min = Math.floor(dx);
-	} else if(dx > max) {
-		max = Math.ceil(dx);
-	}
-	var ii_min = min;
-	var ii_max = max;
-	var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-	this.xIter4 = this1;
-	var min = Math.floor(ay);
-	var max = Math.ceil(ay);
-	if(by < min) {
-		min = Math.floor(by);
-	} else if(by > max) {
-		max = Math.ceil(by);
-	}
-	if(cy < min) {
-		min = Math.floor(cy);
-	} else if(cy > max) {
-		max = Math.ceil(cy);
-	}
-	if(dy < min) {
-		min = Math.floor(dy);
-	} else if(dy > max) {
-		max = Math.ceil(dy);
-	}
-	var ii_min = min;
-	var ii_max = max;
-	var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-	this.yIter4 = this1;
 };
 pixelimage_algo_HitQuad.__name__ = true;
-var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy) {
+var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy,preCalculated) {
+	if(preCalculated == null) {
+		preCalculated = true;
+	}
 	var adjustWinding = ax * by - bx * ay + (bx * cy - cx * by) + (cx * ay - ax * cy) > 0;
 	if(!adjustWinding) {
 		var bx_ = bx;
@@ -3334,63 +3350,72 @@ var pixelimage_algo_HitTri = function(ax,ay,bx,by,cx,cy) {
 	this.by = by;
 	this.cx = cx;
 	this.cy = cy;
-	this.s0 = ay * cx - ax * cy;
-	this.sx = cy - ay;
-	this.sy = ax - cx;
-	this.t0 = ax * by - ay * bx;
-	this.tx = ay - by;
-	this.ty = bx - ax;
-	this.A = -by * cx + ay * (-bx + cx) + ax * (by - cy) + bx * cy;
-	var tmp;
-	if(ax > bx) {
-		if(ax > cx) {
-			var ii_min = bx > cx ? Math.floor(cx) : Math.floor(bx);
-			var ii_max = Math.ceil(ax);
+	this.preCalculated = preCalculated;
+	if(preCalculated) {
+		this.s0 = this.ay * this.cx - this.ax * this.cy;
+		this.sx = this.cy - this.ay;
+		this.sy = this.ax - this.cx;
+		this.t0 = this.ax * this.by - this.ay * this.bx;
+		this.tx = this.ay - this.by;
+		this.ty = this.bx - this.ax;
+		this.A = -this.by * this.cx + this.ay * (-this.bx + this.cx) + this.ax * (this.by - this.cy) + this.bx * this.cy;
+		var a = this.ax;
+		var b = this.bx;
+		var c = this.cx;
+		var tmp;
+		if(a > b) {
+			if(a > c) {
+				var ii_min = b > c ? Math.floor(c) : Math.floor(b);
+				var ii_max = Math.ceil(a);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				tmp = this1;
+			} else {
+				var ii_min = Math.floor(b);
+				var ii_max = Math.ceil(c);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				tmp = this1;
+			}
+		} else if(b > c) {
+			var ii_min = a > c ? Math.floor(c) : Math.ceil(a);
+			var ii_max = Math.ceil(b);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			tmp = this1;
 		} else {
-			var ii_min = Math.floor(bx);
-			var ii_max = Math.ceil(cx);
+			var ii_min = Math.floor(a);
+			var ii_max = Math.ceil(c);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			tmp = this1;
 		}
-	} else if(bx > cx) {
-		var ii_min = ax > cx ? Math.floor(cx) : Math.ceil(ax);
-		var ii_max = Math.ceil(bx);
-		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-		tmp = this1;
-	} else {
-		var ii_min = Math.floor(ax);
-		var ii_max = Math.ceil(cx);
-		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-		tmp = this1;
-	}
-	this.xIter3 = tmp;
-	var tmp;
-	if(ay > by) {
-		if(ay > cy) {
-			var ii_min = by > cy ? Math.floor(cy) : Math.floor(by);
-			var ii_max = Math.ceil(ay);
+		this.xIter3 = tmp;
+		var a = this.ay;
+		var b = this.by;
+		var c = this.cy;
+		var tmp;
+		if(a > b) {
+			if(a > c) {
+				var ii_min = b > c ? Math.floor(c) : Math.floor(b);
+				var ii_max = Math.ceil(a);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				tmp = this1;
+			} else {
+				var ii_min = Math.floor(b);
+				var ii_max = Math.ceil(c);
+				var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
+				tmp = this1;
+			}
+		} else if(b > c) {
+			var ii_min = a > c ? Math.floor(c) : Math.ceil(a);
+			var ii_max = Math.ceil(b);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			tmp = this1;
 		} else {
-			var ii_min = Math.floor(by);
-			var ii_max = Math.ceil(cy);
+			var ii_min = Math.floor(a);
+			var ii_max = Math.ceil(c);
 			var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
 			tmp = this1;
 		}
-	} else if(by > cy) {
-		var ii_min = ay > cy ? Math.floor(cy) : Math.ceil(ay);
-		var ii_max = Math.ceil(by);
-		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-		tmp = this1;
-	} else {
-		var ii_min = Math.floor(ay);
-		var ii_max = Math.ceil(cy);
-		var this1 = new pixelimage_iter_IntIterStart(ii_min,ii_max);
-		tmp = this1;
+		this.yIter3 = tmp;
 	}
-	this.yIter3 = tmp;
 };
 pixelimage_algo_HitTri.__name__ = true;
 function pixelimage_fontImage_TestLem_lemBlue() {

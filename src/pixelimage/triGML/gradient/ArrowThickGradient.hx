@@ -1,5 +1,6 @@
 package pixelimage.triGML.gradient;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 
 @:structInit
@@ -74,21 +75,21 @@ class ArrowThickGradient extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         if( both == false ){
             if( arrowHeight > 0. || arrowWidth > 0. ){
-                pixelImage.gradThickFixArrow( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
+                pixelShape.gradThickFixArrow( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
             } else {
-                pixelImage.gradThickArrow( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
+                pixelShape.gradThickArrow( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
             }
             
         } else {
             if( arrowHeight > 0. || arrowWidth > 0. ){
-                pixelImage.gradThickFixArrowBoth( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor );
+                pixelShape.gradThickFixArrowBoth( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor );
             } else {
-                pixelImage.gradThickArrowBoth( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor );
+                pixelShape.gradThickArrowBoth( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor );
             }
         }
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

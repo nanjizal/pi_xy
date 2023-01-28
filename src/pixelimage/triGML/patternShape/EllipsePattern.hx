@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternShape;
 
 @:structInit
@@ -59,8 +60,8 @@ class EllipsePattern extends PatternShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
 
         buildPatternTemplates();
@@ -76,8 +77,8 @@ class EllipsePattern extends PatternShape {
         temp.tileEllipseTri( cx, cy, rW, rH, tileImageStroke, phi );
         temp.tileEllipseTri( innerCx, innerCy, innerRw, innerRh, tileImageFill, phi );
 
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

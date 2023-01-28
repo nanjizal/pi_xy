@@ -1,5 +1,5 @@
 package pixelimage.triGML.coreShape;
-import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.BasicShape;
 
 @:structInit
@@ -13,7 +13,7 @@ class PatternStroke extends BasicShape {
     public var strokePatternHeight: Int;
     public var strokePatternAcross: Bool;
     public var strokePatternScale:  Int;
-    public var tileImageStroke:     Pixelimage;
+    public var tileImageStroke:     Pixelshape;
 
     public function new(  opacity            = 1.
                         , visibility          = true
@@ -70,20 +70,20 @@ class PatternStroke extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         tileImageStroke = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     public function buildPatternTemplates(){
-        tileImageStroke = new Pixelimage( strokePatternWidth, strokePatternHeight );
+        tileImageStroke = new Pixelshape( strokePatternWidth, strokePatternHeight );
         tileImageStroke.transparent = false;
         if( strokePatternAcross ){
-            // draws pattern as a tile
+            // draws pattern as a tileImage
             tileImageStroke.patternRect( 0, 0, strokePatternWidth, strokePatternHeight, strokeColor0, strokeColor1, strokePatternFill );
         } else {
             // if pattern is defined to draw y first ( allow some shorter patterns );
             tileImageStroke.patternRect( 0, 0, strokePatternWidth, strokePatternHeight, strokeColor0, strokeColor1, strokePatternFill );
         }
-        if( strokePatternScale > 1 ) tileImageStroke = tileImageStroke.scaleUpInt( strokePatternScale, strokePatternScale );
+        if( strokePatternScale > 1 ) tileImageStroke = cast tileImageStroke.scaleUpInt( strokePatternScale, strokePatternScale );
     }
 }

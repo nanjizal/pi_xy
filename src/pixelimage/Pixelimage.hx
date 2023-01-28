@@ -89,6 +89,27 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     }
     inline function get_hasMask(): Bool
         return this.useMask;
+    var rectWindow( get, set ): RectangleWindow;
+    inline function get_rectWindow(): RectangleWindow {
+        return { x: 0, y: 0, width: width, height: height };
+    }
+    @:access( pixelImage.ImageStruct )
+    inline function set_rectWindow( r: RectangleWindow ): RectangleWindow {
+        if( r.x != 0. ) throw 'rectangle window must have x = 0';
+        if( r.y != 0. ) throw 'rectangle window must have y = 0';
+        if( r.width == width && r.height == height ){
+            // do nothing!
+        } else {
+            var sx = Std.int( r.width/width );
+            var sy = Std.int( r.height/height );
+            var pixelImage = scaleXY( sx, sy, transparent, false );
+            this.image = pixelImage.image;
+            this.width = pixelImage.width;
+            this.height = pixelImage.height;
+            if( mask != null ) mask.rectWindow = r;
+        }
+        return r;
+    }
     inline
     public function new( w: Int, h: Int ){
        this = ( 
@@ -217,8 +238,295 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             if( q > maxY ) break;
         }
     }
+    /**
+        creates a new Pixelimage that is flipped horizonally.
+        inPlace overwrites current.
+    **/
     inline public
-    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2, transparent: Bool = false ): Pixelimage {
+    function flippedX( x: Float, y: Float
+                  , w: Float, h: Float
+                  , transparent: Bool = false
+                  , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
+        var p: Int = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
+        pixelImage.transparent = transparent;
+        var color: Int = 0;
+        while( true ){
+            color = getARGB( maxX - p, q ); // to do check if needs to be +1.
+            pixelImage.setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        return if( inPlace ){
+            putPixelImage( pixelImage, Std.int( x ), Std.int( y ) );
+            if( mask != null && includeMask ) mask = mask.flippedX( x, y, width, height, mask.transparent, inPlace, includeMask );
+            pixelImage = null;
+            this;
+        } else {
+            if( mask != null && includeMask ) mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
+            pixelImage;
+        }
+    }
+    /**
+        creates a new Pixelimage that is flipped vertically.
+        inPlace overwrites current.
+    **/
+    inline public
+    function flippedY( x: Float, y: Float
+                  , w: Float, h: Float
+                  , transparent: Bool = false
+                  , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
+        pixelImage.transparent = transparent;
+        var color: Int = 0;
+        while( true ){
+            color = getARGB( p, maxY - q ); // to do check if needs to be +1.
+            pixelImage.setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        return if( inPlace ){
+            putPixelImage( pixelImage, Std.int( x ), Std.int( y ) );
+            if( mask != null && includeMask ) mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
+            pixelImage = null;
+            this;
+        } else {
+            if( mask != null && includeMask ){
+                pixelImage.mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
+            }
+            pixelImage;
+        }
+    }
+    /**
+        creates a new Pixelimage base on current image, rotated 90° clockwise
+    **/
+    inline public
+    function spunClock90( x: Float, y: Float
+                  , w: Float, h: Float
+                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var pixelImage = new Pixelimage( Std.int( h ), Std.int( w ) );
+        pixelImage.transparent = transparent;
+        var color: Int = 0;
+        while( true ){
+            color = getARGB( p, q ); // to do check if needs to be +1.
+            pixelImage.setARGB( maxY - q, p, color );
+            p++;
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        if( mask != null && includeMask ) {
+            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
+        }
+        return pixelImage;
+    }
+    inline public
+    function spunAntiClock90( x: Float, y: Float
+                  , w: Float, h: Float
+                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var pixelImage = new Pixelimage( Std.int( h ), Std.int( w ) );
+        pixelImage.transparent = transparent;
+        var color: Int = 0;
+        while( true ){
+            color = getARGB( p, q ); // to do check if needs to be +1.
+            pixelImage.setARGB( q, maxX-p, color );
+            p++;
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        if( mask != null && includeMask ) {
+            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
+        }
+        return pixelImage;
+    }
+    inline public
+    function spun180( x: Float, y: Float
+                  , w: Float, h: Float
+                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
+        pixelImage.transparent = transparent;
+        var color: Int = 0;
+        while( true ){
+            color = getARGB( p, q ); // to do check if needs to be +1.
+            pixelImage.setARGB( maxX - p, maxY - q, color );
+            p++;
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+        if( mask != null && includeMask ) {
+            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
+        }
+        return pixelImage;
+    }
+    inline public
+    function scaleXY( sx: Float, sy: Float, transparent = false, includeMask: Bool = false ): Pixelimage {
+        var scaleW = Std.int( sx );
+        var scaleH = Std.int( sy );
+        var ifScaleUpInt = ( scaleW == sx && sx > 0. && scaleH == sy && sy > 0. );
+        return if( ifScaleUpInt ){
+            scaleUpInt( scaleW, scaleH, transparent );
+        } else {
+            var w = width*sx;
+            var h = height*sy;
+            var wid = Math.ceil( w );
+            var hi  = Math.ceil( h );
+            var pixelImage = new Pixelimage( wid, hi );
+            pixelImage.transparent = transparent;
+            pixelImage.imgQuad( this, rectWindow, 0, 0, w, 0, w, h, 0, h, false );
+            if( mask != null && includeMask ){
+                pixelImage.mask = mask.scaleXY( sx, sy, mask.transparent, includeMask );
+            }
+            pixelImage;
+        }
+    }
+
+    inline public
+    function rotateClockwiseDegrees( angle: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){
+        while( angle >= 360 ){
+            angle -= 360;
+        }
+        while( angle <= -360 ){
+            angle += 360;
+        }
+        return if( angle == 90. || angle == -270 ){
+            spunClock90( 0, 0, width, height, transparent, includeMask );
+        } else if( angle == -90 || angle == 270 ){
+            spunAntiClock90( 0, 0, width, height, transparent, includeMask );
+        } else if( angle == 180 || angle == -180 ){
+            spun180( 0, 0, width, height, transparent, includeMask );
+        } else {
+            rotate( angle*Math.PI/180, centreX, centreY, transparent, includeMask );
+        }
+    }
+    inline public
+    function rotateClockwiseRadians( theta: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){
+        while( theta >= 2*Math.PI ){
+            theta -= 2*Math.PI;
+        }
+        while( theta <= -2*Math.PI ){
+            theta += 2*Math.PI;
+        }
+        return if( theta == Math.PI/2 || theta == -3*Math.PI/2 ){
+            spunClock90( 0, 0, width, height, transparent, includeMask );
+        } else if( theta == -Math.PI/2 || theta == 3*Math.PI/2 ){
+            spunAntiClock90( 0, 0, width, height, transparent, includeMask );
+        } else if( theta == Math.PI || theta == -Math.PI ){
+            spun180( 0, 0, width, height, transparent, includeMask );
+        } else {
+            rotate( theta, centreX, centreY, transparent, includeMask );
+        }
+    }
+
+    public inline
+    function rotate( theta: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){       
+        var ax = 0.;
+        var ay = 0.;
+        if( centreX != 0. ){
+            centreX = 0 + width/2 + centreX;
+            ax -= centreX;
+        }
+        if( centreY != 0. ){
+            centreY = 0 + height/2  + centreY;
+            ay -= centreY;
+        }
+        var bx = ax + width;
+        var by = ay;
+        var cx = bx;
+        var cy = ay + height;
+        var dx = ax;
+        var dy = cy;
+        var sin = Math.sin( theta );
+        var cos = Math.cos( theta );
+        var temp = ax;
+        ax = rotX( temp, ay, sin, cos );
+        ay = rotY( temp, ay, sin, cos );
+        var temp = bx;
+        bx = rotX( temp, by, sin, cos );
+        by = rotY( temp, by, sin, cos );
+        var temp = cx;
+        cx = rotX( temp, cy, sin, cos );
+        cy = rotY( temp, cy, sin, cos );
+        var temp = dx;
+        dx = rotX( temp, dy, sin, cos );
+        dy = rotY( temp, dy, sin, cos );
+        if( centreX != 0. ){
+            ax += centreX;
+            bx += centreX;
+            cx += centreX;
+            dx += centreX;
+        }
+        if( centreY != 0. ){
+            ay += centreY;
+            by += centreY;
+            cy += centreY;
+            dy += centreY;
+        }
+        var boundX = boundIterator4( ax, bx, cx, dx );
+        var boundY = boundIterator4( ay, by, cy, dy );
+        var minX = boundX.start;
+        var wid = boundX.length;
+        var minY = boundY.start;
+        var hi = boundY.length;
+        var pixelImage = new Pixelimage( wid, hi );
+        pixelImage.transparent = true;
+        if( minX < 0. ){
+            ax -= minX;
+            bx -= minX;
+            cx -= minX;
+            dx -= minX;
+        }
+        if( minY < 0. ){
+            ay -= minY;
+            by -= minY;
+            cy -= minY;
+            dy -= minY;
+        }
+        pixelImage.imgQuad( this, rectWindow, ax, ay, bx, by, cx, cy, dx, dy, false );
+        if( mask != null && includeMask ) {
+            pixelImage.mask = mask.rotate( theta, centreX, centreY, mask.transparent, includeMask );
+        }
+        return pixelImage;        
+    }
+    inline public
+    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2, transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
         var p = 0;
         var xx = p;
         var q = 0;
@@ -235,6 +543,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                 q++;
             } 
             if( q > maxY ) break;
+        }
+        if( mask != null && includeMask ) {
+            pixelImage.mask = mask.scaleUpInt( scaleW, scaleH, mask.transparent, includeMask );
         }
         return pixelImage;
     }
@@ -329,118 +640,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , hasHit: Bool = false ): Null<HitTri> {
         return tileTriangle( this, ax, ay, bx, by, cx, cy, tileImage, hasHit );
     }
-    public inline
-    function sweepTri( ax: Float, ay: Float
-                     , rx: Float, ry: Float
-                     , startRadian: Float, sweepRadian: Float
-                     , color: Pixel32
-                     , hasHit: Bool = false ): Null<HitTri> {
-        var currAngle = startRadian;
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        var cx = rx * Math.cos( currAngle ) + ax;
-        var cy = ry * Math.sin( currAngle ) + ay;
-        return fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
-    }
-    public inline
-    function tileSweepTri( ax: Float, ay: Float
-                         , rx: Float, ry: Float
-                         , startRadian: Float, sweepRadian: Float
-                         , tileImage: Pixelimage
-                         , hasHit: Bool = false ): HitTri {
-        var currAngle = startRadian;
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        var cx = rx * Math.cos( currAngle ) + ax;
-        var cy = ry * Math.sin( currAngle ) + ay;
-        return tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
-    }
-    public inline
-    function fillPie( ax: Float, ay: Float
-                    , rx: Float, ry: Float
-                    , startRadian: Float, sweepRadian: Float
-                    , color: Pixel32
-                    , hasHit: Bool = false
-                    , ?targetError: Float = 1.05 ): Null<HitTriArray> {
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
-        var currAngle = startRadian;
-        var tot = Math.floor( sweepRadian/theta );
-        theta += (sweepRadian/theta - tot)/noSides;
-        tot = Math.floor( sweepRadian/theta );
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        var cx = 0.;
-        var cy = 0.;
-        var arrTri: Array<HitTri> = [];
-        for( i in 1...tot+1){
-            currAngle = startRadian + i*theta;
-            cx = rx * Math.cos( currAngle ) + ax;
-            cy = ry * Math.sin( currAngle ) + ay;
-            var triHit = fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
-            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-            bx = cx;
-            by = cy;
-        }
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        cx = rx * Math.cos( currAngle ) + ax;
-        cy = ry * Math.sin( currAngle ) + ay;
-        var triHit = fillTri( ax, ay, bx, by, cx, cy, color, hasHit );
-        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-        return if( hasHit ){
-            return new HitTriArray( arrTri );
-        } else {
-            arrTri = null;
-            null;
-        }
-    }
-    public inline
-    function tilePie( ax: Float, ay: Float
-                    , rx: Float, ry: Float
-                    , startRadian: Float, sweepRadian: Float
-                    , tileImage: Pixelimage
-                    , hasHit: Bool = false
-                    , ?targetError: Float = 1.05 ): Null<HitTriArray> {
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        var theta = 1.41213*Math.PI/noSides;// 2* but make smaller
-        var currAngle = startRadian;
-        var tot = Math.floor( sweepRadian/theta );
-        theta += (sweepRadian/theta - tot)/noSides;
-        tot = Math.floor( sweepRadian/theta );
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        var cx = 0.;
-        var cy = 0.;
-        var arrTri: Array<HitTri> = [];
-        for( i in 1...tot+1){
-            currAngle = startRadian + i*theta;
-            cx = rx * Math.cos( currAngle ) + ax;
-            cy = ry * Math.sin( currAngle ) + ay;
-            var triHit = tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
-            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-            bx = cx;
-            by = cy;
-        }
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        cx = rx * Math.cos( currAngle ) + ax;
-        cy = ry * Math.sin( currAngle ) + ay;
-        var triHit = tileTri( ax, ay, bx, by, cx, cy, tileImage, hasHit );
-        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-        return if( hasHit ){
-            return new HitTriArray( arrTri );
-        } else {
-            arrTri = null;
-            null;
-        }
-    }
     /**
         uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
     **/
@@ -485,59 +684,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                      , hasHit: Bool = true ): Null<HitTri> {
         return uvTriangle( this, texture, win, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv );
     }
-    public inline
-    function sweepGradTri( ax: Float, ay: Float, rx: Float, ry: Float
-                        , startRadian: Float, sweepRadian: Float
-                        , colA: Pixel32, colB: Pixel32, colC: Pixel32
-                        , hasHit: Bool = false ): Null<HitTri>{
-        var currAngle = startRadian;
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        var cx = rx * Math.cos( currAngle ) + ax;
-        var cy = ry * Math.sin( currAngle ) + ay;
-        return fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
-    }
-    public inline
-    function fillRadialPie( ax: Float, ay: Float
-                          , rx: Float, ry: Float
-                          , startRadian: Float, sweepRadian: Float
-                          , centreColor: Pixel32, outerColor: Pixel32
-                          , hasHit: Bool = false, ?targetError: Float = 1.05 ): Null<HitTriArray> {
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        var theta = Math.PI/noSides; // *2 but make it smaller
-        var currAngle = startRadian;
-        var tot = Math.floor( sweepRadian/theta );
-        theta += (sweepRadian/theta - tot)/noSides;
-        var bx = rx * Math.cos( currAngle ) + ax;
-        var by = ry * Math.sin( currAngle ) + ay;
-        var cx = 0.;
-        var cy = 0.;
-        var arrTri: Array<HitTri> = [];
-        for( i in 1...tot+1 ){
-            currAngle = startRadian + i*theta;
-            cx = rx * Math.cos( currAngle ) + ax;
-            cy = ry * Math.sin( currAngle ) + ay;
-            var triHit = fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
-            if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-            bx = cx;
-            by = cy;
-        }
-        // last pie
-        currAngle = startRadian + sweepRadian;
-        cx = rx * Math.cos( currAngle ) + ax;
-        cy = ry * Math.sin( currAngle ) + ay;
-        var triHit = fillGradTri( ax, ay, centreColor, bx, by, outerColor, cx, cy, outerColor );
-        if( hasHit ) arrTri[ arrTri.length ] = triHit; 
-        return if( hasHit ){
-            return new HitTriArray( arrTri );
-        } else {
-            arrTri = null;
-            null;
-        }
-    }
     public inline 
     function tileRect( x:   Float, y: Float
                          , wid: Float, hi: Float
@@ -579,18 +725,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         // tri f - b c d
         return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
     }
-    /*
-        works with image Fudge of UV values, deprediated unless turns out useful in edge cases.
-     */
-    public inline
-    function imgQuadFudge( texture: Pixelimage, win: RectangleWindow
-                    , ax: Float, ay: Float
-                    , bx: Float, by: Float
-                    , cx: Float, cy: Float
-                    , dx: Float, dy: Float
-                    , hasHit: Bool = true ): Null<HitQuad> {
-        return imgQuadrilateralFudge( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
-    }
     public inline
     function imgQuad( texture: Pixelimage, win: RectangleWindow
                     , ax: Float, ay: Float
@@ -599,65 +733,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , dx: Float, dy: Float
                     , hasHit: Bool = true ): Null<HitQuad> {
         return imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
-    }
-    public inline
-    function imgRectFudge( texture: Pixelimage, win: RectangleWindow
-                      , x: Float, y: Float, wid: Float, hi: Float
-                      , theta: Float = 0., centreX: Float = 0., centreY: Float = 0.
-                      , skewX: Float = 0., skewY: Float = 0.
-                      , hasHit: Bool = true ): Null<HitQuad> {
-        var ax = x;
-        var ay = y;
-        if( theta != 0. ){
-            centreX = x + wid/2 + centreX;
-            centreY = y + hi/2  + centreY;
-            ax -= centreX;
-            ay -= centreY;
-        }
-        var bx = ax + wid;
-        var by = ay;
-        var cx = bx;
-        var cy = ay + hi;
-        var dx = ax;
-        var dy = cy;
-        // skew does not really cope well with offx and offy changes?
-        if( skewX != 0. ){
-            ax += skewX;
-            bx += skewX;
-            cx -= skewX;
-            dx -= skewX;
-        }
-        if( skewY != 0. ){
-            ay -= skewY;
-            dy -= skewY;
-            by += skewY;
-            cy += skewY;
-        }
-        if( theta != 0 ){
-            var sin = Math.sin( theta );
-            var cos = Math.cos( theta );
-            var temp = ax;
-            ax = rotX( temp, ay, sin, cos );
-            ay = rotY( temp, ay, sin, cos );
-            var temp = bx;
-            bx = rotX( temp, by, sin, cos );
-            by = rotY( temp, by, sin, cos );
-            var temp = cx;
-            cx = rotX( temp, cy, sin, cos );
-            cy = rotY( temp, cy, sin, cos );
-            var temp = dx;
-            dx = rotX( temp, dy, sin, cos );
-            dy = rotY( temp, dy, sin, cos );
-            ax += centreX;
-            ay += centreY;
-            bx += centreX;
-            by += centreY;
-            cx += centreX;
-            cy += centreY;
-            dx += centreX;
-            dy += centreY;
-        }
-        return imgQuadFudge( texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
     }
     public inline
     function imgRect( texture: Pixelimage, win: RectangleWindow
@@ -772,53 +847,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var theta = Math.atan2( o, a );
         return rotateLine( this, px, py, thick, h, theta, color, debugCorners );
     }
-    /**
-        provides a thick arrow using two triangles vector p, q
-    **/
-    public inline
-    function fillArrow( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
-        trace( 'pixelimage.fillArrow');
-        return fillLineArrow( this, px, py, qx, qy, thick, color, flare, reverseFlare, hasHit );
-    }
-    public inline
-    function fillArrowBoth( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
-        return fillLineArrowBoth( this, px, py, qx, qy, thick, color, hasHit );
-    }
-    public inline
-    function fillFixArrow( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
-        , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
-        trace( 'pixelimage.fillArrow');
-        return fillLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, flare, reverseFlare, hasHit );
-    }
-    public inline
-    function fillFixArrowBoth( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
-        , thick: Float, color: Int, hasHit: Bool = true ): Null<HitTriArray> {
-        return fillLineFixedArrowBoth( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color, hasHit );
-    }
 
-    // gradient thick arrows
-    public inline
-    function gradThickArrow( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color1: Int, color2: Int, flare: Bool = false, reverseFlare: Bool, hasHit: Bool = true ): Null<HitTriArray> {
-        return gradThickLineArrow( this, px, py, qx, qy, thick, color1, color2, flare, reverseFlare, hasHit );
-    }
-    public inline
-    function gradThickArrowBoth( px: Float, py: Float, qx: Float, qy: Float
-        , thick: Float, color1: Int, color2: Int, hasHit: Bool = true ): Null<HitTriArray> {
-        return gradThickLineArrowBoth( this, px, py, qx, qy, thick, color1, color2, hasHit );
-    }
-    public inline
-    function gradThickFixArrow( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
-        , thick: Float, color1: Int, color2: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
-        return gradThickLineFixedArrow( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color1, color2, flare, reverseFlare, hasHit );
-    }
-    public inline
-    function gradThickFixArrowBoth( px: Float, py: Float, qx: Float, qy: Float, arrowWidth: Float, arrowHeight: Float
-        , thick: Float, color1: Int, color2: Int, hasHit: Bool = true ): Null<HitTriArray> {
-        return gradThickLineFixedArrowBoth( this, px, py, qx, qy, arrowWidth, arrowHeight, thick, color1, color2, hasHit );
-    }
 
     /**
         tiles a thick line using two triangles vector p, q
@@ -851,211 +880,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var theta = Math.atan2( o, a );
         return rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, hasHit, debugCorners );
     }
-    /**
-        this is used for drawing a filled ellipse or circle ( using triangles ), it uses more sides when larger and can be tweaked with targetError
-        drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
-        setup so large ellipses automatically use more sides.
-    **/
-    public inline
-    function fillEllipseTri( cx: Float, cy: Float
-                           , rx: Float, ry: Float
-                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        if( printSides ) trace( noSides );
-        fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
-    }
-    public inline
-    function tileEllipseTri( cx: Float, cy: Float
-                           , rx: Float, ry: Float
-                           , tileImage: Pixelimage, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        if( printSides ) trace( noSides );
-        tilePolyBuild( cx, cy, rx, ry, tileImage, phi, noSides );
-    }
-    /**
-        this is provides a thick outline ellipse or circle ( using triangles ), large ones have more sides.
-        @:see fillEllipseTri
-        it uses a temp pixelimage with transparent false,
-        and a second ellipse to remove the centre before copying over pixels
-        setup so large ellipses automatically use more sides.
-        for phi rotated ellipses it over estimates the temp pixelimage to be safe
-    **/
-    public inline
-    function lineEllipseTri( cx: Float, cy: Float
-                           , rx: Float, ry: Float
-                           , drx: Float, dry: Float                               
-                           , color: Int, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
-        var rSmall = ( rx > ry )? ry: rx;
-        var rLarge = ( rx < ry )? ry: rx;
-        var rDif = rLarge - rSmall;
-        var noSides = circleError( rSmall, targetError );
-        if( printSides ) trace( noSides );
-        var temp = ( phi == 0 )? new Pixelimage( Std.int( 2*rx ), Std.int( 2*ry ) ):
-                                 new Pixelimage( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
-        temp.transparent = false;
-        if( phi == 0 ){
-            temp.fillPolyBuild( rx, ry, rx, ry, color, phi, noSides );
-        } else {
-            temp.fillPolyBuild( rx+rDif, ry+rDif, rx, ry, color, phi, noSides );
-        }
-        // remove center
-        var rx2 = rx - drx;
-        var ry2 = ry - dry;
-        rSmall = ( rx > ry )? ry: rx;
-        // erase middle
-        if( phi == 0 ){
-            temp.fillPolyBuild( rx, ry, rx2, ry2, 0x00000000, phi, noSides );
-            putPixelImage( temp, Std.int( cx-rx ), Std.int( cy-ry ) );
-        } else {
-            temp.fillPolyBuild( rx + rDif, ry + rDif, rx2, ry2, 0x00000000, phi, noSides );
-            putPixelImage( temp, Std.int( cx-rx-rDif ), Std.int( cy-ry-rDif ) );
-        }
-        // temp.image = null;
-        temp = null;
-    }
-    /**
-        provides a filled ellipse/circle using triangles and more sides for large with a radial color gradient from the centre 
-        colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
-        there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse
-    **/
-    public inline
-    function fillRadialEllipseTri( cx: Float, cy: Float
-                                 , rx: Float, ry: Float
-                                 , colorIn: Int, colorOut: Int
-                                 , gx: Float = 0., gy: Float = 0.
-                                 , ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
-        var rSmall = ( rx > ry )? ry: rx;
-        var noSides = circleError( rSmall, targetError );
-        if( printSides ) trace( noSides );
-        fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
-    }
-    /**
-        radial ellipse thick line 
-        @see fillRadialEllipseTri
-    **/
-    public inline
-    function lineRadialEllipseTri( cx: Float, cy: Float
-                                 , rx: Float, ry: Float
-                                 , drx: Float, dry: Float
-                                 , colorIn: Int, colorOut: Int
-                                 , gx: Float = 0., gy: Float = 0.
-                                 , ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
-        var rSmall = ( rx > ry )? ry: rx;
-        var rLarge = ( rx < ry )? ry: rx;
-        var rDif = rLarge - rSmall;
-        var noSides = circleError( rSmall, targetError );
-        if( printSides ) trace( noSides );
-        var temp = ( phi == 0 )? new Pixelimage( Std.int( 2*rx ), Std.int( 2*ry ) ):
-                                 new Pixelimage( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
-        temp.transparent = false;
-        if( phi == 0 ){
-            fillRadialPolyBuild( temp, rx, ry, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
-        } else {
-            fillRadialPolyBuild( temp, rx+rDif, ry+rDif, rx, ry, colorIn, colorOut, gx, gy, phi, noSides );
-        }
-        // remove center
-        var rx2 = rx - drx;
-        var ry2 = ry - dry;
-        rSmall = ( rx > ry )? ry: rx;
-        // erase middle
-        if( phi == 0 ){
-            temp.fillPolyBuild( rx, ry, rx2, ry2, 0x00000000, phi, noSides );
-            putPixelImage( temp, Std.int( cx-rx ), Std.int( cy-ry ) );
-        } else {
-            temp.fillPolyBuild( rx+rDif, ry+rDif, rx2, ry2, 0x00000000, phi, noSides );
-            putPixelImage( temp, Std.int( cx-rx-rDif ), Std.int( cy-ry-rDif ) ); 
-        }
-        // temp.image = null;
-        temp = null;
-    }
-    /**
-        provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
-        @:see fillRadialEllipseTri
 
-    **/
-    public inline
-    function fillRadialRectangle( x:   Float, y: Float
-                                , wid: Float, hi: Float 
-                                , colorIn: Pixel32, colorOut: Pixel32
-                                , ?gx: Float = 0,  ?gy: Float = 0
-                                ){
-        var temp = new Pixelimage( Math.ceil( wid ), Math.ceil( hi ) );
-        var rx = wid/2;
-        var ry = hi/2;
-        temp.transparent = false; // should be default anyway.
-        // draw base color
-        temp.simpleRect( 0, 0, wid, hi, colorOut );
-        // should over write pixels
-        temp.fillRadialEllipseTri( rx, ry, rx, ry, colorIn, colorOut, gx, gy );
-        putPixelImage( temp, Std.int( x ), Std.int( y ) );
-        temp = null;
-    }
-    /**
-        fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape
-     **/
-    inline public
-    function fillQuadrant( cx: Float, cy: Float
-                         , rx: Float, ry: Float
-                         , startAngle: Float 
-                         , color:  Int, ?phi:   Float, ?targetError: Float = 1.05 ){
-        solidQuadrant( this, cx, cy, rx, ry, startAngle, color, phi, targetError );
-    }
-     /**
-        tiles Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape
-     **/
-     inline public
-     function tileQuadrant( cx: Float, cy: Float
-                          , rx: Float, ry: Float
-                          , startAngle: Float 
-                          , tileImage:  Pixelimage, ?phi:   Float, ?targetError: Float = 1.05 ){
-        tileSolidQuadrant( this, cx, cy, rx, ry, startAngle, tileImage, phi, targetError );
-     }   
-    /**
-        this provides building block for regular polygons,ellipses and circles
-        cornerUp false will have polygon with flat edge on the top
-        defined from centre cx,cy the radius allow stretching the regualar and phi controls rotation
-        sides defines the sides required
-        would be nice to add skew in future?
-        cornerUp may need debugging
-    **/
-    inline public
-    function fillPolyBuild( cx: Float,  cy: Float
-                          , rx: Float,  ry: Float
-                          , color: Int, ?phi: Float = 0.
-                          , ?sides: Int = 36, cornerUp: Bool = true ){
-        fillPolygonBuild( this, cx, cy, rx, ry, color, phi, sides, cornerUp );
-    }
-    /**
-        this provides building block for image tiled regular polygons,ellipses and circles
-        cornerUp false will have polygon with flat edge on the top
-        defined from centre cx,cy the radius allow stretching the regualar and phi controls rotation
-        sides defines the sides required
-        would be nice to add skew in future?
-        cornerUp may need debugging
-    **/
-    inline public
-    function tilePolyBuild( cx: Float,  cy: Float
-                          , rx: Float,  ry: Float
-                          , tileImage: Pixelimage, ?phi: Float = 0.
-                          , ?sides: Int = 36, cornerUp: Bool = true ){
-        tilePolygonBuild( this, cx, cy, rx, ry, tileImage, phi, sides, cornerUp );
-    }
-    
-    /**
-        @see fillPolyBuild
-        this is a version with radial gradient applied so the centre is one color, but only used gradient triangles so limited
-    **/
-    inline public
-    function fillRadialPolyon( cx: Float,  cy: Float
-                             , rx: Float,  ry: Float
-                             , colorIn: Int, colorOut: Int
-                             , gx: Float = 0.,  gy: Float = 0.
-                             , ?phi: Float = 0., ?sides: Int = 36
-                             , cornerUp: Bool = true ){
-        fillRadialPolyBuild( this, cx, cy, rx, ry, colorIn, colorOut, gx, gy , phi, sides, cornerUp );
-    }
     /**
         used to draw one pixelimage on part of another, essentially it is a copy
         black transparent pixels are ignored.

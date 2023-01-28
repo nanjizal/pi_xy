@@ -57,8 +57,8 @@ class QuadShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        pixelImage.fillQuad( aX, aY, bX, bY, cX, cY, dX, dY, strokeColor );
-        return super.render( pixelImage );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        pixelShape.fillQuad( aX, aY, bX, bY, cX, cY, dX, dY, strokeColor );
+        return super.render( pixelShape );
     }
 }

@@ -80,14 +80,14 @@ class QuadrilateralPattern extends PatternShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         var iterX  = boundIterator4( x1, x2, x3, x4 );
         var iterY  = boundIterator4( y1, y2, y3, y4 );
         var left   = iterX.start;
         var top    = iterY.start;
         var width  = iterX.max - left;
         var height = iterY.max - top;
-        var temp   = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+        var temp   = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
 
         buildPatternTemplates();
@@ -120,10 +120,10 @@ class QuadrilateralPattern extends PatternShape {
         // slight round error
         temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageFill );
 
-        pixelImage.putPixelImage( temp, left, top );
+        pixelShape.putPixelImage( temp, left, top );
         temp = null;
 
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     
 }

@@ -1,7 +1,8 @@
 package pixelimage.triGML.patternContour;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternStroke;
-import pixelimage.triGML.coreShape.DrawTileHelper; 
+import pixelimage.draw.DrawTileHelper; 
 
 @:structInit
 class CubicCurvePattern extends PatternStroke {
@@ -85,11 +86,11 @@ class CubicCurvePattern extends PatternStroke {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         buildPatternTemplates();
-        var drawing = new DrawTileHelper( pixelImage, strokeWidth, tileImageStroke, translateX, translateY, scaleX, scaleY );
+        var drawing = new DrawTileHelper( pixelShape, strokeWidth, tileImageStroke, translateX, translateY, scaleX, scaleY );
         drawing.moveTo( x1, y1 );
         drawing.curveTo( x2, y2, x3, y3, x4, y4 );
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

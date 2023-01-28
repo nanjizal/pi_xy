@@ -23,8 +23,8 @@ class PatternShape extends BasicShape {
     public var fillPatternScale:    Int;
 
     public var tiledBorder:         Bool;
-    public var tileImageStroke:     Pixelimage;
-    public var tileImageFill:       Pixelimage;
+    public var tileImageStroke:     Pixelshape;
+    public var tileImageFill:       Pixelshape;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0x00000000
@@ -121,16 +121,16 @@ class PatternShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         tileImageStroke = null;
         tileImageFill = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     public function buildPatternTemplates(){
         tileImageStroke = null;
         tiledBorder = ( strokePatternFill != null );
         if( tiledBorder ){
-            tileImageStroke = new Pixelimage( strokePatternWidth, strokePatternHeight );
+            tileImageStroke = new Pixelshape( strokePatternWidth, strokePatternHeight );
             tileImageStroke.transparent = false;
         
             if( strokePatternAcross ){
@@ -140,10 +140,10 @@ class PatternShape extends BasicShape {
                 // if pattern is defined to draw y first ( allow some shorter patterns );
                 tileImageStroke.patternRect( 0, 0, strokePatternWidth, strokePatternHeight, strokeColor0, strokeColor1, strokePatternFill );
             }
-            if( strokePatternScale > 1 ) tileImageStroke = tileImageStroke.scaleUpInt( strokePatternScale, strokePatternScale );
+            if( strokePatternScale > 1 ) tileImageStroke = cast tileImageStroke.scaleUpInt( strokePatternScale, strokePatternScale );
         }
         // fill tile image
-        tileImageFill = new Pixelimage( fillPatternWidth, fillPatternHeight );
+        tileImageFill = new Pixelshape( fillPatternWidth, fillPatternHeight );
         tileImageFill.transparent = false;
     
         if( fillPatternAcross ){
@@ -153,6 +153,6 @@ class PatternShape extends BasicShape {
             // if pattern is defined to draw y first ( allow some shorter patterns )
             tileImageFill.patternRectDown( 0, 0, fillPatternWidth, fillPatternHeight, fillColor0, fillColor1, fillPatternFill );
         }
-        if( fillPatternScale > 1 ) tileImageFill = tileImageFill.scaleUpInt( fillPatternScale, fillPatternScale );
+        if( fillPatternScale > 1 ) tileImageFill = cast tileImageFill.scaleUpInt( fillPatternScale, fillPatternScale );
     }
 }

@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternShape;
 import pixelimage.triGML.shape.ArcShape;
 
@@ -80,10 +81,9 @@ class ArcPattern extends PatternShape {
         rx = width/2;
         ry = height/2;
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
-
         buildPatternTemplates();
         switch ( arcType ){
             case Chord:
@@ -94,12 +94,12 @@ class ArcPattern extends PatternShape {
                 pie( temp );
         }
         
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
 
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
-    function chord( temp: Pixelimage ){
+    function chord( temp: Pixelshape ){
         ellipse( temp );
         //temp.fillPie( rx, ry, rx, ry, startAngle, sweepAngle, fill );
         var endAngle = startAngle + sweepAngle;
@@ -121,11 +121,11 @@ class ArcPattern extends PatternShape {
             temp.tileLine( cx, cy, bx, by, strokeWidth, tileImageStroke );
         }
     }
-    function ellipse( temp: Pixelimage ){
+    function ellipse( temp: Pixelshape ){
         temp.tilePie( rx, ry, rx, ry, startAngle, sweepAngle, tileImageStroke );
         temp.tilePie( rx, ry, rx-strokeWidth, ry-strokeWidth, startAngle, sweepAngle, tileImageFill );
     }
-    function pie( temp: Pixelimage ){
+    function pie( temp: Pixelshape ){
         ellipse( temp );
         var bx = rx * Math.cos( startAngle ) + rx;
         var by = ry * Math.sin( startAngle ) + ry;

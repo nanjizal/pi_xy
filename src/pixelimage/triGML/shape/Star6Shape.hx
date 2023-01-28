@@ -2,6 +2,7 @@ package pixelimage.triGML.shape;
 
 import pixelimage.triGML.coreShape.FillShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 
 @:structInit
 class Star6Shape extends FillShape {
@@ -45,8 +46,8 @@ class Star6Shape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
         // outer radius
         var r_ = diameter/2;
@@ -111,8 +112,8 @@ class Star6Shape extends FillShape {
         temp.fillTri( _a0x, _a0y, _b0x, _b0y, _c0x, _c0y, fill );
         temp.fillTri( _a1x, _a1y, _b1x, _b1y, _c1x, _c1y, fill );
 
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

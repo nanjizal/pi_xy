@@ -1,5 +1,6 @@
 package pixelimage.triGML.gradient;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.BasicGradient;
 import pixelimage.iter.BoundIterator;
 import pixelimage.algo.PolyPixel;
@@ -60,22 +61,22 @@ class EllipseRadialGradient extends BasicGradient {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         if( gradientCentreX == -1. ) gradientCentreX = centreX;
         if( gradientCentreY == -1. ) gradientCentreY = centreY;
         var rSmall = ( radiusX > radiusY )? radiusY: radiusX;
         var rLarge = ( radiusX < radiusY )? radiusY: radiusX;
         var rDif = rLarge - rSmall;
-        var temp = ( rotation == 0 )? new Pixelimage( Std.int( 2*radiusX ), Std.int( 2*radiusY ) ):
-                                 new Pixelimage( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
+        var temp = ( rotation == 0 )? new Pixelshape( Std.int( 2*radiusX ), Std.int( 2*radiusY ) ):
+                                 new Pixelshape( Std.int( 2*rLarge+rDif ), Std.int( 2*rLarge+rDif ) );
         temp.transparent = false;
         fillRadialPolyBuild( temp, centreX, centreY, radiusX, radiusY, colorIn, colorOut, gradientCentreX, gradientCentreY, rotation );
         if( rotation == 0 ){
-            pixelImage.putPixelImage( temp, Std.int( centreX-radiusX ), Std.int( centreY-radiusY ) );
+            pixelShape.putPixelImage( temp, Std.int( centreX-radiusX ), Std.int( centreY-radiusY ) );
         } else {
-            pixelImage.putPixelImage( temp, Std.int( centreX-radiusX-rDif ), Std.int( centreY-radiusY-rDif ) ); 
+            pixelShape.putPixelImage( temp, Std.int( centreX-radiusX-rDif ), Std.int( centreY-radiusY-rDif ) ); 
         }
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

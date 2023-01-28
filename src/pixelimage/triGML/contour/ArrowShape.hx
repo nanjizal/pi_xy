@@ -65,7 +65,7 @@ class ArrowShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelImage: Pixelshape ): Pixelshape {
         if( both == false ){
             if( arrowHeight > 0. || arrowWidth > 0. ){
                 pixelImage.fillFixArrow( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeColor, flare, reverseFlare );

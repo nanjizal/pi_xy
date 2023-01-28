@@ -1,5 +1,6 @@
 package pixelimage.triGML.contour;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.BasicShape;
 
 @:structInit
@@ -40,8 +41,8 @@ class LineShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        pixelImage.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
-        return super.render( pixelImage );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        pixelShape.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
+        return super.render( pixelShape );
     }
 }

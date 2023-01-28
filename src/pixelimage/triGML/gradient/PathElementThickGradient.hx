@@ -64,18 +64,18 @@ class PathElementThickGradient extends FillShape implements ILinePathContext {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         //var pData = { lineTo: lineTo, moveTo: moveTo };
         trace( 'render pathData ' + pathData );
-        temp = new Pixelimage( Math.ceil( pixelImage.width ), Math.ceil( pixelImage.height ) );
+        temp = new Pixelshape( Math.ceil( pixelShape.width ), Math.ceil( pixelShape.height ) );
         temp.transparent = true;
         var sp = new SvgLinePath( this );
         sp.parse( pathData );
-        pixelImage.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
+        pixelShape.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
         temp = null;
         //var sp2 = new SvgLinePath( new LinePathContextTrace() );
         //sp2.parse( pathData );
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     var toggleDraw = true;
     var info: {ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float, dx: Float, dy: Float };

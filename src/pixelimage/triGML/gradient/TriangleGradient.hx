@@ -1,6 +1,7 @@
 package pixelimage.triGML.gradient;
 
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.BasicGradient;
 
 @:structInit
@@ -55,8 +56,8 @@ class TriangleGradient extends BasicGradient {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        pixelImage.fillGradTri( aX, aY, cornerColors[0], bX, bY, cornerColors[1], cX, cY, cornerColors[2] );
-        return super.render( pixelImage );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        pixelShape.fillGradTri( aX, aY, cornerColors[0], bX, bY, cornerColors[1], cX, cY, cornerColors[2] );
+        return super.render( pixelShape );
     }
 }

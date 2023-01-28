@@ -1,4 +1,4 @@
-package pixelimage.triGML.coreShape;
+package pixelimage.draw;
 
 
 import pixelimage.Pixelimage;
@@ -90,19 +90,19 @@ class DrawTileHelper implements ILinePathContext {
         svgLinePath.quadThru( x2, y2, x3, y3 );
     }
     public inline
-    function archBezier( distance: Float, distance2: Float, radius: Float ){            
-        var nx = x + distance*Math.cos( rotation );
-        var ny = y + distance*Math.sin( rotation );
-        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+    function archBezier( distance: Float, distance2: Float, radius: Float, rotation: Float ){            
+        var nx = x0 + distance*Math.cos( rotation );
+        var ny = y0 + distance*Math.sin( rotation );
+        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
         svgLinePath.quadThru( thruX, thruY, nx, ny );
     }
     public inline
-    function triangleArch(  distance: Float, distance2: Float, radius: Float ){
-        var nx = x + distance*Math.cos( rotation );
-        var ny = y + distance*Math.sin( rotation );
-        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+    function triangleArch(  distance: Float, distance2: Float, radius: Float, rotation: Float ){
+        var nx = x0 + distance*Math.cos( rotation );
+        var ny = y0 + distance*Math.sin( rotation );
+        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
         svgLinePath.lineTo( thruX, thruY );
         svgLinePath.lineTo( nx, ny );
     }

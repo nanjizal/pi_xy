@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternShape;
 import pixelimage.algo.RoundRecPixel;
 
@@ -65,19 +66,19 @@ class RectanglePattern extends PatternShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
 
         buildPatternTemplates();
         buildRectangles( temp );
         
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
         
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
-    public function buildRectangles( temp: Pixelimage ){
+    public function buildRectangles( temp: Pixelshape ){
         if( rounded == false ){
             if( tiledBorder ){
                 temp.tileRect( 0, 0, width, height, tileImageStroke );

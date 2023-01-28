@@ -1,6 +1,7 @@
 package pixelimage.triGML.contour;
 import pixelimage.Pixelimage;
-import pixelimage.triGML.coreShape.DrawShapeHelper;
+import pixelimage.Pixelshape;
+import pixelimage.draw.DrawShapeHelper;
 import pixelimage.triGML.coreShape.FillShape;
 
 @:structInit
@@ -28,12 +29,12 @@ class PolyLineShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         {
-            var drawing = new DrawShapeHelper( pixelImage, strokeWidth, strokeColor );
+            var drawing = new DrawShapeHelper( pixelShape, strokeWidth, strokeColor );
             var l = points.length;
-            if( l < 4 ) return pixelImage;
-            if( l%2 != 0 ) return pixelImage;
+            if( l < 4 ) return pixelShape;
+            if( l%2 != 0 ) return pixelShape;
             var i = 0;
             var x = 0.;
             var y = 0.;
@@ -50,6 +51,6 @@ class PolyLineShape extends FillShape {
                 drawing.lineTo( x, y );
             }
         }
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

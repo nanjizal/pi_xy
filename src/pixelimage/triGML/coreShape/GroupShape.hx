@@ -20,7 +20,7 @@ abstract class GroupShape implements ShapeInterface {
                 trace( 'property not found ' + name );
         }
     }
-    public function render( pixelImage: Pixelimage ): Pixelimage {
-        return pixelImage; 
+    public function render( pixelShape: Pixelshape ): Pixelshape {
+        return pixelShape; 
     }
 }

@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternContour;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternStroke;
 
 @:structInit
@@ -67,9 +68,9 @@ class QuadPattern extends PatternStroke {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         buildPatternTemplates();
-        pixelImage.tileQuad( aX, aY, bX, bY, cX, cY, dX, dY, tileImageStroke );
-        return super.render( pixelImage );
+        pixelShape.tileQuad( aX, aY, bX, bY, cX, cY, dX, dY, tileImageStroke );
+        return super.render( pixelShape );
     }
 }

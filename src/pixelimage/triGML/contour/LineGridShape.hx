@@ -51,13 +51,12 @@ class LineGridShape extends BasicShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var pixelShape: Pixelshape = cast pixelImage;
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         if( deltaH != 0. ){
             pixelShape.lineGridWH( left, top, width, height, delta, deltaH, strokeWidth, strokeColor );
         } else {
             pixelShape.lineGrid( left, top, width, height, delta, strokeWidth, strokeColor );
         }
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

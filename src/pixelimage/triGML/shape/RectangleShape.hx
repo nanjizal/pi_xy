@@ -1,5 +1,6 @@
 package pixelimage.triGML.shape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 import pixelimage.algo.RoundRecPixel;
 
@@ -47,23 +48,23 @@ class RectangleShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         if( rounded == false ){
             // simple rectangle
-            var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+            var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
             temp.transparent = false;
             temp.simpleRect( 0, 0, width, height, strokeColor );
             temp.simpleRect( strokeWidth, strokeWidth,width-2*strokeWidth, height-2*strokeWidth, fill );
-            pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+            pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
             temp = null;
         } else {
-            var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+            var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
             temp.transparent = false;
             fillRoundRectangle( cast temp, 0, 0, width, height,strokeColor );
             fillRoundRectangle( cast temp, strokeWidth, strokeWidth, width-2*strokeWidth, height-2*strokeWidth, fill );
-            pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+            pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
             temp = null;
         }
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

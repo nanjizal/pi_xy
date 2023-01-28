@@ -2,6 +2,7 @@ package pixelimage.triGML.shape;
 
 import pixelimage.triGML.coreShape.FillShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 
 @:structInit
 class TriangleShape extends FillShape {
@@ -52,12 +53,12 @@ class TriangleShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        pixelImage.fillTri( x1, y1, x2, y2, x3, y3, fill );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        pixelShape.fillTri( x1, y1, x2, y2, x3, y3, fill );
         //TODO improve corners of line fill
-        pixelImage.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
-        pixelImage.fillLine( x2, y2, x3, y3, strokeWidth, strokeColor );
-        pixelImage.fillLine( x3, y3, x1, y1, strokeWidth, strokeColor );
-        return super.render( pixelImage );
+        pixelShape.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
+        pixelShape.fillLine( x2, y2, x3, y3, strokeWidth, strokeColor );
+        pixelShape.fillLine( x3, y3, x1, y1, strokeWidth, strokeColor );
+        return super.render( pixelShape );
     }
 }

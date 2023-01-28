@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternShape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternShape;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
@@ -14,11 +15,11 @@ class PathElementPattern extends PatternShape implements ILinePathContext {
     public var scaleY: Float;
     var x0: Float = 0.;
     var y0: Float = 0.;
-    var temp: Pixelimage;
+    var temp: Pixelshape;
 
     var toggleDraw = true;
     var info: {ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float, dx: Float, dy: Float };
-    
+    var oldInfo: {ax: Float, ay: Float, bx: Float, by: Float, cx: Float, cy: Float, dx: Float, dy: Float };
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0x000000
@@ -74,9 +75,9 @@ class PathElementPattern extends PatternShape implements ILinePathContext {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         //trace( 'render pathData ' + pathData );
-        temp = new Pixelimage( Math.ceil( pixelImage.width ), Math.ceil( pixelImage.height ) );
+        temp = new Pixelshape( Math.ceil( pixelShape.width ), Math.ceil( pixelShape.height ) );
         temp.transparent = true;
 
         buildPatternTemplates();
@@ -84,16 +85,16 @@ class PathElementPattern extends PatternShape implements ILinePathContext {
         sp.parse( pathData );
 
 
-        pixelImage.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
+        pixelShape.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
         temp = null;
         //var sp2 = new SvgLinePath( new LinePathContextTrace() );
         //sp2.parse( pathData );
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
     public
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
-            var oldInfo = info;
+            oldInfo = info;
             info = temp.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth, tileImageStroke, true );
@@ -112,7 +113,7 @@ class PathElementPattern extends PatternShape implements ILinePathContext {
     }
     public
     function lineTo( x2: Float, y2: Float ){
-        var oldInfo = info;
+        oldInfo = info;
         info = temp.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth, tileImageStroke, true );

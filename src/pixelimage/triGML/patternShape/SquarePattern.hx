@@ -57,18 +57,18 @@ class SquarePattern extends PatternShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
 
         buildPatternTemplates();
         buildSquare( temp );
 
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
-    function buildSquare( temp: Pixelimage ){
+    function buildSquare( temp: Pixelshape ){
         temp.tileRect( 0., 0., diameter, diameter, tileImageStroke );
         temp.tileRect( strokeWidth, strokeWidth, diameter-2*strokeWidth, diameter-2*strokeWidth, tileImageFill );
     }

@@ -1,5 +1,6 @@
 package pixelimage.triGML.patternContour;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.PatternStroke;
 
 @:structInit
@@ -52,9 +53,9 @@ class LinePattern extends PatternStroke {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
         buildPatternTemplates();
-        pixelImage.tileLine( x1, y1, x2, y2, strokeWidth, tileImageStroke );
-        return super.render( pixelImage );
+        pixelShape.tileLine( x1, y1, x2, y2, strokeWidth, tileImageStroke );
+        return super.render( pixelShape );
     }
 }

@@ -23,7 +23,7 @@ class HitQuad implements IhitObj {
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float
                        , cx: Float, cy: Float
-                       , dx: Float, dy: Float ){
+                       , dx: Float, dy: Float, preCalculated: Bool = true ){
         this.ax = ax;
         this.ay = ay;
         this.bx = bx;
@@ -32,11 +32,18 @@ class HitQuad implements IhitObj {
         this.cy = cy;
         this.dx = dx;
         this.dy = dy;
+        if( preCalculated ){
+            preCalculateValues();
+        }
+    }
+    inline 
+    public function preCalculateValues(){
         triABD = { ax: ax, ay: ay, bx: bx, by: by, cx: dx, cy: dy };
         triBCD = { ax: bx, ay: by, bx: cx, by: cy, cx: dx, cy: dy };
         xIter4 = boundIterator4( ax, bx, cx, dx );
         yIter4 = boundIterator4( ay, by, cy, dy );
     }
+
     inline 
     public function hit( x: Float, y: Float ): Bool {
         return if( xIter4.containsF( x ) && yIter4.containsF( y ) ){

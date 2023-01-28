@@ -1,5 +1,6 @@
 package pixelimage.triGML.shape;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 
 @:structInit
@@ -41,8 +42,8 @@ class EllipseShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
         
         var rW = width/2;
@@ -57,8 +58,8 @@ class EllipseShape extends FillShape {
 
         temp.fillEllipseTri( cx, cy, rW, rH, strokeColor, phi );
         temp.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

@@ -1,23 +1,24 @@
 package pixelimage.triGML.coreShape;
 //import haxe.xml.Access;
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.textureContour.*;
 import pixelimage.textureShape.*;
 import pixelimage.triGML.coreShape.TriGML;
 
 class XMLshape {
-    var pixelImage: Pixelimage;
+    var pixelShape: Pixelshape;
     var xml: Xml;
-    public function new( pixelImage: Pixelimage, xml: Xml ){
-        this.pixelImage = pixelImage;
+    public function new( pixelShape: Pixelshape, xml: Xml ){
+        this.pixelShape = pixelShape;
         this.xml = xml;
         process();
     }
-    public static inline function withString( pixelImage: Pixelimage, str: String ): XMLshape {
+    public static inline function withString( pixelShape: Pixelshape, str: String ): XMLshape {
         trace(str);
         var xml = Xml.parse( '<node>'+str+'</node>' ).firstElement();
         trace( xml );
-        return new XMLshape( pixelImage, xml );
+        return new XMLshape( pixelShape, xml );
     }
     function process(){
         //trace( xml );
@@ -31,6 +32,6 @@ class XMLshape {
             trace( att + ' ' + x.get(att) );
             s.setParameter( att, x.get( att ) );
         }
-        s.render( pixelImage );
+        s.render( pixelShape );
     }
 }

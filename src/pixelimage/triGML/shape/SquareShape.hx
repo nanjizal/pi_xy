@@ -1,6 +1,7 @@
 package pixelimage.triGML.shape;
 
 import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
 import pixelimage.triGML.coreShape.FillShape;
 
 @:structInit
@@ -39,17 +40,17 @@ class SquareShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var temp = new Pixelshape( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
 
         buildSquare( temp );
 
-        pixelImage.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
         temp = null;
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
-    function buildSquare( temp: Pixelimage ){
+    function buildSquare( temp: Pixelshape ){
         temp.simpleRect( 0., 0., diameter, diameter, strokeColor );
         temp.simpleRect( strokeWidth, strokeWidth, Std.int( diameter-2*strokeWidth ), Std.int( diameter-2*strokeWidth ), fill );
     }

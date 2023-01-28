@@ -1,7 +1,7 @@
 package pixelimage.triGML.contour;
 import pixelimage.Pixelimage;
 import pixelimage.triGML.coreShape.FillShape;
-import pixelimage.triGML.coreShape.DrawShapeHelper;
+import pixelimage.draw.DrawShapeHelper;
 
 
 @:structInit
@@ -58,10 +58,10 @@ class QuadCurveShape extends FillShape {
                 super.setParameter( name, value );
         }
     }
-    public override function render( pixelImage: Pixelimage ): Pixelimage {
-        var drawing = new DrawShapeHelper( pixelImage, strokeWidth, strokeColor );
+    public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var drawing = new DrawShapeHelper( pixelShape, strokeWidth, strokeColor );
         drawing.moveTo( x1, y1 );
         drawing.quadTo( x2, y2, x3, y3 );
-        return super.render( pixelImage );
+        return super.render( pixelShape );
     }
 }

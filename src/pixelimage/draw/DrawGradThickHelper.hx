@@ -1,4 +1,4 @@
-package pixelimage.triGML.coreShape;
+package pixelimage.draw;
 
 
 import pixelimage.Pixelimage;
@@ -23,10 +23,10 @@ class DrawGradThickHelper implements ILinePathContext {
     var pixelImage: Pixelimage;
     var info: HitQuad;
     var oldInfo: HitQuad;
-    public function new( pixelImage: Pixelimage
-                        , strokeWidth: Float
-                        , strokeTopColor: Int;
-                        , strokeBottomColor: Int;
+    public function new(  pixelImage:        Pixelimage
+                        , strokeWidth:       Float
+                        , strokeTopColor:    Int
+                        , strokeBottomColor: Int
                         , translateX = 0.
                         , translateY = 0.
                         , scaleX = 1.
@@ -44,12 +44,12 @@ class DrawGradThickHelper implements ILinePathContext {
     public
     function lineSegmentTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = pixelImage.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
                  , x2*scaleX + translateX, y2*scaleY + translateY 
                  , strokeWidth
                  , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true );
         if( info != null && oldInfo != null ){
-            temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+            pixelImage.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                             , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                             , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                             , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
@@ -61,12 +61,12 @@ class DrawGradThickHelper implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = temp.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = pixelImage.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
             , x2*scaleX + translateX, y2*scaleY + translateY 
             , strokeWidth
             , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true);
         if( info != null && oldInfo != null ){
-            temp.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+            pixelImage.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                 , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                 , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                 , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
@@ -95,19 +95,19 @@ class DrawGradThickHelper implements ILinePathContext {
         svgLinePath.quadThru( x2, y2, x3, y3 );
     }
     public inline
-    function archBezier( distance: Float, distance2: Float, radius: Float ){            
-        var nx = x + distance*Math.cos( rotation );
-        var ny = y + distance*Math.sin( rotation );
-        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+    function archBezier( distance: Float, distance2: Float, radius: Float, rotation: Float ){            
+        var nx = x0 + distance*Math.cos( rotation );
+        var ny = y0 + distance*Math.sin( rotation );
+        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
         svgLinePath.quadThru( thruX, thruY, nx, ny );
     }
     public inline
-    function triangleArch(  distance: Float, distance2: Float, radius: Float ){
-        var nx = x + distance*Math.cos( rotation );
-        var ny = y + distance*Math.sin( rotation );
-        var thruX = x + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
+    function triangleArch(  distance: Float, distance2: Float, radius: Float, rotation: Float ){
+        var nx = x0 + distance*Math.cos( rotation );
+        var ny = y0 + distance*Math.sin( rotation );
+        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
+        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
         svgLinePath.lineTo( thruX, thruY );
         svgLinePath.lineTo( nx, ny );
     }
