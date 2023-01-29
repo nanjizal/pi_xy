@@ -7,10 +7,10 @@ import js.html.ImageElement;
 import vision.Vision;
 import vision.ds.Kernal2D;
 import pixelimage.formats.VisionImage;
-import pixelimage.triGML.*;
-import pixelimage.triGML.pattern.*;
-import pixelimage.triGML.coreShape.XMLshape;
-import pixelimage.triGML.coreShape.XMLshapeSamples;
+import pixelimage.triangleGML.*;
+import pixelimage.triangleGML.pattern.*;
+import pixelimage.triangleGML.coreShape.TriangleGML;
+import pixelimage.triangleGML.coreShape.XMLshapeSamples;
 import htmlHelper.tools.ImageLoader;
 import pixelimage.fontImage.TestLem;
 import pixelimage.fontImage.OneDfont;
@@ -105,22 +105,22 @@ class DemoUse {
             var data = aShape.split('\n');
             for( i in 0...data.length ) data[ i ] = StringTools.trim(data[ i ]);
             var str = data.join(' ');
-            XMLshape.withString( p, str );*/
-            // XMLshape.withString( p, aShape );
+            TriangleGML.withString( p, str );*/
+            // TriangleGML.withString( p, aShape );
             // count++;
         //}
         
         /*
         var str = circleTest;
         trace( 'circleTest ' + str );
-        //XMLshape.withString( p, circleTest );
+        //TriangleGML.withString( p, circleTest );
         trace( 'test2');
         var str =  lineShapeTest;
-        //XMLshape.withString( p, str );
-        //XMLshape.withString( p, ellipseTest );
+        //TriangleGML.withString( p, str );
+        //TriangleGML.withString( p, ellipseTest );
         var str = triangleGradientTest;
         trace( str );
-        XMLshape.withString( p, str );
+        TriangleGML.withString( p, str );
         */
         /*
         drawGrid( p );

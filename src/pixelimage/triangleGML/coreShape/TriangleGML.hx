@@ -1,0 +1,175 @@
+package pixelimage.triangleGML.coreShape;
+import pixelimage.triangleGML.contour.*;
+import pixelimage.triangleGML.coreShape.*;
+import pixelimage.triangleGML.gradient.*;
+import pixelimage.triangleGML.gradientContour.*;
+import pixelimage.triangleGML.patternContour.*;
+import pixelimage.triangleGML.patternShape.*;
+import pixelimage.triangleGML.shape.*;
+import pixelimage.Pixelimage;
+import pixelimage.Pixelshape;
+import pixelimage.textureContour.*;
+import pixelimage.textureShape.*;
+import pixelimage.triangleGML.coreShape.TriangleGML;
+// module TriangleGML
+
+class TriangleGML {
+    var pixelShape: Pixelshape;
+    var xml: Xml;
+    public function new( pixelShape: Pixelshape, xml: Xml ){
+        this.pixelShape = pixelShape;
+        this.xml = xml;
+        process();
+    }
+    public static inline function withString( pixelShape: Pixelshape, str: String ): TriangleGML {
+        trace(str);
+        var xml = Xml.parse( '<node>'+str+'</node>' ).firstElement();
+        trace( xml );
+        return new TriangleGML( pixelShape, xml );
+    }
+    function process(){
+        //trace( xml );
+        for( e in xml.elements() ) processShape( e );
+    }
+    
+    function processShape( x: Xml ){
+        var name: String = x.nodeName;
+        var s = getTriangleGML( name );
+        for( att in x.attributes() ){
+            trace( att + ' ' + x.get(att) );
+            s.setParameter( att, x.get( att ) );
+        }
+        s.render( pixelShape );
+    }
+}
+
+enum abstract TriangleGMLname ( String ) to String {
+    /* contour */
+    var ARROW_SHAPE                 = 'ArrowShape';
+	var CUBIC_CURVE_SHAPE           = 'CubicCurveShape';
+    var LINE_GRID_SHAPE             = 'LineGridShape';
+    var LINE_SHAPE                  = 'LineShape';
+    var POLY_LINE_SHAPE             = 'PolyLineShape';
+    var QUAD_CURVE_SHAPE            = 'QuadCurveShape';
+    var QUAD_SHAPE                  = 'QuadShape';
+    var THRU_CURVE_SHAPE            = 'ThruCurveShape';
+    /* gradient */
+    var ARROW_THICK_GRADIENT        = 'ArrowThickGradient';
+    var ELLIPSE_RADIAL_GRADIENT     = 'EllipseRadialGradient';
+    var PATH_ELEMENT_THICK_GRADIENT = 'PathElementThickGradient';
+    var QUAD_GRADIENT               = 'QuadGradient';
+    var TRIANGLE_GRADIENT           = 'TriangleGradient';
+    /* gradientContour */
+    var LINE_GRADIENT               = 'LineGradient';
+    var POLY_LINE_GRADIENT          = 'PolyLineGradient';
+    /* patternContour */  
+    var CUBIC_CURVE_PATTERN         = 'CubicCurvePattern';
+    var LINE_PATTERN                = 'LinePattern';
+    var QUAD_PATTERN                = 'QuadPattern';
+    var TRIANGLE_PATTERN            = 'TrianglePattern';
+    // patternShape
+    var ARC_PATTERN                 = 'ArcPattern';
+    var CIRCLE_PATTERN              = 'CirclePattern';
+    var ELLIPSE_PATTERN             = 'EllipsePattern';
+    var PATH_ELEMENT_PATTERN        = 'PathElementPattern';
+    var QUADRILATERAL_PATTERN       = 'QuadrilateralPattern';
+    var RECTANGLE_PATTERN           = 'RectanglePattern';
+    var SQUARE_PATTERN              = 'SquarePattern';
+    // shape
+    var ARC_SHAPE                   = 'ArcShape';
+    var CIRCLE_SHAPE                = 'CircleShape';
+    var ELLIPSE_SHAPE               = 'EllipseShape';
+    var PATH_ELEMENT_SHAPE          = 'PathElementShape';
+    var QUADRILATERAL_SHAPE         = 'QuadrilateralShape';
+    var RECTANGLE_SHAPE             = 'RectangleShape';
+    var SQUARE_SHAPE                = 'SquareShape';
+    var STAR6_SHAPE                 = 'Star6Shape';
+    var TRIANGLE_SHAPE              = 'TriangleShape';
+    var VE_PATH_ELEMENT_SHAPE       = 'VePathElementShape';
+}
+
+function getTriangleGML( nodeName: String ): ShapeInterface {
+    var triangleGMLname: TriangleGMLname = cast nodeName;
+    var s: ShapeInterface = switch( triangleGMLname ){
+        case ARROW_SHAPE:
+            new ArrowShape();
+        case CUBIC_CURVE_SHAPE:
+            new CubicCurveShape();
+        case LINE_GRID_SHAPE:
+            new LineGridShape();
+        case LINE_SHAPE:
+            new LineShape();
+        case POLY_LINE_SHAPE:
+            new PolyLineShape();
+        case QUAD_CURVE_SHAPE:
+            new QuadCurveShape();
+        case QUAD_SHAPE:
+            new QuadShape();
+        case THRU_CURVE_SHAPE:
+            new ThruCurveShape();
+        /* gradient */
+        case ARROW_THICK_GRADIENT:
+            new ArrowThickGradient();
+        case ELLIPSE_RADIAL_GRADIENT:
+            new EllipseRadialGradient();
+        case PATH_ELEMENT_THICK_GRADIENT:
+            new PathElementThickGradient();
+        case QUAD_GRADIENT:
+            new QuadGradient();
+        case TRIANGLE_GRADIENT:
+            new TriangleGradient();
+        /* gradientContour */
+        case LINE_GRADIENT:
+            new LineGradient();
+        case POLY_LINE_GRADIENT:
+            new PolyLineGradient();
+        /* patternContour */  
+        case CUBIC_CURVE_PATTERN:
+            new CubicCurvePattern();
+        case LINE_PATTERN:
+            new LinePattern();
+        case QUAD_PATTERN:
+            new QuadPattern();
+        case TRIANGLE_PATTERN:
+            new TrianglePattern();
+        // patternShape
+        case ARC_PATTERN:
+            new ArcPattern();
+        case CIRCLE_PATTERN:
+            new CirclePattern();
+        case ELLIPSE_PATTERN:
+            new EllipsePattern();
+        case PATH_ELEMENT_PATTERN:
+            new PathElementPattern();
+        case QUADRILATERAL_PATTERN:
+            new QuadrilateralPattern();
+        case RECTANGLE_PATTERN:
+            new RectanglePattern();
+        case SQUARE_PATTERN:
+            new SquarePattern();
+        // shape
+        case ARC_SHAPE:
+            new ArcShape();
+        case CIRCLE_SHAPE:
+            new CircleShape();
+        case ELLIPSE_SHAPE:
+            new EllipseShape();
+        case PATH_ELEMENT_SHAPE:
+            new PathElementShape();
+        case QUADRILATERAL_SHAPE:
+            new QuadrilateralShape();
+        case RECTANGLE_SHAPE: 
+            new RectangleShape();
+        case SQUARE_SHAPE:
+            new SquareShape();
+        case STAR6_SHAPE:
+            new Star6Shape();
+        case TRIANGLE_SHAPE:
+            new TriangleShape();
+        case VE_PATH_ELEMENT_SHAPE:
+            new VePathElementShape(); 
+        case _:
+            throw( 'shape unfound' );
+    }
+    return s;
+}
