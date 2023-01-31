@@ -42118,7 +42118,7 @@
 			<m n=":forward"/>
 		</meta>
 		<impl><class path="pixelimage._Pixelshape.Pixelshape_Impl_" params="" file="src/pixelimage/Pixelshape.hx" private="1" module="pixelimage.Pixelshape" final="1">
-	<_new public="1" get="inline" set="null" line="36" static="1">
+	<_new public="1" get="inline" set="null" line="37" static="1">
 		<f a="w:h">
 			<x path="Int"/>
 			<x path="Int"/>
@@ -42126,7 +42126,7 @@
 		</f>
 		<meta><m n=":noCompletion"/></meta>
 	</_new>
-	<lineGrid public="1" get="inline" set="null" line="59" static="1"><f a="this:x:y:w:h:delta:thick:color">
+	<lineGrid public="1" get="inline" set="null" line="60" static="1"><f a="this:x:y:w:h:delta:thick:color">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -42137,7 +42137,7 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></lineGrid>
-	<lineGridWH public="1" get="inline" set="null" line="70" static="1"><f a="this:x:y:w:h:deltaW:deltaH:thick:color">
+	<lineGridWH public="1" get="inline" set="null" line="71" static="1"><f a="this:x:y:w:h:deltaW:deltaH:thick:color">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -42149,7 +42149,7 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></lineGridWH>
-	<fillRoundRect public="1" get="inline" set="null" line="101" static="1">
+	<fillRoundRect public="1" get="inline" set="null" line="102" static="1">
 		<f a="this:x:y:hi:wid:color:?dx:?dy:?fat:?tall" v="::::::-1.:-1.:-1.:-1.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42169,7 +42169,7 @@
         dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
         fat, tall - the inner dimensions of the 9-slice centre, optional</haxe_doc>
 	</fillRoundRect>
-	<lineRoundRect public="1" get="inline" set="null" line="111" static="1">
+	<lineRoundRect public="1" get="inline" set="null" line="112" static="1">
 		<f a="this:x:y:hi:wid:thick:color:?dx:?dy:?fat:?tall" v=":::::::-1.:-1.:-1.:-1.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42186,7 +42186,7 @@
 		</f>
 		<meta><m n=":value"><e>{ tall : -1., fat : -1., dy : -1., dx : -1. }</e></m></meta>
 	</lineRoundRect>
-	<fillGrad4RoundRect public="1" get="inline" set="null" line="131" static="1">
+	<fillGrad4RoundRect public="1" get="inline" set="null" line="132" static="1">
 		<f a="this:x:y:hi:wid:colorA:colorB:colorC:colorD:?dx:?dy:?fat:?tall" v=":::::::::-1.:-1.:-1.:-1.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42209,7 +42209,7 @@
         dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
         fat, tall - the inner dimensions of the 9-slice centre, optional</haxe_doc>
 	</fillGrad4RoundRect>
-	<lineGrad4RoundRect public="1" get="inline" set="null" line="141" static="1">
+	<lineGrad4RoundRect public="1" get="inline" set="null" line="142" static="1">
 		<f a="this:x:y:hi:wid:thick:colorA:colorB:colorC:colorD:?dx:?dy:?fat:?tall" v="::::::::::-1.:-1.:-1.:-1.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42229,14 +42229,14 @@
 		</f>
 		<meta><m n=":value"><e>{ tall : -1., fat : -1., dy : -1., dx : -1. }</e></m></meta>
 	</lineGrad4RoundRect>
-	<testFillSimonSaysQuadrant public="1" get="inline" set="null" line="151" static="1"><f a="this:cx:cy:radius">
+	<testFillSimonSaysQuadrant public="1" get="inline" set="null" line="152" static="1"><f a="this:cx:cy:radius">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></testFillSimonSaysQuadrant>
-	<fillQuadrantI public="1" get="inline" set="null" line="161" static="1">
+	<fillQuadrantI public="1" get="inline" set="null" line="162" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42249,7 +42249,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</fillQuadrantI>
-	<tileQuadrantI public="1" get="inline" set="null" line="169" static="1">
+	<tileQuadrantI public="1" get="inline" set="null" line="170" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42262,7 +42262,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</tileQuadrantI>
-	<fillQuadrantII public="1" get="inline" set="null" line="176" static="1">
+	<fillQuadrantII public="1" get="inline" set="null" line="177" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42275,7 +42275,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</fillQuadrantII>
-	<tileQuadrantII public="1" get="inline" set="null" line="183" static="1">
+	<tileQuadrantII public="1" get="inline" set="null" line="184" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42288,7 +42288,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</tileQuadrantII>
-	<fillQuadrantIII public="1" get="inline" set="null" line="190" static="1">
+	<fillQuadrantIII public="1" get="inline" set="null" line="191" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42301,7 +42301,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</fillQuadrantIII>
-	<tileQuadrantIII public="1" get="inline" set="null" line="197" static="1">
+	<tileQuadrantIII public="1" get="inline" set="null" line="198" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42314,7 +42314,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</tileQuadrantIII>
-	<fillQuadrantIV public="1" get="inline" set="null" line="204" static="1">
+	<fillQuadrantIV public="1" get="inline" set="null" line="205" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42327,7 +42327,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</fillQuadrantIV>
-	<tileQuadrantIV public="1" get="inline" set="null" line="211" static="1">
+	<tileQuadrantIV public="1" get="inline" set="null" line="212" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42340,7 +42340,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 	</tileQuadrantIV>
-	<fillCircle public="1" get="inline" set="null" line="217" static="1">
+	<fillCircle public="1" get="inline" set="null" line="218" static="1">
 		<f a="this:cx:cy:r:color:?phi" v=":::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42355,7 +42355,7 @@
 			<m n=":access"><e>pixelimage.Pixelimage.fillEllipseTri</e></m>
 		</meta>
 	</fillCircle>
-	<fillEllipse public="1" get="inline" set="null" line="222" static="1">
+	<fillEllipse public="1" get="inline" set="null" line="223" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42371,7 +42371,7 @@
 			<m n=":access"><e>pixelimage.Pixelimage.fillEllipseTri</e></m>
 		</meta>
 	</fillEllipse>
-	<fillArrowHead public="1" get="inline" set="null" line="226" static="1">
+	<fillArrowHead public="1" get="inline" set="null" line="227" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42384,7 +42384,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillArrowHead>
-	<fillPentagon public="1" get="inline" set="null" line="230" static="1">
+	<fillPentagon public="1" get="inline" set="null" line="231" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42397,7 +42397,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillPentagon>
-	<fillHexagon public="1" get="inline" set="null" line="234" static="1">
+	<fillHexagon public="1" get="inline" set="null" line="235" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42410,7 +42410,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillHexagon>
-	<fillHeptagon public="1" get="inline" set="null" line="238" static="1">
+	<fillHeptagon public="1" get="inline" set="null" line="239" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42423,7 +42423,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillHeptagon>
-	<fillSeptagon public="1" get="inline" set="null" line="242" static="1">
+	<fillSeptagon public="1" get="inline" set="null" line="243" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42436,7 +42436,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillSeptagon>
-	<fillOctagon public="1" get="inline" set="null" line="246" static="1">
+	<fillOctagon public="1" get="inline" set="null" line="247" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42449,7 +42449,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillOctagon>
-	<fillNonagon public="1" get="inline" set="null" line="250" static="1">
+	<fillNonagon public="1" get="inline" set="null" line="251" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42462,7 +42462,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillNonagon>
-	<fillEnneagon public="1" get="inline" set="null" line="254" static="1">
+	<fillEnneagon public="1" get="inline" set="null" line="255" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42475,7 +42475,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillEnneagon>
-	<fillDecagon public="1" get="inline" set="null" line="258" static="1">
+	<fillDecagon public="1" get="inline" set="null" line="259" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42488,7 +42488,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillDecagon>
-	<fillHendecagon public="1" get="inline" set="null" line="262" static="1">
+	<fillHendecagon public="1" get="inline" set="null" line="263" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42501,7 +42501,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillHendecagon>
-	<fillUndecagon public="1" get="inline" set="null" line="266" static="1">
+	<fillUndecagon public="1" get="inline" set="null" line="267" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42514,7 +42514,7 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillUndecagon>
-	<fillDodecagon public="1" get="inline" set="null" line="270" static="1">
+	<fillDodecagon public="1" get="inline" set="null" line="271" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42527,7 +42527,25 @@
 		</f>
 		<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 	</fillDodecagon>
-	<sweepTri public="1" get="inline" set="null" line="279" static="1">
+	<softFillQuint public="1" get="inline" set="null" line="282" static="1">
+		<f a="this:ax:ay:bx:by:cx:cy:dx:dy:color:softC:?hasHit" v=":::::::::::false">
+			<x path="pixelimage.Pixelimage"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Int"/>
+			<x path="Float"/>
+			<x path="Bool"/>
+			<c path="pixelimage.algo.HitQuad"/>
+		</f>
+		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+	</softFillQuint>
+	<sweepTri public="1" get="inline" set="null" line="293" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:color:?hasHit" v="::::::::false">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42542,7 +42560,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepTri>
-	<tileSweepTri public="1" get="inline" set="null" line="294" static="1">
+	<tileSweepTri public="1" get="inline" set="null" line="308" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:tileImage:?hasHit" v="::::::::false">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42557,7 +42575,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</tileSweepTri>
-	<fillPie public="1" get="inline" set="null" line="310" static="1">
+	<fillPie public="1" get="inline" set="null" line="324" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:color:?hasHit:?targetError" v="::::::::false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42573,7 +42591,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</fillPie>
-	<tilePie public="1" get="inline" set="null" line="351" static="1">
+	<tilePie public="1" get="inline" set="null" line="365" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:tileImage:?hasHit:?targetError" v="::::::::false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42589,7 +42607,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</tilePie>
-	<sweepGradTri public="1" get="inline" set="null" line="390" static="1">
+	<sweepGradTri public="1" get="inline" set="null" line="404" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:colA:colB:colC:?hasHit" v="::::::::::false">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42606,7 +42624,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepGradTri>
-	<fillRadialPie public="1" get="inline" set="null" line="405" static="1">
+	<fillRadialPie public="1" get="inline" set="null" line="419" static="1">
 		<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:centreColor:outerColor:?hasHit:?targetError" v=":::::::::false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42623,7 +42641,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</fillRadialPie>
-	<imgQuadFudge public="1" get="inline" set="null" line="448" static="1">
+	<imgQuadFudge public="1" get="inline" set="null" line="462" static="1">
 		<f a="this:texture:win:ax:ay:bx:by:cx:cy:dx:dy:?hasHit" v=":::::::::::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="pixelimage.Pixelimage"/>
@@ -42642,7 +42660,7 @@
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		<haxe_doc>works with image Fudge of UV values, deprediated unless turns out useful in edge cases.</haxe_doc>
 	</imgQuadFudge>
-	<imgRectFudge public="1" get="inline" set="null" line="456" static="1">
+	<imgRectFudge public="1" get="inline" set="null" line="470" static="1">
 		<f a="this:texture:win:x:y:wid:hi:?theta:?centreX:?centreY:?skewX:?skewY:?hasHit" v=":::::::0.:0.:0.:0.:0.:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="pixelimage.Pixelimage"/>
@@ -42661,7 +42679,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 	</imgRectFudge>
-	<fillArrow public="1" get="inline" set="null" line="515" static="1">
+	<fillArrow public="1" get="inline" set="null" line="529" static="1">
 		<f a="this:px:py:qx:qy:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::false:false:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42678,7 +42696,7 @@
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
 	</fillArrow>
-	<fillArrowBoth public="1" get="inline" set="null" line="521" static="1">
+	<fillArrowBoth public="1" get="inline" set="null" line="535" static="1">
 		<f a="this:px:py:qx:qy:thick:color:?hasHit" v=":::::::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42692,7 +42710,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</fillArrowBoth>
-	<fillFixArrow public="1" get="inline" set="null" line="526" static="1">
+	<fillFixArrow public="1" get="inline" set="null" line="540" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::::false:false:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42710,7 +42728,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</fillFixArrow>
-	<fillFixArrowBoth public="1" get="inline" set="null" line="532" static="1">
+	<fillFixArrowBoth public="1" get="inline" set="null" line="546" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?hasHit" v=":::::::::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42726,7 +42744,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</fillFixArrowBoth>
-	<gradThickArrow public="1" get="inline" set="null" line="539" static="1">
+	<gradThickArrow public="1" get="inline" set="null" line="553" static="1">
 		<f a="this:px:py:qx:qy:thick:color1:color2:?flare:reverseFlare:?hasHit" v="::::::::false::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42743,7 +42761,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, flare : false }</e></m></meta>
 	</gradThickArrow>
-	<gradThickArrowBoth public="1" get="inline" set="null" line="544" static="1">
+	<gradThickArrowBoth public="1" get="inline" set="null" line="558" static="1">
 		<f a="this:px:py:qx:qy:thick:color1:color2:?hasHit" v="::::::::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42758,7 +42776,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</gradThickArrowBoth>
-	<gradThickFixArrow public="1" get="inline" set="null" line="549" static="1">
+	<gradThickFixArrow public="1" get="inline" set="null" line="563" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?flare:?reverseFlare:?hasHit" v="::::::::::false:false:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42777,7 +42795,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</gradThickFixArrow>
-	<gradThickFixArrowBoth public="1" get="inline" set="null" line="554" static="1">
+	<gradThickFixArrowBoth public="1" get="inline" set="null" line="568" static="1">
 		<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?hasHit" v="::::::::::true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42794,7 +42812,7 @@
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</gradThickFixArrowBoth>
-	<fillEllipseTri public="1" get="inline" set="null" line="565" static="1">
+	<fillEllipseTri public="1" get="inline" set="null" line="579" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42812,7 +42830,23 @@
         drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
         setup so large ellipses automatically use more sides.</haxe_doc>
 	</fillEllipseTri>
-	<tileEllipseTri public="1" get="inline" set="null" line="574" static="1">
+	<softFillEllipseTri public="1" get="inline" set="null" line="588" static="1">
+		<f a="this:cx:cy:rx:ry:color:?phi:?softC:?printSides:?targetError" v="::::::0:10:false:1.05">
+			<x path="pixelimage.Pixelimage"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Int"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Bool"/>
+			<x path="Float"/>
+			<x path="Void"/>
+		</f>
+		<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, softC : 10, phi : 0 }</e></m></meta>
+	</softFillEllipseTri>
+	<tileEllipseTri public="1" get="inline" set="null" line="597" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42827,7 +42861,7 @@
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, phi : 0 }</e></m></meta>
 	</tileEllipseTri>
-	<lineEllipseTri public="1" get="inline" set="null" line="592" static="1">
+	<lineEllipseTri public="1" get="inline" set="null" line="615" static="1">
 		<f a="this:cx:cy:rx:ry:drx:dry:color:?phi:?printSides:?targetError" v="::::::::0:false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42850,7 +42884,7 @@
         setup so large ellipses automatically use more sides.
         for phi rotated ellipses it over estimates the temp pixelimage to be safe</haxe_doc>
 	</lineEllipseTri>
-	<fillRadialEllipseTri public="1" get="inline" set="null" line="631" static="1">
+	<fillRadialEllipseTri public="1" get="inline" set="null" line="654" static="1">
 		<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::0.:0.:0:false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42871,7 +42905,7 @@
         colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
         there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse</haxe_doc>
 	</fillRadialEllipseTri>
-	<lineRadialEllipseTri public="1" get="inline" set="null" line="647" static="1">
+	<lineRadialEllipseTri public="1" get="inline" set="null" line="670" static="1">
 		<f a="this:cx:cy:rx:ry:drx:dry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::::0.:0.:0:false:1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42893,7 +42927,7 @@
 		<haxe_doc>radial ellipse thick line 
         @see fillRadialEllipseTri</haxe_doc>
 	</lineRadialEllipseTri>
-	<fillRadialRectangle public="1" get="inline" set="null" line="686" static="1">
+	<fillRadialRectangle public="1" get="inline" set="null" line="709" static="1">
 		<f a="this:x:y:wid:hi:colorIn:colorOut:?gx:?gy" v=":::::::0:0">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42910,7 +42944,7 @@
 		<haxe_doc>provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
         @:see fillRadialEllipseTri</haxe_doc>
 	</fillRadialRectangle>
-	<fillQuadrant public="1" get="inline" set="null" line="705" static="1">
+	<fillQuadrant public="1" get="inline" set="null" line="728" static="1">
 		<f a="this:cx:cy:rx:ry:startAngle:color:?phi:?targetError" v="::::::::1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42926,7 +42960,7 @@
 		<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 		<haxe_doc>fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 	</fillQuadrant>
-	<tileQuadrant public="1" get="inline" set="null" line="715" static="1">
+	<tileQuadrant public="1" get="inline" set="null" line="738" static="1">
 		<f a="this:cx:cy:rx:ry:startAngle:tileImage:?phi:?targetError" v="::::::::1.05">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42942,7 +42976,7 @@
 		<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 		<haxe_doc>tiles Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 	</tileQuadrant>
-	<fillPolyBuild public="1" get="inline" set="null" line="730" static="1">
+	<fillPolyBuild public="1" get="inline" set="null" line="753" static="1">
 		<f a="this:cx:cy:rx:ry:color:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42963,7 +42997,23 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 	</fillPolyBuild>
-	<tilePolyBuild public="1" get="inline" set="null" line="745" static="1">
+	<softFillPolyBuild public="1" get="inline" set="null" line="760" static="1">
+		<f a="this:cx:cy:rx:ry:color:?phi:?sides:?softC:?cornerUp" v="::::::0.:36:10.:true">
+			<x path="pixelimage.Pixelimage"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Int"/>
+			<x path="Float"/>
+			<x path="Int"/>
+			<x path="Float"/>
+			<x path="Bool"/>
+			<x path="Void"/>
+		</f>
+		<meta><m n=":value"><e>{ cornerUp : true, softC : 10., sides : 36, phi : 0. }</e></m></meta>
+	</softFillPolyBuild>
+	<tilePolyBuild public="1" get="inline" set="null" line="775" static="1">
 		<f a="this:cx:cy:rx:ry:tileImage:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -42984,7 +43034,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 	</tilePolyBuild>
-	<fillRadialPolyon public="1" get="inline" set="null" line="758" static="1">
+	<fillRadialPolyon public="1" get="inline" set="null" line="788" static="1">
 		<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?sides:?cornerUp" v=":::::::0.:0.:0.:36:true">
 			<x path="pixelimage.Pixelimage"/>
 			<x path="Float"/>
@@ -43007,7 +43057,7 @@
 </class></impl>
 	</abstract>
 	<class path="pixelimage._Pixelshape.Pixelshape_Impl_" params="" file="src/pixelimage/Pixelshape.hx" private="1" module="pixelimage.Pixelshape" final="1">
-		<_new public="1" get="inline" set="null" line="36" static="1">
+		<_new public="1" get="inline" set="null" line="37" static="1">
 			<f a="w:h">
 				<x path="Int"/>
 				<x path="Int"/>
@@ -43015,7 +43065,7 @@
 			</f>
 			<meta><m n=":noCompletion"/></meta>
 		</_new>
-		<lineGrid public="1" get="inline" set="null" line="59" static="1"><f a="this:x:y:w:h:delta:thick:color">
+		<lineGrid public="1" get="inline" set="null" line="60" static="1"><f a="this:x:y:w:h:delta:thick:color">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -43026,7 +43076,7 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></lineGrid>
-		<lineGridWH public="1" get="inline" set="null" line="70" static="1"><f a="this:x:y:w:h:deltaW:deltaH:thick:color">
+		<lineGridWH public="1" get="inline" set="null" line="71" static="1"><f a="this:x:y:w:h:deltaW:deltaH:thick:color">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -43038,7 +43088,7 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></lineGridWH>
-		<fillRoundRect public="1" get="inline" set="null" line="101" static="1">
+		<fillRoundRect public="1" get="inline" set="null" line="102" static="1">
 			<f a="this:x:y:hi:wid:color:?dx:?dy:?fat:?tall" v="::::::-1.:-1.:-1.:-1.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43058,7 +43108,7 @@
         dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
         fat, tall - the inner dimensions of the 9-slice centre, optional</haxe_doc>
 		</fillRoundRect>
-		<lineRoundRect public="1" get="inline" set="null" line="111" static="1">
+		<lineRoundRect public="1" get="inline" set="null" line="112" static="1">
 			<f a="this:x:y:hi:wid:thick:color:?dx:?dy:?fat:?tall" v=":::::::-1.:-1.:-1.:-1.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43075,7 +43125,7 @@
 			</f>
 			<meta><m n=":value"><e>{ tall : -1., fat : -1., dy : -1., dx : -1. }</e></m></meta>
 		</lineRoundRect>
-		<fillGrad4RoundRect public="1" get="inline" set="null" line="131" static="1">
+		<fillGrad4RoundRect public="1" get="inline" set="null" line="132" static="1">
 			<f a="this:x:y:hi:wid:colorA:colorB:colorC:colorD:?dx:?dy:?fat:?tall" v=":::::::::-1.:-1.:-1.:-1.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43098,7 +43148,7 @@
         dx, dy    - define the 9-slice distance in from x, y, dy can default to dx
         fat, tall - the inner dimensions of the 9-slice centre, optional</haxe_doc>
 		</fillGrad4RoundRect>
-		<lineGrad4RoundRect public="1" get="inline" set="null" line="141" static="1">
+		<lineGrad4RoundRect public="1" get="inline" set="null" line="142" static="1">
 			<f a="this:x:y:hi:wid:thick:colorA:colorB:colorC:colorD:?dx:?dy:?fat:?tall" v="::::::::::-1.:-1.:-1.:-1.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43118,14 +43168,14 @@
 			</f>
 			<meta><m n=":value"><e>{ tall : -1., fat : -1., dy : -1., dx : -1. }</e></m></meta>
 		</lineGrad4RoundRect>
-		<testFillSimonSaysQuadrant public="1" get="inline" set="null" line="151" static="1"><f a="this:cx:cy:radius">
+		<testFillSimonSaysQuadrant public="1" get="inline" set="null" line="152" static="1"><f a="this:cx:cy:radius">
 	<x path="pixelimage.Pixelimage"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></testFillSimonSaysQuadrant>
-		<fillQuadrantI public="1" get="inline" set="null" line="161" static="1">
+		<fillQuadrantI public="1" get="inline" set="null" line="162" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43138,7 +43188,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</fillQuadrantI>
-		<tileQuadrantI public="1" get="inline" set="null" line="169" static="1">
+		<tileQuadrantI public="1" get="inline" set="null" line="170" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43151,7 +43201,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</tileQuadrantI>
-		<fillQuadrantII public="1" get="inline" set="null" line="176" static="1">
+		<fillQuadrantII public="1" get="inline" set="null" line="177" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43164,7 +43214,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</fillQuadrantII>
-		<tileQuadrantII public="1" get="inline" set="null" line="183" static="1">
+		<tileQuadrantII public="1" get="inline" set="null" line="184" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43177,7 +43227,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</tileQuadrantII>
-		<fillQuadrantIII public="1" get="inline" set="null" line="190" static="1">
+		<fillQuadrantIII public="1" get="inline" set="null" line="191" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43190,7 +43240,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</fillQuadrantIII>
-		<tileQuadrantIII public="1" get="inline" set="null" line="197" static="1">
+		<tileQuadrantIII public="1" get="inline" set="null" line="198" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43203,7 +43253,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</tileQuadrantIII>
-		<fillQuadrantIV public="1" get="inline" set="null" line="204" static="1">
+		<fillQuadrantIV public="1" get="inline" set="null" line="205" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43216,7 +43266,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</fillQuadrantIV>
-		<tileQuadrantIV public="1" get="inline" set="null" line="211" static="1">
+		<tileQuadrantIV public="1" get="inline" set="null" line="212" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi" v="::::::0.">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43229,7 +43279,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0. }</e></m></meta>
 		</tileQuadrantIV>
-		<fillCircle public="1" get="inline" set="null" line="217" static="1">
+		<fillCircle public="1" get="inline" set="null" line="218" static="1">
 			<f a="this:cx:cy:r:color:?phi" v=":::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43244,7 +43294,7 @@
 				<m n=":access"><e>pixelimage.Pixelimage.fillEllipseTri</e></m>
 			</meta>
 		</fillCircle>
-		<fillEllipse public="1" get="inline" set="null" line="222" static="1">
+		<fillEllipse public="1" get="inline" set="null" line="223" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43260,7 +43310,7 @@
 				<m n=":access"><e>pixelimage.Pixelimage.fillEllipseTri</e></m>
 			</meta>
 		</fillEllipse>
-		<fillArrowHead public="1" get="inline" set="null" line="226" static="1">
+		<fillArrowHead public="1" get="inline" set="null" line="227" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43273,7 +43323,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillArrowHead>
-		<fillPentagon public="1" get="inline" set="null" line="230" static="1">
+		<fillPentagon public="1" get="inline" set="null" line="231" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43286,7 +43336,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillPentagon>
-		<fillHexagon public="1" get="inline" set="null" line="234" static="1">
+		<fillHexagon public="1" get="inline" set="null" line="235" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43299,7 +43349,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillHexagon>
-		<fillHeptagon public="1" get="inline" set="null" line="238" static="1">
+		<fillHeptagon public="1" get="inline" set="null" line="239" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43312,7 +43362,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillHeptagon>
-		<fillSeptagon public="1" get="inline" set="null" line="242" static="1">
+		<fillSeptagon public="1" get="inline" set="null" line="243" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43325,7 +43375,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillSeptagon>
-		<fillOctagon public="1" get="inline" set="null" line="246" static="1">
+		<fillOctagon public="1" get="inline" set="null" line="247" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43338,7 +43388,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillOctagon>
-		<fillNonagon public="1" get="inline" set="null" line="250" static="1">
+		<fillNonagon public="1" get="inline" set="null" line="251" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43351,7 +43401,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillNonagon>
-		<fillEnneagon public="1" get="inline" set="null" line="254" static="1">
+		<fillEnneagon public="1" get="inline" set="null" line="255" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43364,7 +43414,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillEnneagon>
-		<fillDecagon public="1" get="inline" set="null" line="258" static="1">
+		<fillDecagon public="1" get="inline" set="null" line="259" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43377,7 +43427,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillDecagon>
-		<fillHendecagon public="1" get="inline" set="null" line="262" static="1">
+		<fillHendecagon public="1" get="inline" set="null" line="263" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43390,7 +43440,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillHendecagon>
-		<fillUndecagon public="1" get="inline" set="null" line="266" static="1">
+		<fillUndecagon public="1" get="inline" set="null" line="267" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43403,7 +43453,7 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillUndecagon>
-		<fillDodecagon public="1" get="inline" set="null" line="270" static="1">
+		<fillDodecagon public="1" get="inline" set="null" line="271" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi" v="::::::0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43416,7 +43466,25 @@
 			</f>
 			<meta><m n=":value"><e>{ phi : 0 }</e></m></meta>
 		</fillDodecagon>
-		<sweepTri public="1" get="inline" set="null" line="279" static="1">
+		<softFillQuint public="1" get="inline" set="null" line="282" static="1">
+			<f a="this:ax:ay:bx:by:cx:cy:dx:dy:color:softC:?hasHit" v=":::::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<c path="pixelimage.algo.HitQuad"/>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</softFillQuint>
+		<sweepTri public="1" get="inline" set="null" line="293" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:color:?hasHit" v="::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43431,7 +43499,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepTri>
-		<tileSweepTri public="1" get="inline" set="null" line="294" static="1">
+		<tileSweepTri public="1" get="inline" set="null" line="308" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:tileImage:?hasHit" v="::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43446,7 +43514,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileSweepTri>
-		<fillPie public="1" get="inline" set="null" line="310" static="1">
+		<fillPie public="1" get="inline" set="null" line="324" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:color:?hasHit:?targetError" v="::::::::false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43462,7 +43530,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</fillPie>
-		<tilePie public="1" get="inline" set="null" line="351" static="1">
+		<tilePie public="1" get="inline" set="null" line="365" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:tileImage:?hasHit:?targetError" v="::::::::false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43478,7 +43546,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</tilePie>
-		<sweepGradTri public="1" get="inline" set="null" line="390" static="1">
+		<sweepGradTri public="1" get="inline" set="null" line="404" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:colA:colB:colC:?hasHit" v="::::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43495,7 +43563,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepGradTri>
-		<fillRadialPie public="1" get="inline" set="null" line="405" static="1">
+		<fillRadialPie public="1" get="inline" set="null" line="419" static="1">
 			<f a="this:ax:ay:rx:ry:startRadian:sweepRadian:centreColor:outerColor:?hasHit:?targetError" v=":::::::::false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43512,7 +43580,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</fillRadialPie>
-		<imgQuadFudge public="1" get="inline" set="null" line="448" static="1">
+		<imgQuadFudge public="1" get="inline" set="null" line="462" static="1">
 			<f a="this:texture:win:ax:ay:bx:by:cx:cy:dx:dy:?hasHit" v=":::::::::::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -43531,7 +43599,7 @@
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 			<haxe_doc>works with image Fudge of UV values, deprediated unless turns out useful in edge cases.</haxe_doc>
 		</imgQuadFudge>
-		<imgRectFudge public="1" get="inline" set="null" line="456" static="1">
+		<imgRectFudge public="1" get="inline" set="null" line="470" static="1">
 			<f a="this:texture:win:x:y:wid:hi:?theta:?centreX:?centreY:?skewX:?skewY:?hasHit" v=":::::::0.:0.:0.:0.:0.:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -43550,7 +43618,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 		</imgRectFudge>
-		<fillArrow public="1" get="inline" set="null" line="515" static="1">
+		<fillArrow public="1" get="inline" set="null" line="529" static="1">
 			<f a="this:px:py:qx:qy:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::false:false:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43567,7 +43635,7 @@
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 			<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
 		</fillArrow>
-		<fillArrowBoth public="1" get="inline" set="null" line="521" static="1">
+		<fillArrowBoth public="1" get="inline" set="null" line="535" static="1">
 			<f a="this:px:py:qx:qy:thick:color:?hasHit" v=":::::::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43581,7 +43649,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</fillArrowBoth>
-		<fillFixArrow public="1" get="inline" set="null" line="526" static="1">
+		<fillFixArrow public="1" get="inline" set="null" line="540" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?flare:?reverseFlare:?hasHit" v=":::::::::false:false:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43599,7 +43667,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</fillFixArrow>
-		<fillFixArrowBoth public="1" get="inline" set="null" line="532" static="1">
+		<fillFixArrowBoth public="1" get="inline" set="null" line="546" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color:?hasHit" v=":::::::::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43615,7 +43683,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</fillFixArrowBoth>
-		<gradThickArrow public="1" get="inline" set="null" line="539" static="1">
+		<gradThickArrow public="1" get="inline" set="null" line="553" static="1">
 			<f a="this:px:py:qx:qy:thick:color1:color2:?flare:reverseFlare:?hasHit" v="::::::::false::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43632,7 +43700,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, flare : false }</e></m></meta>
 		</gradThickArrow>
-		<gradThickArrowBoth public="1" get="inline" set="null" line="544" static="1">
+		<gradThickArrowBoth public="1" get="inline" set="null" line="558" static="1">
 			<f a="this:px:py:qx:qy:thick:color1:color2:?hasHit" v="::::::::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43647,7 +43715,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</gradThickArrowBoth>
-		<gradThickFixArrow public="1" get="inline" set="null" line="549" static="1">
+		<gradThickFixArrow public="1" get="inline" set="null" line="563" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?flare:?reverseFlare:?hasHit" v="::::::::::false:false:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43666,7 +43734,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</gradThickFixArrow>
-		<gradThickFixArrowBoth public="1" get="inline" set="null" line="554" static="1">
+		<gradThickFixArrowBoth public="1" get="inline" set="null" line="568" static="1">
 			<f a="this:px:py:qx:qy:arrowWidth:arrowHeight:thick:color1:color2:?hasHit" v="::::::::::true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43683,7 +43751,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</gradThickFixArrowBoth>
-		<fillEllipseTri public="1" get="inline" set="null" line="565" static="1">
+		<fillEllipseTri public="1" get="inline" set="null" line="579" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43701,7 +43769,23 @@
         drawn from the circles/ellipses centre, with rx and ry the radius, phi allows rotatation of ellipses
         setup so large ellipses automatically use more sides.</haxe_doc>
 		</fillEllipseTri>
-		<tileEllipseTri public="1" get="inline" set="null" line="574" static="1">
+		<softFillEllipseTri public="1" get="inline" set="null" line="588" static="1">
+			<f a="this:cx:cy:rx:ry:color:?phi:?softC:?printSides:?targetError" v="::::::0:10:false:1.05">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Float"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, softC : 10, phi : 0 }</e></m></meta>
+		</softFillEllipseTri>
+		<tileEllipseTri public="1" get="inline" set="null" line="597" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi:?printSides:?targetError" v="::::::0:false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43716,7 +43800,7 @@
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, printSides : false, phi : 0 }</e></m></meta>
 		</tileEllipseTri>
-		<lineEllipseTri public="1" get="inline" set="null" line="592" static="1">
+		<lineEllipseTri public="1" get="inline" set="null" line="615" static="1">
 			<f a="this:cx:cy:rx:ry:drx:dry:color:?phi:?printSides:?targetError" v="::::::::0:false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43739,7 +43823,7 @@
         setup so large ellipses automatically use more sides.
         for phi rotated ellipses it over estimates the temp pixelimage to be safe</haxe_doc>
 		</lineEllipseTri>
-		<fillRadialEllipseTri public="1" get="inline" set="null" line="631" static="1">
+		<fillRadialEllipseTri public="1" get="inline" set="null" line="654" static="1">
 			<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::0.:0.:0:false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43760,7 +43844,7 @@
         colorIn is the internal colour and colorOut the external one, gx and gy -1 to 1 provide offset centre
         there are lots of limitations, gx and gy max and min obviously look bad and may need to scale them to 0.7 for rotated ellipse</haxe_doc>
 		</fillRadialEllipseTri>
-		<lineRadialEllipseTri public="1" get="inline" set="null" line="647" static="1">
+		<lineRadialEllipseTri public="1" get="inline" set="null" line="670" static="1">
 			<f a="this:cx:cy:rx:ry:drx:dry:colorIn:colorOut:?gx:?gy:?phi:?printSides:?targetError" v=":::::::::0.:0.:0:false:1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43782,7 +43866,7 @@
 			<haxe_doc>radial ellipse thick line 
         @see fillRadialEllipseTri</haxe_doc>
 		</lineRadialEllipseTri>
-		<fillRadialRectangle public="1" get="inline" set="null" line="686" static="1">
+		<fillRadialRectangle public="1" get="inline" set="null" line="709" static="1">
 			<f a="this:x:y:wid:hi:colorIn:colorOut:?gx:?gy" v=":::::::0:0">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43799,7 +43883,7 @@
 			<haxe_doc>provides a radial colour gradient, it uses a temp pixelimage to draw a rectangle and then radial ellipse within.
         @:see fillRadialEllipseTri</haxe_doc>
 		</fillRadialRectangle>
-		<fillQuadrant public="1" get="inline" set="null" line="705" static="1">
+		<fillQuadrant public="1" get="inline" set="null" line="728" static="1">
 			<f a="this:cx:cy:rx:ry:startAngle:color:?phi:?targetError" v="::::::::1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43815,7 +43899,7 @@
 			<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 			<haxe_doc>fill Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 		</fillQuadrant>
-		<tileQuadrant public="1" get="inline" set="null" line="715" static="1">
+		<tileQuadrant public="1" get="inline" set="null" line="738" static="1">
 			<f a="this:cx:cy:rx:ry:startAngle:tileImage:?phi:?targetError" v="::::::::1.05">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43831,7 +43915,7 @@
 			<meta><m n=":value"><e>{ targetError : 1.05 }</e></m></meta>
 			<haxe_doc>tiles Quadrant draws a quarter arc, for rounded rectangle there are I,II,III,IV defined ones in Pixelshape</haxe_doc>
 		</tileQuadrant>
-		<fillPolyBuild public="1" get="inline" set="null" line="730" static="1">
+		<fillPolyBuild public="1" get="inline" set="null" line="753" static="1">
 			<f a="this:cx:cy:rx:ry:color:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43852,7 +43936,23 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 		</fillPolyBuild>
-		<tilePolyBuild public="1" get="inline" set="null" line="745" static="1">
+		<softFillPolyBuild public="1" get="inline" set="null" line="760" static="1">
+			<f a="this:cx:cy:rx:ry:color:?phi:?sides:?softC:?cornerUp" v="::::::0.:36:10.:true">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ cornerUp : true, softC : 10., sides : 36, phi : 0. }</e></m></meta>
+		</softFillPolyBuild>
+		<tilePolyBuild public="1" get="inline" set="null" line="775" static="1">
 			<f a="this:cx:cy:rx:ry:tileImage:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -43873,7 +43973,7 @@
         would be nice to add skew in future?
         cornerUp may need debugging</haxe_doc>
 		</tilePolyBuild>
-		<fillRadialPolyon public="1" get="inline" set="null" line="758" static="1">
+		<fillRadialPolyon public="1" get="inline" set="null" line="788" static="1">
 			<f a="this:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?sides:?cornerUp" v=":::::::0.:0.:0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -44647,13 +44747,13 @@
 			<meta><m n=":value"><e>fillRadialPolyBuild</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">fillRadialPolyBuild</font> module level field]]></haxe_doc>
 		</_fillRadialPolyBuild>
-		<new public="1" set="method" line="188">
+		<new public="1" set="method" line="250">
 			<f a=""><x path="Void"/></f>
 			<meta><m n=":compilerGenerated"/></meta>
 		</new>
 	</class>
 	<class path="pixelimage.algo._PolyPixel.PolyPixel_Fields_" params="" file="src/pixelimage/algo/PolyPixel.hx" private="1" module="pixelimage.algo.PolyPixel" final="1">
-		<fillPolygonBuild public="1" get="inline" set="null" line="12" static="1">
+		<fillPolygonBuild public="1" get="inline" set="null" line="13" static="1">
 			<f a="pixelimage:cx:cy:rx:ry:color:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -44668,7 +44768,23 @@
 			</f>
 			<meta><m n=":value"><e>{ cornerUp : true, sides : 36, phi : 0. }</e></m></meta>
 		</fillPolygonBuild>
-		<tilePolygonBuild public="1" get="inline" set="null" line="70" static="1">
+		<softFillPolygonBuild public="1" get="inline" set="null" line="73" static="1">
+			<f a="pixelimage:cx:cy:rx:ry:color:?phi:?sides:?softC:?cornerUp" v="::::::0.:36:10:true">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ cornerUp : true, softC : 10, sides : 36, phi : 0. }</e></m></meta>
+		</softFillPolygonBuild>
+		<tilePolygonBuild public="1" get="inline" set="null" line="132" static="1">
 			<f a="pixelimage:cx:cy:rx:ry:tileImage:?phi:?sides:?cornerUp" v="::::::0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -44683,7 +44799,7 @@
 			</f>
 			<meta><m n=":value"><e>{ cornerUp : true, sides : 36, phi : 0. }</e></m></meta>
 		</tilePolygonBuild>
-		<fillRadialPolyBuild public="1" get="inline" set="null" line="130" static="1">
+		<fillRadialPolyBuild public="1" get="inline" set="null" line="192" static="1">
 			<f a="pixelimage:cx:cy:rx:ry:colorIn:colorOut:?gx:?gy:?phi:?sides:?cornerUp" v=":::::::0:0:0.:36:true">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -44930,6 +45046,24 @@
      *</haxe_doc>
 		</tileSolidQuadrant>
 	</class>
+	<class path="pixelimage.algo._QuintPixel.QuintPixel_Fields_" params="" file="src/pixelimage/algo/QuintPixel.hx" private="1" module="pixelimage.algo.QuintPixel" final="1"><softFillQuintilateral public="1" get="inline" set="null" line="20" static="1">
+	<f a="pixelImage:ax:ay:bx:by:cx:cy:dx:dy:color:?softC:?hasHit" v="::::::::::10:false">
+		<x path="pixelimage.Pixelimage"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Float"/>
+		<x path="Int"/>
+		<x path="Float"/>
+		<x path="Bool"/>
+		<x path="Null"><c path="pixelimage.algo.HitQuad"/></x>
+	</f>
+	<meta><m n=":value"><e>{ hasHit : false, softC : 10 }</e></m></meta>
+</softFillQuintilateral></class>
 	<class path="pixelimage.algo.RectanglePixel" params="" file="src/pixelimage/algo/RectanglePixel.hx">
 		<_fillRadialRect public="1" expr="fillRadialRect">
 			<f a="pixelimage:x:y:wid:hi:colorIn:colorOut:?gx:?gy:?edgePoints">
@@ -45152,7 +45286,7 @@
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">fillGradTriangle</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.]]></haxe_doc>
 		</_fillGradTriangle>
-		<new public="1" set="method" line="428">
+		<new public="1" set="method" line="652">
 			<f a=""><x path="Void"/></f>
 			<meta><m n=":compilerGenerated"/></meta>
 		</new>
@@ -45190,7 +45324,37 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillTriUnsafe>
-		<tileTriangle public="1" get="inline" set="null" line="90" static="1">
+		<fillTriangle2 public="1" get="inline" set="null" line="89" static="1">
+			<f a="pixelImage:ax:ay:bx:by:cx:cy:color:?hasHit" v="::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimage.pixel.Pixel32"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</fillTriangle2>
+		<fillTriUnsafe2 public="1" get="inline" set="null" line="110" static="1">
+			<f a="pixelImage:ax:ay:bx:by:cx:cy:color:?hasHit" v="::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimage.pixel.Pixel32"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</fillTriUnsafe2>
+		<tileTriangle public="1" get="inline" set="null" line="160" static="1">
 			<f a="pixelImage:ax:ay:bx:by:cx:cy:tileImage:?hasHit" v="::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -45205,7 +45369,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileTriangle>
-		<tileTriUnsafe public="1" get="inline" set="null" line="111" static="1">
+		<tileTriUnsafe public="1" get="inline" set="null" line="181" static="1">
 			<f a="pixelimage:ax:ay:bx:by:cx:cy:tileImage:?hasHit" v="::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -45220,7 +45384,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileTriUnsafe>
-		<fillGradTriangle public="1" get="inline" set="null" line="161" static="1">
+		<fillGradTriangle public="1" get="inline" set="null" line="231" static="1">
 			<f a="pixelimage:ax:ay:colA:bx:by:colB:cx:cy:colC:?hasHit" v="::::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="Float"/>
@@ -45237,7 +45401,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillGradTriangle>
-		<topRightImgTriFudge public="1" get="inline" set="null" line="213" static="1">
+		<topRightImgTriFudge public="1" get="inline" set="null" line="283" static="1">
 			<f a="pixelimage:texture:win:ax:ay:bx:by:cx:cy:?hasHit" v=":::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45253,7 +45417,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</topRightImgTriFudge>
-		<bottomLeftImgTriFudge public="1" get="inline" set="null" line="221" static="1">
+		<bottomLeftImgTriFudge public="1" get="inline" set="null" line="291" static="1">
 			<f a="pixelimage:texture:win:dx:dy:cx:cy:ax:ay:?hasHit" v=":::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45269,7 +45433,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</bottomLeftImgTriFudge>
-		<uvTriangleFudge public="1" get="inline" set="null" line="233" static="1">
+		<uvTriangleFudge public="1" get="inline" set="null" line="303" static="1">
 			<f a="pixelimage:texture:win:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v=":::::::::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45293,7 +45457,7 @@
 			<haxe_doc>This is the first attempt at UV mapping it does not swap A B and so does not work properly, but can be used with fudged triangles above.
         Likely will remove in future but keeping incase it is useful for edge cases.</haxe_doc>
 		</uvTriangleFudge>
-		<topLeftImgTri public="1" get="inline" set="null" line="275" static="1">
+		<topLeftImgTri public="1" get="inline" set="null" line="345" static="1">
 			<f a="pixelimage:texture:win:ax:ay:bx:by:dx:dy:?hasHit" v=":::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45309,7 +45473,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</topLeftImgTri>
-		<bottomRightImgTri public="1" get="inline" set="null" line="285" static="1">
+		<bottomRightImgTri public="1" get="inline" set="null" line="355" static="1">
 			<f a="pixelimage:texture:win:bx:by:cx:cy:dx:dy:?hasHit" v=":::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45325,7 +45489,7 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</bottomRightImgTri>
-		<uvTriangle public="1" get="inline" set="null" line="295" static="1">
+		<uvTriangle public="1" get="inline" set="null" line="365" static="1">
 			<f a="pixelimage:texture:win:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v=":::::::::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -45347,7 +45511,53 @@
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</uvTriangle>
-		<uvTriangleTexture3 public="1" get="inline" set="null" line="351" static="1">
+		<fillTriSoftC public="1" get="inline" set="null" line="418" static="1">
+			<f a="pixelimage:ax:ay:bx:by:cx:cy:color:?softC:?hasHit" v="::::::::10:false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimage.pixel.Pixel32"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false, softC : 10 }</e></m></meta>
+		</fillTriSoftC>
+		<fillTriExtra0 public="1" get="inline" set="null" line="472" static="1">
+			<f a="pixelimage:ax:ay:bx:by:cx:cy:color:?hasHit" v="::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimage.pixel.Pixel32"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</fillTriExtra0>
+		<fillTriExtra1 public="1" get="inline" set="null" line="527" static="1">
+			<f a="pixelimage:ax:ay:bx:by:cx:cy:color:?hasHit" v="::::::::false">
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimage.pixel.Pixel32"/>
+				<x path="Bool"/>
+				<x path="Null"><c path="pixelimage.algo.HitTri"/></x>
+			</f>
+			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
+		</fillTriExtra1>
+		<uvTriangleTexture3 public="1" get="inline" set="null" line="575" static="1">
 			<f a="pixelimage:textureA:winA:textureB:winB:textureC:winC:ax:ay:au:av:bx:by:bu:bv:cx:cy:cu:cv:?hasHit" v=":::::::::::::::::::false">
 				<x path="pixelimage.Pixelimage"/>
 				<x path="pixelimage.Pixelimage"/>
@@ -47916,6 +48126,84 @@
 			<m n=":structInit"/>
 		</meta>
 	</class>
+	<class path="pixelimage.triangleGML.contour.QuintShape" params="" file="src/pixelimage/triangleGML/contour/QuintShape.hx">
+		<extends path="pixelimage.triangleGML.coreShape.BasicShape"/>
+		<aX public="1"><x path="Float"/></aX>
+		<aY public="1"><x path="Float"/></aY>
+		<bX public="1"><x path="Float"/></bX>
+		<bY public="1"><x path="Float"/></bY>
+		<cX public="1"><x path="Float"/></cX>
+		<cY public="1"><x path="Float"/></cY>
+		<dX public="1"><x path="Float"/></dX>
+		<dY public="1"><x path="Float"/></dY>
+		<softC public="1"><x path="Float"/></softC>
+		<setParameter public="1" set="method" line="41" override="1"><f a="name:value">
+	<c path="String"/>
+	<c path="String"/>
+	<x path="Void"/>
+</f></setParameter>
+		<render public="1" set="method" line="65" override="1"><f a="pixelShape">
+	<x path="pixelimage.Pixelshape"/>
+	<x path="pixelimage.Pixelshape"/>
+</f></render>
+		<new public="1" set="method" line="29">
+			<f a="?opacity:?visibility:?strokeColor:?aX:?aY:?bX:?bY:?cX:?cY:?dX:?dY:?softC" v="1.:true:0xFFF00000:0.:0.:1.:0.:1.:1.:0.:1.:10.">
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ softC : 10., dY : 1., dX : 0., cY : 1., cX : 1., bY : 0., bX : 1., aY : 0., aX : 0., strokeColor : 0xFFF00000, visibility : true, opacity : 1. }</e></m></meta>
+		</new>
+		<meta>
+			<m n=":directlyUsed"/>
+			<m n=":structInit"/>
+		</meta>
+	</class>
+	<class path="pixelimage.triangleGML.contour.SoftEllipseShape" params="" file="src/pixelimage/triangleGML/contour/SoftEllipseShape.hx">
+		<extends path="pixelimage.triangleGML.coreShape.BasicShape"/>
+		<left public="1"><x path="Float"/></left>
+		<top public="1"><x path="Float"/></top>
+		<width public="1"><x path="Float"/></width>
+		<height public="1"><x path="Float"/></height>
+		<softC public="1"><x path="Float"/></softC>
+		<setParameter public="1" set="method" line="28" override="1"><f a="name:value">
+	<c path="String"/>
+	<c path="String"/>
+	<x path="Void"/>
+</f></setParameter>
+		<render public="1" set="method" line="44" override="1"><f a="pixelShape">
+	<x path="pixelimage.Pixelshape"/>
+	<x path="pixelimage.Pixelshape"/>
+</f></render>
+		<new public="1" set="method" line="21">
+			<f a="?opacity:?visibility:?strokeColor:?left:?top:?width:?height:?softC" v="1.:true:0x000000:0.:0.:1.:1.:10.">
+				<x path="Float"/>
+				<x path="Bool"/>
+				<x path="Int"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Void"/>
+			</f>
+			<meta><m n=":value"><e>{ softC : 10., height : 1., width : 1., top : 0., left : 0., strokeColor : 0x000000, visibility : true, opacity : 1. }</e></m></meta>
+		</new>
+		<meta>
+			<m n=":directlyUsed"/>
+			<m n=":structInit"/>
+		</meta>
+	</class>
 	<class path="pixelimage.triangleGML.contour.ThruCurveShape" params="" file="src/pixelimage/triangleGML/contour/ThruCurveShape.hx">
 		<extends path="pixelimage.triangleGML.coreShape.FillShape"/>
 		<x1 public="1"><x path="Float"/></x1>
@@ -48117,19 +48405,19 @@
 		<meta><m n=":structInit"/></meta>
 	</class>
 	<class path="pixelimage.triangleGML.coreShape.TriangleGML" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx">
-		<withString public="1" get="inline" set="null" line="24" static="1"><f a="pixelShape:str">
+		<withString public="1" get="inline" set="null" line="25" static="1"><f a="pixelShape:str">
 	<x path="pixelimage.Pixelshape"/>
 	<c path="String"/>
 	<c path="pixelimage.triangleGML.coreShape.TriangleGML"/>
 </f></withString>
 		<pixelShape><x path="pixelimage.Pixelshape"/></pixelShape>
 		<xml><c path="Xml"/></xml>
-		<process set="method" line="30"><f a=""><x path="Void"/></f></process>
-		<processShape set="method" line="35"><f a="x">
+		<process set="method" line="31"><f a=""><x path="Void"/></f></process>
+		<processShape set="method" line="36"><f a="x">
 	<c path="Xml"/>
 	<x path="Void"/>
 </f></processShape>
-		<new public="1" set="method" line="19"><f a="pixelShape:xml">
+		<new public="1" set="method" line="20"><f a="pixelShape:xml">
 	<x path="pixelimage.Pixelshape"/>
 	<c path="Xml"/>
 	<x path="Void"/>
@@ -48140,7 +48428,7 @@
 		<to><icast><c path="String"/></icast></to>
 		<meta><m n=":enum"/></meta>
 		<impl><class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGMLname_Impl_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" extern="1" final="1">
-	<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="48" static="1">
+	<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="49" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArrowShape"</e></m>
@@ -48148,7 +48436,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARROW_SHAPE>
-	<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="49" static="1">
+	<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="50" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CubicCurveShape"</e></m>
@@ -48156,7 +48444,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CUBIC_CURVE_SHAPE>
-	<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="50" static="1">
+	<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="51" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineGridShape"</e></m>
@@ -48164,7 +48452,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_GRID_SHAPE>
-	<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="51" static="1">
+	<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="52" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineShape"</e></m>
@@ -48172,7 +48460,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_SHAPE>
-	<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="52" static="1">
+	<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="53" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PolyLineShape"</e></m>
@@ -48180,7 +48468,7 @@
 			<m n=":enum"/>
 		</meta>
 	</POLY_LINE_SHAPE>
-	<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="53" static="1">
+	<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="54" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadCurveShape"</e></m>
@@ -48188,7 +48476,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_CURVE_SHAPE>
-	<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="54" static="1">
+	<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="55" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadShape"</e></m>
@@ -48196,7 +48484,23 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_SHAPE>
-	<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="55" static="1">
+	<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="56" static="1">
+		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "QuintShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</QUINT_SHAPE>
+	<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="57" static="1">
+		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
+		<meta>
+			<m n=":value"><e>cast "SoftEllipseShape"</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</SOFT_ELLIPSE_SHAPE>
+	<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="58" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ThruCurveShape"</e></m>
@@ -48204,7 +48508,7 @@
 			<m n=":enum"/>
 		</meta>
 	</THRU_CURVE_SHAPE>
-	<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="57" static="1">
+	<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="60" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArrowThickGradient"</e></m>
@@ -48212,7 +48516,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARROW_THICK_GRADIENT>
-	<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="58" static="1">
+	<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="61" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipseRadialGradient"</e></m>
@@ -48220,7 +48524,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_RADIAL_GRADIENT>
-	<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="59" static="1">
+	<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="62" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementThickGradient"</e></m>
@@ -48228,7 +48532,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_THICK_GRADIENT>
-	<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="60" static="1">
+	<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="63" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadGradient"</e></m>
@@ -48236,7 +48540,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_GRADIENT>
-	<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="61" static="1">
+	<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="64" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TriangleGradient"</e></m>
@@ -48244,7 +48548,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_GRADIENT>
-	<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="63" static="1">
+	<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="66" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineGradient"</e></m>
@@ -48252,7 +48556,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_GRADIENT>
-	<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="64" static="1">
+	<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="67" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PolyLineGradient"</e></m>
@@ -48260,7 +48564,7 @@
 			<m n=":enum"/>
 		</meta>
 	</POLY_LINE_GRADIENT>
-	<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="66" static="1">
+	<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="69" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CubicCurvePattern"</e></m>
@@ -48268,7 +48572,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CUBIC_CURVE_PATTERN>
-	<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="67" static="1">
+	<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="70" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LinePattern"</e></m>
@@ -48276,7 +48580,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_PATTERN>
-	<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="68" static="1">
+	<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="71" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadPattern"</e></m>
@@ -48284,7 +48588,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_PATTERN>
-	<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="69" static="1">
+	<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="72" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TrianglePattern"</e></m>
@@ -48292,7 +48596,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_PATTERN>
-	<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="71" static="1">
+	<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="74" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArcPattern"</e></m>
@@ -48300,7 +48604,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARC_PATTERN>
-	<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="72" static="1">
+	<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="75" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CirclePattern"</e></m>
@@ -48308,7 +48612,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CIRCLE_PATTERN>
-	<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="73" static="1">
+	<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="76" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipsePattern"</e></m>
@@ -48316,7 +48620,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_PATTERN>
-	<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="74" static="1">
+	<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="77" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementPattern"</e></m>
@@ -48324,7 +48628,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_PATTERN>
-	<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="75" static="1">
+	<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="78" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadrilateralPattern"</e></m>
@@ -48332,7 +48636,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUADRILATERAL_PATTERN>
-	<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="76" static="1">
+	<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="79" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "RectanglePattern"</e></m>
@@ -48340,7 +48644,7 @@
 			<m n=":enum"/>
 		</meta>
 	</RECTANGLE_PATTERN>
-	<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="77" static="1">
+	<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="80" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "SquarePattern"</e></m>
@@ -48348,7 +48652,7 @@
 			<m n=":enum"/>
 		</meta>
 	</SQUARE_PATTERN>
-	<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="79" static="1">
+	<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="82" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArcShape"</e></m>
@@ -48356,7 +48660,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARC_SHAPE>
-	<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="80" static="1">
+	<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="83" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CircleShape"</e></m>
@@ -48364,7 +48668,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CIRCLE_SHAPE>
-	<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="81" static="1">
+	<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="84" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipseShape"</e></m>
@@ -48372,7 +48676,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_SHAPE>
-	<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="82" static="1">
+	<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="85" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementShape"</e></m>
@@ -48380,7 +48684,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_SHAPE>
-	<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="83" static="1">
+	<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="86" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadrilateralShape"</e></m>
@@ -48388,7 +48692,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUADRILATERAL_SHAPE>
-	<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="84" static="1">
+	<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="87" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "RectangleShape"</e></m>
@@ -48396,7 +48700,7 @@
 			<m n=":enum"/>
 		</meta>
 	</RECTANGLE_SHAPE>
-	<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="85" static="1">
+	<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="88" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "SquareShape"</e></m>
@@ -48404,7 +48708,7 @@
 			<m n=":enum"/>
 		</meta>
 	</SQUARE_SHAPE>
-	<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="86" static="1">
+	<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="89" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "Star6Shape"</e></m>
@@ -48412,7 +48716,7 @@
 			<m n=":enum"/>
 		</meta>
 	</STAR6_SHAPE>
-	<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="87" static="1">
+	<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="90" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TriangleShape"</e></m>
@@ -48420,7 +48724,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_SHAPE>
-	<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="88" static="1">
+	<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="91" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "VePathElementShape"</e></m>
@@ -48432,7 +48736,7 @@
 </class></impl>
 	</abstract>
 	<class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGMLname_Impl_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" extern="1" final="1">
-		<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="48" static="1">
+		<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="49" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArrowShape"</e></m>
@@ -48440,7 +48744,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARROW_SHAPE>
-		<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="49" static="1">
+		<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="50" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CubicCurveShape"</e></m>
@@ -48448,7 +48752,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CUBIC_CURVE_SHAPE>
-		<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="50" static="1">
+		<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="51" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineGridShape"</e></m>
@@ -48456,7 +48760,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_GRID_SHAPE>
-		<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="51" static="1">
+		<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="52" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineShape"</e></m>
@@ -48464,7 +48768,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_SHAPE>
-		<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="52" static="1">
+		<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="53" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PolyLineShape"</e></m>
@@ -48472,7 +48776,7 @@
 				<m n=":enum"/>
 			</meta>
 		</POLY_LINE_SHAPE>
-		<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="53" static="1">
+		<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="54" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadCurveShape"</e></m>
@@ -48480,7 +48784,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_CURVE_SHAPE>
-		<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="54" static="1">
+		<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="55" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadShape"</e></m>
@@ -48488,7 +48792,23 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_SHAPE>
-		<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="55" static="1">
+		<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="56" static="1">
+			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "QuintShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</QUINT_SHAPE>
+		<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="57" static="1">
+			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
+			<meta>
+				<m n=":value"><e>cast "SoftEllipseShape"</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</SOFT_ELLIPSE_SHAPE>
+		<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="58" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ThruCurveShape"</e></m>
@@ -48496,7 +48816,7 @@
 				<m n=":enum"/>
 			</meta>
 		</THRU_CURVE_SHAPE>
-		<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="57" static="1">
+		<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="60" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArrowThickGradient"</e></m>
@@ -48504,7 +48824,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARROW_THICK_GRADIENT>
-		<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="58" static="1">
+		<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="61" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipseRadialGradient"</e></m>
@@ -48512,7 +48832,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_RADIAL_GRADIENT>
-		<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="59" static="1">
+		<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="62" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementThickGradient"</e></m>
@@ -48520,7 +48840,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_THICK_GRADIENT>
-		<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="60" static="1">
+		<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="63" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadGradient"</e></m>
@@ -48528,7 +48848,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_GRADIENT>
-		<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="61" static="1">
+		<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="64" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TriangleGradient"</e></m>
@@ -48536,7 +48856,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_GRADIENT>
-		<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="63" static="1">
+		<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="66" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineGradient"</e></m>
@@ -48544,7 +48864,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_GRADIENT>
-		<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="64" static="1">
+		<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="67" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PolyLineGradient"</e></m>
@@ -48552,7 +48872,7 @@
 				<m n=":enum"/>
 			</meta>
 		</POLY_LINE_GRADIENT>
-		<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="66" static="1">
+		<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="69" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CubicCurvePattern"</e></m>
@@ -48560,7 +48880,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CUBIC_CURVE_PATTERN>
-		<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="67" static="1">
+		<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="70" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LinePattern"</e></m>
@@ -48568,7 +48888,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_PATTERN>
-		<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="68" static="1">
+		<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="71" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadPattern"</e></m>
@@ -48576,7 +48896,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_PATTERN>
-		<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="69" static="1">
+		<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="72" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TrianglePattern"</e></m>
@@ -48584,7 +48904,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_PATTERN>
-		<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="71" static="1">
+		<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="74" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArcPattern"</e></m>
@@ -48592,7 +48912,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARC_PATTERN>
-		<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="72" static="1">
+		<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="75" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CirclePattern"</e></m>
@@ -48600,7 +48920,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CIRCLE_PATTERN>
-		<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="73" static="1">
+		<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="76" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipsePattern"</e></m>
@@ -48608,7 +48928,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_PATTERN>
-		<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="74" static="1">
+		<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="77" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementPattern"</e></m>
@@ -48616,7 +48936,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_PATTERN>
-		<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="75" static="1">
+		<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="78" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadrilateralPattern"</e></m>
@@ -48624,7 +48944,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUADRILATERAL_PATTERN>
-		<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="76" static="1">
+		<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="79" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "RectanglePattern"</e></m>
@@ -48632,7 +48952,7 @@
 				<m n=":enum"/>
 			</meta>
 		</RECTANGLE_PATTERN>
-		<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="77" static="1">
+		<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="80" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "SquarePattern"</e></m>
@@ -48640,7 +48960,7 @@
 				<m n=":enum"/>
 			</meta>
 		</SQUARE_PATTERN>
-		<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="79" static="1">
+		<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="82" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArcShape"</e></m>
@@ -48648,7 +48968,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARC_SHAPE>
-		<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="80" static="1">
+		<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="83" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CircleShape"</e></m>
@@ -48656,7 +48976,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CIRCLE_SHAPE>
-		<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="81" static="1">
+		<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="84" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipseShape"</e></m>
@@ -48664,7 +48984,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_SHAPE>
-		<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="82" static="1">
+		<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="85" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementShape"</e></m>
@@ -48672,7 +48992,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_SHAPE>
-		<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="83" static="1">
+		<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="86" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadrilateralShape"</e></m>
@@ -48680,7 +49000,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUADRILATERAL_SHAPE>
-		<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="84" static="1">
+		<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="87" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "RectangleShape"</e></m>
@@ -48688,7 +49008,7 @@
 				<m n=":enum"/>
 			</meta>
 		</RECTANGLE_SHAPE>
-		<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="85" static="1">
+		<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="88" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "SquareShape"</e></m>
@@ -48696,7 +49016,7 @@
 				<m n=":enum"/>
 			</meta>
 		</SQUARE_SHAPE>
-		<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="86" static="1">
+		<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="89" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "Star6Shape"</e></m>
@@ -48704,7 +49024,7 @@
 				<m n=":enum"/>
 			</meta>
 		</STAR6_SHAPE>
-		<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="87" static="1">
+		<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="90" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TriangleShape"</e></m>
@@ -48712,7 +49032,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_SHAPE>
-		<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="88" static="1">
+		<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="91" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "VePathElementShape"</e></m>
@@ -48723,13 +49043,13 @@
 		<meta><m n=":enum"/></meta>
 	</class>
 	<class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGML_Fields_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" final="1">
-		<getTriangleGML public="1" set="method" line="91" static="1"><f a="nodeName">
+		<getTriangleGML public="1" set="method" line="94" static="1"><f a="nodeName">
 	<c path="String"/>
 	<c path="pixelimage.triangleGML.coreShape.ShapeInterface"/>
 </f></getTriangleGML>
 		<meta><m n=":directlyUsed"/></meta>
 	</class>
-	<class path="pixelimage.triangleGML.coreShape._XMLshapeSamples.XMLshapeSamples_Fields_" params="" file="src/pixelimage/triangleGML/coreShape/XMLshapeSamples.hx" private="1" module="pixelimage.triangleGML.coreShape.XMLshapeSamples" final="1">
+	<class path="pixelimage.triangleGML.coreShape._XMLshapeSamples2.XMLshapeSamples2_Fields_" params="" file="src/pixelimage/triangleGML/coreShape/XMLshapeSamples2.hx" private="1" module="pixelimage.triangleGML.coreShape.XMLshapeSamples2" final="1">
 		<shapeTestArr public="1" set="method" line="3" static="1"><f a=""><c path="Array"><c path="String"/></c></f></shapeTestArr>
 		<arcTest public="1" expr="&quot;&lt;ArcShape \n                        left=\&quot;100\&quot;  top=\&quot;100\&quot; \n                        width=\&quot;500\&quot; height=\&quot;480\&quot; \n                        strokeColor=\&quot;0xFFFF0000\&quot; strokeWidth=\&quot;5\&quot; \n                        fill=\&quot;0xFF00FF00\&quot; \n                        startAngle=\&quot;0\&quot; sweepAngle=\&quot;240\&quot;\n                        arcType=\&quot;pie\&quot;&gt;&lt;/ArcShape&gt;&quot;" line="32" static="1">
 			<c path="String"/>

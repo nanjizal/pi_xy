@@ -10,6 +10,7 @@ import pixelimage.Pixelimage;
 import pixelimage.Pixelshape;
 import pixelimage.textureContour.*;
 import pixelimage.textureShape.*;
+import pixelimage.triangleGML.contour.QuintShape;
 import pixelimage.triangleGML.coreShape.TriangleGML;
 // module TriangleGML
 
@@ -52,6 +53,8 @@ enum abstract TriangleGMLname ( String ) to String {
     var POLY_LINE_SHAPE             = 'PolyLineShape';
     var QUAD_CURVE_SHAPE            = 'QuadCurveShape';
     var QUAD_SHAPE                  = 'QuadShape';
+    var QUINT_SHAPE                 = 'QuintShape';
+    var SOFT_ELLIPSE_SHAPE          = 'SoftEllipseShape';
     var THRU_CURVE_SHAPE            = 'ThruCurveShape';
     /* gradient */
     var ARROW_THICK_GRADIENT        = 'ArrowThickGradient';
@@ -105,6 +108,10 @@ function getTriangleGML( nodeName: String ): ShapeInterface {
             new QuadCurveShape();
         case QUAD_SHAPE:
             new QuadShape();
+        case QUINT_SHAPE:
+            new QuintShape();
+        case SOFT_ELLIPSE_SHAPE:
+            new SoftEllipseShape();
         case THRU_CURVE_SHAPE:
             new ThruCurveShape();
         /* gradient */

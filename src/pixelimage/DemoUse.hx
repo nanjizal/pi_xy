@@ -10,7 +10,7 @@ import pixelimage.formats.VisionImage;
 import pixelimage.triangleGML.*;
 import pixelimage.triangleGML.pattern.*;
 import pixelimage.triangleGML.coreShape.TriangleGML;
-import pixelimage.triangleGML.coreShape.XMLshapeSamples;
+import pixelimage.triangleGML.coreShape.XMLshapeSamples2;
 import htmlHelper.tools.ImageLoader;
 import pixelimage.fontImage.TestLem;
 import pixelimage.fontImage.OneDfont;

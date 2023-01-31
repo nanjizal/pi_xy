@@ -28,6 +28,7 @@ import pixelimage.algo.HitTri;
 import pixelimage.algo.HitQuad;
 import pixelimage.algo.HitTriArray;
 import pixelimage.algo.QuadPixel;
+import pixelimage.algo.QuintPixel;
 import pixelimage.algo.ArrowPixel;
 
 @:transient
@@ -270,7 +271,20 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     function fillDodecagon(cx: Float, cy: Float, rx: Float, ry: Float, color: Int, ?phi: Float = 0 ){
         fillPolyBuild( cx, cy, rx,  ry, color, phi, 12, false );
     }
-
+    
+    public inline
+    function softFillQuint( ax: Float, ay: Float
+                     , bx: Float, by: Float
+                     , cx: Float, cy: Float
+                     , dx: Float, dy: Float 
+                     , color: Int
+                     , softC: Float
+                     , hasHit: Bool = false ): HitQuad {
+        // tri e - a b d
+        // tri f - b c d
+        return softFillQuintilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, softC, hasHit );
+    }
+    
     public inline
     function sweepTri( ax: Float, ay: Float
                      , rx: Float, ry: Float
@@ -569,6 +583,15 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
         fillPolyBuild( cx, cy, rx, ry, color, phi, noSides );
     }
     public inline
+    function softFillEllipseTri( cx: Float, cy: Float
+                           , rx: Float, ry: Float
+                           , color: Int, phi: Float = 0, softC: Float = 10, printSides: Bool = false, targetError: Float = 1.05 ){
+        var rSmall = ( rx > ry )? ry: rx;
+        var noSides = circleError( rSmall, targetError );
+        if( printSides ) trace( noSides );
+        softFillPolyBuild( cx, cy, rx, ry, color, phi, noSides, softC );
+    }
+    public inline
     function tileEllipseTri( cx: Float, cy: Float
                            , rx: Float, ry: Float
                            , tileImage: Pixelimage, ?phi: Float = 0, ?printSides: Bool = false, ?targetError: Float = 1.05 ){
@@ -729,6 +752,13 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
                           , color: Int, ?phi: Float = 0.
                           , ?sides: Int = 36, cornerUp: Bool = true ){
         fillPolygonBuild( this, cx, cy, rx, ry, color, phi, sides, cornerUp );
+    }
+    inline public
+    function softFillPolyBuild( cx: Float,  cy: Float
+                          , rx: Float,  ry: Float
+                          , color: Int, ?phi: Float = 0.
+                          , ?sides: Int = 36, softC: Float = 10., cornerUp: Bool = true ){
+        softFillPolygonBuild( this, cx, cy, rx, ry, color, phi, sides, softC, cornerUp );
     }
     /**
         this provides building block for image tiled regular polygons,ellipses and circles
