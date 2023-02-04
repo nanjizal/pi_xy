@@ -80,7 +80,6 @@ import pixelimage.algo.HitTri;
             null;
         }
     }
-
     inline
     function fillTriangle2( pixelImage: Pixelimage, ax: Float, ay: Float
                     , bx: Float, by: Float
@@ -397,6 +396,76 @@ import pixelimage.algo.HitTri;
                     var y = Std.int( v*win.height + win.y );
                     var col = texture.getARGB( x, y );
                     pixelimage.setARGB( px, py, col );
+                }
+            }
+        }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            v;
+        } else {
+            null;
+        }   
+    }
+
+    inline
+    function uvTriangleSoft3( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+                        , ax: Float, ay: Float, au: Float, av: Float
+                        , bx: Float, by: Float, bu: Float, bv: Float
+                        , cx: Float, cy: Float, cu: Float, cv: Float
+                        , soft3: Float
+                        , hasHit: Bool = false ): Null<HitTri>{
+    // switch A B as per gradient ( consider xor's )
+        var temp = au;
+        au = bu;
+        bu = temp;
+        temp = av;
+        av = bv;
+        bv = temp;
+        //
+        var bcx = bx - cx;
+        var bcy = by - cy;
+        var acx = ax - cx; 
+        var acy = ay - cy;
+        // Had to re-arrange algorithm to work so dot names may not quite make sense.
+        var dot11 = dotSame( bcx, bcy );
+        var dot12 = dot( bcx, bcy, acx, acy );
+        var dot22 = dotSame( acx, acy );
+        var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+
+        for( px in boundIterator3( cx, bx, ax ) ){
+            var pcx = px - cx;
+            for( py in boundIterator3( cy, by, ay ) ){
+                var pcy = py - cy;
+                var dot31  = dot( pcx, pcy, bcx, bcy );
+                var dot32  = dot( pcx, pcy, acx, acy );
+                var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+                var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+                var ratioC = 1.0 - ratioB - ratioA;
+                if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
+                    var u = au*ratioA + bu*ratioB + cu*ratioC;
+                    var v = av*ratioA + bv*ratioB + cv*ratioC;
+                    var x = Std.int( u*win.width + win.x );
+                    var y = Std.int( v*win.height + win.y );
+                    
+                    var color = texture.getARGB( x, y );
+                    var aA = ( color >> 24 ) & 0xFF;
+                    var rA = ( color >> 16 ) & 0xFF;
+                    var gA = ( color >> 8 ) & 0xFF;
+                    var bA = color & 0xFF;
+
+                    var min = ( ratioA < ratioB )? ratioA: ratioB;
+                    min = ( min < ratioC )? min: ratioC;
+                    var max = ( ratioA > ratioB )? ratioA: ratioB;
+                    max = ( max > ratioC )? max: ratioC;
+                    max = ( 1 - max )/2; // not really max just the shaded out, not sure if 2.7 ideal but close.
+                    var min = ( min < max )? min: (max+min)/2;
+
+                    var a = PixelChannel.boundChannel( aA*soft3*min );
+                    var r = PixelChannel.boundChannel( rA );
+                    var g = PixelChannel.boundChannel( gA );
+                    var b = PixelChannel.boundChannel( bA );
+
+                    pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
                 }
             }
         }

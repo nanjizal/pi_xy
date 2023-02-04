@@ -19,12 +19,21 @@ class TriangleGML {
     var xml: Xml;
     var offX: Float;
     var offY: Float;
+    public var shapes: Array<ShapeInterface>;
     public function new( pixelShape: Pixelshape, xml: Xml, x: Float = 0., y: Float = 0. ){
         this.pixelShape = pixelShape;
         this.xml = xml;
         this.offX = x;
         this.offY = y;
         process();
+    }
+    public function addShape( str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
+        // consider revising perhaps should process new shape and then process new xml with this child as well?
+        xml = Xml.parse( '<node>'+str+'</node>' ).firstElement(); 
+        this.offX = x;
+        this.offY = y;
+        process();
+        return this;
     }
     public static inline function withString( pixelShape: Pixelshape, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
         trace(str);
@@ -44,10 +53,12 @@ class TriangleGML {
             trace( att + ' ' + x.get(att) );
             s.setParameter( att, x.get( att ) );
         }
-        if( offX != 0. && offY != 0. ){
+        if( offX != 0. || offY != 0. ){
             s.translate( offX, offY );
         }
         s.render( pixelShape );
+        if( shapes == null ) shapes = [];
+        shapes.push( s );
     }
 }
 

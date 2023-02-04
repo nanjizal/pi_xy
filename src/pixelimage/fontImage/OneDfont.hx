@@ -95,14 +95,14 @@ class OneDfont{
         to allow for instance curved y placement
     **/
     inline 
-    public function drawString( str: String, spacingX: Int = 0 ): Pixelimage {
+    public function drawString( str: String, spacingX: Int = 0, transparent: Bool = false ): Pixelimage {
         var charPos = createPlacement( str, spacingX );
         var pixelImage = new Pixelimage( widthArrCharPlacement1D( charPos ), fontImage.height-1 );
-        pixelImage.transparent = false;
+        pixelImage.transparent = transparent;
         return drawPlacement( pixelImage, charPos );
     }
     inline
-    public function drawCurveY( charPos: Array<CharPlacement1D>, fy: ( x: Int ) -> Int ): Pixelimage {
+    public function drawCurveY( charPos: Array<CharPlacement1D>, fy: ( x: Int ) -> Int, transparent = false ): Pixelimage {
         var l = charPos.length;
         var info: CharPlacement1D;
         var minY = 0;
@@ -117,7 +117,7 @@ class OneDfont{
             info.currY = currY;
         }
         var pixelImage = new Pixelimage( widthArrCharPlacement1D( charPos ), maxY - minY + fontImage.height-1 );
-        pixelImage.transparent = false;
+        pixelImage.transparent = transparent;
         return drawPlacement( pixelImage, charPos, -minY );
     }
     inline

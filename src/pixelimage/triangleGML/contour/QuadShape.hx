@@ -63,11 +63,15 @@ class QuadShape extends BasicShape {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        if( soft == 0. ){
-            pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor );
+        this.hitObj = if( soft == 0. ){
+            pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, true );
         } else {
             pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, true, true, true, true );
         }
         return super.render( pixelShape );
+    }
+    public override function clear( pixelShape: Pixelshape, color: Int ): Pixelshape {
+        pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, color, false );
+        return pixelShape;
     }
 }

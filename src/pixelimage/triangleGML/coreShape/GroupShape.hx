@@ -1,5 +1,6 @@
 package pixelimage.triangleGML.coreShape;
 import pixelimage.Pixelimage;
+import pixelimage.algo.IhitObj;
 
 @:structInit
 abstract class GroupShape implements ShapeInterface {
@@ -8,6 +9,8 @@ abstract class GroupShape implements ShapeInterface {
     public var opacity: Float;
     public var offX: Float = 0.;
     public var offY: Float = 0.;
+    public var hitObj: Null<IhitObj> = null;
+
     public function new( opacity = 1., visibility = true ){
         this.visibility = visibility;
         this.opacity = opacity;
@@ -28,5 +31,15 @@ abstract class GroupShape implements ShapeInterface {
     }
     public function render( pixelShape: Pixelshape ): Pixelshape {
         return pixelShape; 
+    }
+    public function clear( pixelShape: Pixelshape, color: Int ): Pixelshape {
+        return pixelShape;
+    }
+    public function hit( x: Float, y: Float ){
+        return if( hitObj == null ){
+            false;
+        } else {
+            hitObj.hit( x, y );
+        }
     }
 }

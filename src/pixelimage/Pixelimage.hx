@@ -951,13 +951,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.image = cast temp;
     }
     inline 
-    public static function imageElementToPixels( img: js.html.ImageElement ): Pixelimage {
+    public static function imageElementToPixels( img: js.html.ImageElement, transparent_ = false ): Pixelimage {
         var canvas        = js.Browser.document.createCanvasElement();
         canvas.width      = img.width;
         canvas.height     = img.height;
         canvas.getContext2d().drawImage( img, 0, 0, img.width, img.height );
         var pixelImage    = new Pixelimage( img.width, img.height );
-        pixelImage.transparent = false;
+        pixelImage.transparent = transparent_;
         pixelImage.drawFromContext( canvas.getContext2d(), 0, 0 );
         canvas            = null;
         return pixelImage; 
