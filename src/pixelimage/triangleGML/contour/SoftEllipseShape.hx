@@ -50,7 +50,7 @@ class SoftEllipseShape extends BasicShape {
         var cy = rH;
         var phi = 0;
         temp.softFillEllipseTri( cx, cy, rW, rH, strokeColor, phi, softC );
-        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
         return super.render( pixelShape );
     }

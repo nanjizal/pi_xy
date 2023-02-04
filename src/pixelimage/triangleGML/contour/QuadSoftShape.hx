@@ -1,10 +1,9 @@
-package pixelimage.triangleGML.patternContour;
+package pixelimage.triangleGML.contour;
 import pixelimage.Pixelimage;
-import pixelimage.Pixelshape;
-import pixelimage.triangleGML.coreShape.PatternStroke;
+import pixelimage.triangleGML.coreShape.BasicShape;
 
 @:structInit
-class QuadPattern extends PatternStroke {
+class QuadSoftShape extends BasicShape {
     public var aX:      Float;
     public var aY:      Float;
     public var bX:      Float;
@@ -13,17 +12,15 @@ class QuadPattern extends PatternStroke {
     public var cY:      Float;
     public var dX:      Float;
     public var dY:      Float;
+    public var soft:    Float;
+    public var softAB:  Bool;
+    public var softBC:  Bool;
+    public var softCD:  Bool;
+    public var softDA:  Bool;
+
     public function new(  opacity            = 1.
                         , visibility          = true
-
-                        , strokeColor0 = 0x00000000
-                        , strokeColor1 = 0x00000000
-
-                        , strokePatternFill = null
-                        , strokePatternWidth = null
-                        , strokePatternHeight = null
-                        , strokePatternAcross = true
-                        , strokePatternScale = 1
+                        , strokeColor        = 0xFFF00000
 
                         , aX: Float = 0.
                         , aY: Float = 0.
@@ -33,10 +30,13 @@ class QuadPattern extends PatternStroke {
                         , cY: Float = 1.
                         , dX: Float = 0.
                         , dY: Float = 1.
+                        , soft: Float = 40.
+                        , softAB: Bool = true
+                        , softBC: Bool = true
+                        , softCD: Bool = true
+                        , softDA: Bool = true
                         ){
-        super( opacity, visibility, 0x00000000, 0, null
-            , strokeColor0, strokeColor1
-            , strokePatternFill, strokePatternWidth, strokePatternHeight, strokePatternAcross, strokePatternScale );
+        super( opacity, visibility, strokeColor, 0., null );
         this.aX = aX;
         this.aY = aY;
         this.bX = bX;
@@ -45,6 +45,11 @@ class QuadPattern extends PatternStroke {
         this.cY = cY;
         this.dX = dX;
         this.dY = dY;
+        this.soft = soft;
+        this.softAB = softAB;
+        this.softBC = softBC;
+        this.softCD = softCD;
+        this.softDA = softDA;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -59,18 +64,27 @@ class QuadPattern extends PatternStroke {
             case 'cX':
                 cX = Std.parseFloat( value );
             case 'cY':
-                cY = Std.parseFloat( value );
+                cY = Std.parseFloat( value );         
             case 'dX':
                 dX = Std.parseFloat( value );
             case 'dY':
-                dY = Std.parseFloat( value );
+                dY = Std.parseFloat( value );  
+            case 'soft':
+                soft = Std.parseFloat( value ); 
+            case 'softAB':
+                softAB = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+            case 'softBC':
+                softBC = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;   
+            case 'softCD':
+                softCD = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false; 
+            case 'softDA':
+                softDA = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false; 
             case _:
                 super.setParameter( name, value );
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        buildPatternTemplates();
-        pixelShape.tileQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, tileImageStroke );
+        pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, softAB, softBC, softCD, softDA );
         return super.render( pixelShape );
     }
 }

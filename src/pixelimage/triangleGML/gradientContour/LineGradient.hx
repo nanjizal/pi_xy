@@ -66,7 +66,11 @@ class LineGradient extends BasicGradient {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        pixelShape.fillGradLine( x1, y1, x2, y2, strokeWidth
+        var px = x1 + offX;
+        var qx = x2 + offX;
+        var py = y1 + offY;
+        var qy = y2 + offY;
+        pixelShape.fillGradLine( px, py, qx, qy, strokeWidth
             , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
         return super.render( pixelShape );
     }

@@ -57,7 +57,7 @@ class TriangleGradient extends BasicGradient {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        pixelShape.fillGradTri( aX, aY, cornerColors[0], bX, bY, cornerColors[1], cX, cY, cornerColors[2] );
+        pixelShape.fillGradTri( aX + offX, aY+offY, cornerColors[0], bX+offX, bY+offY, cornerColors[1], cX+offX, cY+offY, cornerColors[2] );
         return super.render( pixelShape );
     }
 }

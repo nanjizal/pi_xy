@@ -83,7 +83,7 @@ class VePathElementShape extends FillShape implements ILinePathContext {
             i--;
             drawing();
         }
-        pixelShape.putPixelImage( temp, Std.int( 0 ), Std.int( 0 ) );
+        pixelShape.putPixelImage( temp, Std.int( 0+offX ), Std.int( 0+offY ) );
         temp = null;
         //var sp2 = new SvgLinePath( new LinePathContextTrace() );
         //sp2.parse( pathData );

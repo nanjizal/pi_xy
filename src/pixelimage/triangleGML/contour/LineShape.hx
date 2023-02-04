@@ -9,6 +9,7 @@ class LineShape extends BasicShape {
     public var y1: Float;
     public var x2: Float;
     public var y2: Float;
+    public var soft: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0xFFF00000
@@ -20,12 +21,14 @@ class LineShape extends BasicShape {
                         , y1 = 0.
                         , x2 = 0.
                         , y2 = 0.
+                        , soft = 0.
                         ){
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray );
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.soft = soft;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -37,12 +40,22 @@ class LineShape extends BasicShape {
                 x2 = Std.parseFloat( value );
             case 'y2':
                 y2 = Std.parseFloat( value );
+            case 'soft':
+                soft = Std.parseFloat( value );
             case _:
                 super.setParameter( name, value );
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        pixelShape.fillLine( x1, y1, x2, y2, strokeWidth, strokeColor );
+        var px = x1 + offX;
+        var qx = x2 + offX;
+        var py = y1 + offY;
+        var qy = y2 + offY;
+        if( soft == 0. ){
+            pixelShape.fillLine( px, py, qx, qy, strokeWidth, strokeColor );
+        } else {
+            pixelShape.fillSoftLine( px, py, qx, qy, strokeWidth, strokeColor, soft );
+        }
         return super.render( pixelShape );
     }
 }

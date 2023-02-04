@@ -82,7 +82,7 @@ class ArcShape extends FillShape {
             case Pie:
                 pie( temp );
         }
-        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
         return super.render( pixelShape );
     }

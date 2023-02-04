@@ -74,18 +74,26 @@ class QuadGradient extends BasicGradient {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        var iterX  = boundIterator4( x1, x2, x3, x4 );
-        var iterY  = boundIterator4( y1, y2, y3, y4 );
+        var x1_ = x1+offX;
+        var x2_ = x2+offX;
+        var x3_ = x3+offX;
+        var x4_ = x4+offX;
+        var y1_ = y1+offY;
+        var y2_ = y2+offY;
+        var y3_ = y3+offY;
+        var y4_ = y4+offY; 
+        var iterX  = boundIterator4( x1_, x2_, x3_, x4_ );
+        var iterY  = boundIterator4( y1_, y2_, y3_, y4_ );
         var left   = iterX.start;
         var top    = iterY.start;
         var width  = iterX.max - left;
         var height = iterY.max - top;
         var temp   = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
-        temp.fillGradQuad( x1, y1, cornerColors[0]
-                         , x2, y2, cornerColors[1]
-                         , x3, y3, cornerColors[2]
-                         , x4, y4, cornerColors[3] );
+        temp.fillGradQuad( x1_, y1_, cornerColors[0]
+                         , x2_, y2_, cornerColors[1]
+                         , x3_, y3_, cornerColors[2]
+                         , x4_, y4_, cornerColors[3] );
         pixelShape.putPixelImage( temp, left, top );
         temp = null;
         return super.render( pixelShape );

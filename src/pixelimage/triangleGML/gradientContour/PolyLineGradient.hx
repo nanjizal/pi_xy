@@ -51,9 +51,9 @@ class PolyLineGradient extends BasicGradient {
             var y = 0.;
             var nextX = 0.;
             var nextY = 0.;
-            x = points[i];
+            x = points[i] + offX;
             i++;
-            y = points[i];
+            y = points[i] + offY;
             i++;
             var colorCount = 0;
             var colorLen = cornerColors.length;
@@ -62,9 +62,9 @@ class PolyLineGradient extends BasicGradient {
             var colorC = 0;
             var colorD = 0;
             while( i < l ){
-                x = points[ i ];
+                x = points[ i ] + offX;
                 i++;
-                y = points[ i ];
+                y = points[ i ] + offY;
                 i++;
                 nextX = x;
                 nextY = y;

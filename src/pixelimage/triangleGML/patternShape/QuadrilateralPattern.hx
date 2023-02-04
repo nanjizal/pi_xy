@@ -120,7 +120,7 @@ class QuadrilateralPattern extends PatternShape {
         // slight round error
         temp.tileQuad( x1_, y1_, x2_, y2_, x3_, y3_, x4_, y4_, tileImageFill );
 
-        pixelShape.putPixelImage( temp, left, top );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
 
         return super.render( pixelShape );

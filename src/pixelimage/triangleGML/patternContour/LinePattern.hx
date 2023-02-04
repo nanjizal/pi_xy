@@ -54,8 +54,12 @@ class LinePattern extends PatternStroke {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var px = x1 + offX;
+        var qx = x2 + offX;
+        var py = y1 + offY;
+        var qy = y2 + offY;
         buildPatternTemplates();
-        pixelShape.tileLine( x1, y1, x2, y2, strokeWidth, tileImageStroke );
+        pixelShape.tileLine( px, py, qx, qy, strokeWidth, tileImageStroke );
         return super.render( pixelShape );
     }
 }

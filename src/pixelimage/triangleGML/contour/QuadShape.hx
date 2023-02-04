@@ -12,6 +12,7 @@ class QuadShape extends BasicShape {
     public var cY:      Float;
     public var dX:      Float;
     public var dY:      Float;
+    public var soft:    Float;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0xFFF00000
@@ -24,6 +25,7 @@ class QuadShape extends BasicShape {
                         , cY: Float = 1.
                         , dX: Float = 0.
                         , dY: Float = 1.
+                        , soft: Float = 0.
                         ){
         super( opacity, visibility, strokeColor, 0., null );
         this.aX = aX;
@@ -34,6 +36,7 @@ class QuadShape extends BasicShape {
         this.cY = cY;
         this.dX = dX;
         this.dY = dY;
+        this.soft = soft;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -52,13 +55,19 @@ class QuadShape extends BasicShape {
             case 'dX':
                 dX = Std.parseFloat( value );
             case 'dY':
-                dY = Std.parseFloat( value );                
+                dY = Std.parseFloat( value );
+            case 'soft':
+                soft = Std.parseFloat( value );            
             case _:
                 super.setParameter( name, value );
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        pixelShape.fillQuad( aX, aY, bX, bY, cX, cY, dX, dY, strokeColor );
+        if( soft == 0. ){
+            pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor );
+        } else {
+            pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, true, true, true, true );
+        }
         return super.render( pixelShape );
     }
 }

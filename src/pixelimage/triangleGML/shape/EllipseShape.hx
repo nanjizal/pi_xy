@@ -58,7 +58,7 @@ class EllipseShape extends FillShape {
 
         temp.fillEllipseTri( cx, cy, rW, rH, strokeColor, phi );
         temp.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
-        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
         return super.render( pixelShape );
     }

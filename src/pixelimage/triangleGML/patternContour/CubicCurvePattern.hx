@@ -88,7 +88,7 @@ class CubicCurvePattern extends PatternStroke {
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
         buildPatternTemplates();
-        var drawing = new DrawTileHelper( pixelShape, strokeWidth, tileImageStroke, translateX, translateY, scaleX, scaleY );
+        var drawing = new DrawTileHelper( pixelShape, strokeWidth, tileImageStroke, translateX+offX, translateY+offY, scaleX, scaleY );
         drawing.moveTo( x1, y1 );
         drawing.curveTo( x2, y2, x3, y3, x4, y4 );
         return super.render( pixelShape );

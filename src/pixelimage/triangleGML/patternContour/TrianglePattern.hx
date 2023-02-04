@@ -60,7 +60,7 @@ class TrianglePattern extends PatternStroke {
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
         buildPatternTemplates();
-        pixelShape.tileTri( aX, aY, bX, bY, cX, cY, tileImageStroke );
+        pixelShape.tileTri( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, tileImageStroke );
         return super.render( pixelShape );
     }
 }

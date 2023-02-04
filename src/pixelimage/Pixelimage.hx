@@ -845,9 +845,8 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        return rotateLine( this, px, py, thick, h, theta, color, debugCorners );
+        return rotateLine( this, px, py, thick, h, theta, color, hasHit, debugCorners );
     }
-
 
     /**
         tiles a thick line using two triangles vector p, q

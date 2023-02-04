@@ -133,3 +133,19 @@ class ColorHelp {
     public var blueAvg_:( a: Int, b: Int  ) -> Float = blueAvg;
     public var argbIntAvg_:( c0: Int, c1: Int ) -> Int = argbIntAvg;
 }
+// assumes ARGB in and out
+inline
+function luminosityGrey( color: Int, useAlpha: Bool = true ): Int{
+    var c = hexToARGB( color );
+    var l: Float = 0.;
+    var v: Int = 0;
+    return if( useAlpha ){
+        l = c.a * ( 0.21*c.r + 0.72*c.g + 0.07*c.b );
+        v = Math.round( l*0xFF );
+        ( 0xFF << 24 | v << 16 | v << 8 | v );
+    } else {
+        l = ( 0.21*c.r + 0.72*c.g + 0.07*c.b );
+        v = Math.round( l*0xFF );
+        ( Math.round(c.a*0xFF) << 24 | v << 16 | v << 8 | v );
+    }
+}

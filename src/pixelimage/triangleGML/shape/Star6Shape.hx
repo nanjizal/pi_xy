@@ -112,7 +112,7 @@ class Star6Shape extends FillShape {
         temp.fillTri( _a0x, _a0y, _b0x, _b0y, _c0x, _c0y, fill );
         temp.fillTri( _a1x, _a1y, _b1x, _b1y, _c1x, _c1y, fill );
 
-        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
         return super.render( pixelShape );
     }

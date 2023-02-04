@@ -33,6 +33,7 @@ class BasicShape extends GroupShape {
         this.strokeWidth        = strokeWidth;
         this.strokeDashGapArray = strokeDashGapArray;
     }
+
     public override function setParameter( name: String, value: String ){
         switch( name ){
             case 'strokeColor':

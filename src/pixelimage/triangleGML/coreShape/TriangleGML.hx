@@ -17,16 +17,20 @@ import pixelimage.triangleGML.coreShape.TriangleGML;
 class TriangleGML {
     var pixelShape: Pixelshape;
     var xml: Xml;
-    public function new( pixelShape: Pixelshape, xml: Xml ){
+    var offX: Float;
+    var offY: Float;
+    public function new( pixelShape: Pixelshape, xml: Xml, x: Float = 0., y: Float = 0. ){
         this.pixelShape = pixelShape;
         this.xml = xml;
+        this.offX = x;
+        this.offY = y;
         process();
     }
-    public static inline function withString( pixelShape: Pixelshape, str: String ): TriangleGML {
+    public static inline function withString( pixelShape: Pixelshape, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
         trace(str);
         var xml = Xml.parse( '<node>'+str+'</node>' ).firstElement();
         trace( xml );
-        return new TriangleGML( pixelShape, xml );
+        return new TriangleGML( pixelShape, xml, x, y );
     }
     function process(){
         //trace( xml );
@@ -39,6 +43,9 @@ class TriangleGML {
         for( att in x.attributes() ){
             trace( att + ' ' + x.get(att) );
             s.setParameter( att, x.get( att ) );
+        }
+        if( offX != 0. && offY != 0. ){
+            s.translate( offX, offY );
         }
         s.render( pixelShape );
     }
@@ -53,9 +60,11 @@ enum abstract TriangleGMLname ( String ) to String {
     var POLY_LINE_SHAPE             = 'PolyLineShape';
     var QUAD_CURVE_SHAPE            = 'QuadCurveShape';
     var QUAD_SHAPE                  = 'QuadShape';
+    var QUAD_SOFT_SHAPE             = 'QuadSoftShape';
     var QUINT_SHAPE                 = 'QuintShape';
     var SOFT_ELLIPSE_SHAPE          = 'SoftEllipseShape';
     var THRU_CURVE_SHAPE            = 'ThruCurveShape';
+    var TRIANGLE_SOFT_SHAPE         = 'TriangleSoftShape';
     /* gradient */
     var ARROW_THICK_GRADIENT        = 'ArrowThickGradient';
     var ELLIPSE_RADIAL_GRADIENT     = 'EllipseRadialGradient';
@@ -75,6 +84,7 @@ enum abstract TriangleGMLname ( String ) to String {
     var CIRCLE_PATTERN              = 'CirclePattern';
     var ELLIPSE_PATTERN             = 'EllipsePattern';
     var PATH_ELEMENT_PATTERN        = 'PathElementPattern';
+    var PATH_SOFT_ELEMENT_PATTERN   = 'PathSoftElementPattern';
     var QUADRILATERAL_PATTERN       = 'QuadrilateralPattern';
     var RECTANGLE_PATTERN           = 'RectanglePattern';
     var SQUARE_PATTERN              = 'SquarePattern';
@@ -108,12 +118,16 @@ function getTriangleGML( nodeName: String ): ShapeInterface {
             new QuadCurveShape();
         case QUAD_SHAPE:
             new QuadShape();
+        case QUAD_SOFT_SHAPE:
+            new QuadSoftShape();
         case QUINT_SHAPE:
             new QuintShape();
         case SOFT_ELLIPSE_SHAPE:
             new SoftEllipseShape();
         case THRU_CURVE_SHAPE:
             new ThruCurveShape();
+        case TRIANGLE_SOFT_SHAPE:
+            new TriangleSoftShape();
         /* gradient */
         case ARROW_THICK_GRADIENT:
             new ArrowThickGradient();
@@ -148,6 +162,8 @@ function getTriangleGML( nodeName: String ): ShapeInterface {
             new EllipsePattern();
         case PATH_ELEMENT_PATTERN:
             new PathElementPattern();
+        case PATH_SOFT_ELEMENT_PATTERN:
+            new PathElementPattern();    
         case QUADRILATERAL_PATTERN:
             new QuadrilateralPattern();
         case RECTANGLE_PATTERN:

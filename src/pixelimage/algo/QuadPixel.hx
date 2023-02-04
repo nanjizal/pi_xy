@@ -6,16 +6,42 @@ import pixelimage.algo.HitTri;
 import pixelimage.algo.GeomPix;
 
 inline
-function fillQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
-                 , bx: Float, by: Float
-                 , cx: Float, cy: Float
-                 , dx: Float, dy: Float 
-                 , color: Int
-                 , hasHit: Bool = false ): Null<HitQuad>{
+function fillQuadrilateral( pixelImage: Pixelimage
+                        , ax: Float, ay: Float
+                        , bx: Float, by: Float
+                        , cx: Float, cy: Float
+                        , dx: Float, dy: Float 
+                        , color: Int
+                        , hasHit: Bool = false ): Null<HitQuad>{
     // tri e - a b d
     // tri f - b c d
     fillTriangle( pixelImage, ax, ay, bx, by, dx, dy, color, hasHit );
     fillTriangle( pixelImage, bx, by, cx, cy, dx, dy, color, hasHit );
+    return if( hasHit == true ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
+inline
+function fillSoftQuadrilateral( pixelImage: Pixelimage
+                              , ax: Float, ay: Float
+                              , bx: Float, by: Float
+                              , cx: Float, cy: Float
+                              , dx: Float, dy: Float 
+                              , color: Int
+                              , soft: Float = 40
+                              , softAB: Bool = true
+                              , softBC: Bool = true
+                              , softCD: Bool = true
+                              , softDA: Bool = true
+                              , hasHit: Bool = false ): Null<HitQuad>{
+    // tri e - a b d  - ab true, bd internal, da true
+    // tri f - b c d  - bc true, cd true, bd internal
+    fillTriSoft3( pixelImage, ax, ay, bx, by, dx, dy, color, soft, softAB, false, softDA, hasHit );
+    fillTriSoft3( pixelImage, bx, by, cx, cy, dx, dy, color, soft, softBC, softCD, false, hasHit );
     return if( hasHit == true ){
         var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
         v;

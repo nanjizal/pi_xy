@@ -77,7 +77,7 @@ class EllipsePattern extends PatternShape {
         temp.tileEllipseTri( cx, cy, rW, rH, tileImageStroke, phi );
         temp.tileEllipseTri( innerCx, innerCy, innerRw, innerRh, tileImageFill, phi );
 
-        pixelShape.putPixelImage( temp, Std.int( left ), Std.int( top ) );
+        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
         return super.render( pixelShape );
     }

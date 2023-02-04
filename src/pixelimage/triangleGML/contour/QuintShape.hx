@@ -63,7 +63,7 @@ class QuintShape extends BasicShape {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
-        pixelShape.softFillQuint( aX, aY, bX, bY, cX, cY, dX, dY, strokeColor, softC );
+        pixelShape.softFillQuint( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, softC );
         return super.render( pixelShape );
     }
 }

@@ -76,18 +76,22 @@ class ArrowThickGradient extends FillShape {
         }
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
+        var px = x1 + offX;
+        var qx = x2 + offX;
+        var py = y1 + offY;
+        var qy = y2 + offY;
         if( both == false ){
             if( arrowHeight > 0. || arrowWidth > 0. ){
-                pixelShape.gradThickFixArrow( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
+                pixelShape.gradThickFixArrow( px, py, qx, qy, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
             } else {
-                pixelShape.gradThickArrow( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
+                pixelShape.gradThickArrow( px, py, qx, qy, strokeWidth, strokeTopColor, strokeBottomColor, flare, reverseFlare );
             }
             
         } else {
             if( arrowHeight > 0. || arrowWidth > 0. ){
-                pixelShape.gradThickFixArrowBoth( x1, y1, x2, y2, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor );
+                pixelShape.gradThickFixArrowBoth( px, py, qx, qy, arrowWidth, arrowHeight, strokeWidth, strokeTopColor, strokeBottomColor );
             } else {
-                pixelShape.gradThickArrowBoth( x1, y1, x2, y2, strokeWidth, strokeTopColor, strokeBottomColor );
+                pixelShape.gradThickArrowBoth( px, py, qx, qy, strokeWidth, strokeTopColor, strokeBottomColor );
             }
         }
         return super.render( pixelShape );

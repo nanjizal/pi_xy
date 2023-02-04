@@ -53,9 +53,9 @@ class LineGridShape extends BasicShape {
     }
     public override function render( pixelShape: Pixelshape ): Pixelshape {
         if( deltaH != 0. ){
-            pixelShape.lineGridWH( left, top, width, height, delta, deltaH, strokeWidth, strokeColor );
+            pixelShape.lineGridWH( left+offX, top+offY, width, height, delta, deltaH, strokeWidth, strokeColor );
         } else {
-            pixelShape.lineGrid( left, top, width, height, delta, strokeWidth, strokeColor );
+            pixelShape.lineGrid( left+offX, top+offY, width, height, delta, strokeWidth, strokeColor );
         }
         return super.render( pixelShape );
     }
