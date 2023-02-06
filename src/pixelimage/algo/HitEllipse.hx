@@ -11,6 +11,9 @@ class HitEllipse implements IhitObj {
     var x_phi_ry: Float;
     var y_phi_rx: Float;
     var y_phi_ry: Float;
+    public var undoImage: Null<Pixelimage> = null;
+    public var undoX: Int;
+    public var undoY: Int;
     inline
     function new( cx: Float,  cy: Float
                 , rx: Float,  ry: Float

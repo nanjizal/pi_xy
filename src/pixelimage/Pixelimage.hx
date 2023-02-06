@@ -118,6 +118,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }: ImageStruct
         );
     }
+
     /**
         this provides a location for a UIn8 access of a color channel
     **/
@@ -144,6 +145,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     inline
     public function setPixel( x: Int, y: Int, color: Int ): Int {
         return setARGB( x, y, color );
+    }
+    inline
+    public function zeroPixel( x: Int, y: Int ){
+        this.image[ position( x, y ) ] = 0;
     }
     /**
         The main way is set the pixel color at x, y
@@ -231,6 +236,23 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         var maxY = Std.int( y + h );
         while( true ){
             setARGB( p++, q, color );
+            if( p > maxX ){
+                p = xx;
+                q++;
+            } 
+            if( q > maxY ) break;
+        }
+    }
+    inline public 
+    function clearRect( x: Float, y: Float
+                       , w: Float, h: Float ){
+        var p = Std.int( x );
+        var xx = p;
+        var q = Std.int( y );
+        var maxX = Std.int( x + w );
+        var maxY = Std.int( y + h );
+        while( true ){
+            this.image[ position( p++, q ) ] = 0;
             if( p > maxX ){
                 p = xx;
                 q++;
@@ -629,8 +651,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
                     , color: Pixel32
-                    , hasHit: Bool = false ): Null<HitTri> {
-        return fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit );
+                    , hasHit: Bool = false
+                    , hasUndo: Bool = false ): Null<HitTri> {
+        return fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit, hasUndo );
     }
     public inline
     function tileTri( ax: Float, ay: Float
@@ -686,9 +709,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     }
     public inline 
     function tileRect( x:   Float, y: Float
-                         , wid: Float, hi: Float
-                         , tileImage: Pixelimage
-                         , hasHit: Bool = false ): HitQuad {
+                     , wid: Float, hi: Float
+                     , tileImage: Pixelimage
+                     , hasHit: Bool = false ): HitQuad {
         var bx = x + wid;
         var cy = y + hi;
         return tileQuad( x,  y, bx, y, bx, cy, x,  cy, tileImage, hasHit );
@@ -887,7 +910,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.
     **/
     inline public
-    function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int, ?useAvaliableMask = true ){
+    function putPixelImage( pixelImage: Pixelimage, x: Int, y: Int, ?useAvaliableMask = true, forceClear: Bool = false ){
         // ignore useVirtualPos for now.
         // ignore could use one loop for now.
         for( dy in 0...pixelImage.height ){
@@ -897,12 +920,16 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     var maskPixel = new Pixel32( pixelImage.mask.getARGB( dx, dy ) );
                     col = new Pixel32( col ).maskPixel( maskPixel );
                 }
-                if( col != 0 ) setARGB( x + dx, y + dy, col );
+                if( col != 0 ) {
+                    setARGB( x + dx, y + dy, col );
+                } else {
+                    if( forceClear ) this.image[ position( x + dx, y + dy ) ] = 0;
+                }
             }
         }
     }
     inline public
-    function putPixelImageRect( pixelImage: Pixelimage, x: Int, y: Int, rectLeft: Int, rectTop: Int, rectRight: Int, rectBottom: Int, ?useAvaliableMask = true ){
+    function putPixelImageRect( pixelImage: Pixelimage, x: Int, y: Int, rectLeft: Int, rectTop: Int, rectRight: Int, rectBottom: Int, ?useAvaliableMask = true, forceClear: Bool = false ){
         for( dy in rectTop...rectBottom ){
             for( dx in rectLeft...rectRight ){
                 var col = pixelImage.getARGB( dx, dy );
@@ -910,7 +937,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
                     var maskPixel = new Pixel32( pixelImage.mask.getARGB( dx, dy ) );
                     col = new Pixel32( col ).maskPixel( maskPixel );
                 }
-                if( col != 0 ) setARGB( x + dx - rectLeft, y + dy - rectTop, col );
+                if( col != 0 ){
+                    setARGB( x + dx - rectLeft, y + dy - rectTop, col );
+                } else {
+                    if( forceClear ) this.image[ position( x + dx - rectLeft, y + dy - rectTop ) ] = 0;
+                }
             }
         }
     }

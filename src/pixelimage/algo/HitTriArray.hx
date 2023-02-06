@@ -9,6 +9,9 @@ class HitTriArray implements IhitObj {
     public var triArr: Array<HitTri>;
     var xRange: IteratorRange;
     var yRange: IteratorRange;
+    public var undoImage: Null<Pixelimage> = null;
+    public var undoX: Int;
+    public var undoY: Int;
     public var boundsCalculated: Bool = false;
     inline
     public function new( triArr: Array<HitTri> ){

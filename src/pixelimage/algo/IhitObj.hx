@@ -1,5 +1,8 @@
 package pixelimage.algo;
 
 interface IhitObj {
-    function hit( x: Float, y: Float ): Bool;
+    public function hit( x: Float, y: Float ): Bool;
+    public var undoImage: Null<Pixelimage>;
+    public var undoX: Int;
+    public var undoY: Int;
 }

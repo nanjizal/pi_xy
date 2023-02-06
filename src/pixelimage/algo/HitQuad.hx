@@ -19,6 +19,9 @@ class HitQuad implements IhitObj {
     public var triBCD: HitTri;
     public var xIter4: IteratorRange;
     public var yIter4: IteratorRange;
+    public var undoImage: Null<Pixelimage> = null;
+    public var undoX: Int;
+    public var undoY: Int;
     inline
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float

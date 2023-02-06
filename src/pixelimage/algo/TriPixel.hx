@@ -16,7 +16,7 @@ import pixelimage.algo.HitTri;
                     , bx: Float, by: Float
                     , cx: Float, cy: Float
                     , color: Pixel32
-                    , hasHit: Bool = false ){
+                    , hasHit: Bool = false, hasUndo: Bool = false ){
         var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
         if( !adjustWinding ){// TODO: this is inverse of cornerContour needs thought, but provides required protection
             // swap b and c
@@ -28,7 +28,7 @@ import pixelimage.algo.HitTri;
             cx = bx_;
             cy = by_;
         }
-        return fillTriUnsafe( pixelImage, ax, ay, bx, by, cx, cy, color, hasHit );
+        return fillTriUnsafe( pixelImage, ax, ay, bx, by, cx, cy, color, hasHit, hasUndo );
     }
 
     inline 
@@ -37,7 +37,7 @@ import pixelimage.algo.HitTri;
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
                           , color: Pixel32
-                          , hasHit: Bool = false ): Null<HitTri>{
+                          , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -45,13 +45,19 @@ import pixelimage.algo.HitTri;
         var tx = ay - by;
         var ty = bx - ax;
         var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
         var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
         var found = false;
         var s = 0.;
         var t = 0.;
         var sxx = 0.;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         var txx = 0.;
-        for( x in boundIterator3( ax, bx, cx ) ){
+        for( x in xIter3 ){
             sxx = sx*x;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             txx = tx*x;
             found = false;
@@ -68,13 +74,18 @@ import pixelimage.algo.HitTri;
                         found = true;
                     } else {
                         // after filling break
-                        if( found ) break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+                        if( found ) break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                     }
                 }
             }                                                                                                                                                                                                                                                                                                                                                                                                                                
         }
         return if( hasHit == true ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -106,7 +117,7 @@ import pixelimage.algo.HitTri;
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
                           , color: Pixel32
-                          , hasHit: Bool = false ): Null<HitTri>{
+                          , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -115,12 +126,18 @@ import pixelimage.algo.HitTri;
         var ty = bx - ax;
         var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
         var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
         var found = false;
         var s = 0.;
         var t = 0.;
         var syy = 0.;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         var tyy = 0.;
-        for( y in boundIterator3( ay, by, cy ) ){
+        for( y in yIter3 ){
             syy = sy*y;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             tyy = ty*y;
             found = false;
@@ -144,6 +161,11 @@ import pixelimage.algo.HitTri;
         }
         return if( hasHit == true ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -172,12 +194,12 @@ import pixelimage.algo.HitTri;
     }
 
     inline 
-    function tileTriUnsafe( pixelimage: Pixelimage
+    function tileTriUnsafe( pixelImage: Pixelimage
                           , ax: Float, ay: Float
                           , bx: Float, by: Float
                           , cx: Float, cy: Float
                           , tileImage: Pixelimage
-                          , hasHit: Bool = false ): Null<HitTri>{
+                          , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var s0 = ay*cx - ax*cy;
         var sx = cy - ay;
         var sy = ax - cx;
@@ -185,13 +207,19 @@ import pixelimage.algo.HitTri;
         var tx = ay - by;
         var ty = bx - ax;
         var A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
         var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
         var foundY = false;
         var s = 0.;
         var t = 0.;
         var sxx = 0.;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         var txx = 0.;
-        for( x in boundIterator3( ax, bx, cx ) ){
+        for( x in xIter3 ){
             sxx = sx*x;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             txx = tx*x;
             foundY = false;
@@ -205,7 +233,7 @@ import pixelimage.algo.HitTri;
                     if( (s + t) < A ) {
                         // store first hit
                         var color = tileImage.getARGB( x % (tileImage.width), y % (tileImage.height) );
-                        pixelimage.setARGB( x, y, color );
+                        pixelImage.setARGB( x, y, color );
                         foundY = true;
                     } else {
                         // after filling break
@@ -216,6 +244,11 @@ import pixelimage.algo.HitTri;
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -223,11 +256,11 @@ import pixelimage.algo.HitTri;
     }
 
     inline
-    function fillGradTriangle( pixelimage: Pixelimage
+    function fillGradTriangle( pixelImage: Pixelimage
                         , ax: Float, ay: Float, colA: Pixel32
                         , bx: Float, by: Float, colB: Pixel32
                         , cx: Float, cy: Float, colC: Pixel32
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var aA = ( colB >> 24 ) & 0xFF;
         var rA = ( colB >> 16 ) & 0xFF;
         var gA = ( colB >> 8 ) & 0xFF;
@@ -249,9 +282,16 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
-        for( px in boundIterator3( cx, bx, ax ) ){
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        for( px in xIter3 ){
             var pcx = px - cx;
-            for( py in boundIterator3( cy, by, ay ) ){
+            for( py in yIter3 ){
                 var pcy = py - cy;
                 var dot31 = dot( pcx, pcy, bcx, bcy );
                 var dot32 = dot( pcx, pcy, acx, acy );
@@ -263,43 +303,48 @@ import pixelimage.algo.HitTri;
                     var r = PixelChannel.boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
                     var g = PixelChannel.boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );
                     var b = PixelChannel.boundChannel( bA*ratioA + bB*ratioB + bC*ratioC );
-                    pixelimage.set_argbPixel( a, r, g, b, pixelimage.position( px, py ) );
+                    pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
                 }
             }
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
         }   
     }
     inline
-    function topRightImgTriFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function topRightImgTriFudge( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , ax: Float, ay: Float
                             , bx: Float, by: Float
                             , cx: Float, cy: Float
-                            , hasHit: Bool = false ): Null<HitTri>{
-        return uvTriangle( pixelimage, texture, win, ax, ay, 1., 0., bx, by, 0., 0., cx, cy, 1., 1. );                      
+                            , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
+        return uvTriangle( pixelImage, texture, win, ax, ay, 1., 0., bx, by, 0., 0., cx, cy, 1., 1., hasHit, hasUndo );                      
     }
     inline
-    function bottomLeftImgTriFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function bottomLeftImgTriFudge( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , dx: Float, dy: Float
                             , cx: Float, cy: Float
                             , ax: Float, ay: Float
-                            , hasHit: Bool = false ): Null<HitTri>{
-        return uvTriangle( pixelimage, texture, win, dx, dy, 1., 1., cx, cy, 0., 1., ax, ay, 0., 0. );                     
+                            , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
+        return uvTriangle( pixelImage, texture, win, dx, dy, 1., 1., cx, cy, 0., 1., ax, ay, 0., 0., hasHit, hasUndo );                     
     }
     /**
         This is the first attempt at UV mapping it does not swap A B and so does not work properly, but can be used with fudged triangles above.
         Likely will remove in future but keeping incase it is useful for edge cases.
     **/
     inline
-    function uvTriangleFudge( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function uvTriangleFudge( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                         , ax: Float, ay: Float, au: Float, av: Float
                         , bx: Float, by: Float, bu: Float, bv: Float
                         , cx: Float, cy: Float, cu: Float, cv: Float
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var bcx = bx - cx;
         var bcy = by - cy;
         var acx = ax - cx; 
@@ -309,10 +354,16 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
-
-        for( px in boundIterator3( cx, bx, ax ) ){
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        for( px in xIter3 ){
             var pcx = px - cx;
-            for( py in boundIterator3( cy, by, ay ) ){
+            for( py in yIter3 ){
                 var pcy = py - cy;
                 var dot31  = dot( pcx, pcy, bcx, bcy );
                 var dot32  = dot( pcx, pcy, acx, acy );
@@ -325,43 +376,48 @@ import pixelimage.algo.HitTri;
                     var x = Std.int( u*win.width + win.x );
                     var y = Std.int( v*win.height + win.y );
                     var col = texture.getARGB( x, y );
-                    pixelimage.setARGB( px, py, col );
+                    pixelImage.setARGB( px, py, col );
                 }
             }
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
         }   
     }
     inline
-    function topLeftImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function topLeftImgTri( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , ax: Float, ay: Float
                             , bx: Float, by: Float
                             , dx: Float, dy: Float
-                            , hasHit: Bool = false ): Null<HitTri>{
+                            , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         // tri e - a b d
         // tri f - b c d                        
-        return uvTriangle( pixelimage, texture, win, ax, ay, 0., 0., bx, by, 1, 0., dx, dy, 0., 1. );                      
+        return uvTriangle( pixelImage, texture, win, ax, ay, 0., 0., bx, by, 1, 0., dx, dy, 0., 1., hasHit, hasUndo );                      
     }
     inline
-    function bottomRightImgTri( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function bottomRightImgTri( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                             , bx: Float, by: Float
                             , cx: Float, cy: Float
                             , dx: Float, dy: Float
-                            , hasHit: Bool = false ): Null<HitTri>{
+                            , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         // tri e - a b d
         // tri f - b c d                         
-        return uvTriangle( pixelimage, texture, win, bx, by, 1., 0., cx, cy, 1., 1., dx, dy, 0., 1. );                     
+        return uvTriangle( pixelImage, texture, win, bx, by, 1., 0., cx, cy, 1., 1., dx, dy, 0., 1., hasHit, hasUndo );                     
     }
     inline
-    function uvTriangle( pixelimage: Pixelimage, texture: Pixelimage, win: RectangleWindow
+    function uvTriangle( pixelImage: Pixelimage, texture: Pixelimage, win: RectangleWindow
                         , ax: Float, ay: Float, au: Float, av: Float
                         , bx: Float, by: Float, bu: Float, bv: Float
                         , cx: Float, cy: Float, cu: Float, cv: Float
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
     // switch A B as per gradient ( consider xor's )
         var temp = au;
         au = bu;
@@ -379,10 +435,16 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
-
-        for( px in boundIterator3( cx, bx, ax ) ){
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        for( px in xIter3 ){
             var pcx = px - cx;
-            for( py in boundIterator3( cy, by, ay ) ){
+            for( py in yIter3 ){
                 var pcy = py - cy;
                 var dot31  = dot( pcx, pcy, bcx, bcy );
                 var dot32  = dot( pcx, pcy, acx, acy );
@@ -395,12 +457,17 @@ import pixelimage.algo.HitTri;
                     var x = Std.int( u*win.width + win.x );
                     var y = Std.int( v*win.height + win.y );
                     var col = texture.getARGB( x, y );
-                    pixelimage.setARGB( px, py, col );
+                    pixelImage.setARGB( px, py, col );
                 }
             }
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -413,7 +480,7 @@ import pixelimage.algo.HitTri;
                         , bx: Float, by: Float, bu: Float, bv: Float
                         , cx: Float, cy: Float, cu: Float, cv: Float
                         , soft3: Float
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = true ): Null<HitTri>{
     // switch A B as per gradient ( consider xor's )
         var temp = au;
         au = bu;
@@ -431,10 +498,20 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
-
-        for( px in boundIterator3( cx, bx, ax ) ){
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        var a = 0;
+        var r = 0;
+        var g = 0;
+        var b = 0;
+        for( px in xIter3 ){
             var pcx = px - cx;
-            for( py in boundIterator3( cy, by, ay ) ){
+            for( py in yIter3 ){
                 var pcy = py - cy;
                 var dot31  = dot( pcx, pcy, bcx, bcy );
                 var dot32  = dot( pcx, pcy, acx, acy );
@@ -460,10 +537,10 @@ import pixelimage.algo.HitTri;
                     max = ( 1 - max )/2; // not really max just the shaded out, not sure if 2.7 ideal but close.
                     var min = ( min < max )? min: (max+min)/2;
 
-                    var a = PixelChannel.boundChannel( aA*soft3*min );
-                    var r = PixelChannel.boundChannel( rA );
-                    var g = PixelChannel.boundChannel( gA );
-                    var b = PixelChannel.boundChannel( bA );
+                    a = PixelChannel.boundChannel( aA*soft3*min );
+                    r = PixelChannel.boundChannel( rA );
+                    g = PixelChannel.boundChannel( gA );
+                    b = PixelChannel.boundChannel( bA );
 
                     pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
                 }
@@ -471,20 +548,25 @@ import pixelimage.algo.HitTri;
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
         }   
     }
-
+    // TODO: no undo here, it may disappear..
     inline
     function fillTriTwoSoft( pixelImage: Pixelimage
-        , ax: Float, ay: Float
-        , bx: Float, by: Float
-        , cx: Float, cy: Float
-        , color: Pixel32
-        , softC: Float = 10
-        , hasHit: Bool = false ): Null<HitTri>{
+                            , ax: Float, ay: Float
+                            , bx: Float, by: Float
+                            , cx: Float, cy: Float
+                            , color: Pixel32
+                            , softC: Float = 10
+                            , hasHit: Bool = false ): Null<HitTri>{
         // A is the inner one..
         // calculate centre as average
         var ex: Float = ( bx + cx )/2;
@@ -507,7 +589,7 @@ import pixelimage.algo.HitTri;
                         , cx: Float, cy: Float
                         , color: Pixel32
                         , softC: Float = 10
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var aA = ( color >> 24 ) & 0xFF;
         var rA = ( color >> 16 ) & 0xFF;
         var gA = ( color >> 8 ) & 0xFF;
@@ -521,9 +603,19 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
         var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        var a = 0;
+        var r = 0;
+        var g = 0;
+        var b = 0;
         var found = false;
-        for( px in boundIterator3( cx, bx, ax ) ){
+        for( px in xIter3 ){
             var pcx = px - cx;
             found = false;
             for( py in yIter3 ){
@@ -545,9 +637,16 @@ import pixelimage.algo.HitTri;
                     break;
                 }
             }
+            // TODO: need to consider
+            // if( !found ) pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, yIter3.max ) );// -1?
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -564,7 +663,7 @@ import pixelimage.algo.HitTri;
                         , softAB = true
                         , softBC = true
                         , softCA = true
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = true ): Null<HitTri>{
         var aA = ( color >> 24 ) & 0xFF;
         var rA = ( color >> 16 ) & 0xFF;
         var gA = ( color >> 8 ) & 0xFF;
@@ -578,11 +677,21 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
         var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
         var found = false;
         var min: Float = 0;
         var max: Float = 0;
-        for( px in boundIterator3( cx, bx, ax ) ){
+        var a = 0;
+        var r = 0;
+        var g = 0;
+        var b = 0;
+        for( px in xIter3 ){
             var pcx = px - cx;
             found = false;
             for( py in yIter3 ){
@@ -594,7 +703,7 @@ import pixelimage.algo.HitTri;
                 var ratioC = 1.0 - ratioB - ratioA;
                 if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
                     // Note slightly strange as A B sort of switched in implementation
-                    var a = switch( [ softAB, softBC, softCA ]){
+                    a = switch( [ softAB, softBC, softCA ]){
                         case [ false, false, false ]:
                             PixelChannel.boundChannel( aA );
                         case [ false, false, true ]:
@@ -636,9 +745,9 @@ import pixelimage.algo.HitTri;
                             var min = ( min < max )? min: (max+min)/2;
                             PixelChannel.boundChannel( aA*soft3*min );
                     }
-                    var r = PixelChannel.boundChannel( rA );
-                    var g = PixelChannel.boundChannel( gA );
-                    var b = PixelChannel.boundChannel( bA );
+                    r = PixelChannel.boundChannel( rA );
+                    g = PixelChannel.boundChannel( gA );
+                    b = PixelChannel.boundChannel( bA );
                     pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
                     found = true;
                 } else if( found ){
@@ -646,9 +755,16 @@ import pixelimage.algo.HitTri;
                     break;
                 }
             }
+            // TODO: need to consider
+            // if( !found ) pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, yIter3.max ) );// -1?
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -656,12 +772,12 @@ import pixelimage.algo.HitTri;
     }
 
     inline
-    function fillTriExtra0( pixelimage: Pixelimage
+    function fillTriExtra0( pixelImage: Pixelimage
                         , ax: Float, ay: Float
                         , bx: Float, by: Float
                         , cx: Float, cy: Float
                         , color: Pixel32
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = true ): Null<HitTri>{
         var aA = ( color >> 24 ) & 0xFF;
         var rA = ( color >> 16 ) & 0xFF;
         var gA = ( color >> 8 ) & 0xFF;
@@ -675,9 +791,19 @@ import pixelimage.algo.HitTri;
         var dot12 = dot( bcx, bcy, acx, acy );
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
         var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        var a = 0;
+        var r = 0;
+        var g = 0;
+        var b = 0;
         var found = false;
-        for( px in boundIterator3( cx, bx, ax ) ){
+        for( px in xIter3 ){
             var pcx = px - cx;
             found = false;
             for( py in yIter3 ){
@@ -688,12 +814,11 @@ import pixelimage.algo.HitTri;
                 var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
                 var ratioC = 1.0 - ratioB - ratioA;
                 if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
-                    var a = PixelChannel.boundChannel( aA*(10*ratioB ) );
-                    var r = PixelChannel.boundChannel( rA );
-                    var g = PixelChannel.boundChannel( gA );
-                    var b = PixelChannel.boundChannel( bA );
-                    pixelimage.set_argbPixel( a, r, g, b, pixelimage.position( px, py ) );
-
+                    a = PixelChannel.boundChannel( aA*(10*ratioB ) );
+                    r = PixelChannel.boundChannel( rA );
+                    g = PixelChannel.boundChannel( gA );
+                    b = PixelChannel.boundChannel( bA );
+                    pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
                     //pixelimage.setARGB( px, py, color );
                     found = true;
                 } else if( found ){
@@ -701,9 +826,16 @@ import pixelimage.algo.HitTri;
                     break;
                 }
             }
+            // TODO: need to consider
+            //if( !found ) pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, yIter3.max ) );// -1?
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -711,12 +843,12 @@ import pixelimage.algo.HitTri;
     }
 
     inline
-    function fillTriExtra1( pixelimage: Pixelimage
+    function fillTriExtra1( pixelImage: Pixelimage
                         , ax: Float, ay: Float
                         , bx: Float, by: Float
                         , cx: Float, cy: Float
                         , color: Pixel32
-                        , hasHit: Bool = false ): Null<HitTri>{
+                        , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
         var bcx = bx - cx;
         var bcy = by - cy;
         var acx = ax - cx; 
@@ -727,8 +859,14 @@ import pixelimage.algo.HitTri;
         var dot22 = dotSame( acx, acy );
         var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
         var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
         var found = false;
-        for( py in boundIterator3( cy, by, ay ) ){
+        for( py in yIter3 ){
             var pcy = py - cy;
             found = false;
             for( px in xIter3 ){
@@ -739,16 +877,23 @@ import pixelimage.algo.HitTri;
                 var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
                 var ratioC = 1.0 - ratioB - ratioA;
                 if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
-                    pixelimage.setARGB( px, py, color );
+                    pixelImage.setARGB( px, py, color );
                     found = true;
                 } else if( found ){
                     // exit early
                     break;
                 }
             }
+            // TODO: need to consider
+            //if( !found ) pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, yIter3.max ) );// -1?
         }
         return if( hasHit == false ){
             var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
             v;
         } else {
             null;
@@ -757,14 +902,14 @@ import pixelimage.algo.HitTri;
 
 // EXPERIMENTAL !!!  work in progress
 inline
-function uvTriangleTexture3( pixelimage: Pixelimage
+function uvTriangleTexture3( pixelImage: Pixelimage
                     , textureA: Pixelimage, winA: RectangleWindow
                     , textureB: Pixelimage, winB: RectangleWindow
                     , textureC: Pixelimage, winC: RectangleWindow
                     , ax: Float, ay: Float, au: Float, av: Float
                     , bx: Float, by: Float, bu: Float, bv: Float
                     , cx: Float, cy: Float, cu: Float, cv: Float
-                    , hasHit: Bool = false ): Null<HitTri>{
+                    , hasHit: Bool = false, hasUndo: Bool = false ): Null<HitTri>{
     // switch A B as per gradient ( consider xor's )
     var temp = au;
     au = bu;
@@ -790,9 +935,20 @@ function uvTriangleTexture3( pixelimage: Pixelimage
     var x: Int = 0;
     var y: Int = 0;
     var col: Int;
-    for( px in boundIterator3( cx, bx, ax ) ){
+    var a = 0;
+    var r = 0;
+    var g = 0;
+    var b = 0;
+    var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+    var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+    var undoImage: Pixelimage = null;
+    if( hasUndo ){
+        undoImage = new Pixelimage( xIter3.length, yIter3.length );
+        undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+    }
+    for( px in xIter3 ){
         var pcx = px - cx;
-        for( py in boundIterator3( cy, by, ay ) ){
+        for( py in yIter3 ){
             var pcy = py - cy;
             var dot31  = dot( pcx, pcy, bcx, bcy );
             var dot32  = dot( pcx, pcy, acx, acy );
@@ -825,16 +981,21 @@ function uvTriangleTexture3( pixelimage: Pixelimage
                 var rC: Int = ( colC >> 16 ) & 0xFF;
                 var gC: Int = ( colC >> 8 ) & 0xFF;
                 var bC: Int = colC & 0xFF;
-                var a = PixelChannel.boundChannel( aA*ratioA + aB*ratioB + aC*ratioC );
-                var r = PixelChannel.boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
-                var g = PixelChannel.boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );
-                var b = PixelChannel.boundChannel( bA*ratioA + bB*ratioB + bC*ratioC );
-                pixelimage.set_argbPixel( a, r, g, b, pixelimage.position( px, py ) );
+                a = PixelChannel.boundChannel( aA*ratioA + aB*ratioB + aC*ratioC );
+                r = PixelChannel.boundChannel( rA*ratioA + rB*ratioB + rC*ratioC );
+                g = PixelChannel.boundChannel( gA*ratioA + gB*ratioB + gC*ratioC );
+                b = PixelChannel.boundChannel( bA*ratioA + bB*ratioB + bC*ratioC );
+                pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
             }
         }
     }
     return if( hasHit == false ){
         var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+        if( hasUndo ){
+            v.undoImage = undoImage;
+            v.undoX = xIter3.start;
+            v.undoY = yIter3.start;
+        }
         v;
     } else {
         null;
@@ -846,29 +1007,29 @@ class TriPixel{
        <font color="LightPink" font-weight:"Bold">fillTriUnsafe</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.
     **/
-    public var _fillTriUnsafe: ( pixelimage: Pixelimage
+    public var _fillTriUnsafe: ( pixelImage: Pixelimage
                         , ax: Float, ay: Float
                         , bx: Float, by: Float
                         , cx: Float, cy: Float
                         , color: Pixel32
-                        , hasHit: Bool ) -> Null<HitTri> = fillTriUnsafe;
+                        , hasHit: Bool, hasUndo: Bool ) -> Null<HitTri> = fillTriUnsafe;
     /**
        <font color="LightPink" font-weight:"Bold">tileTriUnsafe</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.
     **/
-    public var _tileTriUnsafe:(  pixelimage: Pixelimage
+    public var _tileTriUnsafe:(  pixelImage: Pixelimage
                         , ax: Float, ay: Float
                         , bx: Float, by: Float
                         , cx: Float, cy: Float
                         , tileImage: Pixelimage
-                        , hasHit: Bool ) -> Null<HitTri> = tileTriUnsafe;
+                        , hasHit: Bool, hasUndo: Bool ) -> Null<HitTri> = tileTriUnsafe;
     /**
        <font color="LightPink" font-weight:"Bold">fillGradTriangle</font> module level field
        @param hasHit defaults false, since a HitTri has runtime overhead.
     **/          
-    public var _fillGradTriangle:( pixelimage: Pixelimage
+    public var _fillGradTriangle:( pixelImage: Pixelimage
                         , ax: Float, ay: Float, colA: Pixel32
                         , bx: Float, by: Float, colB: Pixel32
                         , cx: Float, cy: Float, colC: Pixel32
-                        , hasHit: Bool ) -> Null<HitTri> = fillGradTriangle;
+                        , hasHit: Bool, hasUndo: Bool ) -> Null<HitTri> = fillGradTriangle;
 }

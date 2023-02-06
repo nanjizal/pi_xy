@@ -21,7 +21,9 @@ class HitTri implements IhitObj {
     var A:  Float;
     public var xIter3: IteratorRange;
     public var yIter3: IteratorRange;
-
+    public var undoImage: Null<Pixelimage> = null;
+    public var undoX: Int;
+    public var undoY: Int;
     inline
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float
