@@ -13,6 +13,7 @@ class QuadShape extends BasicShape {
     public var dX:      Float;
     public var dY:      Float;
     public var soft:    Float;
+    public var luxury:  Bool;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0xFFF00000
@@ -26,6 +27,7 @@ class QuadShape extends BasicShape {
                         , dX: Float = 0.
                         , dY: Float = 1.
                         , soft: Float = 0.
+                        , luxury: Bool = false
                         ){
         super( opacity, visibility, strokeColor, 0., null );
         this.aX = aX;
@@ -37,6 +39,7 @@ class QuadShape extends BasicShape {
         this.dX = dX;
         this.dY = dY;
         this.soft = soft;
+        this.luxury = luxury;
     }
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -57,7 +60,9 @@ class QuadShape extends BasicShape {
             case 'dY':
                 dY = Std.parseFloat( value );
             case 'soft':
-                soft = Std.parseFloat( value );            
+                soft = Std.parseFloat( value ); 
+            case 'luxury':
+                luxury = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;          
             case _:
                 super.setParameter( name, value );
         }
@@ -66,7 +71,12 @@ class QuadShape extends BasicShape {
         this.hitObj = if( soft == 0. ){
             pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, true );
         } else {
-            pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, true, true, true, true );
+            if( luxury ){
+                pixelShape.fillSoftQuadQuarter( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, true, true, true, true );
+            } else {
+                pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, soft, true, true, true, true );
+            }
+            
         }
         return super.render( pixelShape );
     }

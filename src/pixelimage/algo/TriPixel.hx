@@ -770,6 +770,105 @@ import pixelimage.algo.HitTri;
             null;
         }   
     }
+    inline
+    function fillQuarterSoft( pixelImage: Pixelimage
+                        , ax: Float, ay: Float
+                        , bx: Float, by: Float
+                        , cx: Float, cy: Float
+                        , color: Pixel32
+                        , soft3: Float = 40
+                        , softAB = true
+                        , softBC = true
+                        , softCA = true
+                        , hasHit: Bool = false, hasUndo: Bool = true ): Null<HitTri>{
+        var aA = ( color >> 24 ) & 0xFF;
+        var rA = ( color >> 16 ) & 0xFF;
+        var gA = ( color >> 8 ) & 0xFF;
+        var bA = color & 0xFF;
+        var bcx = bx - cx;
+        var bcy = by - cy;
+        var acx = ax - cx; 
+        var acy = ay - cy;
+        // Had to re-arrange algorithm to work so dot names may not quite make sense.
+        var dot11 = dotSame( bcx, bcy );
+        var dot12 = dot( bcx, bcy, acx, acy );
+        var dot22 = dotSame( acx, acy );
+        var denom1 = 1/( dot11 * dot22 - dot12 * dot12 );
+        var xIter3: IteratorRange = boundIterator3( ax, bx, cx );
+        var yIter3: IteratorRange = boundIterator3( ay, by, cy );
+        var undoImage: Pixelimage = null;
+        if( hasUndo ){
+            undoImage = new Pixelimage( xIter3.length, yIter3.length );
+            undoImage.putPixelImageRect( pixelImage, 0, 0, xIter3.start, yIter3.start, xIter3.max, yIter3.max );
+        }
+        var found = false;
+        var min: Float = 0;
+        var max: Float = 0;
+        var a = 0;
+        var r = 0;
+        var g = 0;
+        var b = 0;
+        for( px in xIter3 ){
+            var pcx = px - cx;
+            found = false;
+            for( py in yIter3 ){
+                var pcy = py - cy;
+                var dot31  = dot( pcx, pcy, bcx, bcy );
+                var dot32  = dot( pcx, pcy, acx, acy );
+                var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;
+                var ratioB = (dot11 * dot32 - dot12 * dot31) * denom1;
+                var ratioC = 1.0 - ratioB - ratioA;
+                if( ratioA >= 0 && ratioB >= 0 && ratioC >= 0 ){
+                    r = PixelChannel.boundChannel( rA );
+                    g = PixelChannel.boundChannel( gA );
+                    b = PixelChannel.boundChannel( bA );
+                    if( softAB == true && softBC == false && softCA == true ){
+                        min = ( ratioA < ratioC )? ratioA: ratioC;
+                        
+                        max = ( ratioA > ratioB )? ratioA: ratioB;
+                        max = ( max > ratioC )? max: ratioC;
+                        max = ( 1 - max )/2; // not really max just the shaded out, not sure if 2.7 ideal but close.
+                        min = ( min < max )? min: (max+min)/2;
+                        
+                        a = PixelChannel.boundChannel( aA*soft3*min );
+                        //if( ratioB > 0.9 || ( ratioC < 0.9 && ratioA < 0.9 ) ){
+                            pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
+                        //}
+                    }
+                    if( softAB == true  && softBC == true && softCA == false ){    
+                        min = ( ratioB < ratioC )? ratioB: ratioC;
+                        
+                        max = ( ratioA > ratioB )? ratioA: ratioB;
+                        max = ( max > ratioC )? max: ratioC;
+                        max = ( 1 - max )/2; // not really max just the shaded out, not sure if 2.7 ideal but close.
+                        min = ( min < max )? min: (max+min)/2;
+                        
+                        a = PixelChannel.boundChannel( aA*soft3*min );
+                        //if( ratioA > 0.9 || ( ratioB < 0.9 && ratioC < 0.9 ) ){
+                            pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, py ) );
+                        //}
+                    }
+                    found = true;
+                } else if( found ){
+                    // exit early
+                    break;
+                }
+            }
+            // TODO: need to consider
+            // if( !found ) pixelImage.set_argbPixel( a, r, g, b, pixelImage.position( px, yIter3.max ) );// -1?
+        }
+        return if( hasHit == false ){
+            var v: HitTri = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy };
+            if( hasUndo ){
+                v.undoImage = undoImage;
+                v.undoX = xIter3.start;
+                v.undoY = yIter3.start;
+            }
+            v;
+        } else {
+            null;
+        }   
+    }
 
     inline
     function fillTriExtra0( pixelImage: Pixelimage

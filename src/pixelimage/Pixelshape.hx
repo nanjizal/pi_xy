@@ -300,6 +300,34 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
         // tri f - b c d
         return fillSoftQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, soft, softAB, softBC, softCD, softDA, hasHit );
     }
+    public inline
+    function fillSoftQuadFudge( ax: Float, ay: Float
+                     , bx: Float, by: Float
+                     , cx: Float, cy: Float
+                     , dx: Float, dy: Float 
+                     , color: Int
+                     , soft: Float = 40
+                     , softAB: Bool = true
+                     , softBC: Bool = true
+                     , softCD: Bool = true
+                     , softDA: Bool = true
+                     , hasHit: Bool = false ): HitQuad {
+        return fillSoftQuadrilateralFudge( this, ax, ay, bx, by, cx, cy, dx, dy, color, soft, softAB, softBC, softCD, softDA, hasHit );
+    }
+    public inline
+    function fillSoftQuadQuarter( ax: Float, ay: Float
+                     , bx: Float, by: Float
+                     , cx: Float, cy: Float
+                     , dx: Float, dy: Float 
+                     , color: Int
+                     , soft: Float = 40
+                     , softAB: Bool = true
+                     , softBC: Bool = true
+                     , softCD: Bool = true
+                     , softDA: Bool = true
+                     , hasHit: Bool = false ): HitQuad {
+        return fillSoftQuadrilateralQuarter( this, ax, ay, bx, by, cx, cy, dx, dy, color, soft, softAB, softBC, softCD, softDA, hasHit );
+    }
     public inline 
     function fillSoftLine( px: Float, py: Float, qx: Float, qy: Float
                      , thick: Float, color: Int
@@ -315,7 +343,21 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
         var theta = Math.atan2( o, a );
         return rotateSoftLine( this, px, py, thick, h, theta, color, soft, softAB, softBC, softCD, softDA, hasHit, debugCorners );
     }
-
+    public inline 
+    function fillSoftLineLuxury( px: Float, py: Float, qx: Float, qy: Float
+                     , thick: Float, color: Int
+                     , soft: Float = 40
+                     , softAB: Bool = true
+                     , softBC: Bool = true
+                     , softCD: Bool = true
+                     , softDA: Bool = true
+                     , hasHit: Bool = true, ?debugCorners = false ): Null<HitQuad> {
+        var o = qy-py;
+        var a = qx-px;
+        var h = Math.pow( o*o + a*a, 0.5 );
+        var theta = Math.atan2( o, a );
+        return rotateSoftLineLuxury( this, px, py, thick, h, theta, color, soft, softAB, softBC, softCD, softDA, hasHit, debugCorners );
+    }
     public inline
     function softFillTriangle( ax: Float, ay: Float
                              , bx: Float, by: Float

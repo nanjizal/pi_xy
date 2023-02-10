@@ -49,6 +49,61 @@ function fillSoftQuadrilateral( pixelImage: Pixelimage
         null;
     }
 }
+inline
+function fillSoftQuadrilateralFudge( pixelImage: Pixelimage
+                                    , ax: Float, ay: Float
+                                    , bx: Float, by: Float
+                                    , cx: Float, cy: Float
+                                    , dx: Float, dy: Float 
+                                    , color: Int
+                                    , soft: Float = 40
+                                    , softAB: Bool = true
+                                    , softBC: Bool = true
+                                    , softCD: Bool = true
+                                    , softDA: Bool = true
+                                    , hasHit: Bool = false ): Null<HitQuad>{
+    //a b c
+    //d c a
+    fillTriSoft3( pixelImage, ax, ay, bx, by, cx, cy, color, soft, softAB, softBC, false, hasHit );
+    fillTriSoft3( pixelImage, dx, dy, cx, cy, ax, ay, color, soft, softCD, false, softDA, hasHit );
+    return if( hasHit == true ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
+inline
+function fillSoftQuadrilateralQuarter( pixelImage: Pixelimage
+                                    , ax: Float, ay: Float
+                                    , bx: Float, by: Float
+                                    , cx: Float, cy: Float
+                                    , dx: Float, dy: Float 
+                                    , color: Int
+                                    , soft: Float = 40
+                                    , softAB: Bool = true
+                                    , softBC: Bool = true
+                                    , softCD: Bool = true
+                                    , softDA: Bool = true
+                                    , hasHit: Bool = false ): Null<HitQuad>{
+    //a b c
+    //d c a
+    fillQuarterSoft( pixelImage, ax, ay, bx, by, cx, cy, color, soft, softAB, softBC, false, hasHit );
+    fillQuarterSoft( pixelImage, dx, dy, cx, cy, ax, ay, color, soft, softCD, false, softDA, hasHit );
+    // tri e - a b d  - ab true, bd internal, da true
+    // tri f - b c d  - bc true, cd true, bd internal
+    fillQuarterSoft( pixelImage, ax, ay, bx, by, dx, dy, color, soft, softAB, false, softDA, hasHit );
+    fillQuarterSoft( pixelImage, bx, by, cx, cy, dx, dy, color, soft, softBC, softCD, false, hasHit );
+    //
+    return if( hasHit == true ){
+        var v: HitQuad = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        v;
+    } else {
+        null;
+    }
+}
+
 
 inline
 function tileQuadrilateral( pixelImage: Pixelimage, ax: Float, ay: Float
@@ -244,6 +299,7 @@ function imageNineSlice( pixelImage: Pixelimage
             null;
         }
 }
+
 class QuadPixel {
     /**
        <font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
