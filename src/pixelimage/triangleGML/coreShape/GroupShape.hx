@@ -1,7 +1,26 @@
 package pixelimage.triangleGML.coreShape;
 import pixelimage.Pixelimage;
 import pixelimage.algo.IhitObj;
+/*
+typedef T_GroupShape {
+    public var visibility: String;
+    public var opacity:    String;
+    public var offX:       String;
+    public var offY:       String;
+}
 
+abstract A_GroupShape {
+    public inline new<S:T_GroupShape>( T_GroupShape: S ){
+		this = p;
+	}
+    public inline function setProperties( s: GroupShape ){
+        if( visiblity != null ) s.setProperties( 'visibility', visibility );
+        if( opacity != null ) s.setProperties( 'opacity', opacity );
+        if( offX!= null ) s.setProperties('offX', off );
+        if( offY!= null ) s.setProperties('offY', off );
+    }
+}
+*/
 @:structInit
 abstract class GroupShape implements ShapeInterface {
     var isDirty = true;

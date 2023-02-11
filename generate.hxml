@@ -1,5 +1,5 @@
 #-lib pixelimage
--lib htmlHelper
+#-lib htmlHelper
 -lib justPath
 -lib vision
 -lib format
@@ -10,4 +10,4 @@
 -main pixelimage.PixelimageDoc
 --no-output
 -xml output.xml
--js foo
+-cppia foo

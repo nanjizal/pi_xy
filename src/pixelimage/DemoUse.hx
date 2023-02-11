@@ -1,5 +1,5 @@
 package pixelimage;
-
+#if js 
 import htmlHelper.canvas.CanvasSetup;
 import htmlHelper.canvas.Surface;
 import pixelimage.Pixelimage;
@@ -190,3 +190,4 @@ class DemoUse {
         }
    }
 }
+#end

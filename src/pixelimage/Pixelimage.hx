@@ -137,11 +137,18 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     /**
         Provides a view for single color channel access, not usually used
     **/
+    #if js
     inline 
     function view8():js.lib.Uint8Array {
         var dataimg: js.lib.Uint32Array = cast this.image;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }
+    #elseif
+    inline 
+    function view8():haxe.io.Uint8Array {
+        return new js.lib.Uint8Array( this.image.view.buffer );
+    }
+    #end
     inline
     public function setPixel( x: Int, y: Int, color: Int ): Int {
         return setARGB( x, y, color );
@@ -173,7 +180,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         from the internal value
     **/
     inline
-    public function getARGB( x: Int, y: Int ): Int {
+    public function getARGB( x: Int, y: Int ): Pixel32 {
         var c: Pixel32 = cast this.image[ position( x, y ) ];
         return c.transferColor();
     }
@@ -1008,10 +1015,17 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
             image[ i ] = ( new Pixel32( p.image[ i ] ) ).flip13();
         }
     }
+    #if js
     inline
     public function getBytes(){
         return haxe.io.Bytes.ofData( view8().buffer );
     }
+    #else
+    inline
+    public function getBytes(){
+        return this.image.view.buffer;
+    }
+    #end
     inline
     public function fromBytes( bytes: haxe.io.Bytes, pos ){
         this.image = haxe.io.UInt32Array.fromBytes( bytes, pos );
