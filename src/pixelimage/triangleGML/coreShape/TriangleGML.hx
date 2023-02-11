@@ -11,6 +11,7 @@ import pixelimage.Pixelshape;
 import pixelimage.textureContour.*;
 import pixelimage.textureShape.*;
 import pixelimage.triangleGML.contour.QuintShape;
+import pixelimage.fontImage.OneDfont;
 import pixelimage.triangleGML.coreShape.TriangleGML;
 // module TriangleGML
 
@@ -19,6 +20,34 @@ class TriangleGML {
     var xml: Xml;
     var offX: Float;
     var offY: Float;
+
+    public var imageResource = new haxe.ds.StringMap<Pixelimage>();
+    public var fontResource1D = new haxe.ds.StringMap<OneDfont>();
+    /** 
+        allows setting an images for the XML shapes that need images 
+        image must already be converted to a Pixelimage / Pixelshape
+        within the XML shape it must be 'image'+'*' = name
+    **/
+    public function addImage( name: String, pixelShape: Pixelshape ): Pixelimage {
+        var pixelImage: Pixelimage = ( pixelShape: Pixelimage ); // allows direct setting as a shape.
+        var lowerName = name.toLowerCase();
+        imageResource.set( lowerName, pixelImage );
+        return pixelImage;
+    }
+    /** 
+        allows setting an font for the XML shapes that need images 
+        fontImage must already be converted to a Pixelimage / Pixelshape
+        within the XML shape it must be 'basicfont'+'*' = name
+    **/
+    public function addFont1D( name: String, fontImage: Pixelimage
+                            , startingAscii: Int = 33, markerColor: Int = 0xFFFFFFFF
+                            , pairOffset: Null<haxe.ds.StringMap<Int>> = null ): OneDfont {
+        var pixelImage: Pixelimage = ( fontImage: Pixelimage ); // allows direct setting as a shape.
+        var oneDfont = new OneDfont( pixelImage, startingAscii, markerColor, pairOffset );
+        var lowerName = name.toLowerCase();
+        fontResource1D.set( lowerName, oneDfont );
+        return oneDfont;
+    }
     public var shapes: Array<ShapeInterface>;
     public function new( pixelShape: Pixelshape, xml: Xml, x: Float = 0., y: Float = 0. ){
         this.pixelShape = pixelShape;
@@ -51,7 +80,15 @@ class TriangleGML {
         var s = getTriangleGML( name );
         for( att in x.attributes() ){
             trace( att + ' ' + x.get(att) );
-            s.setParameter( att, x.get( att ) );
+            if( att.substr( 0, 'image'.length ) == 'image' ){
+                // use image resource
+                s.setImage( att.toLowerCase(), imageResource.get( x.get(att) ) );
+            } else if(  att.substr( 0, 'fontbasic'.length ).toLowerCase() == 'fontbasic' ){
+                // use font 1D resource
+                s.setBasicFont( att.toLowerCase(), fontResource1D.get( x.get(att) ) );
+            } else {
+                s.setParameter( att, x.get( att ) );
+            }
         }
         if( offX != 0. || offY != 0. ){
             s.translate( offX, offY );

@@ -1,6 +1,7 @@
 package pixelimage.triangleGML.coreShape;
 import pixelimage.Pixelimage;
 import pixelimage.algo.IhitObj;
+import pixelimage.fontImage.OneDfont;
 /*
 typedef T_GroupShape {
     public var visibility: String;
@@ -44,6 +45,12 @@ abstract class GroupShape implements ShapeInterface {
                 trace( 'property not found ' + name );
         }
     }
+    public function setImage( name: String, pixelImage: Pixelimage ):Void {
+        // override if needs setting
+    }
+    public function setBasicFont( name: String, basicFont: OneDfont ): Void {
+        // overide if needs setting
+    } 
     public function translate( x: Float, y: Float ){
         offX = x;
         offY = y;

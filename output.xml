@@ -84273,7 +84273,10 @@
 			<haxe_doc>assumes font in a single row, with white marker pixels on the top pixel row to provide ascii start and end character information.
         currently setup that the last char is the spacebar one, as per current test data.</haxe_doc>
 		</new>
-		<meta><m n=":structInit"/></meta>
+		<meta>
+			<m n=":directlyUsed"/>
+			<m n=":structInit"/>
+		</meta>
 	</class>
 	<class path="pixelimage.fontImage._TestLem.TestLem_Fields_" params="" file="src/pixelimage/fontImage/TestLem.hx" private="1" module="pixelimage.fontImage.TestLem" final="1">
 		<lemBlue public="1" set="method" line="6" static="1"><f a=""><c path="String"/></f></lemBlue>
@@ -86153,6 +86156,16 @@
 	<x path="pixelimage.Pixelshape"/>
 	<x path="pixelimage.Pixelshape"/>
 </f></render>
+		<setImage public="1" set="method"><f a="name:pixelImage">
+	<c path="String"/>
+	<x path="pixelimage.Pixelimage"/>
+	<x path="Void"/>
+</f></setImage>
+		<setBasicFont public="1" set="method"><f a="name:basicFont">
+	<c path="String"/>
+	<c path="pixelimage.fontImage.OneDfont"/>
+	<x path="Void"/>
+</f></setBasicFont>
 	</class>
 	<class path="pixelimage.triangleGML.coreShape.GroupShape" params="" file="src/pixelimage/triangleGML/coreShape/GroupShape.hx" abstract="1">
 		<implements path="pixelimage.triangleGML.coreShape.ShapeInterface"/>
@@ -86174,31 +86187,41 @@
 			<x path="Null"><c path="pixelimage.algo.IhitObj"/></x>
 			<meta><m n=":value"><e>null</e></m></meta>
 		</hitObj>
-		<setParameter public="1" set="method" line="37"><f a="name:value">
+		<setParameter public="1" set="method" line="38"><f a="name:value">
 	<c path="String"/>
 	<c path="String"/>
 	<x path="Void"/>
 </f></setParameter>
-		<translate public="1" set="method" line="47"><f a="x:y">
+		<setImage public="1" set="method" line="48"><f a="name:pixelImage">
+	<c path="String"/>
+	<x path="pixelimage.Pixelimage"/>
+	<x path="Void"/>
+</f></setImage>
+		<setBasicFont public="1" set="method" line="51"><f a="name:basicFont">
+	<c path="String"/>
+	<c path="pixelimage.fontImage.OneDfont"/>
+	<x path="Void"/>
+</f></setBasicFont>
+		<translate public="1" set="method" line="54"><f a="x:y">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Void"/>
 </f></translate>
-		<render public="1" set="method" line="51"><f a="pixelShape">
+		<render public="1" set="method" line="58"><f a="pixelShape">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="pixelimage.Pixelshape"/>
 </f></render>
-		<clear public="1" set="method" line="54"><f a="pixelShape:color">
+		<clear public="1" set="method" line="61"><f a="pixelShape:color">
 	<x path="pixelimage.Pixelshape"/>
 	<x path="Int"/>
 	<x path="pixelimage.Pixelshape"/>
 </f></clear>
-		<hit public="1" set="method" line="57"><f a="x:y">
+		<hit public="1" set="method" line="64"><f a="x:y">
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Bool"/>
 </f></hit>
-		<new public="1" set="method" line="33">
+		<new public="1" set="method" line="34">
 			<f a="?opacity:?visibility" v="1.:true">
 				<x path="Float"/>
 				<x path="Bool"/>
@@ -86927,7 +86950,7 @@
 		<meta><m n=":structInit"/></meta>
 	</class>
 	<class path="pixelimage.triangleGML.coreShape.TriangleGML" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx">
-		<withString public="1" get="inline" set="null" line="38" static="1">
+		<withString public="1" get="inline" set="null" line="67" static="1">
 			<f a="pixelShape:str:?x:?y" v="::0.:0.">
 				<x path="pixelimage.Pixelshape"/>
 				<c path="String"/>
@@ -86941,8 +86964,40 @@
 		<xml><c path="Xml"/></xml>
 		<offX><x path="Float"/></offX>
 		<offY><x path="Float"/></offY>
+		<imageResource public="1" expr="new haxe.ds.StringMap&lt;Pixelimage&gt;()">
+			<c path="haxe.ds.StringMap"><x path="pixelimage.Pixelimage"/></c>
+			<meta><m n=":value"><e><![CDATA[new haxe.ds.StringMap<Pixelimage>()]]></e></m></meta>
+		</imageResource>
+		<fontResource1D public="1" expr="new haxe.ds.StringMap&lt;OneDfont&gt;()">
+			<c path="haxe.ds.StringMap"><c path="pixelimage.fontImage.OneDfont"/></c>
+			<meta><m n=":value"><e><![CDATA[new haxe.ds.StringMap<OneDfont>()]]></e></m></meta>
+		</fontResource1D>
+		<addImage public="1" set="method" line="31">
+			<f a="name:pixelShape">
+				<c path="String"/>
+				<x path="pixelimage.Pixelshape"/>
+				<x path="pixelimage.Pixelimage"/>
+			</f>
+			<haxe_doc>allows setting an images for the XML shapes that need images 
+        image must already be converted to a Pixelimage / Pixelshape
+        within the XML shape it must be 'image'+'*' = name</haxe_doc>
+		</addImage>
+		<addFont1D public="1" set="method" line="44">
+			<f a="name:fontImage:?startingAscii:?markerColor:?pairOffset" v="::33:0xFFFFFFFF:null">
+				<c path="String"/>
+				<x path="pixelimage.Pixelimage"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<c path="haxe.ds.StringMap"><x path="Int"/></c>
+				<c path="pixelimage.fontImage.OneDfont"/>
+			</f>
+			<meta><m n=":value"><e>{ pairOffset : null, markerColor : 0xFFFFFFFF, startingAscii : 33 }</e></m></meta>
+			<haxe_doc>allows setting an font for the XML shapes that need images 
+        fontImage must already be converted to a Pixelimage / Pixelshape
+        within the XML shape it must be 'basicfont'+'*' = name</haxe_doc>
+		</addFont1D>
 		<shapes public="1"><c path="Array"><c path="pixelimage.triangleGML.coreShape.ShapeInterface"/></c></shapes>
-		<addShape public="1" set="method" line="30">
+		<addShape public="1" set="method" line="59">
 			<f a="str:?x:?y" v=":0.:0.">
 				<c path="String"/>
 				<x path="Float"/>
@@ -86951,12 +87006,12 @@
 			</f>
 			<meta><m n=":value"><e>{ y : 0., x : 0. }</e></m></meta>
 		</addShape>
-		<process set="method" line="44"><f a=""><x path="Void"/></f></process>
-		<processShape set="method" line="49"><f a="x">
+		<process set="method" line="73"><f a=""><x path="Void"/></f></process>
+		<processShape set="method" line="78"><f a="x">
 	<c path="Xml"/>
 	<x path="Void"/>
 </f></processShape>
-		<new public="1" set="method" line="23">
+		<new public="1" set="method" line="52">
 			<f a="pixelShape:xml:?x:?y" v="::0.:0.">
 				<x path="pixelimage.Pixelshape"/>
 				<c path="Xml"/>
@@ -86972,7 +87027,7 @@
 		<to><icast><c path="String"/></icast></to>
 		<meta><m n=":enum"/></meta>
 		<impl><class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGMLname_Impl_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" extern="1" final="1">
-	<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="67" static="1">
+	<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="104" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArrowShape"</e></m>
@@ -86980,7 +87035,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARROW_SHAPE>
-	<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="68" static="1">
+	<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="105" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CubicCurveShape"</e></m>
@@ -86988,7 +87043,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CUBIC_CURVE_SHAPE>
-	<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="69" static="1">
+	<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="106" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineGridShape"</e></m>
@@ -86996,7 +87051,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_GRID_SHAPE>
-	<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="70" static="1">
+	<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="107" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineShape"</e></m>
@@ -87004,7 +87059,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_SHAPE>
-	<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="71" static="1">
+	<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="108" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PolyLineShape"</e></m>
@@ -87012,7 +87067,7 @@
 			<m n=":enum"/>
 		</meta>
 	</POLY_LINE_SHAPE>
-	<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="72" static="1">
+	<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="109" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadCurveShape"</e></m>
@@ -87020,7 +87075,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_CURVE_SHAPE>
-	<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="73" static="1">
+	<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="110" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadShape"</e></m>
@@ -87028,7 +87083,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_SHAPE>
-	<QUAD_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadSoftShape&quot;" line="74" static="1">
+	<QUAD_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadSoftShape&quot;" line="111" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadSoftShape"</e></m>
@@ -87036,7 +87091,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_SOFT_SHAPE>
-	<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="75" static="1">
+	<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="112" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuintShape"</e></m>
@@ -87044,7 +87099,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUINT_SHAPE>
-	<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="76" static="1">
+	<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="113" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "SoftEllipseShape"</e></m>
@@ -87052,7 +87107,7 @@
 			<m n=":enum"/>
 		</meta>
 	</SOFT_ELLIPSE_SHAPE>
-	<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="77" static="1">
+	<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="114" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ThruCurveShape"</e></m>
@@ -87060,7 +87115,7 @@
 			<m n=":enum"/>
 		</meta>
 	</THRU_CURVE_SHAPE>
-	<TRIANGLE_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleSoftShape&quot;" line="78" static="1">
+	<TRIANGLE_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleSoftShape&quot;" line="115" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TriangleSoftShape"</e></m>
@@ -87068,7 +87123,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_SOFT_SHAPE>
-	<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="80" static="1">
+	<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="117" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArrowThickGradient"</e></m>
@@ -87076,7 +87131,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARROW_THICK_GRADIENT>
-	<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="81" static="1">
+	<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="118" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipseRadialGradient"</e></m>
@@ -87084,7 +87139,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_RADIAL_GRADIENT>
-	<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="82" static="1">
+	<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="119" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementThickGradient"</e></m>
@@ -87092,7 +87147,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_THICK_GRADIENT>
-	<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="83" static="1">
+	<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="120" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadGradient"</e></m>
@@ -87100,7 +87155,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_GRADIENT>
-	<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="84" static="1">
+	<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="121" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TriangleGradient"</e></m>
@@ -87108,7 +87163,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_GRADIENT>
-	<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="86" static="1">
+	<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="123" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LineGradient"</e></m>
@@ -87116,7 +87171,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_GRADIENT>
-	<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="87" static="1">
+	<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="124" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PolyLineGradient"</e></m>
@@ -87124,7 +87179,7 @@
 			<m n=":enum"/>
 		</meta>
 	</POLY_LINE_GRADIENT>
-	<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="89" static="1">
+	<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="126" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CubicCurvePattern"</e></m>
@@ -87132,7 +87187,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CUBIC_CURVE_PATTERN>
-	<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="90" static="1">
+	<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="127" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "LinePattern"</e></m>
@@ -87140,7 +87195,7 @@
 			<m n=":enum"/>
 		</meta>
 	</LINE_PATTERN>
-	<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="91" static="1">
+	<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="128" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadPattern"</e></m>
@@ -87148,7 +87203,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUAD_PATTERN>
-	<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="92" static="1">
+	<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="129" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TrianglePattern"</e></m>
@@ -87156,7 +87211,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_PATTERN>
-	<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="94" static="1">
+	<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="131" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArcPattern"</e></m>
@@ -87164,7 +87219,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARC_PATTERN>
-	<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="95" static="1">
+	<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="132" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CirclePattern"</e></m>
@@ -87172,7 +87227,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CIRCLE_PATTERN>
-	<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="96" static="1">
+	<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="133" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipsePattern"</e></m>
@@ -87180,7 +87235,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_PATTERN>
-	<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="97" static="1">
+	<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="134" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementPattern"</e></m>
@@ -87188,7 +87243,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_PATTERN>
-	<PATH_SOFT_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathSoftElementPattern&quot;" line="98" static="1">
+	<PATH_SOFT_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathSoftElementPattern&quot;" line="135" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathSoftElementPattern"</e></m>
@@ -87196,7 +87251,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_SOFT_ELEMENT_PATTERN>
-	<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="99" static="1">
+	<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="136" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadrilateralPattern"</e></m>
@@ -87204,7 +87259,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUADRILATERAL_PATTERN>
-	<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="100" static="1">
+	<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="137" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "RectanglePattern"</e></m>
@@ -87212,7 +87267,7 @@
 			<m n=":enum"/>
 		</meta>
 	</RECTANGLE_PATTERN>
-	<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="101" static="1">
+	<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="138" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "SquarePattern"</e></m>
@@ -87220,7 +87275,7 @@
 			<m n=":enum"/>
 		</meta>
 	</SQUARE_PATTERN>
-	<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="103" static="1">
+	<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="140" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "ArcShape"</e></m>
@@ -87228,7 +87283,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ARC_SHAPE>
-	<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="104" static="1">
+	<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="141" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "CircleShape"</e></m>
@@ -87236,7 +87291,7 @@
 			<m n=":enum"/>
 		</meta>
 	</CIRCLE_SHAPE>
-	<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="105" static="1">
+	<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="142" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "EllipseShape"</e></m>
@@ -87244,7 +87299,7 @@
 			<m n=":enum"/>
 		</meta>
 	</ELLIPSE_SHAPE>
-	<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="106" static="1">
+	<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="143" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "PathElementShape"</e></m>
@@ -87252,7 +87307,7 @@
 			<m n=":enum"/>
 		</meta>
 	</PATH_ELEMENT_SHAPE>
-	<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="107" static="1">
+	<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="144" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "QuadrilateralShape"</e></m>
@@ -87260,7 +87315,7 @@
 			<m n=":enum"/>
 		</meta>
 	</QUADRILATERAL_SHAPE>
-	<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="108" static="1">
+	<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="145" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "RectangleShape"</e></m>
@@ -87268,7 +87323,7 @@
 			<m n=":enum"/>
 		</meta>
 	</RECTANGLE_SHAPE>
-	<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="109" static="1">
+	<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="146" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "SquareShape"</e></m>
@@ -87276,7 +87331,7 @@
 			<m n=":enum"/>
 		</meta>
 	</SQUARE_SHAPE>
-	<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="110" static="1">
+	<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="147" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "Star6Shape"</e></m>
@@ -87284,7 +87339,7 @@
 			<m n=":enum"/>
 		</meta>
 	</STAR6_SHAPE>
-	<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="111" static="1">
+	<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="148" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "TriangleShape"</e></m>
@@ -87292,7 +87347,7 @@
 			<m n=":enum"/>
 		</meta>
 	</TRIANGLE_SHAPE>
-	<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="112" static="1">
+	<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="149" static="1">
 		<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 		<meta>
 			<m n=":value"><e>cast "VePathElementShape"</e></m>
@@ -87304,7 +87359,7 @@
 </class></impl>
 	</abstract>
 	<class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGMLname_Impl_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" extern="1" final="1">
-		<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="67" static="1">
+		<ARROW_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArrowShape&quot;" line="104" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArrowShape"</e></m>
@@ -87312,7 +87367,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARROW_SHAPE>
-		<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="68" static="1">
+		<CUBIC_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CubicCurveShape&quot;" line="105" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CubicCurveShape"</e></m>
@@ -87320,7 +87375,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CUBIC_CURVE_SHAPE>
-		<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="69" static="1">
+		<LINE_GRID_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineGridShape&quot;" line="106" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineGridShape"</e></m>
@@ -87328,7 +87383,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_GRID_SHAPE>
-		<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="70" static="1">
+		<LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;LineShape&quot;" line="107" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineShape"</e></m>
@@ -87336,7 +87391,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_SHAPE>
-		<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="71" static="1">
+		<POLY_LINE_SHAPE public="1" get="inline" set="null" expr="cast &quot;PolyLineShape&quot;" line="108" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PolyLineShape"</e></m>
@@ -87344,7 +87399,7 @@
 				<m n=":enum"/>
 			</meta>
 		</POLY_LINE_SHAPE>
-		<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="72" static="1">
+		<QUAD_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadCurveShape&quot;" line="109" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadCurveShape"</e></m>
@@ -87352,7 +87407,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_CURVE_SHAPE>
-		<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="73" static="1">
+		<QUAD_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadShape&quot;" line="110" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadShape"</e></m>
@@ -87360,7 +87415,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_SHAPE>
-		<QUAD_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadSoftShape&quot;" line="74" static="1">
+		<QUAD_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadSoftShape&quot;" line="111" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadSoftShape"</e></m>
@@ -87368,7 +87423,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_SOFT_SHAPE>
-		<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="75" static="1">
+		<QUINT_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuintShape&quot;" line="112" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuintShape"</e></m>
@@ -87376,7 +87431,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUINT_SHAPE>
-		<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="76" static="1">
+		<SOFT_ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SoftEllipseShape&quot;" line="113" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "SoftEllipseShape"</e></m>
@@ -87384,7 +87439,7 @@
 				<m n=":enum"/>
 			</meta>
 		</SOFT_ELLIPSE_SHAPE>
-		<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="77" static="1">
+		<THRU_CURVE_SHAPE public="1" get="inline" set="null" expr="cast &quot;ThruCurveShape&quot;" line="114" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ThruCurveShape"</e></m>
@@ -87392,7 +87447,7 @@
 				<m n=":enum"/>
 			</meta>
 		</THRU_CURVE_SHAPE>
-		<TRIANGLE_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleSoftShape&quot;" line="78" static="1">
+		<TRIANGLE_SOFT_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleSoftShape&quot;" line="115" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TriangleSoftShape"</e></m>
@@ -87400,7 +87455,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_SOFT_SHAPE>
-		<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="80" static="1">
+		<ARROW_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;ArrowThickGradient&quot;" line="117" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArrowThickGradient"</e></m>
@@ -87408,7 +87463,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARROW_THICK_GRADIENT>
-		<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="81" static="1">
+		<ELLIPSE_RADIAL_GRADIENT public="1" get="inline" set="null" expr="cast &quot;EllipseRadialGradient&quot;" line="118" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipseRadialGradient"</e></m>
@@ -87416,7 +87471,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_RADIAL_GRADIENT>
-		<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="82" static="1">
+		<PATH_ELEMENT_THICK_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PathElementThickGradient&quot;" line="119" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementThickGradient"</e></m>
@@ -87424,7 +87479,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_THICK_GRADIENT>
-		<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="83" static="1">
+		<QUAD_GRADIENT public="1" get="inline" set="null" expr="cast &quot;QuadGradient&quot;" line="120" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadGradient"</e></m>
@@ -87432,7 +87487,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_GRADIENT>
-		<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="84" static="1">
+		<TRIANGLE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;TriangleGradient&quot;" line="121" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TriangleGradient"</e></m>
@@ -87440,7 +87495,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_GRADIENT>
-		<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="86" static="1">
+		<LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;LineGradient&quot;" line="123" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LineGradient"</e></m>
@@ -87448,7 +87503,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_GRADIENT>
-		<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="87" static="1">
+		<POLY_LINE_GRADIENT public="1" get="inline" set="null" expr="cast &quot;PolyLineGradient&quot;" line="124" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PolyLineGradient"</e></m>
@@ -87456,7 +87511,7 @@
 				<m n=":enum"/>
 			</meta>
 		</POLY_LINE_GRADIENT>
-		<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="89" static="1">
+		<CUBIC_CURVE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CubicCurvePattern&quot;" line="126" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CubicCurvePattern"</e></m>
@@ -87464,7 +87519,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CUBIC_CURVE_PATTERN>
-		<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="90" static="1">
+		<LINE_PATTERN public="1" get="inline" set="null" expr="cast &quot;LinePattern&quot;" line="127" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "LinePattern"</e></m>
@@ -87472,7 +87527,7 @@
 				<m n=":enum"/>
 			</meta>
 		</LINE_PATTERN>
-		<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="91" static="1">
+		<QUAD_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadPattern&quot;" line="128" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadPattern"</e></m>
@@ -87480,7 +87535,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUAD_PATTERN>
-		<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="92" static="1">
+		<TRIANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;TrianglePattern&quot;" line="129" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TrianglePattern"</e></m>
@@ -87488,7 +87543,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_PATTERN>
-		<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="94" static="1">
+		<ARC_PATTERN public="1" get="inline" set="null" expr="cast &quot;ArcPattern&quot;" line="131" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArcPattern"</e></m>
@@ -87496,7 +87551,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARC_PATTERN>
-		<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="95" static="1">
+		<CIRCLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;CirclePattern&quot;" line="132" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CirclePattern"</e></m>
@@ -87504,7 +87559,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CIRCLE_PATTERN>
-		<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="96" static="1">
+		<ELLIPSE_PATTERN public="1" get="inline" set="null" expr="cast &quot;EllipsePattern&quot;" line="133" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipsePattern"</e></m>
@@ -87512,7 +87567,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_PATTERN>
-		<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="97" static="1">
+		<PATH_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathElementPattern&quot;" line="134" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementPattern"</e></m>
@@ -87520,7 +87575,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_PATTERN>
-		<PATH_SOFT_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathSoftElementPattern&quot;" line="98" static="1">
+		<PATH_SOFT_ELEMENT_PATTERN public="1" get="inline" set="null" expr="cast &quot;PathSoftElementPattern&quot;" line="135" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathSoftElementPattern"</e></m>
@@ -87528,7 +87583,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_SOFT_ELEMENT_PATTERN>
-		<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="99" static="1">
+		<QUADRILATERAL_PATTERN public="1" get="inline" set="null" expr="cast &quot;QuadrilateralPattern&quot;" line="136" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadrilateralPattern"</e></m>
@@ -87536,7 +87591,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUADRILATERAL_PATTERN>
-		<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="100" static="1">
+		<RECTANGLE_PATTERN public="1" get="inline" set="null" expr="cast &quot;RectanglePattern&quot;" line="137" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "RectanglePattern"</e></m>
@@ -87544,7 +87599,7 @@
 				<m n=":enum"/>
 			</meta>
 		</RECTANGLE_PATTERN>
-		<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="101" static="1">
+		<SQUARE_PATTERN public="1" get="inline" set="null" expr="cast &quot;SquarePattern&quot;" line="138" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "SquarePattern"</e></m>
@@ -87552,7 +87607,7 @@
 				<m n=":enum"/>
 			</meta>
 		</SQUARE_PATTERN>
-		<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="103" static="1">
+		<ARC_SHAPE public="1" get="inline" set="null" expr="cast &quot;ArcShape&quot;" line="140" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "ArcShape"</e></m>
@@ -87560,7 +87615,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ARC_SHAPE>
-		<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="104" static="1">
+		<CIRCLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;CircleShape&quot;" line="141" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "CircleShape"</e></m>
@@ -87568,7 +87623,7 @@
 				<m n=":enum"/>
 			</meta>
 		</CIRCLE_SHAPE>
-		<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="105" static="1">
+		<ELLIPSE_SHAPE public="1" get="inline" set="null" expr="cast &quot;EllipseShape&quot;" line="142" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "EllipseShape"</e></m>
@@ -87576,7 +87631,7 @@
 				<m n=":enum"/>
 			</meta>
 		</ELLIPSE_SHAPE>
-		<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="106" static="1">
+		<PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;PathElementShape&quot;" line="143" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "PathElementShape"</e></m>
@@ -87584,7 +87639,7 @@
 				<m n=":enum"/>
 			</meta>
 		</PATH_ELEMENT_SHAPE>
-		<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="107" static="1">
+		<QUADRILATERAL_SHAPE public="1" get="inline" set="null" expr="cast &quot;QuadrilateralShape&quot;" line="144" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "QuadrilateralShape"</e></m>
@@ -87592,7 +87647,7 @@
 				<m n=":enum"/>
 			</meta>
 		</QUADRILATERAL_SHAPE>
-		<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="108" static="1">
+		<RECTANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;RectangleShape&quot;" line="145" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "RectangleShape"</e></m>
@@ -87600,7 +87655,7 @@
 				<m n=":enum"/>
 			</meta>
 		</RECTANGLE_SHAPE>
-		<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="109" static="1">
+		<SQUARE_SHAPE public="1" get="inline" set="null" expr="cast &quot;SquareShape&quot;" line="146" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "SquareShape"</e></m>
@@ -87608,7 +87663,7 @@
 				<m n=":enum"/>
 			</meta>
 		</SQUARE_SHAPE>
-		<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="110" static="1">
+		<STAR6_SHAPE public="1" get="inline" set="null" expr="cast &quot;Star6Shape&quot;" line="147" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "Star6Shape"</e></m>
@@ -87616,7 +87671,7 @@
 				<m n=":enum"/>
 			</meta>
 		</STAR6_SHAPE>
-		<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="111" static="1">
+		<TRIANGLE_SHAPE public="1" get="inline" set="null" expr="cast &quot;TriangleShape&quot;" line="148" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "TriangleShape"</e></m>
@@ -87624,7 +87679,7 @@
 				<m n=":enum"/>
 			</meta>
 		</TRIANGLE_SHAPE>
-		<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="112" static="1">
+		<VE_PATH_ELEMENT_SHAPE public="1" get="inline" set="null" expr="cast &quot;VePathElementShape&quot;" line="149" static="1">
 			<x path="pixelimage.triangleGML.coreShape.TriangleGMLname"/>
 			<meta>
 				<m n=":value"><e>cast "VePathElementShape"</e></m>
@@ -87635,7 +87690,7 @@
 		<meta><m n=":enum"/></meta>
 	</class>
 	<class path="pixelimage.triangleGML.coreShape._TriangleGML.TriangleGML_Fields_" params="" file="src/pixelimage/triangleGML/coreShape/TriangleGML.hx" private="1" module="pixelimage.triangleGML.coreShape.TriangleGML" final="1">
-		<getTriangleGML public="1" set="method" line="115" static="1"><f a="nodeName">
+		<getTriangleGML public="1" set="method" line="152" static="1"><f a="nodeName">
 	<c path="String"/>
 	<c path="pixelimage.triangleGML.coreShape.ShapeInterface"/>
 </f></getTriangleGML>
