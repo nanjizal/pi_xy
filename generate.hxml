@@ -3,6 +3,7 @@
 -lib justPath
 -lib vision
 -lib format
+-lib peote-view
 -D pixelimageDoc
 -D doc-gen
 --macro include('pixelimage')

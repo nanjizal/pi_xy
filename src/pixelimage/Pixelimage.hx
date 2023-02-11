@@ -144,9 +144,29 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
     }
     #elseif
+    /*
+    class Test {
+  static function main() {
+    var d32 = new haxe.io.UInt32Array( 1*2 );
+    d32.set( 0, 0xFF00FC00 );
+    d32.set( 1, 0xFF00FFFB );
+    var d8 = haxe.io.UInt8Array.fromBytes( d32.view.buffer );
+    for( i in 0...d8.length ){
+			trace( '#' + StringTools.hex( d8[i], 2 ) ); // BGRA
+    }
+    Test.hx:8: #00
+Test.hx:8: #FC
+Test.hx:8: #00
+Test.hx:8: #FF
+Test.hx:8: #FB
+Test.hx:8: #FF
+Test.hx:8: #00
+Test.hx:8: #FF
+  }
+}*/
     inline 
-    function view8():haxe.io.Uint8Array {
-        return new js.lib.Uint8Array( this.image.view.buffer );
+    function view8():haxe.io.UInt8Array {
+        return UInt8Array.fromBytes( this.image.view.buffer );// reverses order
     }
     #end
     inline
@@ -1023,7 +1043,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     #else
     inline
     public function getBytes(){
-        return this.image.view.buffer;
+        return this.image.view.buffer;// not working..
     }
     #end
     inline
