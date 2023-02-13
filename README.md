@@ -1,4 +1,4 @@
-# pixelimage
+# pixelimageXY
 
 Currently adding hittest to shapes, and improving triGML markup. Not yet ready for production WIP.
 
