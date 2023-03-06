@@ -1,12 +1,12 @@
 
 {
-    "name"         : "pixelimage",
-    "url"          : "https://github.com/nanjizal/pixelimage#pixelimage",
+    "name"         : "pixelimageXY",
+    "url"          : "https://github.com/nanjizal/pixelimageXY#pixelimageXY",
     "license"      : "MIT",
     "tags"         : ["cross", "image", "2d"],
-    "description"  : "pixelimage, image utility",
+    "description"  : "pixelimageXY, image utility",
     "version"      : "0.0.1-alpha",
-    "releasenote"  : "See https://github.com/nanjizal/pixelimage/blob/master/CHANGELOG.md",
+    "releasenote"  : "See https://github.com/nanjizal/pixelimageXY/blob/master/CHANGELOG.md",
     "contributors" : ["Nanjizal"],
     "classPath"    : "src",
     "dependencies" : {}
