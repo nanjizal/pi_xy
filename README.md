@@ -44,10 +44,21 @@ PixelimageXY contains an experimental 2D vector software rendering engine capabi
   
 Shapes can be defined with simple XML shape nodes using [TriangleXML](https://github.com/nanjizal/triangleGML) mini library. TriangleGML uses [abstract classed](https://haxe.org/manual/types-abstract-class.html) [generics](https://haxe.org/manual/type-system-generic.html) to provide basic (macro less and reflection less) XML parsing and can be implemented against alternatate drawing tools by setting the ```<DRAWTOOL>``` and ```<IMAGETOOL>``` generics.  PixelimageXY inherits the abstract classes and implements a 'render' method and defines the ```getTriangleGML``` method mapping the extended render classes.
 
+## Features
+- Alpha blending or overdraw ( transparency = false ) allowing composition, ( Mask needs more testing ).
+- Image skew, scale and rotations, barycentric UV mapping allows fairly reasonable quality.
+- Soft edge lines and gradient lines ( only tried on cpp ) they maybe heavy, pentagon sampling.
+- Arc, pie, ellipse, polygon
+- Curves and SVG data paths ( more testing and some edge cases )
+- Pattern shapes, use of an array of bool to define a simple image texture.
+- Rounded rectangles
+- Arrows including tapering and double arrows
+- Ve multiple color edges
+
 ## WIP progress, wait prior to use.
 - Recently implemented soft edged lines and gradient lines using two triangles.
 - In progress of rebuilding rendering against the TriangleXML, inital old 'pixelimage' has similar.
-- Implementing XML example use at [TriangleXML-samples](https://github.com/nanjizal/triangleGML-samples) and [pixelimageXY-samples](http://github.com/nanjizal/pixelimageXY-samples)
+- Implementing XML sample use at [TriangleXML-samples](https://github.com/nanjizal/triangleGML-samples) and [pixelimageXY-samples](http://github.com/nanjizal/pixelimageXY-samples)
 
 ## Old 'pixelimage' links.
 
