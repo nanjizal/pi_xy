@@ -126,8 +126,8 @@ class Barycentric {
     }
     public inline
     function getRatios(x: Float, y: Float ): BaryCoordinates {
-        var pcy = y - cy;
         var pcx = x - cx;
+        var pcy = y - cy;
         var dot31  = dot( pcx, pcy, bcx, bcy );
         var dot32  = dot( pcx, pcy, acx, acy );
         var ratioA = (dot22 * dot31 - dot12 * dot32) * denom1;

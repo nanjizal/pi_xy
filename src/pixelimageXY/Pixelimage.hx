@@ -1050,6 +1050,10 @@ Test.hx:8: #FF
     public function fromBytes( bytes: haxe.io.Bytes, pos ){
         this.image = haxe.io.UInt32Array.fromBytes( bytes, pos );
     }
+    inline
+    public function fromBytesCameleon( bytes: pixelimageXY.formats.BytesCameleon ){
+        fromBytes( ( cast bytes: haxe.io.Bytes ), 0 );
+    }
     
     // maybe remove
     /*

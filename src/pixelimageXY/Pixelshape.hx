@@ -617,7 +617,6 @@ abstract Pixelshape( Pixelimage ) to Pixelimage {
     public inline
     function fillArrow( px: Float, py: Float, qx: Float, qy: Float
         , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = true ): Null<HitTriArray> {
-        trace( 'pixelimage.fillArrow');
         return fillLineArrow( this, px, py, qx, qy, thick, color, flare, reverseFlare, hasHit );
     }
     public inline
