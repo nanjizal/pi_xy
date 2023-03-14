@@ -10,7 +10,7 @@ class LineShape extends LineShape_<Pixelshape,Pixelshape>{
         switch( name ){
             case 'luxury':
                 luxury = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false; 
-                trace('setting luxury '+ value );            
+                trace('setting luxury '+ value );
             case _:
                 super.setParameter( name, value );
         }
