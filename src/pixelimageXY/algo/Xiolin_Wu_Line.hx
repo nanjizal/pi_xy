@@ -5,12 +5,31 @@ import pixelimageXY.pixel.Pixel32;
 import pixelimageXY.pixel.PixelChannel;
 // https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm
 // algorthim Xiolin Wu
-
+/* NO USE TO REMOVE the *4
+inline 
+function xWuLine4( pixelImage: Pixelimage
+    , x0: Float, y0: Float
+    , x1: Float, y1: Float
+    , color: Pixel32
+    ): Void {
+    var width = Math.abs( x1 - x0 );
+    var height = Math.abs( y1 - y0 );
+    var x3 = Math.min( x1, x0 );
+    var y3 = Math.min( y1, y0 );
+    var temp = new Pixelimage( Math.ceil( width /4 ), Math.ceil( height /4 ) );
+    temp.transparent = true;   
+    var factor = 4.;
+    xWuLine( temp, ( x0 - x3 )/4, ( y0 - y3 )/4
+                 , ( x1 - x3 )/4, ( y1 - y3 )/4, color );
+    var temp2 = temp.scaleXY( 4, 4, true );
+    pixelImage.putPixelImage( temp2, Math.floor( x3 ), Math.floor( y3 ),true );
+}
+*/
 inline
 function xWuLine( pixelImage: Pixelimage
                 , x0: Float, y0: Float
                 , x1: Float, y1: Float
-                , color: Pixel32
+                , color: Pixel32, brightRange: Float = 0.25
                 ): Void {
         // decompose channels
     var a = ( color >> 24 ) & 0xFF;
@@ -45,7 +64,7 @@ function xWuLine( pixelImage: Pixelimage
     var ypxl1 = Math.floor( yend );
     var a0: Int = 0;
     // only adjust alpha / brightness over the top part.
-    var range = 0.25;
+    var range = brightRange;
     var solid = 1 - range;
     if( steep ){    
         a0 = PixelChannel.boundChannel( a*solid + range*a*( rfPart(yend) * xgap ) );
@@ -82,7 +101,6 @@ function xWuLine( pixelImage: Pixelimage
         for( x in startX...endX ){
            a0 = PixelChannel.boundChannel( a*solid + range*a*( rfPart(intery) ) );
            pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery )    , x ) );
-           pos += '' + Math.floor( intery ) + ' ';
            a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(intery)  ) );
            pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery ) + 1, x ) );
            intery = intery + gradient;

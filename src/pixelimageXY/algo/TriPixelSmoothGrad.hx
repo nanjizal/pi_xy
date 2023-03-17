@@ -8,29 +8,29 @@ import pixelimageXY.algo.HitTri;
 import pixelimageXY.algo.PentagonSampler;
 import pixelimageXY.algo.HitTriScalar;
 import pixelimageXY.algo.Barycentric;
+import pixelimageXY.algo.QuadPoints;
 
 inline
-function quadGradPentBary( pixelImage: Pixelimage
-                        , ax: Float, ay: Float
-                        , bx: Float, by: Float
-                        , cx: Float, cy: Float
-                        , dx: Float, dy: Float 
-                        , color: Int
+function lineGradPentBary( pixelImage: Pixelimage
+                         , px: Float, py: Float
+                         , thick: Float, h: Float
+                         , theta: Float
+                         , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+                         , hasHit: Bool = false ){
+    var lineInfo: LineInfo = { px: px, py: py, thick: thick, long: h, theta: theta };
+    var quadPoints: QuadPoints = lineInfo;
+    return quadGradPentBary( pixelImage, quadPoints, colorA, colorB, colorC, colorD, hasHit );
+}
+
+inline
+function quadGradPentBary( pixelImage: Pixelimage, q: QuadPoints
+                        , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
                         , hasHit: Bool = false ): Null<HitQuad>{
     // tri e - a b d
     // tri f - b c d
-    var alpha = 0xFF000000 ;
-    var colors = 0xFFFFFF;
-    var col = alpha + Std.random( colors );
-    var colorA: Pixel32 = col;
-    var colorB: Pixel32 = col;
-    var colorC: Pixel32 = col;
-    var colorD: Pixel32 = col;
-
-    triGradPentBaryBottom( pixelImage, ax, ay, colorA, bx, by, colorB, dx, dy, colorD, false );                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-    triGradPentBaryTop(    pixelImage, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, false );
-    // don't bother with hit as fillQuadrilateral in test will return.
-    return null;
+    triGradPentBaryBottom( pixelImage, q.ax, q.ay, colorA, q.bx, q.by, colorB, q.dx, q.dy, colorD, hasHit );                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+    triGradPentBaryTop(    pixelImage, q.bx, q.by, colorB, q.cx, q.cy, colorC, q.dx, q.dy, colorD, false );
+    return q.getHit( hasHit );
 }
 inline
 function triGradPentBaryBottom( pixelImage: Pixelimage

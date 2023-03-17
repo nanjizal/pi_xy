@@ -3,18 +3,10 @@ package pixelimageXY.algo;
 import pixelimageXY.iter.BoundIterator;
 import pixelimageXY.iter.IteratorRange;
 import pixelimageXY.algo.HitTri;
+import pixelimageXY.algo.QuadPoints;
 
 @:structInit
-class HitQuad implements IhitObj {
-    public var ax: Float;
-    public var ay: Float;
-    public var bx: Float;
-    public var by: Float;
-    public var cx: Float;
-    public var cy: Float;
-    public var dx: Float;
-    public var dy: Float;
-
+class HitQuad extends QuadPoints_ implements IhitObj {
     public var triABD: HitTri;
     public var triBCD: HitTri;
     public var xIter4: IteratorRange;
@@ -27,14 +19,7 @@ class HitQuad implements IhitObj {
                        , bx: Float, by: Float
                        , cx: Float, cy: Float
                        , dx: Float, dy: Float, preCalculated: Bool = true ){
-        this.ax = ax;
-        this.ay = ay;
-        this.bx = bx;
-        this.by = by;
-        this.cx = cx;
-        this.cy = cy;
-        this.dx = dx;
-        this.dy = dy;
+        super( ax, ay, bx, by, cx, cy, dx, dy );
         if( preCalculated ){
             preCalculateValues();
         }

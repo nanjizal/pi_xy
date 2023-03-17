@@ -2,15 +2,10 @@ package pixelimageXY.algo;
 
 import pixelimageXY.iter.BoundIterator;
 import pixelimageXY.iter.IteratorRange;
+import pixelimageXY.algo.TriPoints;
 
 @:structInit
-class HitTri implements IhitObj {
-    public var ax: Float;
-    public var ay: Float;
-    public var bx: Float;
-    public var by: Float;
-    public var cx: Float;
-    public var cy: Float;
+class HitTri extends TriPoints_ implements IhitObj {
     public var preCalculated: Bool;
     var s0: Float;
     var sx: Float;
@@ -28,21 +23,7 @@ class HitTri implements IhitObj {
     public function new( ax: Float, ay: Float
                        , bx: Float, by: Float
                        , cx: Float, cy: Float, preCalculated: Bool = true ){
-        var adjustWinding = ( (ax * by - bx * ay) + (bx * cy - cx * by) + (cx * ay - ax * cy) )>0;
-        if( !adjustWinding ){
-            var bx_ = bx;
-            var by_ = by;
-            bx = cx;
-            by = cy;
-            cx = bx_;
-            cy = by_;
-        }
-        this.ax = ax;
-        this.ay = ay;
-        this.bx = bx;
-        this.by = by;
-        this.cx = cx;
-        this.cy = cy;
+        super( ax, ay, bx, by, cx, cy );
         this.preCalculated = preCalculated;
         if( preCalculated ){
             preCalculateValues();
