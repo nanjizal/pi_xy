@@ -1,14 +1,15 @@
-#-lib pixelimage
+#-lib pixelimageXY
 #-lib htmlHelper
 -lib justPath
 -lib vision
 -lib format
 -lib peote-view
+-lib triangleGML
 -D pixelimageDoc
 -D doc-gen
---macro include('pixelimage')
+--macro include('pixelimageXY')
 -cp src
--main pixelimage.PixelimageDoc
+-main pixelimageXY.PixelimageDoc
 --no-output
 -xml output.xml
 -cppia foo

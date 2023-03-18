@@ -23,3 +23,4 @@ class LineGradient extends LineGradient_<Pixelshape,Pixelshape>{
             , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
         return pixelShape;
     }
+}

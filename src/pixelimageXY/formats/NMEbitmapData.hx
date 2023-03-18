@@ -1,13 +1,16 @@
 package pixelimageXY.formats;
+
+#if !'doc-gen'
 import nme.display.BitmapData;
 import pixelimageXY.Pixelshape;
 import pixelimageXY.Pixelimage;
 import pixelimageXY.pixel.Pixel32;
 import haxe.io.UInt8Array;
+
 // module NMEbitmapData
 
 // untested!!
-
+@:dox(hide)
 inline
 function toNmeBitmapData( pixelShape: Pixelshape ): BitmapData {
     var lh = pixelShape.height; 
@@ -32,3 +35,4 @@ function toNmeBitmapData( pixelShape: Pixelshape ): BitmapData {
     }
     return BitmapData.loadFromHaxeBytes( dataRGB, dataA );
 }
+#end
