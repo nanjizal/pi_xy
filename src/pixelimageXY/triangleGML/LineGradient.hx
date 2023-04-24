@@ -2,6 +2,7 @@ package pixelimageXY.triangleGML;
 
 import pixelimageXY.Pixelshape;
 import triangleGML.shape.gradient.LineGradient_;
+import pixelimageXY.algo.TriPixelSmoothGrad;
 
 class LineGradient extends LineGradient_<Pixelshape,Pixelshape>{
     public var luxury: Bool;
@@ -19,8 +20,13 @@ class LineGradient extends LineGradient_<Pixelshape,Pixelshape>{
         var qx = x2 + offX;
         var py = y1 + offY;
         var qy = y2 + offY;
-        pixelShape.fillGradLine( px, py, qx, qy, strokeWidth
-            , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
+        if( luxury ){
+            lineXYGradPentBary( ( cast pixelShape: Pixelimage ), px, py, qx, qy, strokeWidth
+                            , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
+        } else {
+            pixelShape.fillGradLine( px, py, qx, qy, strokeWidth
+                , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
+        }
         return pixelShape;
     }
 }

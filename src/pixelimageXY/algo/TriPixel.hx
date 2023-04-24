@@ -5,7 +5,6 @@ import pixelimageXY.algo.GeomPix;
 import pixelimageXY.pixel.Pixel32;
 import pixelimageXY.pixel.PixelChannel;
 import pixelimageXY.algo.HitTri;
-import pixelimageXY.algo.MultiBool;
 
     /**
         provides a filled triangle give a,b,c coordinates

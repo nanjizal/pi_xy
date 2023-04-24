@@ -7,7 +7,7 @@ class LineInfo {
     public var px:    Float;
     public var py:    Float;
     public var thick: Float;
-    public var long:     Float;
+    public var long:  Float;
     public var theta: Float;
     public inline
     function new(   px: Float,   py: Float
@@ -18,6 +18,22 @@ class LineInfo {
         this.thick = thick;
         this.long = long;
         this.theta = theta;
+    }
+}
+@:structInit
+class LineXYinfo {
+    public var px: Float;
+    public var py: Float;
+    public var qx: Float;
+    public var qy: Float;
+    public var thick: Float;
+    public inline
+    function new( px: Float, py: Float, qx: Float, qy: Float, thick: Float ){
+        this.px = px;
+        this.py = py;
+        this.qx = qx;
+        this.qy = qy;
+        this.thick = thick;
     }
 }
 
@@ -59,6 +75,16 @@ abstract QuadPoints( QuadPoints_ ) from QuadPoints_ to QuadPoints_ {
     }
     @:from
     public static inline
+    function fromLineXYinfo( lineXYinfo: LineXYinfo ): QuadPoints {
+        var _ = lineXYinfo;
+        var o = _.qy-_.py;
+        var a = _.qx-_.px;
+        var h = Math.pow( o*o + a*a, 0.5 );
+        var theta = Math.atan2( o, a );
+        return QuadPoints.fromLineInfo( new LineInfo( _.px, _.py, _.thick, h, theta ) );
+    }
+    @:from
+    public static inline
     function fromLineInfo( lineInfo: LineInfo ): QuadPoints {
         var radius = lineInfo.thick/2;
         var dx = 0.1;
@@ -69,7 +95,10 @@ abstract QuadPoints( QuadPoints_ ) from QuadPoints_ to QuadPoints_ {
         var by = -radius;
         var ax = 0.1;
         var ay = -radius;
-        var qp: QuadPoints = { ax: ax, ay: ay, bx: bx, by: by, cx: cx, cy: cy, dx: dx, dy: dy };
+        var qp: QuadPoints = ( { ax: ax, ay: ay
+                               , bx: bx, by: by
+                               , cx: cx, cy: cy
+                               , dx: dx, dy: dy }: QuadPoints_ );
         var sin = Math.sin( lineInfo.theta );
         var cos = Math.cos( lineInfo.theta );
         var centreX = lineInfo.px;

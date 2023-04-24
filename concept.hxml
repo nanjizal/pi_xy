@@ -1,0 +1,3 @@
+# mv compile0.txt compile1.txt
+# haxe compile.hxml | tee compile0.txt
+# difftool compile0.txt compile1.txt

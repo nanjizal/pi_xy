@@ -11,6 +11,18 @@ import pixelimageXY.algo.Barycentric;
 import pixelimageXY.algo.QuadPoints;
 
 inline
+function lineXYGradPentBary( pixelImage: Pixelimage
+                         , px: Float, py: Float
+                         , qx: Float, qy: Float
+                         , thick: Float
+                         , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
+                         , hasHit: Bool = false ){
+    var lineXYinfo: LineXYinfo = { px: px, py: py, qx: qx, qy: qy, thick: thick };
+    var quadPoints: QuadPoints = lineXYinfo;
+    return quadGradPentBary( pixelImage, quadPoints, colorA, colorB, colorC, colorD, hasHit );
+}
+
+inline
 function lineGradPentBary( pixelImage: Pixelimage
                          , px: Float, py: Float
                          , thick: Float, h: Float

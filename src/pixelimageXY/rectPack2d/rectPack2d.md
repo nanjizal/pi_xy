@@ -9,3 +9,5 @@ https://github.com/nanjizal/hxRectPack2D_pixel
 
 haxe port of rectPack2D.js https://github.com/plepers/rectpack2D credits Pierre Lepers( js port ) Patryk Czachurski ( c++ original )
 my port has additional code for Atlas parsing.
+
+still wip integration.

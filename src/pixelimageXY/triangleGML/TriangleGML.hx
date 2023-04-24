@@ -99,8 +99,10 @@ class TriangleGML extends TriangleGML_<Pixelshape,Pixelshape> {
                     new LineShape();
                 case NINE_SLICE_PICTURE:
                     new NineSlicePicture();
+                case LINE_GRADIENT:
+                    new LineGradient();
                 case _:
-                    throw( 'shape unfound' );
+                    throw( 'shape unfound ' + nodeName );
         }
         return s;          
     }

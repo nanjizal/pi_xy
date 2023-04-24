@@ -2,6 +2,7 @@ package pixelimageXY;
 
 import vision.ds.Image;
 import haxe.io.UInt32Array;
+
 import pixelimageXY.iter.BoundIterator;
 import pixelimageXY.iter.IteratorRange;
 import pixelimageXY.ImageStruct;
@@ -9,19 +10,22 @@ import pixelimageXY.pixel.Pixel32;
 import pixelimageXY.pixel.Pixel28;
 import pixelimageXY.algo.GeomPix;
 import pixelimageXY.pixel.PixelChannel;
-import pixelimageXY.algo.TriPixel;
-import pixelimageXY.algo.LinePixel;
-import pixelimageXY.algo.CirclePixel;
-import pixelimageXY.algo.PolyPixel;
+import iterMagic.IteratorRangeXY;
+//import pixelimageXY.algo.TriPixel;
+//import pixelimageXY.algo.LinePixel;
+//import pixelimageXY.algo.CirclePixel;
+
+//import pixelimageXY.algo.PolyPixel;
 //import pixelimageXY.algo.QuadPixel;
-import pixelimageXY.algo.QuadrantPixel;
-import pixelimageXY.algo.RoundRecPixel;
-import pixelimageXY.algo.RectanglePixel;
+//import pixelimageXY.algo.QuadrantPixel;
+//import pixelimageXY.algo.RoundRecPixel;
+//import pixelimageXY.algo.RectanglePixel;
+
 import pixelimageXY.algo.HitTri;
 import pixelimageXY.algo.HitQuad;
 import pixelimageXY.algo.HitTriArray;
-import pixelimageXY.algo.QuadPixel;
-import pixelimageXY.algo.ArrowPixel;
+//import pixelimageXY.algo.QuadPixel;
+//import pixelimageXY.algo.ArrowPixel;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
@@ -256,6 +260,9 @@ Test.hx:8: #FF
     function simpleRect( x: Float, y: Float
                        , w: Float, h: Float
                        , color: Int ){
+        var range: IteratorRangeXY = { x: Std.int( x ), y: Std.int( y ), w: Std.int( w ), h: Std.int( h ) };
+        for( i in range ) setARGB( range.x, range.y, color );
+        /*
         var p = Std.int( x );
         var xx = p;
         var q = Std.int( y );
@@ -269,10 +276,14 @@ Test.hx:8: #FF
             } 
             if( q > maxY ) break;
         }
+        */
     }
     inline public 
     function clearRect( x: Float, y: Float
                        , w: Float, h: Float ){
+        var range: IteratorRangeXY = { x: Std.int( x ), y: Std.int( y ), w: Std.int( w ), h: Std.int( h ) };
+        for( i in range ) this.image[ position( range.x, range.y ) ] = 0;
+        /*
         var p = Std.int( x );
         var xx = p;
         var q = Std.int( y );
@@ -286,6 +297,7 @@ Test.hx:8: #FF
             } 
             if( q > maxY ) break;
         }
+        */
     }
     /**
         creates a new Pixelimage that is flipped horizonally.
@@ -296,368 +308,88 @@ Test.hx:8: #FF
                   , w: Float, h: Float
                   , transparent: Bool = false
                   , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p: Int = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
-        pixelImage.transparent = transparent;
-        var color: Int = 0;
-        while( true ){
-            color = getARGB( maxX - p, q ); // to do check if needs to be +1.
-            pixelImage.setARGB( p++, q, color );
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        return if( inPlace ){
-            putPixelImage( pixelImage, Std.int( x ), Std.int( y ) );
-            if( mask != null && includeMask ) mask = mask.flippedX( x, y, width, height, mask.transparent, inPlace, includeMask );
-            pixelImage = null;
-            this;
-        } else {
-            if( mask != null && includeMask ) mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
-            pixelImage;
-        }
+        return pixelimageXY.transformation.FlipImage
+            .imageflipX( abstract, x, y, w, h, transparent, inPlace, includeMask );
     }
     /**
         creates a new Pixelimage that is flipped vertically.
         inPlace overwrites current.
     **/
     inline public
-    function flippedY( x: Float, y: Float
-                  , w: Float, h: Float
-                  , transparent: Bool = false
-                  , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
-        pixelImage.transparent = transparent;
-        var color: Int = 0;
-        while( true ){
-            color = getARGB( p, maxY - q ); // to do check if needs to be +1.
-            pixelImage.setARGB( p++, q, color );
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        return if( inPlace ){
-            putPixelImage( pixelImage, Std.int( x ), Std.int( y ) );
-            if( mask != null && includeMask ) mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
-            pixelImage = null;
-            this;
-        } else {
-            if( mask != null && includeMask ){
-                pixelImage.mask = mask.flippedY( x, y, width, height, mask.transparent, inPlace, includeMask );
-            }
-            pixelImage;
-        }
+    function flippedY( x: Float, y: Float, w: Float, h: Float
+                     , transparent: Bool = false
+                     , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
+        return pixelimageXY.transformation.FlipImage
+            .imageflipY( abstract, x, y, w, h, transparent, inPlace, includeMask );
     }
     /**
         creates a new Pixelimage base on current image, rotated 90° clockwise
     **/
     inline public
-    function spunClock90( x: Float, y: Float
-                  , w: Float, h: Float
-                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var pixelImage = new Pixelimage( Std.int( h ), Std.int( w ) );
-        pixelImage.transparent = transparent;
-        var color: Int = 0;
-        while( true ){
-            color = getARGB( p, q ); // to do check if needs to be +1.
-            pixelImage.setARGB( maxY - q, p, color );
-            p++;
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        if( mask != null && includeMask ) {
-            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
-        }
-        return pixelImage;
+    function spunClock90( x: Float, y: Float, w: Float, h: Float
+                         , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
+        return pixelimageXY.transformation.SpinImage
+            .spinClock90( abstract, x, y, w, h, transparent, includeMask );
     }
     inline public
-    function spunAntiClock90( x: Float, y: Float
-                  , w: Float, h: Float
+    function spunAntiClock90( x: Float, y: Float, w: Float, h: Float
                   , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var pixelImage = new Pixelimage( Std.int( h ), Std.int( w ) );
-        pixelImage.transparent = transparent;
-        var color: Int = 0;
-        while( true ){
-            color = getARGB( p, q ); // to do check if needs to be +1.
-            pixelImage.setARGB( q, maxX-p, color );
-            p++;
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        if( mask != null && includeMask ) {
-            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
-        }
-        return pixelImage;
+        return pixelimageXY.transformation.SpinImage
+            .spinAntiClock90( abstract, x, y, w, h, transparent, includeMask );
     }
     inline public
-    function spun180( x: Float, y: Float
-                  , w: Float, h: Float
+    function spun180( x: Float, y: Float, w: Float, h: Float
                   , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var pixelImage = new Pixelimage( Std.int( w ), Std.int( h ) );
-        pixelImage.transparent = transparent;
-        var color: Int = 0;
-        while( true ){
-            color = getARGB( p, q ); // to do check if needs to be +1.
-            pixelImage.setARGB( maxX - p, maxY - q, color );
-            p++;
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        if( mask != null && includeMask ) {
-            pixelImage.mask = mask.spun180( x, y, w, h, mask.transparent, includeMask );
-        }
-        return pixelImage;
+        return pixelimageXY.transformation.SpinImage
+            .spin180( abstract, x, y, w, h, transparent, includeMask );
     }
     inline public
-    function scaleXY( sx: Float, sy: Float, transparent = false, includeMask: Bool = false ): Pixelimage {
-        var scaleW = Std.int( sx );
-        var scaleH = Std.int( sy );
-        var ifScaleUpInt = ( scaleW == sx && sx > 0. && scaleH == sy && sy > 0. );
-        return if( ifScaleUpInt ){
-            scaleUpInt( scaleW, scaleH, transparent );
-        } else {
-            var w = width*sx;
-            var h = height*sy;
-            var wid = Math.ceil( w );
-            var hi  = Math.ceil( h );
-            var pixelImage = new Pixelimage( wid, hi );
-            pixelImage.transparent = transparent;
-            pixelImage.imgQuad( this, rectWindow, 0, 0, w, 0, w, h, 0, h, false );
-            if( mask != null && includeMask ){
-                pixelImage.mask = mask.scaleXY( sx, sy, mask.transparent, includeMask );
-            }
-            pixelImage;
-        }
+    function scaleXY( sx: Float, sy: Float
+                    , transparent = false, includeMask: Bool = false ): Pixelimage {
+        return pixelimageXY.transformation.ScaleImage
+            .scalingXY( abstract, sx, sy, transparent, includeMask );
     }
+    inline public
+    function rotateClockwiseDegrees( angle: Float, centreX = 0., centreY = 0.
+                                   , transparent: Bool = false, includeMask: Bool = false ){
 
-    inline public
-    function rotateClockwiseDegrees( angle: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){
-        while( angle >= 360 ){
-            angle -= 360;
-        }
-        while( angle <= -360 ){
-            angle += 360;
-        }
-        return if( angle == 90. || angle == -270 ){
-            spunClock90( 0, 0, width, height, transparent, includeMask );
-        } else if( angle == -90 || angle == 270 ){
-            spunAntiClock90( 0, 0, width, height, transparent, includeMask );
-        } else if( angle == 180 || angle == -180 ){
-            spun180( 0, 0, width, height, transparent, includeMask );
-        } else {
-            rotate( angle*Math.PI/180, centreX, centreY, transparent, includeMask );
-        }
+        return pixelimageXY.transformation.SpinImage
+            .rotatingClockwiseDegrees( abstract, angle, centreX, centreY, transparent, includeMask );
     }
     inline public
-    function rotateClockwiseRadians( theta: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){
-        while( theta >= 2*Math.PI ){
-            theta -= 2*Math.PI;
-        }
-        while( theta <= -2*Math.PI ){
-            theta += 2*Math.PI;
-        }
-        return if( theta == Math.PI/2 || theta == -3*Math.PI/2 ){
-            spunClock90( 0, 0, width, height, transparent, includeMask );
-        } else if( theta == -Math.PI/2 || theta == 3*Math.PI/2 ){
-            spunAntiClock90( 0, 0, width, height, transparent, includeMask );
-        } else if( theta == Math.PI || theta == -Math.PI ){
-            spun180( 0, 0, width, height, transparent, includeMask );
-        } else {
-            rotate( theta, centreX, centreY, transparent, includeMask );
-        }
+    function rotateClockwiseRadians( theta: Float, centreX = 0., centreY = 0.
+                                   , transparent: Bool = false, includeMask: Bool = false ){
+        return pixelimageXY.transformation.SpinImage
+            .rotatingClockwiseRadians( abstract, theta, centreX, centreY, transparent, includeMask );
     }
 
     public inline
-    function rotate( theta: Float, centreX = 0., centreY = 0., transparent: Bool = false, includeMask: Bool = false ){       
-        var ax = 0.;
-        var ay = 0.;
-        if( centreX != 0. ){
-            centreX = 0 + width/2 + centreX;
-            ax -= centreX;
-        }
-        if( centreY != 0. ){
-            centreY = 0 + height/2  + centreY;
-            ay -= centreY;
-        }
-        var bx = ax + width;
-        var by = ay;
-        var cx = bx;
-        var cy = ay + height;
-        var dx = ax;
-        var dy = cy;
-        var sin = Math.sin( theta );
-        var cos = Math.cos( theta );
-        var temp = ax;
-        ax = rotX( temp, ay, sin, cos );
-        ay = rotY( temp, ay, sin, cos );
-        var temp = bx;
-        bx = rotX( temp, by, sin, cos );
-        by = rotY( temp, by, sin, cos );
-        var temp = cx;
-        cx = rotX( temp, cy, sin, cos );
-        cy = rotY( temp, cy, sin, cos );
-        var temp = dx;
-        dx = rotX( temp, dy, sin, cos );
-        dy = rotY( temp, dy, sin, cos );
-        if( centreX != 0. ){
-            ax += centreX;
-            bx += centreX;
-            cx += centreX;
-            dx += centreX;
-        }
-        if( centreY != 0. ){
-            ay += centreY;
-            by += centreY;
-            cy += centreY;
-            dy += centreY;
-        }
-        var boundX = boundIterator4( ax, bx, cx, dx );
-        var boundY = boundIterator4( ay, by, cy, dy );
-        var minX = boundX.start;
-        var wid = boundX.length;
-        var minY = boundY.start;
-        var hi = boundY.length;
-        var pixelImage = new Pixelimage( wid, hi );
-        pixelImage.transparent = true;
-        if( minX < 0. ){
-            ax -= minX;
-            bx -= minX;
-            cx -= minX;
-            dx -= minX;
-        }
-        if( minY < 0. ){
-            ay -= minY;
-            by -= minY;
-            cy -= minY;
-            dy -= minY;
-        }
-        pixelImage.imgQuad( this, rectWindow, ax, ay, bx, by, cx, cy, dx, dy, false );
-        if( mask != null && includeMask ) {
-            pixelImage.mask = mask.rotate( theta, centreX, centreY, mask.transparent, includeMask );
-        }
-        return pixelImage;        
+    function rotate( theta: Float, centreX = 0., centreY = 0.
+                   , transparent: Bool = false, includeMask: Bool = false ){       
+        return pixelimageXY.transformation.SpinImage
+            .rotating( abstract, theta, centreX, centreY, transparent, includeMask );   
     }
     inline public
-    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2, transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        var p = 0;
-        var xx = p;
-        var q = 0;
-        var wNew = Std.int( width*scaleW );
-        var hNew = Std.int( height*scaleH );
-        var pixelImage = new Pixelimage( wNew, hNew );
-        var maxX = wNew;
-        var maxY = hNew;
-        while( true ){
-            var color = getARGB( Std.int( p/scaleW ), Std.int( q/scaleH ) );
-            pixelImage.setARGB( p++, q, color );
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
-        if( mask != null && includeMask ) {
-            pixelImage.mask = mask.scaleUpInt( scaleW, scaleH, mask.transparent, includeMask );
-        }
-        return pixelImage;
+    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2
+                       , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
+        return pixelimageXY.transformation.ScaleImage
+            .scaleUpInteger( abstract, scaleW, scaleH, transparent, includeMask );
     }
     inline public 
     function patternRect( x: Float, y: Float
                         , w: Float, h: Float
                         , foreColor: Int, backColor: Int
                         , patternFill: Array<Bool> ){
-        var p = Std.int( x );
-        var xx = p;
-        var q = Std.int( y );
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var count = 0;
-        var useFore = true;
-        while( true ){
-            // use pattern while in range and then repeat
-            if( count < patternFill.length ){
-                useFore = patternFill[ count ];
-                count++;
-            } else {
-                count = 0;
-                useFore = patternFill[ count ];
-                count++;
-            }
-            var color = (useFore)?foreColor: backColor;
-            setARGB( p++, q, color );
-            if( p > maxX ){
-                p = xx;
-                q++;
-            } 
-            if( q > maxY ) break;
-        }
+        return pixelimageXY.transformation.BinaryPatternFill
+            .patternRectangle( abstract, x, y, w, h, foreColor, backColor, patternFill );
     }
     inline public 
-    function patternRectDown(  x: Float, y: Float
+    function patternRectDown( x: Float, y: Float
                             , w: Float, h: Float
-                            , foreColor: Int, backColor: Int, patternFill: Array<Bool> ){
-        var p = Std.int( x );
-        var q = Std.int( y );
-        var yy = q;
-        var maxX = Std.int( x + w );
-        var maxY = Std.int( y + h );
-        var count = 0;
-        var useFore = true;
-        while( true ){
-            // use pattern while in range and then repeat
-            if( count < patternFill.length ){
-                useFore = patternFill[ count ];
-                count++;
-            } else {
-                count = 0;
-                useFore = patternFill[ count ];
-                count++;
-            }
-            var color: Int = (useFore)?foreColor: backColor;
-            setARGB( p, q++, color );
-            if( q > maxY ){
-                q = yy;
-                q++;
-            } 
-            if( p > maxX ) break;
-        }
+                            , foreColor: Int, backColor: Int
+                            , patternFill: Array<Bool> ){
+        return pixelimageXY.transformation.BinaryPatternFill
+            .patternRectangleDown( abstract, x, y, w, h, foreColor, backColor, patternFill );
     }
     /**
         provides a simple filled square a short cut 
@@ -680,7 +412,8 @@ Test.hx:8: #FF
                     , color: Pixel32
                     , hasHit: Bool = false
                     , hasUndo: Bool = false ): Null<HitTri> {
-        return fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit, hasUndo );
+        return pixelimageXY.algo.TriPixel
+            .fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit, hasUndo );
     }
     public inline
     function tileTri( ax: Float, ay: Float
@@ -688,7 +421,8 @@ Test.hx:8: #FF
                     , cx: Float, cy: Float
                     , tileImage: Pixelimage
                     , hasHit: Bool = false ): Null<HitTri> {
-        return tileTriangle( this, ax, ay, bx, by, cx, cy, tileImage, hasHit );
+        return pixelimageXY.algo.TriPixel
+            .tileTriangle( this, ax, ay, bx, by, cx, cy, tileImage, hasHit );
     }
     /**
         uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
@@ -702,7 +436,8 @@ Test.hx:8: #FF
                      , hasHit: Bool = false ): HitQuad {
         // tri e - a b d
         // tri f - b c d
-        return fillQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
+        return pixelimageXY.algo.QuadPixel
+            .fillQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
     }
     public inline
     function tileQuad( ax: Float, ay: Float
@@ -713,7 +448,8 @@ Test.hx:8: #FF
                      , hasHit: Bool = false ): HitQuad {
         // tri e - a b d
         // tri f - b c d
-        return tileQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
+        return pixelimageXY.algo.QuadPixel
+            .tileQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
     }
     /**
         creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
@@ -724,7 +460,8 @@ Test.hx:8: #FF
                         , bx: Float, by: Float, colB: Pixel32
                         , cx: Float, cy: Float, colC: Pixel32
                         , hasHit: Bool = true ): Null<HitTri> {
-        return fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
+        return pixelimageXY.algo.TriPixel
+            .fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
     }
     // Not so useful on own as uv are weird.
     public inline
@@ -732,7 +469,8 @@ Test.hx:8: #FF
                       , bx: Float, by: Float, bu: Float, bv: Float
                       , cx: Float, cy: Float, cu: Float, cv: Float
                      , hasHit: Bool = true ): Null<HitTri> {
-        return uvTriangle( this, texture, win, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv );
+        return pixelimageXY.algo.TriPixel
+            .uvTriangle( this, texture, win, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv );
     }
     public inline 
     function tileRect( x:   Float, y: Float
@@ -773,7 +511,8 @@ Test.hx:8: #FF
                          , hasHit: Bool = true ): Null<HitQuad> {
         // tri e - a b d
         // tri f - b c d
-        return fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
+        return pixelimageXY.algo.QuadPixel
+            .fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
     }
     public inline
     function imgQuad( texture: Pixelimage, win: RectangleWindow
@@ -782,7 +521,8 @@ Test.hx:8: #FF
                     , cx: Float, cy: Float
                     , dx: Float, dy: Float
                     , hasHit: Bool = true ): Null<HitQuad> {
-        return imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
+        return pixelimageXY.algo.QuadPixel
+            .imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
     }
     public inline
     function imgRect( texture: Pixelimage, win: RectangleWindow
@@ -869,7 +609,8 @@ Test.hx:8: #FF
                          , hasHit:   Bool = false ): Null<HitQuad>{
         var temp = new Pixelimage( Std.int( wid ), Std.int( hi ) );
         temp.transparent = false;
-        var hit: Null<HitQuad> = imageNineSlice( temp, texture, win, 0, 0, wid, hi, left, top, fat, tall, widNew, hiNew, leftNew, topNew, fatNew, tallNew,  hasHit );
+        var hit: Null<HitQuad> = pixelimageXY.algo.QuadPixel
+            .imageNineSlice( temp, texture, win, 0, 0, wid, hi, left, top, fat, tall, widNew, hiNew, leftNew, topNew, fatNew, tallNew,  hasHit );
         putPixelImage( temp, Std.int( x ), Std.int( y ) );
         temp = null;
         if( hit != null ){
@@ -895,7 +636,8 @@ Test.hx:8: #FF
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        return rotateLine( this, px, py, thick, h, theta, color, hasHit, debugCorners );
+        return pixelimageXY.algo.LinePixel
+            .rotateLine( this, px, py, thick, h, theta, color, hasHit, debugCorners );
     }
 
     /**
@@ -910,7 +652,8 @@ Test.hx:8: #FF
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        return rotateTileLine( this, px, py, thick, h, theta, tileImage, hasHit, debugCorners );
+        return pixelimageXY.algo.LinePixel
+            .rotateTileLine( this, px, py, thick, h, theta, tileImage, hasHit, debugCorners );
     }
     /**
         provides a thick line using two gradient triangle vector p,q
@@ -927,7 +670,8 @@ Test.hx:8: #FF
         var a = qx-px;
         var h = Math.pow( o*o + a*a, 0.5 );
         var theta = Math.atan2( o, a );
-        return rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, hasHit, debugCorners );
+        return pixelimageXY.algo.LinePixel
+            .rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, hasHit, debugCorners );
     }
 
     /**

@@ -143,4 +143,80 @@ class Barycentric {
     inline function get_centroidY(): Float {
         return (ay+by+cy)/3;
     }
+    inline
+    public function medianABx(): Float {
+        return ( ax + bx ) / 2;
+    }
+    inline
+    public function medianBCx(): Float {
+        return ( bx + cx ) / 2;
+    }
+    inline
+    public function medianCAx(): Float {
+        return ( cx + ax ) / 2;
+    }
+    inline
+    public function medianABy(): Float {
+        return ( ay + by ) / 2;
+    }
+    inline
+    public function medianBCy(): Float {
+        return ( by + cy ) / 2;
+    }
+    inline
+    public function medianCAy(): Float {
+        return ( cy + ay ) / 2;
+    }
+    public inline
+    function scaled( scaleA: Float, scaleB: Float, scaleC: Float ): Barycentric {
+        var x0 = 0.;
+        var y0 = 0.;
+        var isScaledA = scaleA != 1.;
+        var isScaledB = scaleB != 1.;
+        var isScaledC = scaleC != 1.;
+        switch( [ isScaledA, isScaledB, isScaledC ] ){
+            case [ false, false, false ]:
+                x0 = centroidX;
+                y0 = centroidY;
+            case [ false, false, true ]:
+                x0 = medianABx();
+                y0 = medianABy();
+            case [ false, true, false ]:
+                x0 = medianCAx();
+                y0 = medianCAy();
+            case [ false, true, true ]:
+                x0 = this.ax;
+                y0 = this.ay;
+            case [ true, false, false ]:
+                x0 = medianBCx();
+                y0 = medianBCy(); 
+            case [ true, false, true ]:
+                x0 = this.bx;
+                y0 = this.by;
+            case [ true, true, false ]:
+                x0 = this.cx;
+                y0 = this.cy;
+            case [ true, true, true ]:
+                x0 = centroidX;
+                y0 = centroidY;
+        }
+        
+        var ax_ = ( isScaledA )? scalePoint( ax, scaleA, x0 ): ax;
+        var ay_ = ( isScaledA )? scalePoint( ay, scaleA, y0 ): ay;
+        var bx_ = ( isScaledB )? scalePoint( bx, scaleB, x0 ): bx;
+        var by_ = ( isScaledB )? scalePoint( by, scaleB, y0 ): by;
+        var cx_ = ( isScaledC )? scalePoint( cx, scaleC, x0 ): cx;
+        var cy_ = ( isScaledC )? scalePoint( cy, scaleC, y0 ): cy;
+
+        
+        return ({ ax: ax_, ay: ay_
+                , bx: bx_, by: by_
+                , cx: cx_, cy: cy_ }: Barycentric    );
+    }
+    inline function scalePoint( point: Float, scale: Float, centre: Float ){
+        point -= centre;
+        point *= scale;
+        point += centre;
+        return point;
+    }
 }

@@ -5,7 +5,6 @@ import pixelimageXY.algo.GeomPix;
 import pixelimageXY.pixel.Pixel32;
 import pixelimageXY.pixel.PixelChannel;
 import pixelimageXY.algo.HitTri;
-import pixelimageXY.algo.MultiBool;
 
     //inline 
     function fillTriUnsafe5( pixelImage: Pixelimage

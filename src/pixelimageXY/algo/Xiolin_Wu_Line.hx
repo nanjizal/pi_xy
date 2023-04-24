@@ -77,6 +77,11 @@ function xWuLine( pixelImage: Pixelimage
         a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(yend)  * xgap ) );
         pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( xpxl1,     ypxl1 + 1 ) );
     }
+    /*
+      ▞▔▔|▔▔▚
+      ▎--╋---▎
+      ▚▁▁|▁▁▞
+    */
     var intery = yend + gradient; // first y-intersection for the main loop
     var xend = roundFloor( x1 );
     var yend = y1 + gradient * ( xend - x1 );
@@ -94,19 +99,22 @@ function xWuLine( pixelImage: Pixelimage
         a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(yend)  * xgap ) );
         pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( xpxl2,     ypxl2 + 1 ) );
     }
+    
     // main loop
     var startX = xpxl1 + 1;
-    var endX   = xpxl2 - 1;
+    var endX   = xpxl2 + 1;
     if( steep ){
         for( x in startX...endX ){
-           a0 = PixelChannel.boundChannel( a*solid + range*a*( rfPart(intery) ) );
-           pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery )    , x ) );
-           a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(intery)  ) );
-           pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery ) + 1, x ) );
-           intery = intery + gradient;
+           // top and bottom
+            a0 = PixelChannel.boundChannel( a*solid + range*a*( rfPart(intery) ) );
+            pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery )    , x ) );
+            a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(intery)  ) );
+            pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( Math.floor( intery ) + 1, x ) );
+            intery = intery + gradient;
         }
     } else {
         for( x in startX...endX ){
+            // left and right
             a0 = PixelChannel.boundChannel( a*solid + range*a*( rfPart(intery) ) );
             pixelImage.set_argbPixel( a0, r, g, b, pixelImage.position( x, Math.floor( intery ) ) );
             a0 = PixelChannel.boundChannel( a*solid + range*a*( fPart(intery) ) );
