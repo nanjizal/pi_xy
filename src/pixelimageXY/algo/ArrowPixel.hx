@@ -13,16 +13,16 @@ function fillLineArrow( pixelImage: Pixelimage
                   , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = false ): Null<HitTriArray>{
     var goldenRatio = 1.61803398875;
     //trace( 'pixelArrow fillLineArrow');
-    var o = qy-py;
-    var a = qx-px;
-    var h = Math.pow( o*o + a*a, 0.5 );
-    var theta = Math.atan2( o, a );
+    var o       = qy - py;
+    var a       = qx - px;
+    var h       = Math.pow( o*o + a*a, 0.5 );
+    var theta   = Math.atan2( o, a );
     var thicker = 2*thick*goldenRatio;
-    var sin = Math.sin( theta );
-    var cos = Math.cos( theta );
-    var radius = thick/2;
+    var sin     = Math.sin( theta );
+    var cos     = Math.cos( theta );
+    var radius  = thick/2;
     var radius2 = thicker/2;
-    var h2 = h/goldenRatio;
+    var h2      = h/goldenRatio;
     var hitQuad = if( flare ){
         if( reverseFlare ){
             rotateLineFlare( pixelImage, px, py, thick, (thicker - (thicker-thick)/goldenRatio ), h2, theta, color, true );
@@ -38,11 +38,11 @@ function fillLineArrow( pixelImage: Pixelimage
     var by = -radius2;
     var temp = 0.;
     temp = px + rotX( bx, by, sin, cos );
-    by = py + rotY( bx, by, sin, cos );
-    bx = temp;
+    by   = py + rotY( bx, by, sin, cos );
+    bx   = temp;
     temp = px + rotX( cx, cy, sin, cos );
-    cy = py + rotY( cx, cy, sin, cos );
-    cx = temp;
+    cy   = py + rotY( cx, cy, sin, cos );
+    cx   = temp;
     var hitTri = fillTriangle( pixelImage, qx, qy, bx, by, cx, cy, color, hasHit );
     return if( hasHit ){
         var hitArr: Null<HitTriArray> = new HitTriArray( [ hitTri ] );

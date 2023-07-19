@@ -1,6 +1,7 @@
 package pixelimageXY.transformation;
 import pixelimageXY.Pixelimage;
 import pixelimageXY.Pixelshape;
+import iterMagic.IteratorRangeXY;
 
     /**
         creates a new Pixelimage that is flipped horizonally.

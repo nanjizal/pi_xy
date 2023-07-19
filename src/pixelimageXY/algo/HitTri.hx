@@ -37,7 +37,7 @@ class HitTri extends TriPoints_ implements IhitObj {
         t0 = ax*by - ay*bx;
         tx = ay - by;
         ty = bx - ax;
-        A = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
+        A  = -by*cx + ay*(-bx + cx) + ax*(by - cy) + bx*cy; 
         xIter3 = boundIterator3( ax, bx, cx );
         yIter3 = boundIterator3( ay, by, cy );
     }

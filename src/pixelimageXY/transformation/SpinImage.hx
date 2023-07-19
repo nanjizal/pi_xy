@@ -3,6 +3,7 @@ package pixelimageXY.transformation;
 import pixelimageXY.Pixelimage;
 import pixelimageXY.algo.GeomPix;
 import pixelimageXY.iter.BoundIterator;
+import iterMagic.IteratorRangeXY;
 
     /**
         creates a new Pixelimage base on current image, rotated 90° clockwise
