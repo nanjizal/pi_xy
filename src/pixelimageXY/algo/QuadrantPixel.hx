@@ -34,7 +34,7 @@ import pixelimageXY.algo.CirclePixel;
                  var ctheta = Math.cos( i*theta+0.0001 + omega );
                  var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                  var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                 pixelimage.fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                 pixelimage.fillShape.triangle( cx, cy, lastX, lastY, nextX, nextY, color );
                  lastX = nextX;
                  lastY = nextY;
              }
@@ -42,7 +42,7 @@ import pixelimageXY.algo.CirclePixel;
              for( i in 0...quarter+1 ){
                  var nextX = cx + rx*Math.cos( i*theta + 0.0001 + omega );
                  var nextY = cy + ry*Math.sin( i*theta + 0.0001 + omega );
-                 pixelimage.fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                 pixelimage.fillShape.triangle( cx, cy, lastX, lastY, nextX, nextY, color );
                  lastX = nextX;
                  lastY = nextY;
              }
@@ -81,7 +81,7 @@ import pixelimageXY.algo.CirclePixel;
                  var ctheta = Math.cos( i*theta+0.0001 + omega );
                  var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                  var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
+                 pixelimage.tileShape.triangle( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                  lastX = nextX;
                  lastY = nextY;
              }
@@ -89,7 +89,7 @@ import pixelimageXY.algo.CirclePixel;
              for( i in 0...quarter+1 ){
                  var nextX = cx + rx*Math.cos( i*theta + 0.0001 + omega );
                  var nextY = cy + ry*Math.sin( i*theta + 0.0001 + omega );
-                 pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
+                 pixelimage.tileShape.triangle( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                  lastX = nextX;
                  lastY = nextY;
              }

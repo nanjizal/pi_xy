@@ -34,11 +34,11 @@ function fillRadialRect( pixelimage: Pixelimage
     for( i in 1...l - 2 ){
         nextX = x + gap*i;
         nextY = y;
-        pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+        pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
         lastX = nextX;
         lastY = nextY;
     }
-    pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, bx, y, colorOut );
+    pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, bx, y, colorOut );
     // right edge
     lastX = bx;
     lastY = y;
@@ -46,11 +46,11 @@ function fillRadialRect( pixelimage: Pixelimage
     for( i in 1...l - 2 ){
         nextX = bx;
         nextY = y + gap*i;
-        pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+        pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
         lastX = nextX;
         lastY = nextY;
     }
-    pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, bx, cy, colorOut );
+    pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, bx, cy, colorOut );
     // bottom edge
     lastX = bx;
     lastY = cy;
@@ -58,11 +58,11 @@ function fillRadialRect( pixelimage: Pixelimage
     for( i in 1...l - 2 ){
         nextX = bx - gap*i;
         nextY = cy;
-        pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+        pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
         lastX = nextX;
         lastY = nextY;
     }
-    pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, x, cy, colorOut );
+    pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, x, cy, colorOut );
     
     // left edge
     lastX = x;
@@ -71,11 +71,11 @@ function fillRadialRect( pixelimage: Pixelimage
     for( i in 1...l - 2 ){
         nextX = x;
         nextY = cy - gap*i;
-        pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+        pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
         lastX = nextX;
         lastY = nextY;
     }
-    pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, x, y, colorOut );
+    pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, x, y, colorOut );
     
 }
 

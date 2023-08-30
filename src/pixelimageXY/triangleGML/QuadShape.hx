@@ -1,9 +1,9 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import triangleGML.shape.contour.QuadShape_;
 
-class QuadShape extends QuadShape_<Pixelshape,Pixelshape>{
+class QuadShape extends QuadShape_<Pixelimage,Pixelimage>{
     public var luxury:  Bool;
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -13,20 +13,20 @@ class QuadShape extends QuadShape_<Pixelshape,Pixelshape>{
                 super.setParameter( name, value );
         }
     }
-    public function render( pixelShape: Pixelshape ): Pixelshape {
+    public function render( pixelImage: Pixelimage ): Pixelimage {
         this.hitObj = cast if( edgeSoft == 0. ){
-            pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, true );
+            pixelImage.fillShape.quad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, true );
         } else {
             if( luxury ){
-                pixelShape.fillSoftQuadQuarter( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, edgeSoft, true, true, true, true );
+                pixelImage.softShape.quadQuarter( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, edgeSoft, true, true, true, true );
             } else {
-                pixelShape.fillSoftQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, edgeSoft, true, true, true, true );
+                pixelImage.softShape.quad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, strokeColor, edgeSoft, true, true, true, true );
             }
         }
-        return pixelShape;
+        return pixelImage;
     }
-    public override function clear( pixelShape: Pixelshape, color: Int ): Pixelshape {
-        pixelShape.fillQuad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, color, false );
-        return pixelShape;
+    public override function clear( pixelImage: Pixelimage, color: Int ): Pixelimage {
+        pixelImage.fillShape.quad( aX+offX, aY+offY, bX+offX, bY+offY, cX+offX, cY+offY, dX+offX, dY+offY, color, false );
+        return pixelImage;
     }
 }

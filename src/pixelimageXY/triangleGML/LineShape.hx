@@ -1,12 +1,12 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import pixelimageXY.pixel.Pixel32;
 import triangleGML.shape.contour.LineShape_;
 import pixelimageXY.pixel.ColorHelp;
 import pixelimageXY.algo.Xiolin_Wu_Line;
 
-class LineShape extends LineShape_<Pixelshape,Pixelshape>{
+class LineShape extends LineShape_<Pixelimage,Pixelimage>{
     public var luxury: Bool;
 
     public override function setParameter( name: String, value: String ){
@@ -18,7 +18,7 @@ class LineShape extends LineShape_<Pixelshape,Pixelshape>{
                 super.setParameter( name, value );
         }
     }
-    public function render( pixelShape: Pixelshape ): Pixelshape {
+    public function render( pixelImage: Pixelimage ): Pixelimage {
         var px = x1 + offX;
         var qx = x2 + offX;
         var py = y1 + offY;
@@ -26,21 +26,21 @@ class LineShape extends LineShape_<Pixelshape,Pixelshape>{
         
         if( strokeWidth < 1. ){
             var alpha = getAlpha( strokeColor ) * 0.75;
-            xWuLine( ( cast pixelShape: Pixelimage ), px, py, qx, qy, strokeColor, alpha );
-            xWuLine( ( cast pixelShape: Pixelimage ), px, px, qx, qy, strokeColor, alpha );
+            xWuLine( pixelImage, px, py, qx, qy, strokeColor, alpha );
+            xWuLine( pixelImage, px, px, qx, qy, strokeColor, alpha );
         } else {
             if( edgeSoft == 0. ){
-                pixelShape.fillLine( px, py, qx, qy, strokeWidth, strokeColor );
+                pixelImage.fillShape.line( px, py, qx, qy, strokeWidth, strokeColor );
             } else {
 
                 if( luxury ){
-                    pixelShape.fillSoftLineLuxury( px, py, qx, qy, strokeWidth, strokeColor, edgeSoft );
+                    pixelImage.softShape.lineLuxury( px, py, qx, qy, strokeWidth, strokeColor, edgeSoft );
                 } else {
                     trace("luxury!!");
-                    pixelShape.fillSoftLine( px, py, qx, qy, strokeWidth, strokeColor, edgeSoft );
+                    pixelImage.softShape.line( px, py, qx, qy, strokeWidth, strokeColor, edgeSoft );
                 }
             }
         }
-        return pixelShape;
+        return pixelImage;
     }
 }

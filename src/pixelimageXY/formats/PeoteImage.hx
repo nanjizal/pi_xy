@@ -1,6 +1,5 @@
 package pixelimageXY.formats;
 
-import pixelimageXY.Pixelshape;
 import pixelimageXY.Pixelimage;
 import pixelimageXY.pixel.Pixel32;
 
@@ -9,15 +8,15 @@ import peote.view.TextureData;
 import haxe.io.UInt8Array;
 
 inline 
-function toPeoteTextureData( pixelShape: Pixelshape ): TextureData {
-    var lh = pixelShape.height; 
-    var lw = pixelShape.width;
+function toPeoteTextureData( pixelImage: Pixelimage ): TextureData {
+    var lh = pixelImage.height; 
+    var lw = pixelImage.width;
     var data = new UInt8Array( lh*lw*4 );
     var p = 0;
     // not optimal
     for( y in 0...lh ) {
         for( x in 0...lw ) {
-            var col: Pixel32 = new Pixel32( pixelShape.getARGB( x, y ) );
+            var col: Pixel32 = new Pixel32( pixelImage.getARGB( x, y ) );
             var a: Int = col.c0;
             var r: Int = col.c1;
             var g: Int = col.c2;

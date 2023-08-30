@@ -1,7 +1,9 @@
 package pixelimageXY;
 
-import vision.ds.Image;
+//import vision.ds.Image;
 import haxe.io.UInt32Array;
+
+import pixelimageXY.imageAbstracts.*;
 
 import pixelimageXY.iter.BoundIterator;
 import pixelimageXY.iter.IteratorRange;
@@ -30,11 +32,53 @@ import pixelimageXY.algo.HitTriArray;
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     /**
+    abstract helpers     
+    **/
+    public var transform( get, never ): TransformImage;
+    inline function get_transform(): TransformImage {
+        return ( abstract: TransformImage );
+    }
+    
+    public var fillShape( get, never ): FillShape;
+    inline function get_fillShape(): FillShape {
+        return ( abstract: FillShape );
+    }
+    public var softShape( get, never ): SoftShape;
+    inline function get_softShape(): SoftShape {
+        return ( abstract: SoftShape );
+    }
+
+    public var lineShape( get, never ): LineShape;
+    inline function get_lineShape(): LineShape {
+        return ( abstract: LineShape );
+    }
+
+    public var tileShape( get, never ): TileShape;
+    inline function get_tileShape(): TileShape {
+        return ( abstract: TileShape );
+    }
+
+    public var imageShape( get, never ): ImageShape;
+    inline function get_imageShape(): ImageShape {
+        return ( abstract: ImageShape );
+    }
+
+    public var gradientShape( get, never ): GradientShape;
+    inline function get_gradientShape(): GradientShape {
+        return ( abstract: GradientShape );
+    }
+
+    public var pattern( get, never ): PatternShape;
+    inline function get_pattern(): PatternShape {
+        return ( abstract: PatternShape );
+    }
+
+    /**
         provides the width used by the UInt32Array
     **/
     public var width( get, never ): Int;
     inline function get_width(): Int
-       return this.width;
+        return this.width;
     /**
         provides the height used by the UInt32Array
     **/
@@ -106,7 +150,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         } else {
             var sx = Std.int( r.width/width );
             var sy = Std.int( r.height/height );
-            var pixelImage = scaleXY( sx, sy, transparent, false );
+            var pixelImage = transform.scaleXY( sx, sy, transparent, false );
             this.image = pixelImage.image;
             this.width = pixelImage.width;
             this.height = pixelImage.height;
@@ -122,7 +166,7 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }: ImageStruct
         );
     }
-
+    
     /**
         this provides a location for a UIn8 access of a color channel
     **/
@@ -280,8 +324,9 @@ Test.hx:8: #FF
     }
     inline public 
     function clearRect( x: Float, y: Float
-                       , w: Float, h: Float ){
-        var range: IteratorRangeXY = { x: Std.int( x ), y: Std.int( y ), w: Std.int( w ), h: Std.int( h ) };
+                      , w: Float, h: Float ){
+        var range: IteratorRangeXY = { x: Std.int( x ), y: Std.int( y )
+                                     , w: Std.int( w ), h: Std.int( h ) };
         for( i in range ) this.image[ position( range.x, range.y ) ] = 0;
         /*
         var p = Std.int( x );
@@ -298,380 +343,6 @@ Test.hx:8: #FF
             if( q > maxY ) break;
         }
         */
-    }
-    /**
-        creates a new Pixelimage that is flipped horizonally.
-        inPlace overwrites current.
-    **/
-    inline public
-    function flippedX( x: Float, y: Float
-                  , w: Float, h: Float
-                  , transparent: Bool = false
-                  , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.FlipImage
-            .imageflipX( abstract, x, y, w, h, transparent, inPlace, includeMask );
-    }
-    /**
-        creates a new Pixelimage that is flipped vertically.
-        inPlace overwrites current.
-    **/
-    inline public
-    function flippedY( x: Float, y: Float, w: Float, h: Float
-                     , transparent: Bool = false
-                     , inPlace: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.FlipImage
-            .imageflipY( abstract, x, y, w, h, transparent, inPlace, includeMask );
-    }
-    /**
-        creates a new Pixelimage base on current image, rotated 90° clockwise
-    **/
-    inline public
-    function spunClock90( x: Float, y: Float, w: Float, h: Float
-                         , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.SpinImage
-            .spinClock90( abstract, x, y, w, h, transparent, includeMask );
-    }
-    inline public
-    function spunAntiClock90( x: Float, y: Float, w: Float, h: Float
-                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.SpinImage
-            .spinAntiClock90( abstract, x, y, w, h, transparent, includeMask );
-    }
-    inline public
-    function spun180( x: Float, y: Float, w: Float, h: Float
-                  , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.SpinImage
-            .spin180( abstract, x, y, w, h, transparent, includeMask );
-    }
-    inline public
-    function scaleXY( sx: Float, sy: Float
-                    , transparent = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.ScaleImage
-            .scalingXY( abstract, sx, sy, transparent, includeMask );
-    }
-    inline public
-    function rotateClockwiseDegrees( angle: Float, centreX = 0., centreY = 0.
-                                   , transparent: Bool = false, includeMask: Bool = false ){
-
-        return pixelimageXY.transformation.SpinImage
-            .rotatingClockwiseDegrees( abstract, angle, centreX, centreY, transparent, includeMask );
-    }
-    inline public
-    function rotateClockwiseRadians( theta: Float, centreX = 0., centreY = 0.
-                                   , transparent: Bool = false, includeMask: Bool = false ){
-        return pixelimageXY.transformation.SpinImage
-            .rotatingClockwiseRadians( abstract, theta, centreX, centreY, transparent, includeMask );
-    }
-
-    public inline
-    function rotate( theta: Float, centreX = 0., centreY = 0.
-                   , transparent: Bool = false, includeMask: Bool = false ){       
-        return pixelimageXY.transformation.SpinImage
-            .rotating( abstract, theta, centreX, centreY, transparent, includeMask );   
-    }
-    inline public
-    function scaleUpInt( scaleW: Int = 2, scaleH: Int = 2
-                       , transparent: Bool = false, includeMask: Bool = false ): Pixelimage {
-        return pixelimageXY.transformation.ScaleImage
-            .scaleUpInteger( abstract, scaleW, scaleH, transparent, includeMask );
-    }
-    inline public 
-    function patternRect( x: Float, y: Float
-                        , w: Float, h: Float
-                        , foreColor: Int, backColor: Int
-                        , patternFill: Array<Bool> ){
-        return pixelimageXY.transformation.BinaryPatternFill
-            .patternRectangle( abstract, x, y, w, h, foreColor, backColor, patternFill );
-    }
-    inline public 
-    function patternRectDown( x: Float, y: Float
-                            , w: Float, h: Float
-                            , foreColor: Int, backColor: Int
-                            , patternFill: Array<Bool> ){
-        return pixelimageXY.transformation.BinaryPatternFill
-            .patternRectangleDown( abstract, x, y, w, h, foreColor, backColor, patternFill );
-    }
-    /**
-        provides a simple filled square a short cut 
-        @see simpleRect
-    **/
-    public inline
-    function fillSquare( x: Float, y: Float
-                       , d: Float
-                       , color: Int ) {
-        simpleRect( x-d/2, y-d/2, d, d, color );
-    }
-    /**
-        provides a filled triangle give a,b,c coordinates
-        automagically rearranges coordinates so it always renders
-    **/
-    public inline
-    function fillTri( ax: Float, ay: Float
-                    , bx: Float, by: Float
-                    , cx: Float, cy: Float
-                    , color: Pixel32
-                    , hasHit: Bool = false
-                    , hasUndo: Bool = false ): Null<HitTri> {
-        return pixelimageXY.algo.TriPixel
-            .fillTriangle( this, ax, ay, bx, by, cx, cy, color, hasHit, hasUndo );
-    }
-    public inline
-    function tileTri( ax: Float, ay: Float
-                    , bx: Float, by: Float
-                    , cx: Float, cy: Float
-                    , tileImage: Pixelimage
-                    , hasHit: Bool = false ): Null<HitTri> {
-        return pixelimageXY.algo.TriPixel
-            .tileTriangle( this, ax, ay, bx, by, cx, cy, tileImage, hasHit );
-    }
-    /**
-        uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise 
-    **/
-    public inline
-    function fillQuad( ax: Float, ay: Float
-                     , bx: Float, by: Float
-                     , cx: Float, cy: Float
-                     , dx: Float, dy: Float 
-                     , color: Int
-                     , hasHit: Bool = false ): HitQuad {
-        // tri e - a b d
-        // tri f - b c d
-        return pixelimageXY.algo.QuadPixel
-            .fillQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
-    }
-    public inline
-    function tileQuad( ax: Float, ay: Float
-                     , bx: Float, by: Float
-                     , cx: Float, cy: Float
-                     , dx: Float, dy: Float 
-                     , tileImage: Pixelimage
-                     , hasHit: Bool = false ): HitQuad {
-        // tri e - a b d
-        // tri f - b c d
-        return pixelimageXY.algo.QuadPixel
-            .tileQuadrilateral( this, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
-    }
-    /**
-        creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
-        with respective colors after coordinate pairs
-    **/
-    public inline
-    function fillGradTri( ax: Float, ay: Float, colA: Pixel32
-                        , bx: Float, by: Float, colB: Pixel32
-                        , cx: Float, cy: Float, colC: Pixel32
-                        , hasHit: Bool = true ): Null<HitTri> {
-        return pixelimageXY.algo.TriPixel
-            .fillGradTriangle( this, ax, ay, colA, bx, by, colB, cx, cy, colC );
-    }
-    // Not so useful on own as uv are weird.
-    public inline
-    function imgTri( texture: Pixelimage, win: RectangleWindow, ax: Float, ay: Float, au: Float, av: Float
-                      , bx: Float, by: Float, bu: Float, bv: Float
-                      , cx: Float, cy: Float, cu: Float, cv: Float
-                     , hasHit: Bool = true ): Null<HitTri> {
-        return pixelimageXY.algo.TriPixel
-            .uvTriangle( this, texture, win, ax, ay, au, av, bx, by, bu, bv, cx, cy, cu, cv );
-    }
-    public inline 
-    function tileRect( x:   Float, y: Float
-                     , wid: Float, hi: Float
-                     , tileImage: Pixelimage
-                     , hasHit: Bool = false ): HitQuad {
-        var bx = x + wid;
-        var cy = y + hi;
-        return tileQuad( x,  y, bx, y, bx, cy, x,  cy, tileImage, hasHit );
-    }
-    /**
-        uses two triangles to form rectangle x,y,width,height with a,b,c,d clockwise gradient colours
-    **/
-    public inline 
-    function fillGradRect( x:   Float, y: Float
-                         , wid: Float, hi: Float
-                         , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32 ){
-        var bx = x + wid;
-        var cy = y + hi;
-        fillGradQuad( x,  y,  colorA
-                    , bx, y,  colorB
-                    , bx, cy, colorC
-                    , x,  cy, colorD );
-        return { ax: x, ay: y, bx: bx, y: y, cx: bx, cy: cy, x: x, dy: cy };
-    }
-    /**
-        uses two triangle to form a quad with clockwise coordinates a,b,c,d
-        with respective colours after each coordinate pair
-
-        a better render maybe possible see commented out code in algo.QuadPixel and lerp code in algo.GeomPixel
-        ( better render approach compiles but does not yet work, maybe easy? ). 
-    **/
-    public inline
-    function fillGradQuad( ax: Float, ay: Float, colorA: Pixel32
-                         , bx: Float, by: Float, colorB: Pixel32
-                         , cx: Float, cy: Float, colorC: Pixel32 
-                         , dx: Float, dy: Float, colorD: Pixel32
-                         , hasHit: Bool = true ): Null<HitQuad> {
-        // tri e - a b d
-        // tri f - b c d
-        return pixelimageXY.algo.QuadPixel
-            .fillGradQuadrilateral( this, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
-    }
-    public inline
-    function imgQuad( texture: Pixelimage, win: RectangleWindow
-                    , ax: Float, ay: Float
-                    , bx: Float, by: Float
-                    , cx: Float, cy: Float
-                    , dx: Float, dy: Float
-                    , hasHit: Bool = true ): Null<HitQuad> {
-        return pixelimageXY.algo.QuadPixel
-            .imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
-    }
-    public inline
-    function imgRect( texture: Pixelimage, win: RectangleWindow
-                      , x: Float, y: Float, wid: Float, hi: Float
-                      , theta: Float = 0., centreX: Float = 0., centreY: Float = 0.
-                      , skewX: Float = 0., skewY: Float = 0.
-                      , scaleX: Float = 1., scaleY: Float = 1.
-                      , hasHit: Bool = true ): Null<HitQuad> {
-        var ax = x;
-        var ay = y;
-        if( theta != 0. ){
-            centreX = x + wid/2 + centreX;
-            centreY = y + hi/2  + centreY;
-            ax -= centreX;
-            ay -= centreY;
-        }
-        var bx = ax + wid;
-        var by = ay;
-        var cx = bx;
-        var cy = ay + hi;
-        var dx = ax;
-        var dy = cy;
-        // skew does not really cope well with offx and offy changes?
-        if( skewX != 0. ){
-            ax += skewX;
-            bx += skewX;
-            cx -= skewX;
-            dx -= skewX;
-        }
-        if( skewY != 0. ){
-            ay -= skewY;
-            dy -= skewY;
-            by += skewY;
-            cy += skewY;
-        }
-        if( scaleX != 1 ){
-            ax *= scaleX;
-            bx *= scaleX;
-            cx *= scaleX;
-            dx *= scaleX;
-        }
-        if( scaleY != 1. ){
-            ay *= scaleY;
-            bx *= scaleY;
-            cx *= scaleY;
-            dx *= scaleY;
-        }
-        if( theta != 0 ){
-            var sin = Math.sin( theta );
-            var cos = Math.cos( theta );
-            var temp = ax;
-            ax = rotX( temp, ay, sin, cos );
-            ay = rotY( temp, ay, sin, cos );
-            var temp = bx;
-            bx = rotX( temp, by, sin, cos );
-            by = rotY( temp, by, sin, cos );
-            var temp = cx;
-            cx = rotX( temp, cy, sin, cos );
-            cy = rotY( temp, cy, sin, cos );
-            var temp = dx;
-            dx = rotX( temp, dy, sin, cos );
-            dy = rotY( temp, dy, sin, cos );
-            ax += centreX;
-            ay += centreY;
-            bx += centreX;
-            by += centreY;
-            cx += centreX;
-            cy += centreY;
-            dx += centreX;
-            dy += centreY;
-        }
-        return imgQuad( texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
-    }
-    
-    public inline
-    function imgNineSlice( texture:  Pixelimage, win:   RectangleWindow
-                         , x:        Float,      y:     Float
-                         , wid:      Float,      hi:    Float
-                         , left:     Float,      top:   Float
-                         , fat:      Float,      tall:  Float
-                         , widNew:    Float,      hiNew:    Float
-                         , leftNew:     Float,      topNew:   Float
-                         , fatNew:      Float,      tallNew:  Float
-                         , hasHit:   Bool = false ): Null<HitQuad>{
-        var temp = new Pixelimage( Std.int( wid ), Std.int( hi ) );
-        temp.transparent = false;
-        var hit: Null<HitQuad> = pixelimageXY.algo.QuadPixel
-            .imageNineSlice( temp, texture, win, 0, 0, wid, hi, left, top, fat, tall, widNew, hiNew, leftNew, topNew, fatNew, tallNew,  hasHit );
-        putPixelImage( temp, Std.int( x ), Std.int( y ) );
-        temp = null;
-        if( hit != null ){
-            hit.ax += x;
-            hit.ay += y;
-            hit.bx += x;
-            hit.by += y;
-            hit.cx += x;
-            hit.cy += y;
-            hit.dx += x;
-            hit.dy += y;
-        }
-        return hit;
-    }
-    /**
-        provides a thick line using two triangles vector p, q
-        debug corners draws coloured squares on the corners for development
-    **/
-    public inline 
-    function fillLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, color: Int, hasHit: Bool = true, ?debugCorners = false ): Null<HitQuad> {
-        var o = qy-py;
-        var a = qx-px;
-        var h = Math.pow( o*o + a*a, 0.5 );
-        var theta = Math.atan2( o, a );
-        return pixelimageXY.algo.LinePixel
-            .rotateLine( this, px, py, thick, h, theta, color, hasHit, debugCorners );
-    }
-
-    /**
-        tiles a thick line using two triangles vector p, q
-        debug corners draws coloured squares on the corners for development
-    **/
-    public inline 
-    function tileLine( px: Float, py: Float, qx: Float, qy: Float
-                     , thick: Float, tileImage: Pixelimage
-                     , hasHit: Bool = false, ?debugCorners = false ): Null<HitQuad>{
-        var o = qy-py;
-        var a = qx-px;
-        var h = Math.pow( o*o + a*a, 0.5 );
-        var theta = Math.atan2( o, a );
-        return pixelimageXY.algo.LinePixel
-            .rotateTileLine( this, px, py, thick, h, theta, tileImage, hasHit, debugCorners );
-    }
-    /**
-        provides a thick line using two gradient triangle vector p,q
-        the four colors are arranged clockwise a,b,c,d
-        debug corners draws coloured squares on the corners for development
-    **/
-    public inline 
-    function fillGradLine( px: Float, py: Float, qx: Float, qy: Float
-                         , thick: Float
-                         , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
-                         , hasHit: Bool = false
-                         , ?debugCorners = false ): Null<HitQuad>{
-        var o = qy-py;
-        var a = qx-px;
-        var h = Math.pow( o*o + a*a, 0.5 );
-        var theta = Math.atan2( o, a );
-        return pixelimageXY.algo.LinePixel
-            .rotateGradLine( this, px, py, thick, h, theta, colorA, colorB, colorC, colorD, hasHit, debugCorners );
     }
 
     /**

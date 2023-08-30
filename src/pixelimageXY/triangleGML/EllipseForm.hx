@@ -1,11 +1,11 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import triangleGML.shape.form.EllipseForm_;
 
-class EllipseForm extends EllipseForm_<Pixelshape,Pixelshape>{
-    public function render( pixelShape: Pixelshape ): Pixelshape {
-        var temp = new Pixelshape( Math.ceil( width ), Math.ceil( height ) );
+class EllipseForm extends EllipseForm_<Pixelimage,Pixelimage>{
+    public function render( pixelImage: Pixelimage ): Pixelimage {
+        var temp = new Pixelimage( Math.ceil( width ), Math.ceil( height ) );
         temp.transparent = false;
         var rW = width/2;
         var rH = height/2;
@@ -17,14 +17,14 @@ class EllipseForm extends EllipseForm_<Pixelshape,Pixelshape>{
         var innerCx = cx + strokeWidth;
         var innerCy = cy + strokeWidth;
         if( edgeSoft == 0. ){
-            temp.fillEllipseTri( cx, cy, rW, rH, strokeColor, phi );
-            temp.fillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
+            temp.fillShape.ellipseTri( cx, cy, rW, rH, strokeColor, phi );
+            temp.fillShape.ellipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi );
         } else {
-            temp.softFillEllipseTri( cx, cy, rW, rH, strokeColor, phi, edgeSoft );
-            temp.softFillEllipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi, edgeSoft );
+            temp.softShape.ellipseTri( cx, cy, rW, rH, strokeColor, phi, edgeSoft );
+            temp.softShape.ellipseTri( innerCx, innerCy, innerRw, innerRh, fill, phi, edgeSoft );
         }
-        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
+        pixelImage.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
-        return pixelShape;
+        return pixelImage;
     }
 }

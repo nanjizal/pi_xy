@@ -41,7 +41,7 @@ import iterMagic.IteratorRangeXY;
         }
         */
         if( thisImage.mask != null && includeMask ) {
-            nextImage.mask = thisImage.mask.spunClock90( x, y, w, h, thisImage.mask.transparent, includeMask );
+            nextImage.mask = thisImage.mask.transform.spunClock90( x, y, w, h, thisImage.mask.transparent, includeMask );
         }
         return nextImage;
     }
@@ -78,7 +78,7 @@ import iterMagic.IteratorRangeXY;
         }
         */
         if( thisImage.mask != null && includeMask ) {
-            nextImage.mask = thisImage.mask.spunAntiClock90( x, y, w, h, thisImage.mask.transparent, includeMask );
+            nextImage.mask = thisImage.mask.transform.spunAntiClock90( x, y, w, h, thisImage.mask.transparent, includeMask );
         }
         return nextImage;
     }
@@ -116,7 +116,7 @@ import iterMagic.IteratorRangeXY;
         }
         */
         if( thisImage.mask != null && includeMask ) {
-            nextImage.mask = thisImage.mask.spun180( x, y, w, h, thisImage.mask.transparent, includeMask );
+            nextImage.mask = thisImage.mask.transform.spun180( x, y, w, h, thisImage.mask.transparent, includeMask );
         }
         return nextImage;
     }
@@ -132,13 +132,13 @@ import iterMagic.IteratorRangeXY;
             angle += 360;
         }
         return if( angle == 90. || angle == -270 ){
-            thisImage.spunClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spunClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else if( angle == -90 || angle == 270 ){
-            thisImage.spunAntiClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spunAntiClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else if( angle == 180 || angle == -180 ){
-            thisImage.spun180( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spun180( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else {
-            thisImage.rotate( angle*Math.PI/180, centreX, centreY, transparent, includeMask );
+            thisImage.transform.rotate( angle*Math.PI/180, centreX, centreY, transparent, includeMask );
         }
     }
 
@@ -153,13 +153,13 @@ import iterMagic.IteratorRangeXY;
             theta += 2*Math.PI;
         }
         return if( theta == Math.PI/2 || theta == -3*Math.PI/2 ){
-            thisImage.spunClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spunClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else if( theta == -Math.PI/2 || theta == 3*Math.PI/2 ){
-            thisImage.spunAntiClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spunAntiClock90( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else if( theta == Math.PI || theta == -Math.PI ){
-            thisImage.spun180( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
+            thisImage.transform.spun180( 0, 0, thisImage.width, thisImage.height, transparent, includeMask );
         } else {
-            thisImage.rotate( theta, centreX, centreY, transparent, includeMask );
+            thisImage.transform.rotate( theta, centreX, centreY, transparent, includeMask );
         }
     }
     @:access( pixelimageXY.Pixelimage.rectWindow )
@@ -229,9 +229,9 @@ import iterMagic.IteratorRangeXY;
             cy -= minY;
             dy -= minY;
         }
-        nextImage.imgQuad( thisImage, thisImage.rectWindow, ax, ay, bx, by, cx, cy, dx, dy, false );
+        nextImage.imageShape.quad( thisImage, thisImage.rectWindow, ax, ay, bx, by, cx, cy, dx, dy, false );
         if( nextImage.mask != null && includeMask ) {
-            nextImage.mask = thisImage.mask.rotate( theta, centreX, centreY, thisImage.mask.transparent, includeMask );
+            nextImage.mask = thisImage.mask.transform.rotate( theta, centreX, centreY, thisImage.mask.transparent, includeMask );
         }
         return nextImage;        
     }

@@ -1,6 +1,5 @@
 package pixelimageXY.transformation;
 import pixelimageXY.Pixelimage;
-import pixelimageXY.Pixelshape;
 
 @:access( pixelimageXY.Pixelimage.width )
 @:access( pixelimageXY.Pixelimage.height )
@@ -26,7 +25,7 @@ function scaleUpInteger( thisImage: Pixelimage
         if( q > maxY ) break;
     }
     if( thisImage.mask != null && includeMask ) {
-        nextImage.mask = thisImage.mask.scaleUpInt( scaleW, scaleH, thisImage.mask.transparent, includeMask );
+        nextImage.mask = thisImage.mask.transform.scaleUpInt( scaleW, scaleH, thisImage.mask.transparent, includeMask );
     }
     return nextImage;
 }
@@ -41,7 +40,7 @@ function scalingXY( thisImage: Pixelimage
     var scaleH = Std.int( sy );
     var ifScaleUpInt = ( scaleW == sx && sx > 0. && scaleH == sy && sy > 0. );
     return if( ifScaleUpInt ){
-        thisImage.scaleUpInt( scaleW, scaleH, transparent );
+        thisImage.transform.scaleUpInt( scaleW, scaleH, transparent );
     } else {
         var w = thisImage.width*sx;
         var h = thisImage.height*sy;
@@ -49,9 +48,9 @@ function scalingXY( thisImage: Pixelimage
         var hi  = Math.ceil( h );
         var nextImage = new Pixelimage( wid, hi );
         nextImage.transparent = thisImage.transparent;
-        nextImage.imgQuad( thisImage, thisImage.rectWindow, 0, 0, w, 0, w, h, 0, h, false );
+        nextImage.imageShape.quad( thisImage, thisImage.rectWindow, 0, 0, w, 0, w, h, 0, h, false );
         if( thisImage.mask != null && includeMask ){
-            nextImage.mask = thisImage.mask.scaleXY( sx, sy, thisImage.mask.transparent, includeMask );
+            nextImage.mask = thisImage.mask.transform.scaleXY( sx, sy, thisImage.mask.transparent, includeMask );
         }
         nextImage;
     }

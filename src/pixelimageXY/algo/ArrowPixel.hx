@@ -9,8 +9,8 @@ import pixelimageXY.pixel.TwoGrad;
 
 inline 
 function fillLineArrow( pixelImage: Pixelimage
-                  , px: Float, py: Float, qx: Float, qy: Float
-                  , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = false ): Null<HitTriArray>{
+                      , px: Float, py: Float, qx: Float, qy: Float
+                      , thick: Float, color: Int, flare: Bool = false, reverseFlare: Bool = false, hasHit: Bool = false ): Null<HitTriArray>{
     var goldenRatio = 1.61803398875;
     //trace( 'pixelArrow fillLineArrow');
     var o       = qy - py;

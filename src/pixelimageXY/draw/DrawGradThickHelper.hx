@@ -44,12 +44,12 @@ class DrawGradThickHelper implements ILinePathContext {
     public
     function lineSegmentTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = pixelImage.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = pixelImage.gradientShape.line( x0*scaleX + translateX, y0*scaleY + translateY
                  , x2*scaleX + translateX, y2*scaleY + translateY 
                  , strokeWidth
                  , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true );
         if( info != null && oldInfo != null ){
-            pixelImage.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+            pixelImage.gradientShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                             , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                             , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                             , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
@@ -61,12 +61,12 @@ class DrawGradThickHelper implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = pixelImage.fillGradLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = pixelImage.gradientShape.line( x0*scaleX + translateX, y0*scaleY + translateY
             , x2*scaleX + translateX, y2*scaleY + translateY 
             , strokeWidth
             , strokeTopColor, strokeTopColor, strokeBottomColor, strokeBottomColor, true);
         if( info != null && oldInfo != null ){
-            pixelImage.fillGradQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
+            pixelImage.gradientShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, strokeTopColor
                 , info.ax*scaleX + translateX, info.ay*scaleY + translateY, strokeTopColor
                 , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                 , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );

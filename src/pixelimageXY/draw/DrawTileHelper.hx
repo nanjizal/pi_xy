@@ -41,11 +41,11 @@ class DrawTileHelper implements ILinePathContext {
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
             oldInfo = info;
-            info = pixelImage.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
+            info = pixelImage.tileShape.line( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth, tileImageStroke );
             if( info != null && oldInfo != null ){
-                pixelImage.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke );
+                pixelImage.tileShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY, info.ax*scaleX + translateX, info.ay*scaleY + translateY, info.dx*scaleX + translateX, info.dy*scaleY + translateY, oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke );
             }
         } else {
             
@@ -57,11 +57,11 @@ class DrawTileHelper implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = pixelImage.tileLine( x0*scaleX + translateX, y0*scaleY + translateY
+        info = pixelImage.tileShape.line( x0*scaleX + translateX, y0*scaleY + translateY
                      , x2*scaleX + translateX, y2*scaleY + translateY 
                      , strokeWidth, tileImageStroke, true );
         if( info != null && oldInfo != null ){
-            pixelImage.tileQuad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
+            pixelImage.tileShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
                                , info.ax*scaleX + translateX, info.ay*scaleY + translateY
                                , info.dx*scaleX + translateX, info.dy*scaleY + translateY
                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, tileImageStroke, true );

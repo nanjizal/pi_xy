@@ -1,6 +1,5 @@
 package pixelimageXY.transformation;
 import pixelimageXY.Pixelimage;
-import pixelimageXY.Pixelshape;
 import iterMagic.IteratorRangeXY;
 
     /**
@@ -41,11 +40,11 @@ import iterMagic.IteratorRangeXY;
         */
         return if( inPlace ){
             thisImage.putPixelImage( nextImage, Std.int( x ), Std.int( y ) );
-            if( thisImage.mask != null && includeMask ) thisImage.mask = thisImage.mask.flippedX( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
+            if( thisImage.mask != null && includeMask ) thisImage.mask = thisImage.mask.transform.flippedX( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
             nextImage = null;
             thisImage;
         } else {
-            if( thisImage.mask != null && includeMask ) nextImage.mask = thisImage.mask.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
+            if( thisImage.mask != null && includeMask ) nextImage.mask = thisImage.mask.transform.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
             nextImage;
         }
     }
@@ -88,12 +87,12 @@ import iterMagic.IteratorRangeXY;
         */
         return if( inPlace ){
             thisImage.putPixelImage( nextImage, Std.int( x ), Std.int( y ) );
-            if( thisImage.mask != null && includeMask ) thisImage.mask = thisImage.mask.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
+            if( thisImage.mask != null && includeMask ) thisImage.mask = thisImage.mask.transform.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
             nextImage = null;
             thisImage;
         } else {
             if( thisImage.mask != null && includeMask ){
-                nextImage.mask = thisImage.mask.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
+                nextImage.mask = thisImage.mask.transform.flippedY( x, y, thisImage.width, thisImage.height, thisImage.mask.transparent, inPlace, includeMask );
             }
             nextImage;
         }

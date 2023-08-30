@@ -1,6 +1,7 @@
 #-lib pixelimageXY
 #-lib htmlHelper
 -lib justPath
+-lib iterMagic
 -lib vision
 -lib format
 -lib peote-view

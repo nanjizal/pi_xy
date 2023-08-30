@@ -1,7 +1,6 @@
 package pixelimageXY.algo;
 
 import pixelimageXY.Pixelimage;
-import pixelimageXY.Pixelshape;
 import pixelimageXY.pixel.Pixel32;
 
     /**
@@ -11,7 +10,7 @@ import pixelimageXY.pixel.Pixel32;
         fat, tall - the inner dimensions of the 9-slice centre, optional
     **/
     inline
-    function fillRoundRectangle( pixelshape: Pixelshape
+    function fillRoundRectangle( pixelimage: Pixelimage
                           , x:     Float,        y:     Float
                           , wid:    Float,       hi:   Float
                           , color: Int
@@ -34,15 +33,15 @@ import pixelimageXY.pixel.Pixel32;
         var farX = x + dx + fat;
         var lowerY = y + dy + tall;
         // top row
-        pixelshape.fillQuadrantII( x + dx, y + dy, dx, dy, color );
-        pixelshape.simpleRect(  x + dx, y, fat, dy, color );
-        pixelshape.fillQuadrantI(  farX, y + dy, rightRadius, dy, color );
+        pixelimage.fillShape.quadrantII( x + dx, y + dy, dx, dy, color );
+        pixelimage.simpleRect(  x + dx, y, fat, dy, color );
+        pixelimage.fillShape.quadrantI(  farX, y + dy, rightRadius, dy, color );
         // middle row  ( will need more splitting with gradient )
-        pixelshape.simpleRect(  x, y + dy, wid, tall, color );
+        pixelimage.simpleRect(  x, y + dy, wid, tall, color );
         // bottom row
-        pixelshape.fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, color );
-        pixelshape.simpleRect(   x + dx, lowerY, fat, bottomRadius, color );
-        pixelshape.fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, color );
+        pixelimage.fillShape.quadrantIII( x + dx, lowerY, dx, bottomRadius, color );
+        pixelimage.simpleRect(   x + dx, lowerY, fat, bottomRadius, color );
+        pixelimage.fillShape.quadrantIV(  farX,   lowerY, rightRadius, bottomRadius, color );
     }
     /**
         x, y      - position
@@ -51,7 +50,7 @@ import pixelimageXY.pixel.Pixel32;
         fat, tall - the inner dimensions of the 9-slice centre, optional
     **/
     inline
-    function tileRoundRectangle( pixelshape: Pixelshape
+    function tileRoundRectangle( pixelimage: Pixelimage
                           , x:     Float,        y:     Float
                           , wid:    Float,       hi:   Float
                           , tileImage: Pixelimage
@@ -74,15 +73,15 @@ import pixelimageXY.pixel.Pixel32;
         var farX = x + dx + fat;
         var lowerY = y + dy + tall;
         // top row
-        pixelshape.tileQuadrantII( x + dx, y + dy, dx, dy, tileImage );
-        pixelshape.tileRect(  x + dx, y, fat, dy, tileImage );
-        pixelshape.tileQuadrantI(  farX, y + dy, rightRadius, dy, tileImage );
+        pixelimage.tileShape.quadrantII( x + dx, y + dy, dx, dy, tileImage );
+        pixelimage.tileShape.rectangle(  x + dx, y, fat, dy, tileImage );
+        pixelimage.tileShape.quadrantI(  farX, y + dy, rightRadius, dy, tileImage );
         // middle row  ( will need more splitting with gradient )
-        pixelshape.tileRect(  x, y + dy, wid, tall, tileImage );
+        pixelimage.tileShape.rectangle(  x, y + dy, wid, tall, tileImage );
         // bottom row
-        pixelshape.tileQuadrantIII( x + dx, lowerY, dx, bottomRadius, tileImage );
-        pixelshape.tileRect(   x + dx, lowerY, fat, bottomRadius, tileImage );
-        pixelshape.tileQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, tileImage );
+        pixelimage.tileShape.quadrantIII( x + dx, lowerY, dx, bottomRadius, tileImage );
+        pixelimage.tileShape.rectangle(   x + dx, lowerY, fat, bottomRadius, tileImage );
+        pixelimage.tileShape.quadrantIV(  farX,   lowerY, rightRadius, bottomRadius, tileImage );
     }
         /**
         x, y      - position
@@ -91,7 +90,7 @@ import pixelimageXY.pixel.Pixel32;
         fat, tall - the inner dimensions of the 9-slice centre, optional
     **/
     inline
-    function fillGrad4RoundRectangle( pixelshape: Pixelshape
+    function fillGrad4RoundRectangle( pixelimage: Pixelimage
                                , x:     Float,        y:     Float
                                , hi:    Float,        wid:   Float
                                , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32
@@ -114,24 +113,24 @@ import pixelimageXY.pixel.Pixel32;
         var farX = x + dx + fat;
         var lowerY = y + dy + tall;
         // top row
-        pixelshape.fillQuadrantII( x + dx, y + dy, dx, dy, colorA );
-        pixelshape.fillGradRect(  x + dx, y, fat, dy, colorA, colorB, colorB, colorA );
-        pixelshape.fillQuadrantI(  farX, y + dy, rightRadius, dy, colorB );
+        pixelimage.fillShape.quadrantII( x + dx, y + dy, dx, dy, colorA );
+        pixelimage.gradientShape.rectangle(  x + dx, y, fat, dy, colorA, colorB, colorB, colorA );
+        pixelimage.fillShape.quadrantI(  farX, y + dy, rightRadius, dy, colorB );
         // middle row  ( will need more splitting with gradient )
-        pixelshape.fillGradRect(  x, y + dy, dx, tall, colorA, colorA, colorD, colorD );
-        pixelshape.fillGradRect(  x + dx, y + dy, fat, tall, colorA, colorB, colorC, colorD );
-        pixelshape.fillGradRect(  farX, y + dy, rightRadius, tall, colorB, colorB, colorC, colorC );
+        pixelimage.gradientShape.rectangle(  x, y + dy, dx, tall, colorA, colorA, colorD, colorD );
+        pixelimage.gradientShape.rectangle(  x + dx, y + dy, fat, tall, colorA, colorB, colorC, colorD );
+        pixelimage.gradientShape.rectangle(  farX, y + dy, rightRadius, tall, colorB, colorB, colorC, colorC );
         // bottom row
-        pixelshape.fillQuadrantIII( x + dx, lowerY, dx, bottomRadius, colorD );
-        pixelshape.fillGradRect(   x + dx, lowerY, fat, bottomRadius, colorD, colorC, colorC, colorD );
-        pixelshape.fillQuadrantIV(  farX,   lowerY, rightRadius, bottomRadius, colorC );
+        pixelimage.fillShape.quadrantIII( x + dx, lowerY, dx, bottomRadius, colorD );
+        pixelimage.gradientShape.rectangle(   x + dx, lowerY, fat, bottomRadius, colorD, colorC, colorC, colorD );
+        pixelimage.fillShape.quadrantIV(  farX,   lowerY, rightRadius, bottomRadius, colorC );
     }
 
 class RoundRecPixel {
     /**
        <font color="LightPink" font-weight:"Bold">fillRoundRectangle</font> module level field
     **/
-    public var _fillRoundRectangle:( pixelshape: Pixelshape
+    public var _fillRoundRectangle:( pixelimage: Pixelimage
         , x:     Float,        y:     Float
         , wid:    Float,       hi:   Float
         , color: Int
@@ -142,7 +141,7 @@ class RoundRecPixel {
     /**
        <font color="LightPink" font-weight:"Bold">tileRoundRectangle</font> module level field
     **/
-    public var _tileRoundRectangle:( pixelshape: Pixelshape
+    public var _tileRoundRectangle:( pixelimage: Pixelimage
         , x:     Float,        y:     Float
         , wid:    Float,       hi:   Float
         , tileImage: Pixelimage
@@ -153,7 +152,7 @@ class RoundRecPixel {
     /**
        <font color="LightPink" font-weight:"Bold">fillGrad4RoundRectangle</font> module level field
     **/
-    public var _fillGrad4RoundRectangle:( pixelshape: Pixelshape
+    public var _fillGrad4RoundRectangle:( pixelimage: Pixelimage
         , x:     Float,        y:     Float
         , hi:    Float,        wid:   Float
         , colorA: Pixel32, colorB: Pixel32, colorC: Pixel32, colorD: Pixel32

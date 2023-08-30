@@ -1,6 +1,6 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import pixelimageXY.triangleGML.*;
 
 import triangleGML.TriangleGML_;
@@ -14,30 +14,30 @@ import js.html.Image;
 
 @:structInit
 class ShapeAtt {
-    public var shape: ShapeInterface<Pixelshape,Pixelshape>;
+    public var shape: ShapeInterface<Pixelimage,Pixelimage>;
     public var att:   String;
     public inline 
-    function new( shape: ShapeInterface<Pixelshape,Pixelshape>, att: String ){
+    function new( shape: ShapeInterface<Pixelimage,Pixelimage>, att: String ){
         this.shape = shape;
         this.att   = att;
     }
 }
 #end
 
-class TriangleGML extends TriangleGML_<Pixelshape,Pixelshape> {
+class TriangleGML extends TriangleGML_<Pixelimage,Pixelimage> {
     /*
-    public static inline function withString( pixelShape: Pixelshape, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
+    public static inline function withString( pixelImage: Pixelimage, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
         trace(str);
         var xml = Xml.parse( '<node>'+str+'</node>' ).firstElement();
         trace( xml );
-        return new TriangleGML( pixelShape, xml, x, y );
+        return new TriangleGML( pixelImage, xml, x, y );
     }
     */
     #if js 
     // setup promise ... untested with dynamic loading of images so far, but compiles.
     public var promises:   Array<Promise<Pixelimage>> = [];
     public var shapes_att: Array<ShapeAtt> = [];
-    public override function processAttribute( att: String, value: String, shape: ShapeInterface<Pixelshape,Pixelshape> ){
+    public override function processAttribute( att: String, value: String, shape: ShapeInterface<Pixelimage,Pixelimage> ){
         if( att.substr( 0, 'src'.length ) == 'src' ){
             promises.push( load( value ) );
             shapes_att.push( ( { shape: shape, att: att.toLowerCase() }: ShapeAtt ) );
@@ -68,7 +68,7 @@ class TriangleGML extends TriangleGML_<Pixelshape,Pixelshape> {
                 ( pixelimages ) -> {
                     for( i in 0...pixelimages.length ){
                         var shapeAt = here.shapes_att[ i ];
-                        var pixelShape: Pixelshape = ( cast pixelimages[ i ]: Pixelshape );
+                        var pixelImage: Pixelimage = pixelimages[ i ];
                         shapeAt.shape.setImage( shapeAt.att, pixelShape );
                     }
                     here.render();
@@ -78,9 +78,9 @@ class TriangleGML extends TriangleGML_<Pixelshape,Pixelshape> {
     }
     #end
     //
-    public function getTriangleGML( nodeName: String ): ShapeInterface<Pixelshape,Pixelshape> {
+    public function getTriangleGML( nodeName: String ): ShapeInterface<Pixelimage,Pixelimage> {
         
-        var s: ShapeInterface<Pixelshape,Pixelshape> = switch( nodeName ){
+        var s: ShapeInterface<Pixelimage,Pixelimage> = switch( nodeName ){
                 case ARROW_SHAPE:
                     new ArrowShape();
                 case ARC_FORM:

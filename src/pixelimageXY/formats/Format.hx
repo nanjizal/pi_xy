@@ -1,5 +1,4 @@
 package pixelimageXY.formats;
-import pixelimageXY.Pixelshape;
 import pixelimageXY.Pixelimage;
 import pixelimageXY.pixel.Pixel32;
 import pixelimageXY.formats.BytesCameleon;
@@ -10,12 +9,12 @@ import neko.vm.Module;
 #if !js
 import format.png.Data;
 inline
-function toPNG( pixelShape: Pixelshape, name: String, level = 9 ){
+function toPNG( pixelImage: Pixelimage, name: String, level = 9 ){
     if( name.substr( -4, 1 ) == '.' ){ // remove 'png'
         name = name.substr( 0, -4 );
     }
-    var lh = pixelShape.height; 
-    var lw = pixelShape.width;
+    var lh = pixelImage.height; 
+    var lw = pixelImage.width;
     var w = 0;
     var r = 0;
     var rgba = haxe.io.Bytes.alloc( lw * lh * 4 + lh );
@@ -24,7 +23,7 @@ function toPNG( pixelShape: Pixelshape, name: String, level = 9 ){
         rgba.set( w++, 0 ); // no filter for this scanline
         for( x in 0...lw ) { // argb   
             // AGBR
-            var col: Pixel32 = new Pixel32( pixelShape.getARGB( x, y ) );
+            var col: Pixel32 = new Pixel32( pixelImage.getARGB( x, y ) );
             var a: Int = col.c0;
             var r: Int = col.c1;
             var g: Int = col.c2;
@@ -37,7 +36,7 @@ function toPNG( pixelShape: Pixelshape, name: String, level = 9 ){
         }
     }
 	var l = new List();
-	l.add( CHeader( { width:      pixelShape.width, height: pixelShape.height
+	l.add( CHeader( { width:      pixelImage.width, height: pixelImage.height
                     , colbits:    8,                color:  ColTrue( true )
                     , interlaced: false }) );
 	l.add( CData( format.tools.Deflate.run( rgba, level ) ) );

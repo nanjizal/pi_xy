@@ -1,10 +1,10 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import triangleGML.shape.gradient.LineGradient_;
 import pixelimageXY.algo.TriPixelSmoothGrad;
 
-class LineGradient extends LineGradient_<Pixelshape,Pixelshape>{
+class LineGradient extends LineGradient_<Pixelimage,Pixelimage>{
     public var luxury: Bool;
     public override function setParameter( name: String, value: String ){
         switch( name ){
@@ -15,18 +15,18 @@ class LineGradient extends LineGradient_<Pixelshape,Pixelshape>{
                 super.setParameter( name, value );
         }
     }
-    public function render( pixelShape: Pixelshape ): Pixelshape {
+    public function render( pixelImage: Pixelimage ): Pixelimage {
         var px = x1 + offX;
         var qx = x2 + offX;
         var py = y1 + offY;
         var qy = y2 + offY;
         if( luxury ){
-            lineXYGradPentBary( ( cast pixelShape: Pixelimage ), px, py, qx, qy, strokeWidth
+            lineXYGradPentBary( pixelImage, px, py, qx, qy, strokeWidth
                             , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
         } else {
-            pixelShape.fillGradLine( px, py, qx, qy, strokeWidth
+            pixelImage.gradientShape.line( px, py, qx, qy, strokeWidth
                 , cornerColors[0], cornerColors[1], cornerColors[2], cornerColors[3] );
         }
-        return pixelShape;
+        return pixelImage;
     }
 }

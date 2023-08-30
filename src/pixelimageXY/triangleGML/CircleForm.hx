@@ -1,19 +1,19 @@
 package pixelimageXY.triangleGML;
 
-import pixelimageXY.Pixelshape;
+import pixelimageXY.Pixelimage;
 import triangleGML.shape.form.CircleForm_;
 
-class CircleForm extends CircleForm_<Pixelshape,Pixelshape>{
-    public function render( pixelShape: Pixelshape ): Pixelshape {
-        var temp = new Pixelshape( Math.ceil( diameter ), Math.ceil( diameter ) );
+class CircleForm extends CircleForm_<Pixelimage,Pixelimage>{
+    public function render( pixelImage: Pixelimage ): Pixelimage {
+        var temp = new Pixelimage( Math.ceil( diameter ), Math.ceil( diameter ) );
         temp.transparent = false;
         buildCircle( temp );
-        pixelShape.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
+        pixelImage.putPixelImage( temp, Std.int( left+offX ), Std.int( top+offY ) );
         temp = null;
-        return pixelShape;
+        return pixelImage;
     }
 
-    function buildCircle( temp: Pixelshape ){
+    function buildCircle( temp: Pixelimage ){
         var w = Math.round( strokeWidth/2 );
         var r = diameter/2;
         var innerR = diameter/2 - 4*w;
@@ -22,7 +22,7 @@ class CircleForm extends CircleForm_<Pixelshape,Pixelshape>{
         var phi = 0.;
         var innerCx: Float = cx - w/4;
         var innerCy: Float = cy - w/4;
-        temp.fillEllipseTri( cx, cy, r, r, strokeColor, phi );
-        temp.fillEllipseTri( innerCx, innerCy, innerR, innerR, fill, phi );
+        temp.fillShape.ellipseTri( cx, cy, r, r, strokeColor, phi );
+        temp.fillShape.ellipseTri( innerCx, innerCy, innerR, innerR, fill, phi );
     }
 }

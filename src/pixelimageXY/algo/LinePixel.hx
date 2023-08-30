@@ -47,10 +47,10 @@ function rotateLine( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillShape.square( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillShape.square( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillShape.square( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillShape.square( dx, dy, 12, 0xFFF000F0 );
     }
     return fillQuadrilateral( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, color, hasHit );
 }
@@ -101,10 +101,10 @@ function rotateSoftLine( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillShape.square( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillShape.square( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillShape.square( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillShape.square( dx, dy, 12, 0xFFF000F0 );
     }
     return fillSoftQuadrilateral( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, color, soft, softAB, softBC, softCD, softDA, hasHit );
 }
@@ -155,10 +155,10 @@ function rotateSoftLineLuxury( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillShape.square( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillShape.square( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillShape.square( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillShape.square( dx, dy, 12, 0xFFF000F0 );
     }
     return fillSoftQuadrilateralQuarter( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, color, soft, softAB, softBC, softCD, softDA, hasHit );
 }
@@ -209,10 +209,10 @@ function rotateSoftLinePartial( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillShape.square( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillShape.square( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillShape.square( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillShape.square( dx, dy, 12, 0xFFF000F0 );
     }
     return softFillQuintilateralPartial( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, color, softC, softTop, softRight, softBottom, softLeft, hasHit );
 }
@@ -399,10 +399,10 @@ function rotateTileLine( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, 0xFFFF0000 );
-        pixelImage.fillSquare( bx, by, 12, 0xFF00FF00 );
-        pixelImage.fillSquare( cx, cy, 12, 0xFF0000ff );
-        pixelImage.fillSquare( dx, dy, 12, 0xFFF000F0 );
+        pixelImage.fillShape.square( ax, ay, 12, 0xFFFF0000 );
+        pixelImage.fillShape.square( bx, by, 12, 0xFF00FF00 );
+        pixelImage.fillShape.square( cx, cy, 12, 0xFF0000ff );
+        pixelImage.fillShape.square( dx, dy, 12, 0xFFF000F0 );
     }
     return tileQuadrilateral( pixelImage, ax, ay, bx, by, cx, cy, dx, dy, tileImage, hasHit );
 }
@@ -493,10 +493,10 @@ function rotateGradLine( pixelImage: Pixelimage
     trace( dx + ' ' + dy );
     */
     if( debugCorners ){
-        pixelImage.fillSquare( ax, ay, 12, colorA );
-        pixelImage.fillSquare( bx, by, 12, colorB );
-        pixelImage.fillSquare( cx, cy, 12, colorC );
-        pixelImage.fillSquare( dx, dy, 12, colorD );
+        pixelImage.fillShape.square( ax, ay, 12, colorA );
+        pixelImage.fillShape.square( bx, by, 12, colorB );
+        pixelImage.fillShape.square( cx, cy, 12, colorC );
+        pixelImage.fillShape.square( dx, dy, 12, colorD );
     }
     return fillGradQuadrilateral( pixelImage, ax, ay, colorA, bx, by, colorB, cx, cy, colorC, dx, dy, colorD, hasHit );
 }

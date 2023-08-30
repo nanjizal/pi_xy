@@ -46,7 +46,7 @@ import pixelimageXY.Pixelimage;
                 var ctheta = Math.cos( i*theta + omega + 0.01 );
                 var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                 var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                pixelimage.fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                pixelimage.fillShape.triangle( cx, cy, lastX, lastY, nextX, nextY, color );
                 
                 lastX = nextX;
                 lastY = nextY;
@@ -55,7 +55,7 @@ import pixelimageXY.Pixelimage;
             for( i in 0...sides + 1 ){
                 var nextX = cx + rx*Math.cos( i*theta + omega +0.01 );
                 var nextY = cy + ry*Math.sin( i*theta + omega +0.01 );
-                pixelimage.fillTri( cx, cy, lastX, lastY, nextX, nextY, color );
+                pixelimage.fillShape.triangle( cx, cy, lastX, lastY, nextX, nextY, color );
                 lastX = nextX;
                 lastY = nextY;
             }
@@ -165,7 +165,7 @@ import pixelimageXY.Pixelimage;
                 var ctheta = Math.cos( i*theta + omega + 0.01 );
                 var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                 var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
+                pixelimage.tileShape.triangle( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                 lastX = nextX;
                 lastY = nextY;
             }
@@ -173,7 +173,7 @@ import pixelimageXY.Pixelimage;
             for( i in 0...sides + 1 ){
                 var nextX = cx + rx*Math.cos( i*theta + omega + 0.01 );
                 var nextY = cy + ry*Math.sin( i*theta + omega + 0.01 );
-                pixelimage.tileTri( cx, cy, lastX, lastY, nextX, nextY, tileImage );
+                pixelimage.tileShape.triangle( cx, cy, lastX, lastY, nextX, nextY, tileImage );
                 lastX = nextX;
                 lastY = nextY;
             }
@@ -232,7 +232,7 @@ import pixelimageXY.Pixelimage;
                 var ctheta = Math.cos( i*theta + omega );
                 var nextX = rx * ctheta * cphi - ry * stheta * sphi + cx;
                 var nextY = rx * ctheta * sphi + ry * stheta * cphi + cy;
-                pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+                pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
                 lastX = nextX;
                 lastY = nextY;
             }
@@ -240,7 +240,7 @@ import pixelimageXY.Pixelimage;
             for( i in 0...sides + 1 ){
                 var nextX = cx + rx*Math.cos( i*theta + omega );
                 var nextY = cy + ry*Math.sin( i*theta + omega );
-                pixelimage.fillGradTri( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
+                pixelimage.gradientShape.triangle( mx, my, colorIn, lastX, lastY, colorOut, nextX, nextY, colorOut );
                 lastX = nextX;
                 lastY = nextY;
             }
