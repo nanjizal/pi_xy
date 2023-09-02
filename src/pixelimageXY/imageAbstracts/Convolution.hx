@@ -75,6 +75,39 @@ abstract Convolution( Pixelimage ) from Pixelimage to Pixelimage {
         img.setPixel( img.width-1, img.height-1, this.getPixel( this.width - 1, this.height-1 ) );
         return img;
     }
+    /**
+        Add color border
+        ideal to help with testing aspects of padding and to provide useful feature.
+    **/
+    public inline
+    function border( col: Int, places: Int ): Pixelimage {
+        var img = new Pixelimage( this.width+places, this.height+places );
+        img.putPixelImage( this, places, places );
+        // draw border
+        for( x in 0...this.width - 1 ){
+            for( y in 0...places ){
+                // top row
+                img.setPixel( x+1, y, col );
+                // bottom row
+                img.setPixel( x+1, img.height - y, col );
+            }
+        }
+        for( y in 0...this.height - 1 ){
+            for( x in 0...places ){
+                // left column
+                img.setPixel( x, y+1, col );
+                // right column
+                img.setPixel( x, img.height - y, col );
+
+            }
+        }
+        // draw corners
+        img.setPixel( 0, 0, col );
+        img.setPixel( img.width-1, 0, col );
+        img.setPixel( 0, img.height-1, col );
+        img.setPixel( img.width-1, img.height-1, col );
+        return img;
+    }
     inline
     public function convolute3x3( a: Float, b: Float, c: Float
                                 , d: Float, e: Float, f: Float

@@ -83700,7 +83700,17 @@
 	<x path="Int"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></padImage>
-	<convolute3x3 public="1" get="inline" set="null" line="87" static="1">
+	<border public="1" get="inline" set="null" line="83" static="1">
+		<f a="this:col:places">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="Int"/>
+			<x path="Int"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<haxe_doc>Add color border
+        ideal to help with testing aspects of padding and to provide useful feature.</haxe_doc>
+	</border>
+	<convolute3x3 public="1" get="inline" set="null" line="120" static="1">
 		<f a="this:a:b:c:d:e:f:g:h:i:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::false:true:true:true">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="Float"/>
@@ -83721,7 +83731,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
 	</convolute3x3>
-	<convolute5x5 public="1" get="inline" set="null" line="234" static="1">
+	<convolute5x5 public="1" get="inline" set="null" line="267" static="1">
 		<f a="this:a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:w:x:y:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::::::::::::::::::false:true:true:true">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="Float"/>
@@ -83758,7 +83768,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
 	</convolute5x5>
-	<sharpen0_3x3 public="1" get="inline" set="null" line="516" static="1">
+	<sharpen0_3x3 public="1" get="inline" set="null" line="549" static="1">
 		<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="Float"/>
@@ -83768,7 +83778,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
 	</sharpen0_3x3>
-	<blur0_3x3 public="1" get="inline" set="null" line="523" static="1">
+	<blur0_3x3 public="1" get="inline" set="null" line="556" static="1">
 		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
@@ -83777,7 +83787,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
 	</blur0_3x3>
-	<edgeEnhance0_3x3 public="1" get="inline" set="null" line="530" static="1">
+	<edgeEnhance0_3x3 public="1" get="inline" set="null" line="563" static="1">
 		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
@@ -83786,7 +83796,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
 	</edgeEnhance0_3x3>
-	<edgeDetect0_3x3 public="1" get="inline" set="null" line="537" static="1">
+	<edgeDetect0_3x3 public="1" get="inline" set="null" line="570" static="1">
 		<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="Float"/>
@@ -83796,7 +83806,7 @@
 		</f>
 		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
 	</edgeDetect0_3x3>
-	<emboss0_3x3 public="1" get="inline" set="null" line="544" static="1">
+	<emboss0_3x3 public="1" get="inline" set="null" line="577" static="1">
 		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 			<x path="pixelimageXY.Pixelimage"/>
 			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
@@ -83826,7 +83836,17 @@
 	<x path="Int"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></padImage>
-		<convolute3x3 public="1" get="inline" set="null" line="87" static="1">
+		<border public="1" get="inline" set="null" line="83" static="1">
+			<f a="this:col:places">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<haxe_doc>Add color border
+        ideal to help with testing aspects of padding and to provide useful feature.</haxe_doc>
+		</border>
+		<convolute3x3 public="1" get="inline" set="null" line="120" static="1">
 			<f a="this:a:b:c:d:e:f:g:h:i:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::false:true:true:true">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="Float"/>
@@ -83847,7 +83867,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
 		</convolute3x3>
-		<convolute5x5 public="1" get="inline" set="null" line="234" static="1">
+		<convolute5x5 public="1" get="inline" set="null" line="267" static="1">
 			<f a="this:a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:w:x:y:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::::::::::::::::::false:true:true:true">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="Float"/>
@@ -83884,7 +83904,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
 		</convolute5x5>
-		<sharpen0_3x3 public="1" get="inline" set="null" line="516" static="1">
+		<sharpen0_3x3 public="1" get="inline" set="null" line="549" static="1">
 			<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="Float"/>
@@ -83894,7 +83914,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
 		</sharpen0_3x3>
-		<blur0_3x3 public="1" get="inline" set="null" line="523" static="1">
+		<blur0_3x3 public="1" get="inline" set="null" line="556" static="1">
 			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
@@ -83903,7 +83923,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
 		</blur0_3x3>
-		<edgeEnhance0_3x3 public="1" get="inline" set="null" line="530" static="1">
+		<edgeEnhance0_3x3 public="1" get="inline" set="null" line="563" static="1">
 			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
@@ -83912,7 +83932,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
 		</edgeEnhance0_3x3>
-		<edgeDetect0_3x3 public="1" get="inline" set="null" line="537" static="1">
+		<edgeDetect0_3x3 public="1" get="inline" set="null" line="570" static="1">
 			<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="Float"/>
@@ -83922,7 +83942,7 @@
 			</f>
 			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
 		</edgeDetect0_3x3>
-		<emboss0_3x3 public="1" get="inline" set="null" line="544" static="1">
+		<emboss0_3x3 public="1" get="inline" set="null" line="577" static="1">
 			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
 				<x path="pixelimageXY.Pixelimage"/>
 				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
