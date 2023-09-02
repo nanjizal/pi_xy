@@ -79046,11 +79046,16 @@
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.imageAbstracts.PatternShape"/>
 </f></get_pattern>
+	<convolution public="1" get="accessor" set="null" static="1"><x path="pixelimageXY.imageAbstracts.Convolution"/></convolution>
+	<get_convolution get="inline" set="null" line="77" static="1"><f a="this">
+	<c path="pixelimageXY.ImageStruct"/>
+	<x path="pixelimageXY.imageAbstracts.Convolution"/>
+</f></get_convolution>
 	<width public="1" get="accessor" set="null" static="1">
 		<x path="Int"/>
 		<haxe_doc>provides the width used by the UInt32Array</haxe_doc>
 	</width>
-	<get_width get="inline" set="null" line="81" static="1"><f a="this">
+	<get_width get="inline" set="null" line="86" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 </f></get_width>
@@ -79058,11 +79063,11 @@
 		<x path="Int"/>
 		<haxe_doc>provides the height used by the UInt32Array</haxe_doc>
 	</height>
-	<get_height get="inline" set="null" line="87" static="1"><f a="this">
+	<get_height get="inline" set="null" line="92" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 </f></get_height>
-	<setRelativePosition public="1" set="method" line="92" static="1">
+	<setRelativePosition public="1" set="method" line="97" static="1">
 		<f a="this:x:y:?update" v=":::false">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79078,46 +79083,46 @@
 		<x path="Bool"/>
 		<haxe_doc>transparent to false will allow setARGB to overwrite pixels, true will alpha blend them when new pixel is semi transparent</haxe_doc>
 	</transparent>
-	<get_transparent get="inline" set="null" line="105" static="1"><f a="this">
+	<get_transparent get="inline" set="null" line="110" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 </f></get_transparent>
-	<set_transparent get="inline" set="null" line="106" static="1"><f a="this:v">
+	<set_transparent get="inline" set="null" line="111" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_transparent>
 	<mask public="1" get="accessor" set="accessor" static="1"><x path="pixelimageXY.Pixelimage"/></mask>
-	<get_mask get="inline" set="null" line="112" static="1"><f a="this">
+	<get_mask get="inline" set="null" line="117" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></get_mask>
-	<set_mask get="inline" set="null" line="113" static="1"><f a="this:v">
+	<set_mask get="inline" set="null" line="118" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></set_mask>
 	<image public="1" get="accessor" set="null" static="1"><x path="haxe.io.UInt32Array"/></image>
-	<get_image get="inline" set="null" line="120" static="1"><f a="this">
+	<get_image get="inline" set="null" line="125" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="haxe.io.UInt32Array"/>
 </f></get_image>
 	<hasMask public="1" get="accessor" set="accessor" static="1"><x path="Bool"/></hasMask>
-	<set_hasMask get="inline" set="null" line="128" static="1"><f a="this:v">
+	<set_hasMask get="inline" set="null" line="133" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_hasMask>
-	<get_hasMask get="inline" set="null" line="139" static="1"><f a="this">
+	<get_hasMask get="inline" set="null" line="144" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 </f></get_hasMask>
 	<rectWindow get="accessor" set="accessor" static="1"><c path="pixelimageXY.algo.RectangleWindow"/></rectWindow>
-	<get_rectWindow get="inline" set="null" line="141" static="1"><f a="this">
+	<get_rectWindow get="inline" set="null" line="146" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="pixelimageXY.algo.RectangleWindow"/>
 </f></get_rectWindow>
-	<set_rectWindow get="inline" set="null" line="145" static="1">
+	<set_rectWindow get="inline" set="null" line="150" static="1">
 		<f a="this:r">
 			<c path="pixelimageXY.ImageStruct"/>
 			<c path="pixelimageXY.algo.RectangleWindow"/>
@@ -79125,7 +79130,7 @@
 		</f>
 		<meta><m n=":access"><e>pixelImage.ImageStruct</e></m></meta>
 	</set_rectWindow>
-	<_new public="1" get="inline" set="null" line="161" static="1">
+	<_new public="1" get="inline" set="null" line="166" static="1">
 		<f a="w:h">
 			<x path="Int"/>
 			<x path="Int"/>
@@ -79133,7 +79138,7 @@
 		</f>
 		<meta><m n=":noCompletion"/></meta>
 	</_new>
-	<pos4 get="inline" set="null" line="175" static="1">
+	<pos4 get="inline" set="null" line="180" static="1">
 		<f a="this:x:y:?off" v=":::0">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79144,7 +79149,7 @@
 		<meta><m n=":value"><e>{ off : 0 }</e></m></meta>
 		<haxe_doc>this provides a location for a UIn8 access of a color channel</haxe_doc>
 	</pos4>
-	<position public="1" get="inline" set="null" line="180" static="1">
+	<position public="1" get="inline" set="null" line="185" static="1">
 		<f a="this:x:y">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79153,7 +79158,7 @@
 		</f>
 		<haxe_doc>provides the location of the pixel after considering any relative internal x,y offset</haxe_doc>
 	</position>
-	<setPixel public="1" get="inline" set="null" line="221" static="1">
+	<setPixel public="1" get="inline" set="null" line="226" static="1">
 		<f a="this:x:y:color">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79163,13 +79168,13 @@
 		</f>
 		<haxe_doc>Provides a view for single color channel access, not usually used</haxe_doc>
 	</setPixel>
-	<zeroPixel public="1" get="inline" set="null" line="225" static="1"><f a="this:x:y">
+	<zeroPixel public="1" get="inline" set="null" line="230" static="1"><f a="this:x:y">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></zeroPixel>
-	<setARGB public="1" get="inline" set="null" line="233" static="1">
+	<setARGB public="1" get="inline" set="null" line="238" static="1">
 		<f a="this:x:y:color">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79180,13 +79185,13 @@
 		<haxe_doc>The main way is set the pixel color at x, y
         applies an alpha blend if pixel is semi-transparent and if the pixelimage is transparent true</haxe_doc>
 	</setARGB>
-	<getPixel public="1" get="inline" set="null" line="243" static="1"><f a="this:x:y">
+	<getPixel public="1" get="inline" set="null" line="248" static="1"><f a="this:x:y">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Int"/>
 </f></getPixel>
-	<getARGB public="1" get="inline" set="null" line="251" static="1">
+	<getARGB public="1" get="inline" set="null" line="256" static="1">
 		<f a="this:x:y">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79196,7 +79201,7 @@
 		<haxe_doc>returns the current pixel colour, since canvas context is ABGR on little endian this will correct
         from the internal value</haxe_doc>
 	</getARGB>
-	<set_argbPixel public="1" get="inline" set="null" line="260" static="1">
+	<set_argbPixel public="1" get="inline" set="null" line="265" static="1">
 		<f a="this:a:r:g:b:location">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79209,7 +79214,7 @@
 		<haxe_doc>allows setting all 4 colour channels with a location
         @:see position   to obtain the location</haxe_doc>
 	</set_argbPixel>
-	<argbToPixel public="1" get="inline" set="null" line="268" static="1">
+	<argbToPixel public="1" get="inline" set="null" line="273" static="1">
 		<f a="this:a:r:g:b:location">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79221,7 +79226,7 @@
 		</f>
 		<haxe_doc>used more internally to set colours from algorithms does not apply alpha blend</haxe_doc>
 	</argbToPixel>
-	<channelBlend public="1" get="inline" set="null" line="280" static="1">
+	<channelBlend public="1" get="inline" set="null" line="285" static="1">
 		<f a="this:a:r:g:b:location">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="pixelimageXY.pixel.PixelChannel"/>
@@ -79234,7 +79239,7 @@
 		<haxe_doc>used internally is set colours from algorithms only applies alpha blend
         @see setARGB</haxe_doc>
 	</channelBlend>
-	<colorBlend public="1" get="inline" set="null" line="290" static="1">
+	<colorBlend public="1" get="inline" set="null" line="295" static="1">
 		<f a="this:color:location">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="pixelimageXY.pixel.Pixel32"/>
@@ -79244,7 +79249,7 @@
 		<haxe_doc>used internally to set colours from algorithms only applies 
         @see setARGB</haxe_doc>
 	</colorBlend>
-	<getPixelString public="1" get="inline" set="null" line="299" static="1">
+	<getPixelString public="1" get="inline" set="null" line="304" static="1">
 		<f a="this:x:y">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Int"/>
@@ -79253,7 +79258,7 @@
 		</f>
 		<haxe_doc>mainly used for color debugging provides getARGB in hex string format</haxe_doc>
 	</getPixelString>
-	<simpleRect public="1" get="inline" set="null" line="306" static="1">
+	<simpleRect public="1" get="inline" set="null" line="311" static="1">
 		<f a="this:x:y:w:h:color">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="Float"/>
@@ -79265,7 +79270,7 @@
 		</f>
 		<haxe_doc>provides a simple filled Rectangle</haxe_doc>
 	</simpleRect>
-	<clearRect public="1" get="inline" set="null" line="327" static="1"><f a="this:x:y:w:h">
+	<clearRect public="1" get="inline" set="null" line="332" static="1"><f a="this:x:y:w:h">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -79273,7 +79278,7 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></clearRect>
-	<putPixelImage public="1" get="inline" set="null" line="355" static="1">
+	<putPixelImage public="1" get="inline" set="null" line="360" static="1">
 		<f a="this:pixelImage:x:y:?useAvaliableMask:?forceClear" v="::::true:false">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="pixelimageXY.Pixelimage"/>
@@ -79289,7 +79294,7 @@
         this is used also internally so that shapes can be composed with transparent false 
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.</haxe_doc>
 	</putPixelImage>
-	<putPixelImageRect public="1" get="inline" set="null" line="374" static="1">
+	<putPixelImageRect public="1" get="inline" set="null" line="379" static="1">
 		<f a="this:pixelImage:x:y:rectLeft:rectTop:rectRight:rectBottom:?useAvaliableMask:?forceClear" v="::::::::true:false">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="pixelimageXY.Pixelimage"/>
@@ -79305,7 +79310,7 @@
 		</f>
 		<meta><m n=":value"><e>{ forceClear : false, useAvaliableMask : true }</e></m></meta>
 	</putPixelImageRect>
-	<transferClone public="1" get="inline" set="null" line="440" static="1">
+	<transferClone public="1" get="inline" set="null" line="445" static="1">
 		<f a="this">
 			<c path="pixelimageXY.ImageStruct"/>
 			<x path="pixelimageXY.Pixelimage"/>
@@ -79313,22 +79318,22 @@
 		<haxe_doc>Currently library only supports Javascript target and puts the UInt32Array on the canvas context
         hope to add c++ and some toolkits later.</haxe_doc>
 	</transferClone>
-	<transferIn public="1" get="inline" set="null" line="448" static="1"><f a="this:p">
+	<transferIn public="1" get="inline" set="null" line="453" static="1"><f a="this:p">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 	<x path="Void"/>
 </f></transferIn>
-	<getBytes public="1" get="inline" set="null" line="460" static="1"><f a="this">
+	<getBytes public="1" get="inline" set="null" line="465" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 </f></getBytes>
-	<fromBytes public="1" get="inline" set="null" line="465" static="1"><f a="this:bytes:pos">
+	<fromBytes public="1" get="inline" set="null" line="470" static="1"><f a="this:bytes:pos">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></fromBytes>
-	<fromBytesCameleon public="1" get="inline" set="null" line="469" static="1"><f a="this:bytes">
+	<fromBytesCameleon public="1" get="inline" set="null" line="474" static="1"><f a="this:bytes">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.formats.BytesCameleon"/>
 	<x path="Void"/>
@@ -79379,11 +79384,16 @@
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.imageAbstracts.PatternShape"/>
 </f></get_pattern>
+		<convolution public="1" get="accessor" set="null" static="1"><x path="pixelimageXY.imageAbstracts.Convolution"/></convolution>
+		<get_convolution get="inline" set="null" line="77" static="1"><f a="this">
+	<c path="pixelimageXY.ImageStruct"/>
+	<x path="pixelimageXY.imageAbstracts.Convolution"/>
+</f></get_convolution>
 		<width public="1" get="accessor" set="null" static="1">
 			<x path="Int"/>
 			<haxe_doc>provides the width used by the UInt32Array</haxe_doc>
 		</width>
-		<get_width get="inline" set="null" line="81" static="1"><f a="this">
+		<get_width get="inline" set="null" line="86" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 </f></get_width>
@@ -79391,11 +79401,11 @@
 			<x path="Int"/>
 			<haxe_doc>provides the height used by the UInt32Array</haxe_doc>
 		</height>
-		<get_height get="inline" set="null" line="87" static="1"><f a="this">
+		<get_height get="inline" set="null" line="92" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 </f></get_height>
-		<setRelativePosition public="1" set="method" line="92" static="1">
+		<setRelativePosition public="1" set="method" line="97" static="1">
 			<f a="this:x:y:?update" v=":::false">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79411,46 +79421,46 @@
 			<x path="Bool"/>
 			<haxe_doc>transparent to false will allow setARGB to overwrite pixels, true will alpha blend them when new pixel is semi transparent</haxe_doc>
 		</transparent>
-		<get_transparent get="inline" set="null" line="105" static="1"><f a="this">
+		<get_transparent get="inline" set="null" line="110" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 </f></get_transparent>
-		<set_transparent get="inline" set="null" line="106" static="1"><f a="this:v">
+		<set_transparent get="inline" set="null" line="111" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_transparent>
 		<mask public="1" get="accessor" set="accessor" static="1"><x path="pixelimageXY.Pixelimage"/></mask>
-		<get_mask get="inline" set="null" line="112" static="1"><f a="this">
+		<get_mask get="inline" set="null" line="117" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></get_mask>
-		<set_mask get="inline" set="null" line="113" static="1"><f a="this:v">
+		<set_mask get="inline" set="null" line="118" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 	<x path="pixelimageXY.Pixelimage"/>
 </f></set_mask>
 		<image public="1" get="accessor" set="null" static="1"><x path="haxe.io.UInt32Array"/></image>
-		<get_image get="inline" set="null" line="120" static="1"><f a="this">
+		<get_image get="inline" set="null" line="125" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="haxe.io.UInt32Array"/>
 </f></get_image>
 		<hasMask public="1" get="accessor" set="accessor" static="1"><x path="Bool"/></hasMask>
-		<set_hasMask get="inline" set="null" line="128" static="1"><f a="this:v">
+		<set_hasMask get="inline" set="null" line="133" static="1"><f a="this:v">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 	<x path="Bool"/>
 </f></set_hasMask>
-		<get_hasMask get="inline" set="null" line="139" static="1"><f a="this">
+		<get_hasMask get="inline" set="null" line="144" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Bool"/>
 </f></get_hasMask>
 		<rectWindow get="accessor" set="accessor" static="1"><c path="pixelimageXY.algo.RectangleWindow"/></rectWindow>
-		<get_rectWindow get="inline" set="null" line="141" static="1"><f a="this">
+		<get_rectWindow get="inline" set="null" line="146" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="pixelimageXY.algo.RectangleWindow"/>
 </f></get_rectWindow>
-		<set_rectWindow get="inline" set="null" line="145" static="1">
+		<set_rectWindow get="inline" set="null" line="150" static="1">
 			<f a="this:r">
 				<c path="pixelimageXY.ImageStruct"/>
 				<c path="pixelimageXY.algo.RectangleWindow"/>
@@ -79458,7 +79468,7 @@
 			</f>
 			<meta><m n=":access"><e>pixelImage.ImageStruct</e></m></meta>
 		</set_rectWindow>
-		<_new public="1" get="inline" set="null" line="161" static="1">
+		<_new public="1" get="inline" set="null" line="166" static="1">
 			<f a="w:h">
 				<x path="Int"/>
 				<x path="Int"/>
@@ -79466,7 +79476,7 @@
 			</f>
 			<meta><m n=":noCompletion"/></meta>
 		</_new>
-		<pos4 get="inline" set="null" line="175" static="1">
+		<pos4 get="inline" set="null" line="180" static="1">
 			<f a="this:x:y:?off" v=":::0">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79477,7 +79487,7 @@
 			<meta><m n=":value"><e>{ off : 0 }</e></m></meta>
 			<haxe_doc>this provides a location for a UIn8 access of a color channel</haxe_doc>
 		</pos4>
-		<position public="1" get="inline" set="null" line="180" static="1">
+		<position public="1" get="inline" set="null" line="185" static="1">
 			<f a="this:x:y">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79486,7 +79496,7 @@
 			</f>
 			<haxe_doc>provides the location of the pixel after considering any relative internal x,y offset</haxe_doc>
 		</position>
-		<setPixel public="1" get="inline" set="null" line="221" static="1">
+		<setPixel public="1" get="inline" set="null" line="226" static="1">
 			<f a="this:x:y:color">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79496,13 +79506,13 @@
 			</f>
 			<haxe_doc>Provides a view for single color channel access, not usually used</haxe_doc>
 		</setPixel>
-		<zeroPixel public="1" get="inline" set="null" line="225" static="1"><f a="this:x:y">
+		<zeroPixel public="1" get="inline" set="null" line="230" static="1"><f a="this:x:y">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></zeroPixel>
-		<setARGB public="1" get="inline" set="null" line="233" static="1">
+		<setARGB public="1" get="inline" set="null" line="238" static="1">
 			<f a="this:x:y:color">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79513,13 +79523,13 @@
 			<haxe_doc>The main way is set the pixel color at x, y
         applies an alpha blend if pixel is semi-transparent and if the pixelimage is transparent true</haxe_doc>
 		</setARGB>
-		<getPixel public="1" get="inline" set="null" line="243" static="1"><f a="this:x:y">
+		<getPixel public="1" get="inline" set="null" line="248" static="1"><f a="this:x:y">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<x path="Int"/>
 </f></getPixel>
-		<getARGB public="1" get="inline" set="null" line="251" static="1">
+		<getARGB public="1" get="inline" set="null" line="256" static="1">
 			<f a="this:x:y">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79529,7 +79539,7 @@
 			<haxe_doc>returns the current pixel colour, since canvas context is ABGR on little endian this will correct
         from the internal value</haxe_doc>
 		</getARGB>
-		<set_argbPixel public="1" get="inline" set="null" line="260" static="1">
+		<set_argbPixel public="1" get="inline" set="null" line="265" static="1">
 			<f a="this:a:r:g:b:location">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79542,7 +79552,7 @@
 			<haxe_doc>allows setting all 4 colour channels with a location
         @:see position   to obtain the location</haxe_doc>
 		</set_argbPixel>
-		<argbToPixel public="1" get="inline" set="null" line="268" static="1">
+		<argbToPixel public="1" get="inline" set="null" line="273" static="1">
 			<f a="this:a:r:g:b:location">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79554,7 +79564,7 @@
 			</f>
 			<haxe_doc>used more internally to set colours from algorithms does not apply alpha blend</haxe_doc>
 		</argbToPixel>
-		<channelBlend public="1" get="inline" set="null" line="280" static="1">
+		<channelBlend public="1" get="inline" set="null" line="285" static="1">
 			<f a="this:a:r:g:b:location">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="pixelimageXY.pixel.PixelChannel"/>
@@ -79567,7 +79577,7 @@
 			<haxe_doc>used internally is set colours from algorithms only applies alpha blend
         @see setARGB</haxe_doc>
 		</channelBlend>
-		<colorBlend public="1" get="inline" set="null" line="290" static="1">
+		<colorBlend public="1" get="inline" set="null" line="295" static="1">
 			<f a="this:color:location">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="pixelimageXY.pixel.Pixel32"/>
@@ -79577,7 +79587,7 @@
 			<haxe_doc>used internally to set colours from algorithms only applies 
         @see setARGB</haxe_doc>
 		</colorBlend>
-		<getPixelString public="1" get="inline" set="null" line="299" static="1">
+		<getPixelString public="1" get="inline" set="null" line="304" static="1">
 			<f a="this:x:y">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Int"/>
@@ -79586,7 +79596,7 @@
 			</f>
 			<haxe_doc>mainly used for color debugging provides getARGB in hex string format</haxe_doc>
 		</getPixelString>
-		<simpleRect public="1" get="inline" set="null" line="306" static="1">
+		<simpleRect public="1" get="inline" set="null" line="311" static="1">
 			<f a="this:x:y:w:h:color">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="Float"/>
@@ -79598,7 +79608,7 @@
 			</f>
 			<haxe_doc>provides a simple filled Rectangle</haxe_doc>
 		</simpleRect>
-		<clearRect public="1" get="inline" set="null" line="327" static="1"><f a="this:x:y:w:h">
+		<clearRect public="1" get="inline" set="null" line="332" static="1"><f a="this:x:y:w:h">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="Float"/>
 	<x path="Float"/>
@@ -79606,7 +79616,7 @@
 	<x path="Float"/>
 	<x path="Void"/>
 </f></clearRect>
-		<putPixelImage public="1" get="inline" set="null" line="355" static="1">
+		<putPixelImage public="1" get="inline" set="null" line="360" static="1">
 			<f a="this:pixelImage:x:y:?useAvaliableMask:?forceClear" v="::::true:false">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="pixelimageXY.Pixelimage"/>
@@ -79622,7 +79632,7 @@
         this is used also internally so that shapes can be composed with transparent false 
         useful for adding over and taking away parts of shapes before drawing on the main Pixelimage.</haxe_doc>
 		</putPixelImage>
-		<putPixelImageRect public="1" get="inline" set="null" line="374" static="1">
+		<putPixelImageRect public="1" get="inline" set="null" line="379" static="1">
 			<f a="this:pixelImage:x:y:rectLeft:rectTop:rectRight:rectBottom:?useAvaliableMask:?forceClear" v="::::::::true:false">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="pixelimageXY.Pixelimage"/>
@@ -79638,7 +79648,7 @@
 			</f>
 			<meta><m n=":value"><e>{ forceClear : false, useAvaliableMask : true }</e></m></meta>
 		</putPixelImageRect>
-		<transferClone public="1" get="inline" set="null" line="440" static="1">
+		<transferClone public="1" get="inline" set="null" line="445" static="1">
 			<f a="this">
 				<c path="pixelimageXY.ImageStruct"/>
 				<x path="pixelimageXY.Pixelimage"/>
@@ -79646,22 +79656,22 @@
 			<haxe_doc>Currently library only supports Javascript target and puts the UInt32Array on the canvas context
         hope to add c++ and some toolkits later.</haxe_doc>
 		</transferClone>
-		<transferIn public="1" get="inline" set="null" line="448" static="1"><f a="this:p">
+		<transferIn public="1" get="inline" set="null" line="453" static="1"><f a="this:p">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.Pixelimage"/>
 	<x path="Void"/>
 </f></transferIn>
-		<getBytes public="1" get="inline" set="null" line="460" static="1"><f a="this">
+		<getBytes public="1" get="inline" set="null" line="465" static="1"><f a="this">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 </f></getBytes>
-		<fromBytes public="1" get="inline" set="null" line="465" static="1"><f a="this:bytes:pos">
+		<fromBytes public="1" get="inline" set="null" line="470" static="1"><f a="this:bytes:pos">
 	<c path="pixelimageXY.ImageStruct"/>
 	<c path="haxe.io.Bytes"/>
 	<x path="Int"/>
 	<x path="Void"/>
 </f></fromBytes>
-		<fromBytesCameleon public="1" get="inline" set="null" line="469" static="1"><f a="this:bytes">
+		<fromBytesCameleon public="1" get="inline" set="null" line="474" static="1"><f a="this:bytes">
 	<c path="pixelimageXY.ImageStruct"/>
 	<x path="pixelimageXY.formats.BytesCameleon"/>
 	<x path="Void"/>
@@ -83607,6 +83617,320 @@
 	<x path="vision.ds.Image"/>
 	<c path="haxe.io.Bytes"/>
 </f></extractBytesFromImage>
+	</class>
+	<abstract path="pixelimageXY.imageAbstracts.BorderMode" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx" module="pixelimageXY.imageAbstracts.Convolution">
+		<this><x path="Int"/></this>
+		<meta><m n=":enum"/></meta>
+		<impl><class path="pixelimageXY.imageAbstracts._Convolution.BorderMode_Impl_" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx" private="1" module="pixelimageXY.imageAbstracts.Convolution" extern="1" final="1">
+	<EXTEND public="1" get="inline" set="null" expr="cast 0" line="8" static="1">
+		<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+		<meta>
+			<m n=":value"><e>cast 0</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</EXTEND>
+	<CROP public="1" get="inline" set="null" expr="cast 1" line="9" static="1">
+		<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+		<meta>
+			<m n=":value"><e>cast 1</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</CROP>
+	<WRAP public="1" get="inline" set="null" expr="cast 2" line="10" static="1">
+		<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+		<meta>
+			<m n=":value"><e>cast 2</e></m>
+			<m n=":impl"/>
+			<m n=":enum"/>
+		</meta>
+	</WRAP>
+	<meta><m n=":enum"/></meta>
+</class></impl>
+	</abstract>
+	<class path="pixelimageXY.imageAbstracts._Convolution.BorderMode_Impl_" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx" private="1" module="pixelimageXY.imageAbstracts.Convolution" extern="1" final="1">
+		<EXTEND public="1" get="inline" set="null" expr="cast 0" line="8" static="1">
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<meta>
+				<m n=":value"><e>cast 0</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</EXTEND>
+		<CROP public="1" get="inline" set="null" expr="cast 1" line="9" static="1">
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<meta>
+				<m n=":value"><e>cast 1</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</CROP>
+		<WRAP public="1" get="inline" set="null" expr="cast 2" line="10" static="1">
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<meta>
+				<m n=":value"><e>cast 2</e></m>
+				<m n=":impl"/>
+				<m n=":enum"/>
+			</meta>
+		</WRAP>
+		<meta><m n=":enum"/></meta>
+	</class>
+	<abstract path="pixelimageXY.imageAbstracts.Convolution" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx">
+		<from><icast><x path="pixelimageXY.Pixelimage"/></icast></from>
+		<this><x path="pixelimageXY.Pixelimage"/></this>
+		<to><icast><x path="pixelimageXY.Pixelimage"/></icast></to>
+		<meta><m n=":transient"/></meta>
+		<impl><class path="pixelimageXY.imageAbstracts._Convolution.Convolution_Impl_" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx" private="1" module="pixelimageXY.imageAbstracts.Convolution" final="1">
+	<_new public="1" get="inline" set="null" line="16" static="1">
+		<f a="w:h">
+			<x path="Int"/>
+			<x path="Int"/>
+			<x path="pixelimageXY.imageAbstracts.Convolution"/>
+		</f>
+		<meta><m n=":noCompletion"/></meta>
+	</_new>
+	<padWrapImage public="1" get="inline" set="null" line="21" static="1"><f a="this:places">
+	<x path="pixelimageXY.Pixelimage"/>
+	<x path="Int"/>
+	<x path="pixelimageXY.Pixelimage"/>
+</f></padWrapImage>
+	<padImage public="1" get="inline" set="null" line="50" static="1"><f a="this:places">
+	<x path="pixelimageXY.Pixelimage"/>
+	<x path="Int"/>
+	<x path="pixelimageXY.Pixelimage"/>
+</f></padImage>
+	<convolute3x3 public="1" get="inline" set="null" line="87" static="1">
+		<f a="this:a:b:c:d:e:f:g:h:i:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::false:true:true:true">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
+	</convolute3x3>
+	<convolute5x5 public="1" get="inline" set="null" line="234" static="1">
+		<f a="this:a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:w:x:y:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::::::::::::::::::false:true:true:true">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="Float"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
+	</convolute5x5>
+	<sharpen0_3x3 public="1" get="inline" set="null" line="516" static="1">
+		<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="Float"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
+	</sharpen0_3x3>
+	<blur0_3x3 public="1" get="inline" set="null" line="523" static="1">
+		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+	</blur0_3x3>
+	<edgeEnhance0_3x3 public="1" get="inline" set="null" line="530" static="1">
+		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+	</edgeEnhance0_3x3>
+	<edgeDetect0_3x3 public="1" get="inline" set="null" line="537" static="1">
+		<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="Float"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
+	</edgeDetect0_3x3>
+	<emboss0_3x3 public="1" get="inline" set="null" line="544" static="1">
+		<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+			<x path="pixelimageXY.Pixelimage"/>
+			<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+			<x path="Bool"/>
+			<x path="pixelimageXY.Pixelimage"/>
+		</f>
+		<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+	</emboss0_3x3>
+</class></impl>
+	</abstract>
+	<class path="pixelimageXY.imageAbstracts._Convolution.Convolution_Impl_" params="" file="src/pixelimageXY/imageAbstracts/Convolution.hx" private="1" module="pixelimageXY.imageAbstracts.Convolution" final="1">
+		<_new public="1" get="inline" set="null" line="16" static="1">
+			<f a="w:h">
+				<x path="Int"/>
+				<x path="Int"/>
+				<x path="pixelimageXY.imageAbstracts.Convolution"/>
+			</f>
+			<meta><m n=":noCompletion"/></meta>
+		</_new>
+		<padWrapImage public="1" get="inline" set="null" line="21" static="1"><f a="this:places">
+	<x path="pixelimageXY.Pixelimage"/>
+	<x path="Int"/>
+	<x path="pixelimageXY.Pixelimage"/>
+</f></padWrapImage>
+		<padImage public="1" get="inline" set="null" line="50" static="1"><f a="this:places">
+	<x path="pixelimageXY.Pixelimage"/>
+	<x path="Int"/>
+	<x path="pixelimageXY.Pixelimage"/>
+</f></padImage>
+		<convolute3x3 public="1" get="inline" set="null" line="87" static="1">
+			<f a="this:a:b:c:d:e:f:g:h:i:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::false:true:true:true">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
+		</convolute3x3>
+		<convolute5x5 public="1" get="inline" set="null" line="234" static="1">
+			<f a="this:a:b:c:d:e:f:g:h:i:j:k:l:m:n:o:p:q:r:s:t:u:v:w:x:y:borderMode:?adjustAlpha:?adjustRed:?adjustGreen:?adjustBlue" v=":::::::::::::::::::::::::::false:true:true:true">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="Float"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustBlue : true, adjustGreen : true, adjustRed : true, adjustAlpha : false }</e></m></meta>
+		</convolute5x5>
+		<sharpen0_3x3 public="1" get="inline" set="null" line="516" static="1">
+			<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="Float"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
+		</sharpen0_3x3>
+		<blur0_3x3 public="1" get="inline" set="null" line="523" static="1">
+			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+		</blur0_3x3>
+		<edgeEnhance0_3x3 public="1" get="inline" set="null" line="530" static="1">
+			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+		</edgeEnhance0_3x3>
+		<edgeDetect0_3x3 public="1" get="inline" set="null" line="537" static="1">
+			<f a="this:?strength:?borderMode:?adjustAlpha" v=":4:EXTEND:false">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="Float"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND, strength : 4 }</e></m></meta>
+		</edgeDetect0_3x3>
+		<emboss0_3x3 public="1" get="inline" set="null" line="544" static="1">
+			<f a="this:?borderMode:?adjustAlpha" v=":EXTEND:false">
+				<x path="pixelimageXY.Pixelimage"/>
+				<x path="pixelimageXY.imageAbstracts.BorderMode"/>
+				<x path="Bool"/>
+				<x path="pixelimageXY.Pixelimage"/>
+			</f>
+			<meta><m n=":value"><e>{ adjustAlpha : false, borderMode : EXTEND }</e></m></meta>
+		</emboss0_3x3>
 	</class>
 	<abstract path="pixelimageXY.imageAbstracts.FillShape" params="" file="src/pixelimageXY/imageAbstracts/FillShape.hx">
 		<from><icast><x path="pixelimageXY.Pixelimage"/></icast></from>

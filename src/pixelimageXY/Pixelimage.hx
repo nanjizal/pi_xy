@@ -73,6 +73,11 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         return ( abstract: PatternShape );
     }
 
+    public var convolution( get, never ): Convolution;
+    inline function get_convolution(): Convolution {
+        return ( abstract: Convolution );
+    }
+
     /**
         provides the width used by the UInt32Array
     **/
