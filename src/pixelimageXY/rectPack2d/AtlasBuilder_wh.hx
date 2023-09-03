@@ -99,10 +99,17 @@ class AtlasBuilder_wh {
                         , flip:  Bool ){
         var images = imageData.images;
         var img = images[ id ];
+        #if js 
+        trace( 'render ' + name + 
+        ': x:' + left + ', y:' + top + 
+        ', w:' + wid + ', h:' + hi + 
+        ', rotated:' + flip );
+        #else
         Sys.println( 'render ' + name + 
                     ': x:' + left + ', y:' + top + 
                     ', w:' + wid + ', h:' + hi + 
                     ', rotated:' + flip );
+        #end
         if( flip ){
             //img.drawCW( left, top, image );
         } else {

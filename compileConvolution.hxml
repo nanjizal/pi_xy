@@ -1,0 +1,16 @@
+-cp src
+-js bin/convolutionapp.js
+-lib htmlHelper
+-lib justPath
+-lib iterMagic
+-lib format
+#-lib pixelimage
+-main pixelimageXY.application.ConvolutionApp
+-D js-flatten 
+-dce full
+#--no-traces
+--next
+-cmd echo '<!DOCTYPE html><meta charset="UTF-8"><html><body><script src="convolutionapp.js"></script></body></html>' >bin/convolutionApp.html
+# open html on linux.
+-cmd cd bin/
+-cmd firefox "./convolutionApp.html"

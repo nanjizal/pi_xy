@@ -9,8 +9,8 @@ import vision.ds.Kernal2D;
 import pixelimageXY.formats.VisionImage;
 import pixelimageXY.triangleGML.*;
 import pixelimageXY.triangleGML.pattern.*;
-import pixelimageXY.triangleGML.coreShape.TriangleGML;
-import pixelimageXY.triangleGML.coreShape.XMLshapeSamples2;
+import pixelimageXY.triangleGML.TriangleGML;
+//import pixelimageXY.triangleGML.coreShape.XMLshapeSamples2;
 import htmlHelper.tools.ImageLoader;
 import pixelimageXY.fontImage.TestLem;
 import pixelimageXY.fontImage.OneDfont;
@@ -155,7 +155,7 @@ class DemoUse {
         //trace( p.getPixelString( 101, 101) );
      }
 
-     public function drawRadials( p: Pixelshape ){
+     public function drawRadials( p: Pixelimage ){
           p.fillRadialRectangle( 150, 150, 500, 300, 0xFFc0FF00, 0xFF00c0FF, -0.25, -0.25 );
           p.lineRadialEllipseTri( 600, 650, 290, 200, 100, 100,0xffe100ff, 0xff3a20af, -0.75, -0.75, Math.PI/6 );
      }

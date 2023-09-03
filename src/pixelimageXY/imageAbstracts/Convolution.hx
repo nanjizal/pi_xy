@@ -546,38 +546,72 @@ abstract Convolution( Pixelimage ) from Pixelimage to Pixelimage {
         return out;
     }
     public inline 
-    function sharpen0_3x3( strength: Float = 4, borderMode: BorderMode = EXTEND, adjustAlpha: Bool = false ): Pixelimage {
-        return convolute3x3(  0.,-1., 0.
-                            ,-1, strength, -1.
-                            , 0, -1,  0.
+    function sharpen0_3x3( strength: Float = 4
+                         , borderMode: BorderMode = EXTEND
+                         , adjustAlpha: Bool = false ): Pixelimage {
+        var x = (1 - strength )/4.;
+        return convolute3x3(  0., x,        0.
+                            , x,  strength, x
+                            , 0,  x,        0.
                             , borderMode, adjustAlpha );
     }
     public inline 
-    function blur0_3x3( borderMode: BorderMode = EXTEND, adjustAlpha: Bool = false ): Pixelimage {
-        return convolute3x3(  1., 1., 1.
-                            , 1,  1,  1.
-                            , 1,  1,  1.
+    function boxBlur0_3x3( borderMode: BorderMode = EXTEND
+                         , adjustAlpha: Bool = false ): Pixelimage {
+        return convolute3x3(  1./9., 1./9., 1./9.
+                            , 1./9., 1./9., 1./9.
+                            , 1./9., 1./9., 1./9.
                             , borderMode, adjustAlpha );
     }
     public inline
-    function edgeEnhance0_3x3( borderMode: BorderMode = EXTEND, adjustAlpha: Bool = false ): Pixelimage {
+    function gussianBlur_3x3( borderMode: BorderMode = EXTEND
+                            , adjustAlpha: Bool = false ): Pixelimage {
+        return convolute3x3(  1./16., 2./16., 1./16.    
+                            , 2./16., 4./16., 2./16.
+                            , 1./16., 2./16., 1./16.
+                            , borderMode, adjustAlpha );
+    }
+    public inline
+    function gussianBlur_5x5( borderMode: BorderMode = EXTEND
+                            , adjustAlpha: Bool = false ): Pixelimage {
+        return convolute5x5(  1./256.,  4./256.,  6./256.,  4./256., 1./256.
+                            , 4./256., 16./256., 24./256., 16./256., 4./256.
+                            , 6./256., 24./256., 36./256., 24./256., 6./256.
+                            , 4./256., 16./256., 24./256., 16./256., 4./256.
+                            , 1./256.,  4./256.,  6./256.,  4./256., 1./256.  
+                            , borderMode, adjustAlpha );                     
+    }
+    public inline
+    function unsharpenMask0_5x5( borderMode: BorderMode = EXTEND
+                               , adjustAlpha: Bool = false ): Pixelimage {
+        return convolute5x5( -1./256.,  -4./256.,  -6./256.,  -4./256., -1./256.
+                           , -4./256., -16./256., -24./256., -16./256., -4./256.
+                           , -6./256., -24./256., 476./256., -24./256., -6./256.
+                           , -4./256., -16./256., -24./256., -16./256., -4./256.
+                           , -1./256.,  -4./256.,  -6./256.,  -4./256., -1./256.  
+                           , borderMode, adjustAlpha );  
+    }
+    public inline
+    function edgeEnhance0_3x3( borderMode: BorderMode = EXTEND
+                             , adjustAlpha: Bool = false ): Pixelimage {
         return convolute3x3(  0., 0., 0.
-                            ,-1,  1,  0.
-                            , 0,  0,  0.
+                            ,-1., 1., 0.
+                            , 0., 0., 0.
                             , borderMode, adjustAlpha );
     }
     public inline
     function edgeDetect0_3x3( strength: Float = 4, borderMode: BorderMode = EXTEND, adjustAlpha: Bool = false ): Pixelimage {
-        return convolute3x3(  0., 1., 0.
-                            , 1, -strength,  1.
-                            , 0,  1,  0.
+        var x = (strength - 1)/4.;
+        return convolute3x3(  0., x,        0.
+                            , x, -strength, x
+                            , 0,  x,        0.
                             , borderMode, adjustAlpha );
     }
     public inline
     function emboss0_3x3( borderMode: BorderMode = EXTEND, adjustAlpha: Bool = false ): Pixelimage {
-        return convolute3x3( -2., 1., 0.
-                            ,-1,  1,  1.
-                            , 0,  1,  2.
+        return convolute3x3( -2./3., 1./3., 0.
+                            ,-1./3., 1./3., 1./3.
+                            , 0,     1./3., 2./3.
                             , borderMode, adjustAlpha );
     }
 

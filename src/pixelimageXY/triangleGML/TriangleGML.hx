@@ -69,7 +69,7 @@ class TriangleGML extends TriangleGML_<Pixelimage,Pixelimage> {
                     for( i in 0...pixelimages.length ){
                         var shapeAt = here.shapes_att[ i ];
                         var pixelImage: Pixelimage = pixelimages[ i ];
-                        shapeAt.shape.setImage( shapeAt.att, pixelShape );
+                        shapeAt.shape.setImage( shapeAt.att, pixelImage );
                     }
                     here.render();
                     here = null;

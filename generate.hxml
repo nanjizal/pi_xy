@@ -1,10 +1,10 @@
 #-lib pixelimageXY
-#-lib htmlHelper
+-lib htmlHelper
 -lib justPath
 -lib iterMagic
 -lib vision
 -lib format
--lib peote-view
+#-lib peote-view
 -lib triangleGML
 -D pixelimageDoc
 -D doc-gen
@@ -13,4 +13,4 @@
 -main pixelimageXY.PixelimageDoc
 --no-output
 -xml output.xml
--cppia foo
+-js foo

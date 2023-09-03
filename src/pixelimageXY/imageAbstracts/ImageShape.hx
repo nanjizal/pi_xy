@@ -33,6 +33,24 @@ abstract ImageShape( Pixelimage ) from Pixelimage to Pixelimage {
         return pixelimageXY.algo.QuadPixel
             .imgQuadrilateral( this, texture, win, ax, ay, bx, by, cx, cy, dx, dy, hasHit );
     }
+    /** 
+        just a simple image ( automatically scaled )
+    **/
+    public inline
+    function image( texture: Pixelimage
+                  , x: Float = 0., y: Float = 0.
+                  , wid: Float = 0., hi: Float = 0.
+                  , hasHit: Bool = true ): Null<HitQuad> {
+        var win = new RectangleWindow( 0, 0, texture.width, texture.height );
+        if( wid == 0. ) wid = texture.width;
+        if( hi == 0. ) hi = texture.height;
+        return pixelimageXY.algo.QuadPixel
+            .imgQuadrilateral( this, texture, win
+                             , x, y
+                             , x+wid, y
+                             , x+wid, y+hi
+                             , x, y+hi );
+    }
     public inline
     function rectangle( texture: Pixelimage, win: RectangleWindow
                       , x: Float, y: Float, wid: Float, hi: Float

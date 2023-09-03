@@ -1,5 +1,5 @@
 package pixelimageXY.formats;
-
+#if !'doc-gen'
 import pixelimageXY.Pixelimage;
 import pixelimageXY.pixel.Pixel32;
 
@@ -48,3 +48,4 @@ function fromPeoteTextureFrame( texture: Texture, transparent: Bool = true ): Pi
     }
     return pixelImage;
 }
+#end
