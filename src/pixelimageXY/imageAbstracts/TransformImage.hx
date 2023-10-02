@@ -56,6 +56,16 @@ abstract TransformImage( Pixelimage ) from Pixelimage to Pixelimage {
                     , x, y, w, h, transparent, includeMask );
     }
     inline public
+    function scaleMatch( img: Pixelimage
+                       , transparent = false, includeMask = false ): Pixelimage {
+        var here: Pixelimage = this;
+        return if( img.width != here.width || img.height != here.height ) {
+                            img.transform.scaleXY( here.width/img.width, here.height/img.height );
+                        } else {
+                            img;
+                        }
+    }
+    inline public
     function scaleXY( sx: Float, sy: Float
                     , transparent = false, includeMask: Bool = false ): Pixelimage {
         return scalingXY( this

@@ -56,6 +56,10 @@ class ConvolutionApp {
         var gap = 20;
         pixelimage.putPixelImage( blured, 100 + pix0.width + gap, 100 );
         pixelimage.putPixelImage( emboss, 100 + 2*(pix0.width + gap), 100 );
+        var grey = pix0.colorform.greyScale();
+        pixelimage.putPixelImage( grey, 100, 100 + pix0.height + gap );
+        var rose = pix0.colorform.towardsColor( 0xFFFF0000, 0.8 );
+        pixelimage.putPixelImage( rose, 100 + pix0.width + gap, 100 + pix0.height + gap );
         // draw on canvas context
         pixelimage.drawToContext( surface.me, 0, 0 );
     }

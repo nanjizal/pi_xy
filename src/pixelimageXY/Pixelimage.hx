@@ -78,6 +78,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         return ( abstract: Convolution );
     }
 
+    public var colorform( get, never ): ColorformImage;
+    inline function get_colorform(): ColorformImage {
+        return ( abstract: ColorformImage );
+    }
     /**
         provides the width used by the UInt32Array
     **/
