@@ -17,97 +17,7 @@ abstract Convolution( Pixelimage ) from Pixelimage to Pixelimage {
     public function new( w: Int, h: Int ){
        this = new Pixelimage( w, h );
     }
-    public inline
-    function padWrapImage( places: Int ): Pixelimage {
-        var img = new Pixelimage( this.width+places, this.height+places );
-        img.putPixelImage( this, places, places );
-        // draw border
-        for( x in 0...this.width - 1 ){
-            for( y in 0...places ){
-                // top row
-                img.setPixel( x+1, y, this.getPixel( x, this.height - 1 ) );
-                // bottom row
-                img.setPixel( x+1, img.height - y, this.getPixel( x, 0 ) );
-            }
-        }
-        for( y in 0...this.height - 1 ){
-            for( x in 0...places ){
-                // left column
-                img.setPixel( x, y+1, this.getPixel( this.width - 1, y ) );
-                // right column
-                img.setPixel( x, img.height - y, this.getPixel( 0, y ) );
 
-            }
-        }
-        // draw corners
-        img.setPixel( 0, 0, this.getPixel( this.width - 1, this.height-1 ) );
-        img.setPixel( img.width-1, 0, this.getPixel( 0, this.height-1 ) );
-        img.setPixel( 0, img.height-1, this.getPixel( this.width - 1, 0 ) );
-        img.setPixel( img.width-1, img.height-1, this.getPixel( 0, 0 ) );
-        return img;
-    }
-    public inline
-    function padImage( places: Int ): Pixelimage {
-        var img = new Pixelimage( this.width+places, this.height+places );
-        img.putPixelImage( this, places, places );
-        // draw border
-        for( x in 0...this.width - 1 ){
-            for( y in 0...places ){
-                // top row
-                img.setPixel( x+1, y, this.getPixel( x, 0 ) );
-                // bottom row
-                img.setPixel( x+1, img.height - y, this.getPixel( x, this.height - 1 ) );
-            }
-        }
-        for( y in 0...this.height - 1 ){
-            for( x in 0...places ){
-                // left column
-                img.setPixel( x, y+1, this.getPixel( 0, y ) );
-                // right column
-                img.setPixel( x, img.height - y, this.getPixel( this.width - 1, y ) );
-
-            }
-        }
-        // draw corners
-        img.setPixel( 0, 0, this.getPixel( 0, 0 ) );
-        img.setPixel( img.width-1, 0, this.getPixel( this.width - 1, 0 ) );
-        img.setPixel( 0, img.height-1, this.getPixel( 0, this.height-1 ) );
-        img.setPixel( img.width-1, img.height-1, this.getPixel( this.width - 1, this.height-1 ) );
-        return img;
-    }
-    /**
-        Add color border
-        ideal to help with testing aspects of padding and to provide useful feature.
-    **/
-    public inline
-    function border( col: Int, places: Int ): Pixelimage {
-        var img = new Pixelimage( this.width+places, this.height+places );
-        img.putPixelImage( this, places, places );
-        // draw border
-        for( x in 0...this.width - 1 ){
-            for( y in 0...places ){
-                // top row
-                img.setPixel( x+1, y, col );
-                // bottom row
-                img.setPixel( x+1, img.height - y, col );
-            }
-        }
-        for( y in 0...this.height - 1 ){
-            for( x in 0...places ){
-                // left column
-                img.setPixel( x, y+1, col );
-                // right column
-                img.setPixel( x, img.height - y, col );
-
-            }
-        }
-        // draw corners
-        img.setPixel( 0, 0, col );
-        img.setPixel( img.width-1, 0, col );
-        img.setPixel( 0, img.height-1, col );
-        img.setPixel( img.width-1, img.height-1, col );
-        return img;
-    }
     inline
     public function convolute3x3( a: Float, b: Float, c: Float
                                 , d: Float, e: Float, f: Float
@@ -137,11 +47,11 @@ abstract Convolution( Pixelimage ) from Pixelimage to Pixelimage {
 
         switch borderMode {
             case EXTEND:
-                here = padImage( 1 );
+                here = this.rectanglePad.padImage( 1 );
             case CROP:
                 //
             case WRAP: 
-                here = padWrapImage( 1 );  
+                here = this.rectanglePad.padWrapImage( 1 );  
         }
         // get first pixel values
         for( y in 1...this.height-2 ){
@@ -305,11 +215,11 @@ abstract Convolution( Pixelimage ) from Pixelimage to Pixelimage {
 
         switch borderMode {
             case EXTEND:
-                here = padImage( 2 );
+                here = this.rectanglePad.padImage( 2 );
             case CROP:
                 //
             case WRAP: 
-                here = padWrapImage( 2 );  
+                here = this.rectanglePad.padWrapImage( 2 );  
         }
         // get first pixel values
         for( y in 2...this.height-3 ){

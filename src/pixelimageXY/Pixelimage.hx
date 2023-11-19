@@ -13,83 +13,91 @@ import pixelimageXY.pixel.Pixel28;
 import pixelimageXY.algo.GeomPix;
 import pixelimageXY.pixel.PixelChannel;
 import iterMagic.IteratorRangeXY;
-//import pixelimageXY.algo.TriPixel;
-//import pixelimageXY.algo.LinePixel;
-//import pixelimageXY.algo.CirclePixel;
-
-//import pixelimageXY.algo.PolyPixel;
-//import pixelimageXY.algo.QuadPixel;
-//import pixelimageXY.algo.QuadrantPixel;
-//import pixelimageXY.algo.RoundRecPixel;
-//import pixelimageXY.algo.RectanglePixel;
 
 import pixelimageXY.algo.HitTri;
 import pixelimageXY.algo.HitQuad;
 import pixelimageXY.algo.HitTriArray;
-//import pixelimageXY.algo.QuadPixel;
-//import pixelimageXY.algo.ArrowPixel;
+/*
+import pixelimageXY.imageAbstracts.*;
+import pixelimageXY.imageData.*;
+import pixelimageXY.imageData.ByteImage;
+import pixelimageXY.imageData.ImageDefinition;
+*/
+import iterMagic.Img; // ImageType
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
+    public var defaultType( get, set ): ImageType;
+    public inline
+    function get_defaultType(): ImageType {
+        return ImageStruct.defaultType;
+    }
+    public inline
+    function set_defaultType( v: ImageType ): ImageType {
+        ImageStruct.defaultType = v;
+        return v;
+    }
+    public inline function new( width: Int, height: Int, imageType: Null<ImageType> = null ){
+        this = new ImageStruct();
+        if( imageType == null ) imageType = ImageStruct.defaultType;
+        this.image     = cast ImgMulti.create( width, height, imageType );
+        this.width     = width;
+        this.height    = height;
+        this.imageType = imageType;
+    }
+    public inline function clone(): Pixelimage {
+        var cloned = new Pixelimage( this.width, this.height, this.imageType );
+        return toFrom( cloned, abstract );
+    }
+    public var image( get, never ): ImgMulti<Dynamic>;
+    inline function get_image():  ImgMulti<Dynamic>
+        return this.image;
+    /*
+    inline function set_image( img: ImgMulti<Dynamic> ): ImgMulti<Dynamic>{
+        this.image     = img;
+        this.width     = img.width;
+        this.height    = img.height;
+        this.imageType = img.imageType;
+    }
+    */
+    @:arrayAccess
+    public inline
+    function set( index: Int, value: Int ): Int
+        return this.image.set( index, value );
+    @:arrayAccess
+    public inline
+    function get( index: Int ): Int
+        return this.image[ index ];
+    public static inline
+    function fromTo( a: Pixelimage, b: Pixelimage ) {
+        for( i in 0...b.image.length ) b.image[ i ] = a.image[ i ];
+        return b;
+    }
+    public static inline
+    function toFrom( a: Pixelimage, b: Pixelimage ) {
+        for( i in 0...b.image.length ) a.image[ i ] = b.image[ i ];             
+        return a;
+    }
+    public inline
+    function traceGrid(){
+        this.image.traceGrid();
+    }
+    public inline
+    function imgToString(){
+        return this.image.toString();
+    }
+    public inline
+    function imageTypeString(){
+        return this.image.check();
+    }
     /**
-    abstract helpers     
-    **/
-    public var transform( get, never ): TransformImage;
-    inline function get_transform(): TransformImage {
-        return ( abstract: TransformImage );
-    }
-    
-    public var fillShape( get, never ): FillShape;
-    inline function get_fillShape(): FillShape {
-        return ( abstract: FillShape );
-    }
-    public var softShape( get, never ): SoftShape;
-    inline function get_softShape(): SoftShape {
-        return ( abstract: SoftShape );
-    }
-
-    public var lineShape( get, never ): LineShape;
-    inline function get_lineShape(): LineShape {
-        return ( abstract: LineShape );
-    }
-
-    public var tileShape( get, never ): TileShape;
-    inline function get_tileShape(): TileShape {
-        return ( abstract: TileShape );
-    }
-
-    public var imageShape( get, never ): ImageShape;
-    inline function get_imageShape(): ImageShape {
-        return ( abstract: ImageShape );
-    }
-
-    public var gradientShape( get, never ): GradientShape;
-    inline function get_gradientShape(): GradientShape {
-        return ( abstract: GradientShape );
-    }
-
-    public var pattern( get, never ): PatternShape;
-    inline function get_pattern(): PatternShape {
-        return ( abstract: PatternShape );
-    }
-
-    public var convolution( get, never ): Convolution;
-    inline function get_convolution(): Convolution {
-        return ( abstract: Convolution );
-    }
-
-    public var colorform( get, never ): ColorformImage;
-    inline function get_colorform(): ColorformImage {
-        return ( abstract: ColorformImage );
-    }
-    /**
-        provides the width used by the UInt32Array
+        provides the image width
     **/
     public var width( get, never ): Int;
     inline function get_width(): Int
         return this.width;
     /**
-        provides the height used by the UInt32Array
+        provides the image height
     **/
     public var height( get, never ): Int;
     inline function get_height(): Int
@@ -124,15 +132,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.mask = v;
         return v;
     }
-    public var image( get, never ): UInt32Array;
-    inline function get_image():  UInt32Array
-        return this.image;
-    /*
-    inline function set_image( v:  UInt32Array ):  UInt32Array {
-        this.image = v;
-        return v;
-    }
-    */
     public var hasMask( get, set ): Bool;
     inline function set_hasMask( v: Bool ): Bool {
         if( this.mask == null && v == true ){
@@ -167,15 +166,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         }
         return r;
     }
-    inline
-    public function new( w: Int, h: Int ){
-       this = ( 
-        { width:  w, height: h
-        , image:  new haxe.io.UInt32Array( Std.int( w * h  ) ) 
-        }: ImageStruct
-        );
-    }
-    
     /**
         this provides a location for a UIn8 access of a color channel
     **/
@@ -197,8 +187,13 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     #if js
     inline 
     function view8():js.lib.Uint8Array {
-        var dataimg: js.lib.Uint32Array = cast this.image;
+        var temp = new haxe.io.UInt32Array( Std.int( this.width * this.height  ) );
+        for( i in 0...this.image.length ) temp[ i ] = this.image[ i ];
+
+        //var dataimg: js.lib.Uint32Array = cast this.image;
+        var dataimg: js.lib.Uint32Array = cast temp;
         return new js.lib.Uint8Array( dataimg.buffer ); // TODO make more generic
+        
     }
     #elseif
     /*
@@ -223,6 +218,12 @@ Test.hx:8: #FF
 }*/
     inline 
     function view8():haxe.io.UInt8Array {
+        var temp = new haxe.io.UInt32Array( Std.int( this.width * this.height  ) );
+        for( i in 0...this.image.length ){
+            temp[ i ] = this.image[ i ];
+        }
+        var dataimg: haxe.io.Uint32Array = cast temp;
+
         return UInt8Array.fromBytes( this.image.view.buffer );// reverses order
     }
     #end
@@ -337,6 +338,7 @@ Test.hx:8: #FF
         var range: IteratorRangeXY = { x: Std.int( x ), y: Std.int( y )
                                      , w: Std.int( w ), h: Std.int( h ) };
         for( i in range ) this.image[ position( range.x, range.y ) ] = 0;
+        
         /*
         var p = Std.int( x );
         var xx = p;
@@ -396,55 +398,6 @@ Test.hx:8: #FF
             }
         }
     }
-    /**
-        Currently library only supports Javascript target and puts the UInt32Array on the canvas context
-        hope to add c++ and some toolkits later.
-    **/
-    #if js
-    inline
-    public function drawToContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int, ?useAvaliableMask = true  ){
-        if( this.useMask && useAvaliableMask && this.mask != null ){
-            var temp = new Pixelimage( width, height );
-            for( i in 0...this.image.length ){
-                var p0 =  new Pixel32( image[ i ] );
-                var m1 =  new Pixel32( mask.image[ i ] );
-                temp.image[ i ] = p0.maskPixel( m1 );
-            }
-            var data = new js.lib.Uint8ClampedArray( temp.view8().buffer );
-            var imageData = new js.html.ImageData( data, this.width, this.height );
-            ( this.useVirtualPos )? 
-                ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
-                ctx.putImageData( imageData, x, y);
-        } else {
-            var data = new js.lib.Uint8ClampedArray( view8().buffer );
-            var imageData = new js.html.ImageData( data, this.width, this.height );
-            ( this.useVirtualPos )? 
-                ctx.putImageData( imageData, x - this.virtualX, y - this.virtualY ):
-                ctx.putImageData( imageData, x, y);
-        }
-    }
-    inline
-    public function drawFromContext( ctx: js.html.CanvasRenderingContext2D, x: Int, y: Int ){
-        var imageData = ( this.useVirtualPos )?
-            ctx.getImageData( x + this.virtualX, y + this.virtualY, this.width, this.height):
-            ctx.getImageData( x, y, this.width, this.height);
-        var data = imageData.data;
-        var temp = new js.lib.Uint32Array( data.buffer );
-        this.image = cast temp;
-    }
-    inline 
-    public static function imageElementToPixels( img: js.html.ImageElement, transparent_ = false ): Pixelimage {
-        var canvas        = js.Browser.document.createCanvasElement();
-        canvas.width      = img.width;
-        canvas.height     = img.height;
-        canvas.getContext2d().drawImage( img, 0, 0, img.width, img.height );
-        var pixelImage    = new Pixelimage( img.width, img.height );
-        pixelImage.transparent = transparent_;
-        pixelImage.drawFromContext( canvas.getContext2d(), 0, 0 );
-        canvas            = null;
-        return pixelImage; 
-    }
-    #end
     inline
     public function transferClone(): Pixelimage {
         var out = new Pixelimage( width, height );
@@ -470,15 +423,87 @@ Test.hx:8: #FF
         return this.image.view.buffer;// not working..
     }
     #end
+
+    /**
+    abstract helpers     
+    **/
+    public var transform( get, never ): TransformImage;
+    inline function get_transform(): TransformImage {
+        return ( abstract: TransformImage );
+    }
+    
+    public var fillShape( get, never ): FillShape;
+    inline function get_fillShape(): FillShape {
+        return ( abstract: FillShape );
+    }
+    public var softShape( get, never ): SoftShape;
+    inline function get_softShape(): SoftShape {
+        return ( abstract: SoftShape );
+    }
+
+    public var lineShape( get, never ): LineShape;
+    inline function get_lineShape(): LineShape {
+        return ( abstract: LineShape );
+    }
+
+    public var tileShape( get, never ): TileShape;
+    inline function get_tileShape(): TileShape {
+        return ( abstract: TileShape );
+    }
+
+    public var imageShape( get, never ): ImageShape;
+    inline function get_imageShape(): ImageShape {
+        return ( abstract: ImageShape );
+    }
+
+    public var gradientShape( get, never ): GradientShape;
+    inline function get_gradientShape(): GradientShape {
+        return ( abstract: GradientShape );
+    }
+
+    public var pattern( get, never ): PatternShape;
+    inline function get_pattern(): PatternShape {
+        return ( abstract: PatternShape );
+    }
+
+    public var convolution( get, never ): Convolution;
+    inline function get_convolution(): Convolution {
+        return ( abstract: Convolution );
+    }
+
+    public var colorform( get, never ): ColorformImage;
+    inline function get_colorform(): ColorformImage {
+        return ( abstract: ColorformImage );
+    }
+
+    public var rectanglePad( get, never ): RectanglePad;
+    inline function get_rectanglePad(): RectanglePad {
+        return ( abstract: RectanglePad );
+    }
+    #if js
+    public var jsCanvas( get, never ): JsCanvasContext;
+    inline function get_jsCanvas(): JsCanvasContext {
+        return ( abstract: JsCanvasContext );
+    }
+    #else 
+    public var png( get, never ): PNG;
+    inline function get_png(): PNG {
+        return ( abstract: PNG );
+    }
+    #end
+    /*
     inline
     public function fromBytes( bytes: haxe.io.Bytes, pos ){
         this.image = haxe.io.UInt32Array.fromBytes( bytes, pos );
     }
+    
     inline
     public function fromBytesCameleon( bytes: pixelimageXY.formats.BytesCameleon ){
         fromBytes( ( cast bytes: haxe.io.Bytes ), 0 );
     }
-    
+    */
+
+
     // maybe remove
     /*
     inline public

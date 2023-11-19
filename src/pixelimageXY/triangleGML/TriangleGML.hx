@@ -11,6 +11,7 @@ import js.lib.Promise;
 import js.html.XMLHttpRequest;
 import js.html.ImageElement;
 import js.html.Image;
+import pixelimageXY.imageAbstracts.JsCanvasContext;
 
 @:structInit
 class ShapeAtt {
@@ -49,7 +50,7 @@ class TriangleGML extends TriangleGML_<Pixelimage,Pixelimage> {
         return new Promise( function( resolve, reject ) {
             var image = new Image();
             image.onload = () -> {
-                resolve( Pixelimage.imageElementToPixels( image ) );
+                resolve( JsCanvasContext.imageElementToPixels( image ) );
             }
             image.src = url;
       });

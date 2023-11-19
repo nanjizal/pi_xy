@@ -7,6 +7,7 @@
 #-lib pixelimage
 -main pixelimageXY.application.ConvolutionApp
 -D js-flatten 
+-D js-es=6
 -dce full
 #--no-traces
 --next

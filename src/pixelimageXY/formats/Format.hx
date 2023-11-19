@@ -18,21 +18,21 @@ function toPNG( pixelImage: Pixelimage, name: String, level = 9 ){
     var w = 0;
     var r = 0;
     var rgba = haxe.io.Bytes.alloc( lw * lh * 4 + lh );
-    var w = 0, r = 0;
+    var w = 0, row = 0;
     for( y in 0...lh ) {
         rgba.set( w++, 0 ); // no filter for this scanline
         for( x in 0...lw ) { // argb   
             // AGBR
             var col: Pixel32 = new Pixel32( pixelImage.getARGB( x, y ) );
             var a: Int = col.c0;
-            var r: Int = col.c1;
+            var row: Int = col.c1;
             var g: Int = col.c2;
             var b: Int = col.c3;
             rgba.set(w++,r); // r
             rgba.set(w++,g); // g
             rgba.set(w++,b); // b
             rgba.set(w++,a); // a
-            r += 4;
+            row += 4;
         }
     }
 	var l = new List();
