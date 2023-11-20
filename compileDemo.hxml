@@ -5,7 +5,7 @@
 -lib Vision
 -lib format
 #-lib pixelimage
--main pixelimageXY.DemoUse
+-main pi_xy.DemoUse
 -D js-flatten 
 -dce full
 #--no-traces

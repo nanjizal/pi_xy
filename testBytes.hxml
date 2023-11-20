@@ -5,7 +5,7 @@
 -lib iterMagic
 -lib format
 #-lib pixelimage
--main pixelimageXY.application.TestBytes
+-main pi_xy.application.TestBytes
 -D js-flatten 
 -dce full
 #--no-traces

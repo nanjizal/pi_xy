@@ -1,4 +1,4 @@
-#-lib pixelimageXY
+#-lib pi_xy
 -lib htmlHelper
 -lib justPath
 -lib iterMagic
@@ -8,9 +8,9 @@
 -lib triangleGML
 -D pixelimageDoc
 -D doc-gen
---macro include('pixelimageXY')
+--macro include('pi_xy')
 -cp src
--main pixelimageXY.PixelimageDoc
+-main pi_xy.PixelimageDoc
 --no-output
 -xml output.xml
 -js foo

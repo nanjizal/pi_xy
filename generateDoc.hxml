@@ -1,4 +1,4 @@
 #-cmd haxe generate.hxml
--cmd haxelib run dox -i output.xml --title "pixelimageXY API documentation" -D themeColor 0xe6ffe6 --toplevel-package pixelimageXY -D source-path https://github.com/nanjizal/pixelimageXY/blob/main/src/
+-cmd haxelib run dox -i output.xml --title "pi_xy API documentation" -D themeColor 0xe6ffe6 --toplevel-package pi_xy -D source-path https://github.com/nanjizal/pi_xy/blob/main/src/
 -cmd cd pages
 -cmd firefox index.html

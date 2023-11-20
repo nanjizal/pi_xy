@@ -1,0 +1,71 @@
+package pi_xy;
+
+import pi_xy.Pixelimage;
+import pi_xy.pixel.Pixel32;
+import pi_xy.algo.RoundRecPixel;
+import pi_xy.algo.HitTri;
+import pi_xy.algo.HitQuad;
+import pi_xy.algo.HitTriArray;
+import pi_xy.algo.GeomPix;
+//import vision.ds.Image;
+import haxe.io.UInt32Array;
+import iterMagic.BoundIterator;
+import iterMagic.IteratorRange;
+import pi_xy.ImageStruct;
+import pi_xy.pixel.Pixel32;
+import pi_xy.pixel.Pixel28;
+import pi_xy.algo.GeomPix;
+import pi_xy.pixel.PixelChannel;
+import pi_xy.algo.TriPixel;
+import pi_xy.algo.LinePixel;
+import pi_xy.algo.CirclePixel;
+import pi_xy.algo.PolyPixel;
+// import pi_xy.algo.QuadPixel;
+import pi_xy.algo.QuadrantPixel;
+import pi_xy.algo.RoundRecPixel;
+import pi_xy.algo.RectanglePixel;
+import pi_xy.algo.HitTri;
+import pi_xy.algo.HitQuad;
+import pi_xy.algo.HitTriArray;
+import pi_xy.algo.QuadPixel;
+import pi_xy.algo.QuintPixel;
+import pi_xy.algo.ArrowPixel;
+
+@:transient
+@:forward
+abstract Pixelshape( Pixelimage ) to Pixelimage {
+	public inline 
+	function new( w: Int, h: Int ) {
+		this = new Pixelimage( w, h );
+	}
+
+	/*
+		// TODO: may remove.
+		public inline
+		function fillRect( x: Float, y: Float
+						 , w: Float, h: Float
+						 , color: Int, ?phi: Float = 0.
+						 , ?debugCorners: Bool = false ) { 
+			if( phi != 0. ){
+				// need to tweak to get accurate offset..
+				var cx = x + w/2;
+				var cy = y + h/2;
+				this.fillPolyBuild( x, y, w, h, color, phi, 4, false );
+				//rotateLine( x, y, w, h, Math.PI/4, color );
+			} else {
+				this.simpleRect( x, y, w, h, color );
+			}
+		}
+	 */
+
+
+	/*
+		public inline
+		function fillDavidStar(x: Float, y: Float
+								, d: Float
+								, color: Int ) {
+			fillSquare( x, y, d, color );
+			fillRect( x, y, d*Math.pow(2,0.5), d*Math.pow(2,0.5), color, Math.PI/4 );
+		}
+	 */
+}

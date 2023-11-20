@@ -348,23 +348,23 @@ js_Boot.__string_rec = function(o,s) {
 		return String(o);
 	}
 };
-var pixelimageXY_ImageStruct = function() {
+var pi_$xy_ImageStruct = function() {
 	this.useMask = false;
 	this.useVirtualPos = false;
 	this.virtualY = 0;
 	this.virtualX = 0;
 	this.transparent = false;
-	this.isLittle = pixelimageXY_Endian_isLittleEndian;
+	this.isLittle = pi_$xy_Endian_isLittleEndian;
 	this.transparent = false;
 };
-pixelimageXY_ImageStruct.__name__ = true;
-var pixelimageXY_application_TestBytes = function() {
+pi_$xy_ImageStruct.__name__ = true;
+var pi_$xy_application_TestBytes = function() {
 	this.canvasSetup = new htmlHelper_canvas_CanvasSetup();
 	this.surface = this.canvasSetup.surface;
 	var imageType = null;
-	var this1 = new pixelimageXY_ImageStruct();
+	var this1 = new pi_$xy_ImageStruct();
 	if(imageType == null) {
-		imageType = pixelimageXY_ImageStruct.defaultType;
+		imageType = pi_$xy_ImageStruct.defaultType;
 	}
 	var imageType1 = imageType;
 	if(imageType1 == null) {
@@ -493,7 +493,7 @@ var pixelimageXY_application_TestBytes = function() {
 	this.pixelimage = this1;
 	var this1 = this.pixelimage;
 	var v = 3;
-	pixelimageXY_ImageStruct.defaultType = v;
+	pi_$xy_ImageStruct.defaultType = v;
 	this.pixelimage.transparent = true;
 	var Violet = -7077677;
 	var Indigo = -11861886;
@@ -506,9 +506,9 @@ var pixelimageXY_application_TestBytes = function() {
 	var width = 70 * scale;
 	var height = 70 * scale;
 	var imageType = null;
-	var this1 = new pixelimageXY_ImageStruct();
+	var this1 = new pi_$xy_ImageStruct();
 	if(imageType == null) {
-		imageType = pixelimageXY_ImageStruct.defaultType;
+		imageType = pi_$xy_ImageStruct.defaultType;
 	}
 	var imageType1 = imageType;
 	if(imageType1 == null) {
@@ -652,7 +652,7 @@ var pixelimageXY_application_TestBytes = function() {
 				var location = pixelTest.useVirtualPos ? (y - pixelTest.virtualY) * pixelTest.width + x - pixelTest.virtualX | 0 : y * pixelTest.width + x | 0;
 				var this2 = pixelTest.image.get(location);
 				var this3 = this2;
-				var this4 = pixelimageXY_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
+				var this4 = pi_$xy_Endian_isLittleEndian ? (this3 >> 24 & 255) << 24 | (this3 & 255) << 16 | (this3 >> 8 & 255) << 8 | this3 >> 16 & 255 : this3;
 				var this5 = this4 >> 24 & 255;
 				var a1 = this5 == 0 ? 0. : this5 / 255;
 				var this6 = this4 >> 16 & 255;
@@ -675,9 +675,9 @@ var pixelimageXY_application_TestBytes = function() {
 				var b = 255 * (b1 * a3 + b2 * a2) | 0;
 				var a = 255 * (a3 + a2) | 0;
 				var blended = a << 24 | r << 16 | g << 8 | b;
-				pixelTest.image.set(location,pixelimageXY_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended);
+				pixelTest.image.set(location,pi_$xy_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended);
 			} else {
-				pixelTest.image.set(pixelTest.useVirtualPos ? (y - pixelTest.virtualY) * pixelTest.width + x - pixelTest.virtualX | 0 : y * pixelTest.width + x | 0,pixelimageXY_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c);
+				pixelTest.image.set(pixelTest.useVirtualPos ? (y - pixelTest.virtualY) * pixelTest.width + x - pixelTest.virtualX | 0 : y * pixelTest.width + x | 0,pi_$xy_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c);
 			}
 		}
 	}
@@ -691,11 +691,11 @@ var pixelimageXY_application_TestBytes = function() {
 		while(_g2 < _g3) {
 			var dx = _g2++;
 			var c = pixelTest.image.get(pixelTest.useVirtualPos ? (dy - pixelTest.virtualY) * pixelTest.width + dx - pixelTest.virtualX | 0 : dy * pixelTest.width + dx | 0);
-			var col = pixelimageXY_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
+			var col = pi_$xy_Endian_isLittleEndian ? (c >> 24 & 255) << 24 | (c & 255) << 16 | (c >> 8 & 255) << 8 | c >> 16 & 255 : c;
 			if(pixelTest.useMask && pixelTest.mask != null) {
 				var this2 = pixelTest.mask;
 				var c1 = this2.image.get(this2.useVirtualPos ? (dy - this2.virtualY) * this2.width + dx - this2.virtualX | 0 : dy * this2.width + dx | 0);
-				var this3 = pixelimageXY_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
+				var this3 = pi_$xy_Endian_isLittleEndian ? (c1 >> 24 & 255) << 24 | (c1 & 255) << 16 | (c1 >> 8 & 255) << 8 | c1 >> 16 & 255 : c1;
 				var maskPixel = this3;
 				var this4 = col;
 				var this5 = this4;
@@ -727,7 +727,7 @@ var pixelimageXY_application_TestBytes = function() {
 					var location = this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0;
 					var this12 = this1.image.get(location);
 					var this13 = this12;
-					var this14 = pixelimageXY_Endian_isLittleEndian ? (this13 >> 24 & 255) << 24 | (this13 & 255) << 16 | (this13 >> 8 & 255) << 8 | this13 >> 16 & 255 : this13;
+					var this14 = pi_$xy_Endian_isLittleEndian ? (this13 >> 24 & 255) << 24 | (this13 & 255) << 16 | (this13 >> 8 & 255) << 8 | this13 >> 16 & 255 : this13;
 					var this15 = this14 >> 24 & 255;
 					var a1 = this15 == 0 ? 0. : this15 / 255;
 					var this16 = this14 >> 16 & 255;
@@ -750,9 +750,9 @@ var pixelimageXY_application_TestBytes = function() {
 					var b = 255 * (b1 * a3 + b2 * a2) | 0;
 					var a = 255 * (a3 + a2) | 0;
 					var blended = a << 24 | r << 16 | g << 8 | b;
-					this1.image.set(location,pixelimageXY_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended);
+					this1.image.set(location,pi_$xy_Endian_isLittleEndian ? (blended >> 24 & 255) << 24 | (blended & 255) << 16 | (blended >> 8 & 255) << 8 | blended >> 16 & 255 : blended);
 				} else {
-					this1.image.set(this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0,pixelimageXY_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2);
+					this1.image.set(this1.useVirtualPos ? (y - this1.virtualY) * this1.width + x - this1.virtualX | 0 : y * this1.width + x | 0,pi_$xy_Endian_isLittleEndian ? (c2 >> 24 & 255) << 24 | (c2 & 255) << 16 | (c2 >> 8 & 255) << 8 | c2 >> 16 & 255 : c2);
 				}
 			}
 		}
@@ -765,9 +765,9 @@ var pixelimageXY_application_TestBytes = function() {
 		var width = here.width;
 		var height = here.height;
 		var imageType = null;
-		var this1 = new pixelimageXY_ImageStruct();
+		var this1 = new pi_$xy_ImageStruct();
 		if(imageType == null) {
-			imageType = pixelimageXY_ImageStruct.defaultType;
+			imageType = pi_$xy_ImageStruct.defaultType;
 		}
 		var imageType1 = imageType;
 		if(imageType1 == null) {
@@ -958,9 +958,9 @@ var pixelimageXY_application_TestBytes = function() {
 		}
 	}
 };
-pixelimageXY_application_TestBytes.__name__ = true;
-function pixelimageXY_application_TestBytes_main() {
-	new pixelimageXY_application_TestBytes();
+pi_$xy_application_TestBytes.__name__ = true;
+function pi_$xy_application_TestBytes_main() {
+	new pi_$xy_application_TestBytes();
 }
 var $_;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $global.$haxeUID++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = m.bind(o); o.hx__closures__[m.__id__] = f; } return f; }
@@ -968,13 +968,13 @@ $global.$haxeUID |= 0;
 String.__name__ = true;
 Array.__name__ = true;
 js_Boot.__toStr = ({ }).toString;
-var pixelimageXY_Endian_isLittleEndian = (function($this) {
+var pi_$xy_Endian_isLittleEndian = (function($this) {
 	var $r;
 	var a8 = new Uint8Array(4);
 	var a32 = new Uint32Array(a8.buffer)[0] = -3407855;
 	$r = a8[0] != 255;
 	return $r;
 }(this));
-pixelimageXY_ImageStruct.defaultType = 2;
-pixelimageXY_application_TestBytes_main();
+pi_$xy_ImageStruct.defaultType = 2;
+pi_$xy_application_TestBytes_main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

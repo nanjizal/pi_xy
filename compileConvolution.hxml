@@ -5,7 +5,7 @@
 -lib iterMagic
 -lib format
 #-lib pixelimage
--main pixelimageXY.application.ConvolutionApp
+-main pi_xy.application.ConvolutionApp
 -D js-flatten 
 -D js-es=6
 -dce full
