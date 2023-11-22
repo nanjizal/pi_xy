@@ -58,13 +58,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.imageType = imageType;
     }
     /**
-        clone the current Pixelimage to a new one, does not copy the mask.
-    **/
-    public inline function clone(): Pixelimage {
-        var cloned = new Pixelimage( this.width, this.height, this.imageType );
-        return toFrom( cloned, abstract );
-    }
-    /**
         provides the internal image structure used
         unfortunately this is Dynamic but usually resolved at compile 
         the dynamic nature makes it not viable to set without compiler complaints
@@ -81,52 +74,6 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.imageType = img.imageType;
     }
     */
-    /**
-        direct array access of pixel Int
-        not advised as pixels normally have mask and blend applied
-        and the color order is changed when set indirectly.
-        @:see setPixel
-    **/
-    @:arrayAccess
-    public inline
-    function set( index: Int, value: Int ): Int
-        return this.image.set( index, value );
-    @:arrayAccess
-    public inline
-    function get( index: Int ): Int
-        return this.image[ index ];
-    /**
-        transfers pixel values directly from first image to second
-        returns second image
-    **/
-    public static inline
-    function fromTo( a: Pixelimage, b: Pixelimage ) {
-        for( i in 0...b.image.length ) b.image[ i ] = a.image[ i ];
-        return b;
-    }
-    /**
-        transfers pixel values directly from second image to first
-        return first image
-    **/
-    public static inline
-    function toFrom( a: Pixelimage, b: Pixelimage ) {
-        for( i in 0...b.image.length ) a.image[ i ] = b.image[ i ];             
-        return a;
-    }
-    /**
-        debug tool traces the pixel data in rows to console.
-    **/
-    public inline
-    function traceGrid(){
-        this.image.traceGrid();
-    }
-    /**
-        traces the pixel values stored internally
-    **/
-    public inline
-    function imgToString(){
-        return this.image.toString();
-    }
     /**
         provides the ImageType being used
     **/
@@ -498,11 +445,14 @@ Test.hx:8: #FF
     /*
         abstract helpers    
     */
+    public var raw( get, never ): RawImage;
+    inline function get_raw(): RawImage {
+        return ( abstract: RawImage );
+    }
     public var transform( get, never ): TransformImage;
     inline function get_transform(): TransformImage {
         return ( abstract: TransformImage );
     }
-    
     public var fillShape( get, never ): FillShape;
     inline function get_fillShape(): FillShape {
         return ( abstract: FillShape );
@@ -511,42 +461,34 @@ Test.hx:8: #FF
     inline function get_softShape(): SoftShape {
         return ( abstract: SoftShape );
     }
-
     public var lineShape( get, never ): LineShape;
     inline function get_lineShape(): LineShape {
         return ( abstract: LineShape );
     }
-
     public var tileShape( get, never ): TileShape;
     inline function get_tileShape(): TileShape {
         return ( abstract: TileShape );
     }
-
     public var imageShape( get, never ): ImageShape;
     inline function get_imageShape(): ImageShape {
         return ( abstract: ImageShape );
     }
-
     public var gradientShape( get, never ): GradientShape;
     inline function get_gradientShape(): GradientShape {
         return ( abstract: GradientShape );
     }
-
     public var pattern( get, never ): PatternShape;
     inline function get_pattern(): PatternShape {
         return ( abstract: PatternShape );
     }
-
     public var convolution( get, never ): Convolution;
     inline function get_convolution(): Convolution {
         return ( abstract: Convolution );
     }
-
     public var colorform( get, never ): ColorformImage;
     inline function get_colorform(): ColorformImage {
         return ( abstract: ColorformImage );
     }
-
     public var rectanglePad( get, never ): RectanglePad;
     inline function get_rectanglePad(): RectanglePad {
         return ( abstract: RectanglePad );
