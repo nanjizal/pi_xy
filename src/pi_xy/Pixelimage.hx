@@ -28,6 +28,17 @@ typedef ImageType = iterMagic.Img.ImageType;
 
 @:transient
 abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
+    /**
+        defines the data type used for storing images
+
+        BYTES_INT  - Bytes 
+        ARRAY_INT  - Array<Int>
+        U32_ARR    - UInt32Array
+        VECTOR_INT - Vector<Int>
+        
+        saves to a static variable on ImageStruct 
+        if not set it defaults to U32_ARR
+    **/
     public var defaultType( get, set ): ImageType;
     public inline
     function get_defaultType(): ImageType {
@@ -46,10 +57,19 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.height    = height;
         this.imageType = imageType;
     }
+    /**
+        clone the current Pixelimage to a new one, does not copy the mask.
+    **/
     public inline function clone(): Pixelimage {
         var cloned = new Pixelimage( this.width, this.height, this.imageType );
         return toFrom( cloned, abstract );
     }
+    /**
+        provides the internal image structure used
+        unfortunately this is Dynamic but usually resolved at compile 
+        the dynamic nature makes it not viable to set without compiler complaints
+        but direct setting is a bad idea.
+    **/
     public var image( get, never ): ImgMulti<Dynamic>;
     inline function get_image():  ImgMulti<Dynamic>
         return this.image;
@@ -61,6 +81,12 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.imageType = img.imageType;
     }
     */
+    /**
+        direct array access of pixel Int
+        not advised as pixels normally have mask and blend applied
+        and the color order is changed when set indirectly.
+        @:see setPixel
+    **/
     @:arrayAccess
     public inline
     function set( index: Int, value: Int ): Int
@@ -69,24 +95,41 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     public inline
     function get( index: Int ): Int
         return this.image[ index ];
+    /**
+        transfers pixel values directly from first image to second
+        returns second image
+    **/
     public static inline
     function fromTo( a: Pixelimage, b: Pixelimage ) {
         for( i in 0...b.image.length ) b.image[ i ] = a.image[ i ];
         return b;
     }
+    /**
+        transfers pixel values directly from second image to first
+        return first image
+    **/
     public static inline
     function toFrom( a: Pixelimage, b: Pixelimage ) {
         for( i in 0...b.image.length ) a.image[ i ] = b.image[ i ];             
         return a;
     }
+    /**
+        debug tool traces the pixel data in rows to console.
+    **/
     public inline
     function traceGrid(){
         this.image.traceGrid();
     }
+    /**
+        traces the pixel values stored internally
+    **/
     public inline
     function imgToString(){
         return this.image.toString();
     }
+    /**
+        provides the ImageType being used
+    **/
     public inline
     function imageTypeString(){
         return this.image.check();
@@ -125,6 +168,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.transparent = v;
         return v;
     }
+    /**
+        used as a mask
+    **/
     public var mask( get, set ): Pixelimage;
     inline function get_mask(): Pixelimage
         return this.mask;
@@ -133,6 +179,9 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
         this.mask = v;
         return v;
     }
+    /**
+        if an image has a mask
+    **/
     public var hasMask( get, set ): Bool;
     inline function set_hasMask( v: Bool ): Bool {
         if( this.mask == null && v == true ){
@@ -146,6 +195,10 @@ abstract Pixelimage( ImageStruct ) from ImageStruct to ImageStruct {
     }
     inline function get_hasMask(): Bool
         return this.useMask;
+    /**
+        provides a RectangleWindow defining the current image from 0, 0.
+        setting it can resize the window, currently x and y are assumed 0.
+    **/
     var rectWindow( get, set ): RectangleWindow;
     inline function get_rectWindow(): RectangleWindow {
         return { x: 0, y: 0, width: width, height: height };
@@ -228,10 +281,17 @@ Test.hx:8: #FF
         return UInt8Array.fromBytes( this.image.view.buffer );// reverses order
     }
     #end
+    /**
+        setPixel is equivalent to setARGB, setting the colour of a pixel
+        internal color order may differ.
+    **/
     inline
     public function setPixel( x: Int, y: Int, color: Int ): Int {
         return setARGB( x, y, color );
     }
+    /**
+        sets the pixel to 0 without any blend or mask applied
+    **/
     inline
     public function zeroPixel( x: Int, y: Int ){
         this.image[ position( x, y ) ] = 0;
@@ -333,6 +393,16 @@ Test.hx:8: #FF
         }
         */
     }
+    /**
+        clears a rectangular section of the image ( setting to 0 )
+    **/
+    inline public
+    function clearRectWindow( rectangle: RectangleWindow ){
+        clearRect( rectangle.x, rectangle.y, rectangle.width, rectangle.height );
+    }
+    /**
+        clears a rectangular section of the image.
+    **/
     inline public 
     function clearRect( x: Float, y: Float
                       , w: Float, h: Float ){
@@ -425,9 +495,9 @@ Test.hx:8: #FF
     }
     #end
 
-    /**
-    abstract helpers     
-    **/
+    /*
+        abstract helpers    
+    */
     public var transform( get, never ): TransformImage;
     inline function get_transform(): TransformImage {
         return ( abstract: TransformImage );
