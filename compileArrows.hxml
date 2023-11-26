@@ -1,0 +1,20 @@
+-cp src
+-js bin/canvas_arrows.js
+-lib htmlHelper
+-lib justPath
+-lib format
+-lib iterMagic
+-main pi_xy.application.Arrows
+-D js-flatten 
+-D macro-times 
+-dce full
+--times
+
+-D --no-inline
+
+#--no-traces
+--next
+-cmd echo '<!DOCTYPE html><meta charset="UTF-8"><html><body><script src="canvas_arrows.js"></script></body></html>' >bin/canvas_arrows.html
+# open html on linux.
+-cmd cd bin/
+-cmd firefox "./canvas_arrows.html"

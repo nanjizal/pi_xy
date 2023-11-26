@@ -26,14 +26,16 @@ class ShapeAtt {
 #end
 
 class TriangleGML extends TriGML<Pixelimage,Pixelimage> {
-    /*
-    public static inline function withString( pixelImage: Pixelimage, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
-        trace(str);
+    
+    public static inline function withString( pixelImage: Pixelimage, str: String, x: Float = 0., y: Float = 0., renderNow: Bool = true ): TriangleGML {
+       // trace(str);
         var xml = Xml.parse( '<node>'+str+'</node>' ).firstElement();
-        trace( xml );
-        return new TriangleGML( pixelImage, xml, x, y );
+       // trace( xml );
+        var t = new TriangleGML( pixelImage, xml, x, y );
+        if( renderNow ) t.render();
+        return t;
     }
-    */
+    
     #if js 
     // setup promise ... untested with dynamic loading of images so far, but compiles.
     public var promises:   Array<Promise<Pixelimage>> = [];
@@ -55,7 +57,7 @@ class TriangleGML extends TriGML<Pixelimage,Pixelimage> {
             image.src = url;
       });
     }
-    @:access( TriangleGML.render )
+    @:access( TriGML.render )
     public function renderPromise(): Promise<Dynamic> {
         var here = this;
         return if( promises.length == 0 ){
