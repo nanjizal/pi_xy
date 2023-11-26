@@ -5,7 +5,6 @@ import pi_xy.Pixelimage;
     take care as the internal colour values are not ARGB format
     methods are very similar to the Picture class within Img in iterMagic
 **/
-
 @:transient
 abstract RawImage( Pixelimage ) from Pixelimage to Pixelimage {
 
@@ -13,7 +12,7 @@ abstract RawImage( Pixelimage ) from Pixelimage to Pixelimage {
     public function new( w: Int, h: Int ){
        this = new Pixelimage( w, h );
     }
-        /**
+    /**
         clone the current Pixelimage to a new one, does not copy the mask.
     **/
     public inline function clone(): Pixelimage {
