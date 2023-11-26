@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.gradient.LineGradient_;
+import pi_xy.triangleGML.triGML.shape.gradient.LineGradient_;
 import pi_xy.algo.TriPixelSmoothGrad;
 
 class LineGradient extends LineGradient_<Pixelimage,Pixelimage>{

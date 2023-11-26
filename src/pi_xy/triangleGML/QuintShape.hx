@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.contour.QuintShape_;
+import pi_xy.triangleGML.triGML.shape.contour.QuintShape_;
 import pi_xy.algo.QuintPixel;
 
 class QuintShape extends QuintShape_<Pixelimage,Pixelimage>{

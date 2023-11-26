@@ -2,7 +2,7 @@ package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
 import pi_xy.pixel.Pixel32;
-import triangleGML.shape.contour.LineShape_;
+import pi_xy.triangleGML.triGML.shape.contour.LineShape_;
 import pi_xy.pixel.ColorHelp;
 import pi_xy.algo.Xiolin_Wu_Line;
 

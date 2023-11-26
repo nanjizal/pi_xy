@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.form.CircleForm_;
+import pi_xy.triangleGML.triGML.shape.form.CircleForm_;
 
 class CircleForm extends CircleForm_<Pixelimage,Pixelimage>{
     public function render( pixelImage: Pixelimage ): Pixelimage {

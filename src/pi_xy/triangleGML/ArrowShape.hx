@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.contour.ArrowShape_;
+import pi_xy.triangleGML.triGML.shape.contour.ArrowShape_;
 
 class ArrowShape extends ArrowShape_<Pixelimage,Pixelimage>{
 

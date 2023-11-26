@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.picture.NineSlicePicture_;
+import pi_xy.triangleGML.triGML.shape.picture.NineSlicePicture_;
 import pi_xy.algo.GeomPix;
 #if target.sys
 import pi_xy.formats.Format;

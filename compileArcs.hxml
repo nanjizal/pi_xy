@@ -1,0 +1,19 @@
+-cp src
+-js bin/canvas_arcs.js
+-lib htmlHelper
+-lib justPath
+-lib iterMagic
+#-lib pi_xy
+#-lib triangleGML
+#-lib Vision
+#-lib format
+-main pi_xy.application.Arcs
+-D js-flatten 
+-D triangleGML.attibuteTrace
+-dce full
+#--no-traces
+--next
+-cmd echo '<!DOCTYPE html><meta charset="UTF-8"><html><body><script src="canvas_arcs.js"></script></body></html>' >bin/canvas_arcs.html
+# open html on linux.
+-cmd cd bin/
+-cmd firefox "./canvas_arcs.html"

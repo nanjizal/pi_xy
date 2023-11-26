@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.form.RectangleForm_;
+import pi_xy.triangleGML.triGML.shape.form.RectangleForm_;
 import pi_xy.algo.RoundRecPixel;
 
 class RectangleForm extends RectangleForm_<Pixelimage,Pixelimage>{

@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.form.EllipseForm_;
+import pi_xy.triangleGML.triGML.shape.form.EllipseForm_;
 
 class EllipseForm extends EllipseForm_<Pixelimage,Pixelimage>{
     public function render( pixelImage: Pixelimage ): Pixelimage {

@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.contour.QuadShape_;
+import pi_xy.triangleGML.triGML.shape.contour.QuadShape_;
 
 class QuadShape extends QuadShape_<Pixelimage,Pixelimage>{
     public var luxury:  Bool;

@@ -1,7 +1,7 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.contour.LineGridShape_;
+import pi_xy.triangleGML.triGML.shape.contour.LineGridShape_;
 import pi_xy.algo.GeomPix;
 
 class LineGridShape extends LineGridShape_<Pixelimage,Pixelimage>{

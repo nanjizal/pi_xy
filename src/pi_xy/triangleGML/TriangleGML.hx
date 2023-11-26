@@ -3,8 +3,8 @@ package pi_xy.triangleGML;
 import pi_xy.Pixelimage;
 import pi_xy.triangleGML.*;
 
-import triangleGML.TriangleGML_;
-import triangleGML.ShapeInterface;
+import pi_xy.triangleGML.triGML.TriGML;
+import pi_xy.triangleGML.triGML.ShapeInterface;
 
 #if js
 import js.lib.Promise;
@@ -25,7 +25,7 @@ class ShapeAtt {
 }
 #end
 
-class TriangleGML extends TriangleGML_<Pixelimage,Pixelimage> {
+class TriangleGML extends TriGML<Pixelimage,Pixelimage> {
     /*
     public static inline function withString( pixelImage: Pixelimage, str: String, x: Float = 0., y: Float = 0. ): TriangleGML {
         trace(str);

@@ -1,8 +1,8 @@
 package pi_xy.triangleGML;
 
 import pi_xy.Pixelimage;
-import triangleGML.shape.form.ArcForm_;
-import triangleGML.ArcType;
+import pi_xy.triangleGML.triGML.shape.form.ArcForm_;
+import pi_xy.triangleGML.triGML.ArcType;
 
 class ArcForm extends ArcForm_<Pixelimage,Pixelimage>{
     public function render( pixelImage: Pixelimage ): Pixelimage {
