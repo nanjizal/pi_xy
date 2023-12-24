@@ -2,7 +2,7 @@
 -js bin/test.js
 -lib htmlHelper
 -lib justPath
--lib Vision
+#-lib Vision
 -lib format
 #-lib pixelimage
 -main pi_xy.DemoUse
