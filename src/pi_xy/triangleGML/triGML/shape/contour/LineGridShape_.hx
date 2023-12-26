@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.contour;
 import pi_xy.triangleGML.triGML.BasicShape;
 
-@:structInit
+//@:structInit
 abstract class LineGridShape_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var left:    Float;
     public var top:     Float;

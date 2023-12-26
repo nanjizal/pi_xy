@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.BasicGradient;
 
-@:structInit
+//@:structInit
 abstract class PolygonRadialGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var points:Null<Array<Float>>;
     public var colorIn: Int;

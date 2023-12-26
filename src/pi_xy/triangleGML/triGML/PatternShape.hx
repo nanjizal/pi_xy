@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML;
 import pi_xy.triangleGML.triGML.BasicShape;
 
-@:structInit
+//@:structInit
 abstract class PatternShape<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
 
     public var strokeColor0: Int;

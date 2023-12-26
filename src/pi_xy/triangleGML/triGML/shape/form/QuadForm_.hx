@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.form;
 import pi_xy.triangleGML.triGML.FillForm;
 
-@:structInit
+//@:structInit
 abstract class QuadForm_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var x1:      Float;
     public var y1:      Float;

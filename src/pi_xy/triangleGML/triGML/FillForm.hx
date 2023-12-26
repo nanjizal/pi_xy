@@ -2,7 +2,7 @@ package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.BasicShape;
 
-@:structInit
+//@:structInit
 abstract class FillForm<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var fill: Int;
     public function new(  opacity            = 1.

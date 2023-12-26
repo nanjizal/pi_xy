@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.BasicGradient;
 
-@:structInit
+//@:structInit
 abstract class TriangleGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var aX:      Float;
     public var aY:      Float;

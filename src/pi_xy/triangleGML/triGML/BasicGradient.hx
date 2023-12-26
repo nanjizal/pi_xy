@@ -2,7 +2,7 @@ package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.GroupShape;
 
-@:structInit
+//@:structInit
 abstract class BasicGradient<DRAWTOOL,IMAGETOOL> extends GroupShape<DRAWTOOL,IMAGETOOL> {
     public var cornerColors = new Array<Int>();
     public function new(  opacity            = 1.

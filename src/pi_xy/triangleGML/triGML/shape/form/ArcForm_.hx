@@ -3,7 +3,7 @@ import pi_xy.triangleGML.triGML.FillForm;
 
 import pi_xy.triangleGML.triGML.ArcType;
 
-@:structInit
+//@:structInit
 abstract class ArcForm_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var left:       Float;
     public var top:        Float;

@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.form;
 import pi_xy.triangleGML.triGML.FillForm;
 
-@:structInit
+//@:structInit
 abstract class PolygonForm_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var points:Null<Array<Float>>;
     public function new(  opacity            = 1.

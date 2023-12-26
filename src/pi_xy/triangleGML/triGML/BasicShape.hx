@@ -2,7 +2,7 @@ package pi_xy.triangleGML.triGML;
 import pi_xy.triangleGML.triGML.GroupShape;
 import pi_xy.triangleGML.triGML.DashGap;
 
-@:structInit
+//@:structInit
 abstract class BasicShape<DRAWTOOL,IMAGETOOL> extends GroupShape<DRAWTOOL,IMAGETOOL>{
     public static var dashLength: Float = 2.;
     public static var gapLength:  Float = 1.;

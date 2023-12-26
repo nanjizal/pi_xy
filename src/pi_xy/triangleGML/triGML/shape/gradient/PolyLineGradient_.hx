@@ -6,7 +6,7 @@ enum abstract ColorDirection( String ){
     var longways = 'longways';
 }
 
-@:structInit
+//@:structInit
 abstract class PolyLineGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var points: Null<Array<Float>>;
     public var strokeWidth: Float;

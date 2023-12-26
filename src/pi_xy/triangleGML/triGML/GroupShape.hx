@@ -2,7 +2,7 @@ package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.hitTest.IhitObj;
 
-@:structInit
+//@:structInit
 abstract class GroupShape<DRAWTOOL,IMAGETOOL> implements ShapeInterface<DRAWTOOL,IMAGETOOL> {
     var isDirty = true; // TODO: <-- potentially remove
     // implementation may choose to ignore visibility and opacity

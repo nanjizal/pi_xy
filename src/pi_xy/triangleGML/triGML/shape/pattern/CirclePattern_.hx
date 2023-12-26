@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.pattern;
 import pi_xy.triangleGML.triGML.PatternShape;
 
-@:structInit
+//@:structInit
 abstract class CirclePattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,IMAGETOOL> {
     public var left:    Float;
     public var top:     Float;

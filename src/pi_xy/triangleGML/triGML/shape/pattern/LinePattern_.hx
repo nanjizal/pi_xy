@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.pattern;
 import pi_xy.triangleGML.triGML.PatternStroke;
 
-@:structInit
+//@:structInit
 abstract class LinePattern_<DRAWTOOL,IMAGETOOL> extends PatternStroke<DRAWTOOL,IMAGETOOL> {
     public var x1: Float;
     public var y1: Float;
