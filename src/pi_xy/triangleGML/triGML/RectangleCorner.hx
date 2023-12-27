@@ -1,4 +1,4 @@
-package pi_xy.triangleGML,triGML;
+package pi_xy.triangleGML.triGML;
 
 // TODO: for rectangles/squares intend to implement some alternatives
 //  https://dev.to/ndesmic/how-to-draw-squircles-and-superellipses-3d14

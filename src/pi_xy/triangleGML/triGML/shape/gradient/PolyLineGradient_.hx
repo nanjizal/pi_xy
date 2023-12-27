@@ -1,12 +1,12 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
-import triangleGML.triGML.BasicGradient;
+import pi_xy.triangleGML.triGML.BasicGradient;
 
 enum abstract ColorDirection( String ){
     var widthways = 'widthways';
     var longways = 'longways';
 }
 
-//@:structInit
+
 abstract class PolyLineGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var points: Null<Array<Float>>;
     public var strokeWidth: Float;

@@ -3,7 +3,7 @@ import pi_xy.triangleGML.triGML.PatternShape;
 
 import pi_xy.triangleGML.triGML.ArcType;
 
-//@:structInit
+
 abstract class ArcPattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,IMAGETOOL> {
     public var left:       Float;
     public var top:        Float;

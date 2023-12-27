@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.form;
 import pi_xy.triangleGML.triGML.FillForm;
 // TODO: consider extending RectangleForm 
-//@:structInit
+
 abstract class SquareForm_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var left:    Float;
     public var top:     Float;

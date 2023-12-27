@@ -1,15 +1,13 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.FillForm;
 
-//@:structInit
+
 abstract class PathElementThickGradient_<DRAWTOOL,IMAGETOOL> extends  FillForm<DRAWTOOL,IMAGETOOL> {
     public var pathData: String;
     public var strokeTopColor: Int;
     public var strokeBottomColor: Int;
     public var translateX: Float;
     public var translateY: Float;
-    public var scaleX: Float;
-    public var scaleY: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeTopColor        = 0xFF000000

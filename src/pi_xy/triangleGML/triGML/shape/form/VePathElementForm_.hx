@@ -1,15 +1,13 @@
 package pi_xy.triangleGML.triGML.shape.form;
 import pi_xy.triangleGML.triGML.FillForm;
 
-//@:structInit
+
 abstract class VePathElementShape_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var pathData: String = '';
     public var strokeColors: Null<Array<Int>>;
     public var strokeWidths: Null<Array<Float>>;
     public var translateX: Float;
     public var translateY: Float;
-    public var scaleX: Float;
-    public var scaleY: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColors:Null<Array<Int>>  = null

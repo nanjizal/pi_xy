@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.contour;
 import pi_xy.triangleGML.triGML.BasicShape;
 
-//@:structInit
+
 abstract class Triangle_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var aX:      Float;
     public var aY:      Float;

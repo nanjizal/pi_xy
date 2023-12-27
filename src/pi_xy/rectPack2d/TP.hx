@@ -47,8 +47,7 @@ typedef Size = {
 
 // to make sure only valid image pixel formats are used and specified correctly.
 // left off PVRTC, PVR and ETC since I don't think we can read write them with hxFormat
-@:enum 
-abstract PixelFormat( String ) from String to String {
+enum abstract PixelFormat( String ) from String to String {
     var RGBA8888 = 'RGBA8888'; // default only likely to support this 
     var RGBA4444 = 'RGBA4444';
     var RGBA5551 = 'RGBA5551';

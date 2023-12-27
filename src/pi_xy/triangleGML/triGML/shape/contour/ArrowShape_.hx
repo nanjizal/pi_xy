@@ -2,7 +2,7 @@ package pi_xy.triangleGML.triGML.shape.contour;
 import pi_xy.triangleGML.triGML.BasicShape;
 
 // TODO: add option for OpenArrow
-//@:structInit
+
 abstract class ArrowShape_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var x1: Float;
     public var y1: Float;

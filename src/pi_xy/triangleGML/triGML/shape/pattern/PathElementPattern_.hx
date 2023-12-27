@@ -1,13 +1,11 @@
 package pi_xy.triangleGML.triGML.shape.pattern;
 import pi_xy.triangleGML.triGML.PatternShape;
 
-//@:structInit
+
 abstract class PathElementPattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,IMAGETOOL> {
     public var pathData: String;
     public var translateX: Float;
     public var translateY: Float;
-    public var scaleX: Float;
-    public var scaleY: Float;
     public function new(  opacity            = 1.
                         , visibility          = true
                         , strokeColor        = 0x000000

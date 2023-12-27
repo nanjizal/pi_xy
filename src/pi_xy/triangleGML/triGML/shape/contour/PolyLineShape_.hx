@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML.shape.contour;
 import pi_xy.triangleGML.triGML.BasicShape;
 
-//@:structInit
+
 abstract class PolyLineShape_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var points: Null<Array<Float>>;
     public function new(  opacity            = 1.

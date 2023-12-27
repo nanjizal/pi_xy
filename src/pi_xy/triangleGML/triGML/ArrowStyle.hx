@@ -1,4 +1,4 @@
-package triangleGML.triGML;
+package pi_xy.triangleGML.triGML;
 
 // TODO: change arrow..
 // no option for flare with both, by design

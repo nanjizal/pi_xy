@@ -5,7 +5,6 @@
 -lib vision
 -lib format
 #-lib peote-view
--lib triangleGML
 -D pixelimageDoc
 -D doc-gen
 --macro include('pi_xy')
