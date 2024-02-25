@@ -59,4 +59,12 @@ class ArcForm extends ArcForm_<Pixelimage,Pixelimage>{
         temp.fillShape.line( rx, ry, bx, by, strokeWidth, strokeColor );
         temp.fillShape.line( rx, ry, cx, cy, strokeWidth, strokeColor );
     }
+    /*
+    inline function cosX( angle: Float ){
+        return rx * Math.cos( angle ) + rx;
+    }
+    inline function sinX( angle: Float ){
+        return ry * Math.sin( startAngle ) + ry;
+    }
+    */
 }

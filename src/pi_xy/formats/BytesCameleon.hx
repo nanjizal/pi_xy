@@ -1,6 +1,5 @@
 package pi_xy.formats;
 import haxe.io.Bytes;
-
 @:forward
 abstract BytesCameleon( Bytes ) to Bytes from Bytes {
     public inline
@@ -14,15 +13,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var a = this.get( p );
-		    var r = this.get( p + 1 );
-		    var g = this.get( p + 2 );
-		    var b = this.get( p + 3 );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
-		    this.set( p++, a );
+            var r = this.get( p + 1 );
+            var g = this.get( p + 2 );
+            var b = this.get( p + 3 );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
+            this.set( p++, a );
         }
     }
     public inline
@@ -32,15 +31,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var r = this.get( p );
-		    var g = this.get( p + 1 );
-		    var b = this.get( p + 2 );
-		    var a = this.get( p + 3 );
-		    this.set( p++, a );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
+            var g = this.get( p + 1 );
+            var b = this.get( p + 2 );
+            var a = this.get( p + 3 );
+            this.set( p++, a );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
         }
     }
     public inline
@@ -50,15 +49,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var a = this.get( p );
-		    var r = this.get( p + 1 );
-		    var g = this.get( p + 2 );
-		    var b = this.get( p + 3 );
-		    this.set( p++, b );
-		    this.set( p++, g );
-		    this.set( p++, r );
-		    this.set( p++, a );
+            var r = this.get( p + 1 );
+            var g = this.get( p + 2 );
+            var b = this.get( p + 3 );
+            this.set( p++, b );
+            this.set( p++, g );
+            this.set( p++, r );
+            this.set( p++, a );
         }
     }
     public inline
@@ -68,15 +67,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var a = this.get( p );
-		    var r = this.get( p + 1 );
-		    var g = this.get( p + 2 );
-		    var b = this.get( p + 3 );
-		    this.set( p++, a );
-		    this.set( p++, b );
-		    this.set( p++, g );
-		    this.set( p++, r );
+            var r = this.get( p + 1 );
+            var g = this.get( p + 2 );
+            var b = this.get( p + 3 );
+            this.set( p++, a );
+            this.set( p++, b );
+            this.set( p++, g );
+            this.set( p++, r );
         }
     }
     public inline
@@ -86,15 +85,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var a = this.get( p );
-		    var b = this.get( p + 1 );
-		    var g = this.get( p + 2 );
-		    var r = this.get( p + 3 );
-		    this.set( p++, a );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
+            var b = this.get( p + 1 );
+            var g = this.get( p + 2 );
+            var r = this.get( p + 3 );
+            this.set( p++, a );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
         }
     }
     public inline
@@ -104,15 +103,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var a = this.get( p );
-		    var b = this.get( p + 1 );
-		    var g = this.get( p + 2 );
-		    var r = this.get( p + 3 );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
-		    this.set( p++, a );
+            var b = this.get( p + 1 );
+            var g = this.get( p + 2 );
+            var r = this.get( p + 3 );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
+            this.set( p++, a );
         }
     }
     public inline
@@ -122,15 +121,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var b = this.get( p );
-		    var g = this.get( p + 1 );
-		    var r = this.get( p + 2 );
-		    var a = this.get( p + 3 );
-		    this.set( p++, a );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
+            var g = this.get( p + 1 );
+            var r = this.get( p + 2 );
+            var a = this.get( p + 3 );
+            this.set( p++, a );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
         }
     }
     public inline
@@ -140,15 +139,15 @@ abstract BytesCameleon( Bytes ) to Bytes from Bytes {
         var r: Int;
         var g: Int;
         var b: Int;
-	    for( i in 0...this.length >> 2 ) {
+        for( i in 0...this.length >> 2 ) {
             var b = this.get( p );
-		    var g = this.get( p + 1 );
-		    var r = this.get( p + 2 );
-		    var a = this.get( p + 3 );
-		    this.set( p++, r );
-		    this.set( p++, g );
-		    this.set( p++, b );
-		    this.set( p++, a );
+            var g = this.get( p + 1 );
+            var r = this.get( p + 2 );
+            var a = this.get( p + 3 );
+            this.set( p++, r );
+            this.set( p++, g );
+            this.set( p++, b );
+            this.set( p++, a );
         }
     }
 }

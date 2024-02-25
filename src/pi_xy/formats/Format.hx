@@ -35,19 +35,19 @@ function toPNG( pixelImage: Pixelimage, name: String, level = 9 ){
             row += 4;
         }
     }
-	var l = new List();
-	l.add( CHeader( { width:      pixelImage.width, height: pixelImage.height
+    var l = new List();
+    l.add( CHeader( { width:      pixelImage.width, height: pixelImage.height
                     , colbits:    8,                color:  ColTrue( true )
                     , interlaced: false }) );
-	l.add( CData( format.tools.Deflate.run( rgba, level ) ) );
-	l.add( CEnd );
+    l.add( CData( format.tools.Deflate.run( rgba, level ) ) );
+    l.add( CEnd );
     trace( 'create writer' );
     var dir = haxe.io.Path.directory( Sys.programPath() );
     //var dir = get_dir();
-	var writer = new format.png.Writer( 
+    var writer = new format.png.Writer( 
         sys.io.File.write( haxe.io.Path.join( [ dir, name + ".png" ] ), true )
     );
-	writer.write( l );
+    writer.write( l );
     trace( 'written');
 }
 
@@ -63,11 +63,13 @@ function fromPNG( name: String, transparent: Bool = true ): Pixelimage {
     );
     var data = reader.read();
     var header = format.png.Tools.getHeader( data );
-    var bytesCameleon  = new BytesCameleon( format.png.Tools.extract32( data ) ); // BGRA
-    var pixelImage = new Pixelimage( header.width, header.height );
+    var bytes: haxe.io.Bytes = format.png.Tools.extract32( data );
+    var bytesCameleon  = new pi_xy.formats.BytesCameleon( bytes ); // BGRA
+    var pixelImage: Pixelimage = new Pixelimage( header.width, header.height );
     pixelImage.transparent = true;
+    // pixelImage.imageTypeString();
     bytesCameleon.BGRA_RGBA();
-    pixelImage.fromBytesCameleon( bytesCameleon );
+    pixelImage.fromBytes( bytesCameleon );
     return pixelImage;
 }
 

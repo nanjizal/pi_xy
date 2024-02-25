@@ -59,4 +59,12 @@ abstract LTRB( LTRB_ ) from LTRB_ to LTRB_ {
         rect.b = this.b;
         return rect;
     }
+    public inline
+    function toString(){
+        var l = this.l;
+        var t = this.t;
+        var r = this.r;
+        var b = this.b;
+        return '{ l: $l, t: $t, r: $r, b: $b }';
+    }
 }

@@ -12,7 +12,6 @@ class CircleForm extends CircleForm_<Pixelimage,Pixelimage>{
         temp = null;
         return pixelImage;
     }
-
     function buildCircle( temp: Pixelimage ){
         var w = Math.round( strokeWidth/2 );
         var r = diameter/2;

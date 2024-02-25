@@ -1,0 +1,3240 @@
+<xml>
+<set name="HXCPP_API_LEVEL" value="430" />
+<files id="haxe">
+<compilerflag value="-Iinclude"/>
+  <file name="src/sys/thread/_Thread/Thread_Impl_.cpp" >
+   <depend name="include/sys/thread/EventLoop.h"/>
+   <depend name="include/sys/thread/_Thread/HaxeThread.h"/>
+   <depend name="include/sys/thread/_Thread/Thread_Impl_.h"/>
+  </file>
+  <file name="src/sys/thread/Lock.cpp" >
+   <depend name="include/sys/thread/Lock.h"/>
+  </file>
+  <file name="src/sys/thread/_EventLoop/RegularEvent.cpp" >
+   <depend name="include/sys/thread/_EventLoop/RegularEvent.h"/>
+  </file>
+  <file name="src/sys/io/FileOutput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/sys/io/FileOutput.h"/>
+  </file>
+  <file name="src/sys/io/FileInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+  </file>
+  <file name="src/sys/io/File.cpp" >
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/sys/io/File.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+   <depend name="include/sys/io/FileOutput.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/hitTest/IhitObj.cpp" >
+   <depend name="include/pi_xy/triangleGML/triGML/hitTest/IhitObj.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/TriangleGML.cpp" >
+   <depend name="include/Xml.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/triangleGML/ArcForm.h"/>
+   <depend name="include/pi_xy/triangleGML/ArrowShape.h"/>
+   <depend name="include/pi_xy/triangleGML/CircleForm.h"/>
+   <depend name="include/pi_xy/triangleGML/EllipseForm.h"/>
+   <depend name="include/pi_xy/triangleGML/LineGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/LineGridShape.h"/>
+   <depend name="include/pi_xy/triangleGML/LineShape.h"/>
+   <depend name="include/pi_xy/triangleGML/NineSlicePicture.h"/>
+   <depend name="include/pi_xy/triangleGML/QuadShape.h"/>
+   <depend name="include/pi_xy/triangleGML/RectangleForm.h"/>
+   <depend name="include/pi_xy/triangleGML/TriangleGML.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/TriGML.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/ArrowShape_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineGridShape_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineShape_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/QuadShape_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/ArcForm_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/CircleForm_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/EllipseForm_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/RectangleForm_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/gradient/LineGradient_.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/picture/NineSlicePicture_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/TriGML.cpp" >
+   <depend name="include/Xml.h"/>
+   <depend name="include/_Xml/XmlType_Impl_.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/TriGML.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/RectangleForm.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/RectangleForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/RectangleForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/form/RectangleForm_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/RectangleForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/QuadShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/QuadShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/hitTest/IhitObj.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/QuadShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/contour/QuadShape_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/QuadShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/NineSlicePicture.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Sys.h"/>
+   <depend name="include/format/png/Reader.h"/>
+   <depend name="include/format/png/Tools.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Path.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ByteAccessor.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/NineSlicePicture.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/picture/NineSlicePicture_.h"/>
+   <depend name="include/sys/io/File.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/picture/NineSlicePicture_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/picture/NineSlicePicture_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/LineShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/LineShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/contour/LineShape_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/LineGridShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/LineGridShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineGridShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/contour/LineGridShape_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/LineGridShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/LineGradient.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_HitTriScalar/HitTriScalar_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/LineGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/gradient/LineGradient_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/gradient/LineGradient_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/gradient/LineGradient_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/BasicGradient.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicGradient.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/EllipseForm.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/EllipseForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/EllipseForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/form/EllipseForm_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/EllipseForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/CircleForm.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/CircleForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/CircleForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/form/CircleForm_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/CircleForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/ArrowShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/ArrowShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/ArrowShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/contour/ArrowShape_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/contour/ArrowShape_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/ArcForm.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/triangleGML/ArcForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/ArcForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/shape/form/ArcForm_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/shape/form/ArcForm_.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/FillForm.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/FillForm.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/BasicShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/GroupShape.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/GroupShape.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/hitTest/IhitObj.h"/>
+  </file>
+  <file name="src/pi_xy/triangleGML/triGML/ShapeInterface.cpp" >
+   <depend name="include/pi_xy/triangleGML/triGML/ShapeInterface.h"/>
+  </file>
+  <file name="src/pi_xy/transformation/_SpinImage/SpinImage_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_TransformImage/TransformImage_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_SpinImage/SpinImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/transformation/_FlipImage/FlipImage_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_TransformImage/TransformImage_Impl_.h"/>
+   <depend name="include/pi_xy/transformation/_FlipImage/FlipImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/transformation/_BinaryPatternFill/BinaryPatternFill_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/transformation/_BinaryPatternFill/BinaryPatternFill_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_TwoGrad/TwoGrad_Impl_.cpp" >
+   <depend name="include/pi_xy/pixel/_TwoGrad/TwoGrad_.h"/>
+   <depend name="include/pi_xy/pixel/_TwoGrad/TwoGrad_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_TwoGrad/TwoGrad_.cpp" >
+   <depend name="include/pi_xy/pixel/_TwoGrad/TwoGrad_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_PixelChannel/PixelChannel_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/pixel/_PixelChannel/PixelChannel_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_Pixel32/Pixel32_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/pixel/_Pixel32/Pixel32_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_Pixel28/Pixel28_Impl_.cpp" >
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/pixel/_Pixel28/Pixel28_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/_ColorHelp/ColorHelp_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/pi_xy/pixel/_ColorHelp/ColorHelp_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/pixel/ColorHelp.cpp" >
+   <depend name="include/pi_xy/pixel/ColorHelp.h"/>
+   <depend name="include/pi_xy/pixel/_ColorHelp/ColorHelp_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/iter/_IteratorRange/IteratorRange_Impl_.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/iter/_IteratorRange/IteratorRange_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/iter/IntIterStart.cpp" >
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/iter/_BoundIterator/BoundIterator_Fields_.cpp" >
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/iter/_BoundIterator/BoundIterator_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/iter/BoundIterator.cpp" >
+   <depend name="include/pi_xy/iter/BoundIterator.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/iter/_BoundIterator/BoundIterator_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_TransformImage/TransformImage_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_TransformImage/TransformImage_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_FlipImage/FlipImage_Fields_.h"/>
+   <depend name="include/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.h"/>
+   <depend name="include/pi_xy/transformation/_SpinImage/SpinImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_TileShape/TileShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_TileShape/TileShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_SoftShape/SoftShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_SoftShape/SoftShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_RectanglePad/RectanglePad_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/NineColorBorder.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_RectanglePad/RectanglePad_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/NineColorBorder.cpp" >
+   <depend name="include/pi_xy/imageAbstracts/NineColorBorder.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_RawImage/RawImage_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_RawImage/RawImage_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_PatternShape/PatternShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_PatternShape/PatternShape_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_PNG/PNG_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Sys.h"/>
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/format/png/Reader.h"/>
+   <depend name="include/format/png/Tools.h"/>
+   <depend name="include/format/png/Writer.h"/>
+   <depend name="include/format/tools/Deflate.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/haxe/io/Path.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ByteAccessor.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_PNG/PNG_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.h"/>
+   <depend name="include/sys/io/File.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+   <depend name="include/sys/io/FileOutput.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_LineShape/LineShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_LineShape/LineShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_ImageShape/ImageShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/RectangleWindow.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_ImageShape/ImageShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_GradientShape/GradientShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_GradientShape/GradientShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/pixel/_TwoGrad/TwoGrad_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_FillShape/FillShape_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_FillShape/FillShape_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_Convolution/Convolution_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/Mat3x3data.h"/>
+   <depend name="include/pi_xy/imageAbstracts/Mat5x5data.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_Convolution/Convolution_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/Mat3x3data.cpp" >
+   <depend name="include/pi_xy/imageAbstracts/Mat3x3data.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/Mat5x5data.cpp" >
+   <depend name="include/pi_xy/imageAbstracts/Mat5x5data.h"/>
+  </file>
+  <file name="src/pi_xy/imageAbstracts/_ColorformImage/ColorformImage_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/imageAbstracts/_ColorformImage/ColorformImage_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/formats/NMEbitmapData.cpp" >
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/formats/NMEbitmapData.h"/>
+   <depend name="include/pi_xy/formats/_NMEbitmapData/NMEbitmapData_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/formats/_NMEbitmapData/NMEbitmapData_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/formats/_NMEbitmapData/NMEbitmapData_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/formats/_Format/Format_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Sys.h"/>
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/format/png/Reader.h"/>
+   <depend name="include/format/png/Tools.h"/>
+   <depend name="include/format/png/Writer.h"/>
+   <depend name="include/format/tools/Deflate.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/haxe/io/Path.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ByteAccessor.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/formats/_Format/Format_Fields_.h"/>
+   <depend name="include/sys/io/File.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+   <depend name="include/sys/io/FileOutput.h"/>
+  </file>
+  <file name="src/pi_xy/formats/_BytesCameleon/BytesCameleon_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/pi_xy/formats/_BytesCameleon/BytesCameleon_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/application/_TestNME/TestNME_Fields_.cpp" >
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/pi_xy/application/TestNME.h"/>
+   <depend name="include/pi_xy/application/_TestNME/TestNME_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_Xiolin_Wu_Line/Xiolin_Wu_Line_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/_Xiolin_Wu_Line/Xiolin_Wu_Line_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/TriangleSampler.cpp" >
+   <depend name="include/pi_xy/algo/TriangleSampler.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_TriPoints/TriPoints_Impl_.cpp" >
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_TriPoints/TriPoints_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_TriPixelSmoothGrad/TriPixelSmoothGrad_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_HitTriScalar/HitTriScalar_Impl_.h"/>
+   <depend name="include/pi_xy/algo/_TriPixelSmoothGrad/TriPixelSmoothGrad_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_TriPixelSmooth/TriPixelSmooth_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_TriPixelSmooth/TriPixelSmooth_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_TriPixelOld/TriPixelOld_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_TriPixelOld/TriPixelOld_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_TriPixel/TriPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/RectangleWindow.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_TriPixel/TriPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/TriPixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPixel.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_TriPixel/TriPixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/SquareSampler.cpp" >
+   <depend name="include/pi_xy/algo/SquareSampler.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_RoundRecPixel/RoundRecPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_RoundRecPixel/RoundRecPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/RoundRecPixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/RoundRecPixel.h"/>
+   <depend name="include/pi_xy/algo/_RoundRecPixel/RoundRecPixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_RectanglePixel/RectanglePixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_RectanglePixel/RectanglePixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/RectanglePixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/RectanglePixel.h"/>
+   <depend name="include/pi_xy/algo/_RectanglePixel/RectanglePixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_QuintPixel/QuintPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_QuintPixel/QuintPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_QuadrantPixel/QuadrantPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_QuadrantPixel/QuadrantPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_QuadPoints/QuadPoints_Impl_.cpp" >
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/LineInfo.h"/>
+   <depend name="include/pi_xy/algo/LineXYinfo.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/_QuadPoints/QuadPoints_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/LineXYinfo.cpp" >
+   <depend name="include/pi_xy/algo/LineXYinfo.h"/>
+  </file>
+  <file name="src/pi_xy/algo/LineInfo.cpp" >
+   <depend name="include/pi_xy/algo/LineInfo.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_QuadPixel/QuadPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/RectangleWindow.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_QuadPixel/QuadPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/QuadPixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPixel.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/_QuadPixel/QuadPixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_PolyPixel/PolyPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_PolyPixel/PolyPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/PolyPixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/PolyPixel.h"/>
+   <depend name="include/pi_xy/algo/_PolyPixel/PolyPixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/PentagonSampler.cpp" >
+   <depend name="include/pi_xy/algo/PentagonSampler.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_LinePixel/LinePixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_LinePixel/LinePixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/LinePixel.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/LinePixel.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/_LinePixel/LinePixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_HitTriScalar/HitTriScalar_Impl_.cpp" >
+   <depend name="include/pi_xy/algo/Barycentric.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/SampleData.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_HitTriScalar/HitTriScalar_Impl_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/SampleData.cpp" >
+   <depend name="include/pi_xy/algo/SampleData.h"/>
+  </file>
+  <file name="src/pi_xy/algo/HitTriArray.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/HitTri.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/TriPoints_.cpp" >
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/HitQuad.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/IhitObj.cpp" >
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+  </file>
+  <file name="src/pi_xy/algo/QuadPoints_.cpp" >
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_GeomPix/GeomPix_Fields_.cpp" >
+   <depend name="include/pi_xy/algo/_GeomPix/GeomPix_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/GeomPix.cpp" >
+   <depend name="include/pi_xy/algo/GeomPix.h"/>
+   <depend name="include/pi_xy/algo/_GeomPix/GeomPix_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/RectangleWindow.cpp" >
+   <depend name="include/pi_xy/algo/RectangleWindow.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_CirclePixel/CirclePixel_Fields_.cpp" >
+   <depend name="include/pi_xy/algo/_CirclePixel/CirclePixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/CirclePixel.cpp" >
+   <depend name="include/pi_xy/algo/CirclePixel.h"/>
+   <depend name="include/pi_xy/algo/_CirclePixel/CirclePixel_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/Barycentric.cpp" >
+   <depend name="include/pi_xy/algo/Barycentric.h"/>
+   <depend name="include/pi_xy/algo/BarycentricCoordinates.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_Barycentric/BaryCoordinates_Impl_.cpp" >
+   <depend name="include/pi_xy/algo/BarycentricCoordinates.h"/>
+   <depend name="include/pi_xy/algo/_Barycentric/BaryCoordinates_Impl_.h"/>
+  </file>
+  <file name="src/pi_xy/algo/BarycentricCoordinates.cpp" >
+   <depend name="include/pi_xy/algo/BarycentricCoordinates.h"/>
+  </file>
+  <file name="src/pi_xy/algo/_ArrowPixel/ArrowPixel_Fields_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/HitTriArray.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/algo/_ArrowPixel/ArrowPixel_Fields_.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/pixel/_TwoGrad/TwoGrad_.h"/>
+  </file>
+  <file name="src/pi_xy/ByteAccessor.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/pi_xy/ByteAccessor.h"/>
+  </file>
+  <file name="src/pi_xy/_Pixelimage/Pixelimage_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/pi_xy/ByteAccessor.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/_Pixelimage/Pixelimage_Impl_.h"/>
+   <depend name="include/pi_xy/algo/HitQuad.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/QuadPoints_.h"/>
+   <depend name="include/pi_xy/algo/RectangleWindow.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+   <depend name="include/pi_xy/transformation/_ScaleImage/ScaleImage_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/ImageStruct.cpp" >
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+  </file>
+  <file name="src/pi_xy/_Endian/Endian_Fields_.cpp" >
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+  </file>
+  <file name="src/nme/utils/WeakRef.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/utils/WeakRef.h"/>
+  </file>
+  <file name="src/nme/utils/UInt8Array.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ArrayBufferView.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+   <depend name="include/nme/utils/UInt8Array.h"/>
+  </file>
+  <file name="src/nme/utils/_Floats3264/Floats3264_Impl_.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/Float32Buffer.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+   <depend name="include/nme/utils/_Floats3264/Floats3264_Impl_.h"/>
+  </file>
+  <file name="src/nme/utils/Float32Buffer.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/Float32Buffer.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/utils/Endian.cpp" >
+   <depend name="include/nme/utils/Endian.h"/>
+  </file>
+  <file name="src/nme/utils/CompressionAlgorithm.cpp" >
+   <depend name="include/nme/utils/CompressionAlgorithm.h"/>
+  </file>
+  <file name="src/nme/utils/ArrayBufferView.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ArrayBufferView.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/ui/KeyboardInputDevice.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/KeyboardEvent.h"/>
+   <depend name="include/nme/ui/GameInputControl.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+   <depend name="include/nme/ui/KeyboardInputDevice.h"/>
+  </file>
+  <file name="src/nme/ui/Keyboard.cpp" >
+   <depend name="include/nme/ui/Keyboard.h"/>
+  </file>
+  <file name="src/nme/ui/GamepadButton.cpp" >
+   <depend name="include/nme/ui/GamepadButton.h"/>
+  </file>
+  <file name="src/nme/ui/GamepadAxis.cpp" >
+   <depend name="include/nme/ui/GamepadAxis.h"/>
+  </file>
+  <file name="src/nme/ui/GameInputDevice.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/ui/GameInputControl.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/ui/GameInputControl.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/ui/GameInputControl.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+  </file>
+  <file name="src/nme/ui/GameInput.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/GameInputEvent.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/ui/GameInput.h"/>
+   <depend name="include/nme/ui/GameInputControl.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+   <depend name="include/nme/ui/KeyboardInputDevice.h"/>
+  </file>
+  <file name="src/nme/text/TextLineMetrics.cpp" >
+   <depend name="include/nme/text/TextLineMetrics.h"/>
+  </file>
+  <file name="src/nme/text/TextFormat.cpp" >
+   <depend name="include/nme/text/TextFormat.h"/>
+  </file>
+  <file name="src/nme/text/TextFieldType.cpp" >
+   <depend name="include/nme/text/TextFieldType.h"/>
+  </file>
+  <file name="src/nme/text/TextFieldAutoSize.cpp" >
+   <depend name="include/nme/text/TextFieldAutoSize.h"/>
+  </file>
+  <file name="src/nme/text/GridFitType.cpp" >
+   <depend name="include/nme/text/GridFitType.h"/>
+  </file>
+  <file name="src/nme/text/Font.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/text/AntiAliasType.cpp" >
+   <depend name="include/nme/text/AntiAliasType.h"/>
+  </file>
+  <file name="src/nme/system/SecurityDomain.cpp" >
+   <depend name="include/nme/system/SecurityDomain.h"/>
+  </file>
+  <file name="src/nme/system/LoaderContext.cpp" >
+   <depend name="include/nme/system/ApplicationDomain.h"/>
+   <depend name="include/nme/system/LoaderContext.h"/>
+   <depend name="include/nme/system/SecurityDomain.h"/>
+  </file>
+  <file name="src/nme/system/ApplicationDomain.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/nme/system/ApplicationDomain.h"/>
+  </file>
+  <file name="src/nme/net/_URLVariables/URLVariables_Impl_.cpp" >
+   <depend name="include/nme/net/URLVariablesBase.h"/>
+   <depend name="include/nme/net/_URLVariables/URLVariables_Impl_.h"/>
+  </file>
+  <file name="src/nme/net/URLVariablesBase.cpp" >
+   <depend name="include/StringTools.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/nme/net/URLVariablesBase.h"/>
+  </file>
+  <file name="src/nme/net/URLRequestMethod.cpp" >
+   <depend name="include/nme/net/URLRequestMethod.h"/>
+  </file>
+  <file name="src/nme/net/URLRequestHeader.cpp" >
+   <depend name="include/nme/net/URLRequestHeader.h"/>
+  </file>
+  <file name="src/nme/net/URLRequest.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/net/URLRequestHeader.h"/>
+   <depend name="include/nme/net/URLVariablesBase.h"/>
+   <depend name="include/nme/net/_URLVariables/URLVariables_Impl_.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/net/URLLoaderDataFormat.cpp" >
+   <depend name="include/nme/net/URLLoaderDataFormat.h"/>
+  </file>
+  <file name="src/nme/net/NetStream.cpp" >
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/media/SoundTransform.h"/>
+   <depend name="include/nme/media/StageVideo.h"/>
+   <depend name="include/nme/net/NetConnection.h"/>
+   <depend name="include/nme/net/NetStream.h"/>
+  </file>
+  <file name="src/nme/net/NetConnection.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/NetStatusEvent.h"/>
+   <depend name="include/nme/net/NetConnection.h"/>
+  </file>
+  <file name="src/nme/native/Include.cpp" >
+   <depend name="include/nme/native/Include.h"/>
+  </file>
+  <file name="src/nme/media/StageVideo.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/NetStatusEvent.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/media/StageVideo.h"/>
+   <depend name="include/nme/net/NetStream.h"/>
+  </file>
+  <file name="src/nme/media/SoundTransform.cpp" >
+   <depend name="include/nme/media/SoundTransform.h"/>
+  </file>
+  <file name="src/nme/media/SoundLoaderContext.cpp" >
+   <depend name="include/nme/media/SoundLoaderContext.h"/>
+  </file>
+  <file name="src/nme/media/SoundChannel.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/SampleDataEvent.h"/>
+   <depend name="include/nme/media/AudioSampleFormat.h"/>
+   <depend name="include/nme/media/SampleRate.h"/>
+   <depend name="include/nme/media/SoundChannel.h"/>
+   <depend name="include/nme/media/SoundTransform.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/media/Sound.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/errors/Error.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/IOErrorEvent.h"/>
+   <depend name="include/nme/events/SampleDataEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+   <depend name="include/nme/media/ID3Info.h"/>
+   <depend name="include/nme/media/Sound.h"/>
+   <depend name="include/nme/media/SoundChannel.h"/>
+   <depend name="include/nme/media/SoundLoaderContext.h"/>
+   <depend name="include/nme/media/SoundTransform.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/media/SampleRate.cpp" >
+   <depend name="include/nme/media/SampleRate.h"/>
+  </file>
+  <file name="src/nme/media/ID3Info.cpp" >
+   <depend name="include/nme/media/ID3Info.h"/>
+  </file>
+  <file name="src/nme/media/AudioSampleFormat.cpp" >
+   <depend name="include/nme/media/AudioSampleFormat.h"/>
+  </file>
+  <file name="src/nme/macros/Prime.cpp" >
+   <depend name="include/nme/macros/Prime.h"/>
+  </file>
+  <file name="src/nme/image/PixelFormat.cpp" >
+   <depend name="include/nme/image/PixelFormat.h"/>
+  </file>
+  <file name="src/nme/geom/Transform.cpp" >
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/ColorTransform.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/geom/Transform.h"/>
+  </file>
+  <file name="src/nme/geom/Rectangle.cpp" >
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+  </file>
+  <file name="src/nme/geom/Point.cpp" >
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/geom/Matrix.cpp" >
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/geom/ColorTransform.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/geom/ColorTransform.h"/>
+  </file>
+  <file name="src/nme/filters/BitmapFilter.cpp" >
+   <depend name="include/nme/filters/BitmapFilter.h"/>
+  </file>
+  <file name="src/nme/events/TouchEvent.cpp" >
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/MouseEvent.h"/>
+   <depend name="include/nme/events/TouchEvent.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/events/SystemEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/SystemEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+  </file>
+  <file name="src/nme/events/StageVideoAvailabilityEvent.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/StageVideoAvailabilityEvent.h"/>
+  </file>
+  <file name="src/nme/events/SampleDataEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/SampleDataEvent.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/events/ProgressEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/ProgressEvent.h"/>
+  </file>
+  <file name="src/nme/events/NetStatusEvent.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/NetStatusEvent.h"/>
+  </file>
+  <file name="src/nme/events/MoveEvent.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/MoveEvent.h"/>
+  </file>
+  <file name="src/nme/events/KeyboardEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/KeyboardEvent.h"/>
+  </file>
+  <file name="src/nme/events/JoystickEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/JoystickEvent.h"/>
+   <depend name="include/nme/ui/GamepadAxis.h"/>
+   <depend name="include/nme/ui/GamepadButton.h"/>
+  </file>
+  <file name="src/nme/events/IOErrorEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/IOErrorEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+  </file>
+  <file name="src/nme/events/HTTPStatusEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/HTTPStatusEvent.h"/>
+   <depend name="include/nme/net/URLRequestHeader.h"/>
+  </file>
+  <file name="src/nme/events/GameInputEvent.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/GameInputEvent.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+  </file>
+  <file name="src/nme/events/FocusEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/FocusEvent.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/events/EventPhase.cpp" >
+   <depend name="include/nme/events/EventPhase.h"/>
+  </file>
+  <file name="src/nme/events/Listener.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/Listener.h"/>
+   <depend name="include/nme/utils/WeakRef.h"/>
+  </file>
+  <file name="src/nme/events/ErrorEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+  </file>
+  <file name="src/nme/events/TextEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+  </file>
+  <file name="src/nme/events/DropEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/DropEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/MouseEvent.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/events/MouseEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/MouseEvent.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/events/AppLinkEvent.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/AppLinkEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+  </file>
+  <file name="src/nme/events/Event.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventPhase.h"/>
+  </file>
+  <file name="src/nme/errors/RangeError.cpp" >
+   <depend name="include/nme/errors/Error.h"/>
+   <depend name="include/nme/errors/RangeError.h"/>
+  </file>
+  <file name="src/nme/errors/EOFError.cpp" >
+   <depend name="include/nme/errors/EOFError.h"/>
+   <depend name="include/nme/errors/Error.h"/>
+  </file>
+  <file name="src/nme/errors/ArgumentError.cpp" >
+   <depend name="include/nme/errors/ArgumentError.h"/>
+   <depend name="include/nme/errors/Error.h"/>
+  </file>
+  <file name="src/nme/errors/Error.cpp" >
+   <depend name="include/nme/errors/Error.h"/>
+  </file>
+  <file name="src/nme/display/TriangleCulling.cpp" >
+   <depend name="include/nme/display/TriangleCulling.h"/>
+  </file>
+  <file name="src/nme/display/Tilesheet.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/Tilesheet.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+  </file>
+  <file name="src/nme/display/StageScaleMode.cpp" >
+   <depend name="include/nme/display/StageScaleMode.h"/>
+  </file>
+  <file name="src/nme/display/StageQuality.cpp" >
+   <depend name="include/nme/display/StageQuality.h"/>
+  </file>
+  <file name="src/nme/display/StageDisplayState.cpp" >
+   <depend name="include/nme/display/StageDisplayState.h"/>
+  </file>
+  <file name="src/nme/display/StageAlign.cpp" >
+   <depend name="include/nme/display/StageAlign.h"/>
+  </file>
+  <file name="src/nme/display/TouchInfo.cpp" >
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/TouchInfo.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/SpreadMethod.cpp" >
+   <depend name="include/nme/display/SpreadMethod.h"/>
+  </file>
+  <file name="src/nme/display/Shape.cpp" >
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/Shape.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/PixelSnapping.cpp" >
+   <depend name="include/nme/display/PixelSnapping.h"/>
+  </file>
+  <file name="src/nme/display/MovieClip.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/FrameLabel.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/ManagedStage.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/ManagedStage.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/Stage.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/cpp/vm/Gc.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/_CallStack/CallStack_Impl_.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/FrameTimer.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/display/StageAlign.h"/>
+   <depend name="include/nme/display/StageDisplayState.h"/>
+   <depend name="include/nme/display/StageQuality.h"/>
+   <depend name="include/nme/display/StageScaleMode.h"/>
+   <depend name="include/nme/display/TouchInfo.h"/>
+   <depend name="include/nme/events/AppLinkEvent.h"/>
+   <depend name="include/nme/events/DropEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/FocusEvent.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/JoystickEvent.h"/>
+   <depend name="include/nme/events/KeyboardEvent.h"/>
+   <depend name="include/nme/events/MouseEvent.h"/>
+   <depend name="include/nme/events/MoveEvent.h"/>
+   <depend name="include/nme/events/StageVideoAvailabilityEvent.h"/>
+   <depend name="include/nme/events/SystemEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+   <depend name="include/nme/events/TouchEvent.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/media/SoundChannel.h"/>
+   <depend name="include/nme/media/StageVideo.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/text/TextField.h"/>
+   <depend name="include/nme/ui/GameInput.h"/>
+   <depend name="include/sys/thread/Lock.h"/>
+   <depend name="include/sys/thread/_Thread/HaxeThread.h"/>
+  </file>
+  <file name="src/nme/display/LoaderInfo.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Loader.h"/>
+   <depend name="include/nme/display/LoaderInfo.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/net/URLLoaderDataFormat.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/net/URLLoader.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/HTTPStatusEvent.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/IOErrorEvent.h"/>
+   <depend name="include/nme/events/ProgressEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/net/URLLoaderDataFormat.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/net/URLRequestHeader.h"/>
+   <depend name="include/nme/net/URLVariablesBase.h"/>
+   <depend name="include/nme/net/_URLVariables/URLVariables_Impl_.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/display/Loader.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/display/Bitmap.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Loader.h"/>
+   <depend name="include/nme/display/LoaderInfo.h"/>
+   <depend name="include/nme/display/PixelSnapping.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/system/LoaderContext.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/display/LineScaleMode.cpp" >
+   <depend name="include/nme/display/LineScaleMode.h"/>
+  </file>
+  <file name="src/nme/display/JointStyle.cpp" >
+   <depend name="include/nme/display/JointStyle.h"/>
+  </file>
+  <file name="src/nme/display/InterpolationMethod.cpp" >
+   <depend name="include/nme/display/InterpolationMethod.h"/>
+  </file>
+  <file name="src/nme/display/IGraphicsData.cpp" >
+   <depend name="include/nme/display/IGraphicsData.h"/>
+  </file>
+  <file name="src/nme/display/GraphicsPathWinding.cpp" >
+   <depend name="include/nme/display/GraphicsPathWinding.h"/>
+  </file>
+  <file name="src/nme/display/Graphics.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/CapsStyle.h"/>
+   <depend name="include/nme/display/GradientType.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/IGraphicsData.h"/>
+   <depend name="include/nme/display/InterpolationMethod.h"/>
+   <depend name="include/nme/display/JointStyle.h"/>
+   <depend name="include/nme/display/LineScaleMode.h"/>
+   <depend name="include/nme/display/SpreadMethod.h"/>
+   <depend name="include/nme/display/Tilesheet.h"/>
+   <depend name="include/nme/display/TriangleCulling.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/Float32Buffer.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/display/GradientType.cpp" >
+   <depend name="include/nme/display/GradientType.h"/>
+  </file>
+  <file name="src/nme/display/FrameLabel.cpp" >
+   <depend name="include/nme/display/FrameLabel.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/FPS.cpp" >
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/FPS.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/text/TextField.h"/>
+   <depend name="include/nme/text/TextFieldAutoSize.h"/>
+   <depend name="include/nme/text/TextFormat.h"/>
+  </file>
+  <file name="src/nme/text/TextField.cpp" >
+   <depend name="include/StringTools.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/text/AntiAliasType.h"/>
+   <depend name="include/nme/text/GridFitType.h"/>
+   <depend name="include/nme/text/TextField.h"/>
+   <depend name="include/nme/text/TextFieldAutoSize.h"/>
+   <depend name="include/nme/text/TextFieldType.h"/>
+   <depend name="include/nme/text/TextFormat.h"/>
+   <depend name="include/nme/text/TextLineMetrics.h"/>
+  </file>
+  <file name="src/nme/display/CapsStyle.cpp" >
+   <depend name="include/nme/display/CapsStyle.h"/>
+  </file>
+  <file name="src/nme/display/BlendMode.cpp" >
+   <depend name="include/nme/display/BlendMode.h"/>
+  </file>
+  <file name="src/nme/display/BitmapData.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/Memory.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/BlendMode.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/filters/BitmapFilter.h"/>
+   <depend name="include/nme/geom/ColorTransform.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/image/PixelFormat.h"/>
+   <depend name="include/nme/utils/ArrayBufferView.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+   <depend name="include/nme/utils/UInt8Array.h"/>
+  </file>
+  <file name="src/nme/display/Bitmap.cpp" >
+   <depend name="include/nme/display/Bitmap.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/PixelSnapping.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+  </file>
+  <file name="src/nme/app/Window.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/haxe/_CallStack/CallStack_Impl_.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/MouseState.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/display/StageAlign.h"/>
+   <depend name="include/nme/display/StageDisplayState.h"/>
+   <depend name="include/nme/display/StageQuality.h"/>
+   <depend name="include/nme/display/StageScaleMode.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/app/MouseState.cpp" >
+   <depend name="include/nme/app/MouseState.h"/>
+  </file>
+  <file name="src/nme/app/IAppEventHandler.cpp" >
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+  </file>
+  <file name="src/nme/app/FrameTimer.cpp" >
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/FrameTimer.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/Window.h"/>
+  </file>
+  <file name="src/nme/app/EventName.cpp" >
+   <depend name="include/nme/app/EventName.h"/>
+  </file>
+  <file name="src/nme/app/EventId.cpp" >
+   <depend name="include/nme/app/EventId.h"/>
+  </file>
+  <file name="src/nme/app/_AppEvent/AppEvent_Impl_.cpp" >
+   <depend name="include/nme/app/_AppEvent/AppEvent_Impl_.h"/>
+  </file>
+  <file name="src/nme/Version.cpp" >
+   <depend name="include/nme/Version.h"/>
+  </file>
+  <file name="src/nme/_Vector/Vector_Impl_.cpp" >
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+   <depend name="include/nme/_Vector/Vector_Impl_.h"/>
+  </file>
+  <file name="src/nme/PrimeLoader.cpp" >
+   <depend name="include/nme/PrimeLoader.h"/>
+  </file>
+  <file name="src/nme/NativeResource.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+  </file>
+  <file name="src/nme/Memory.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Memory.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/Lib.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/cpp/Lib.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/_CallStack/CallStack_Impl_.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/ManagedStage.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+  </file>
+  <file name="src/nme/app/Application.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/sys/thread/Mutex.h"/>
+  </file>
+  <file name="src/nme/Assets.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+   <depend name="include/nme/AlphaMode.h"/>
+   <depend name="include/nme/AssetInfo.h"/>
+   <depend name="include/nme/AssetLib.h"/>
+   <depend name="include/nme/AssetType.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/Cache.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/media/Sound.h"/>
+   <depend name="include/nme/media/SoundLoaderContext.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/utils/ByteArray.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/zip/Compress.h"/>
+   <depend name="include/haxe/zip/Uncompress.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/errors/EOFError.h"/>
+   <depend name="include/nme/errors/Error.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/CompressionAlgorithm.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/utils/IDataInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/utils/IMemoryRange.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/utils/IDataOutput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/Cache.cpp" >
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/Cache.h"/>
+  </file>
+  <file name="src/nme/AssetType.cpp" >
+   <depend name="include/nme/AssetType.h"/>
+  </file>
+  <file name="src/nme/AssetLib.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/AssetLib.h"/>
+   <depend name="include/nme/AssetType.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/media/Sound.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/nme/AssetInfo.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/AlphaMode.h"/>
+   <depend name="include/nme/AssetInfo.h"/>
+   <depend name="include/nme/AssetType.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/nme/utils/WeakRef.h"/>
+  </file>
+  <file name="src/nme/AssetData.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/nme/AssetData.h"/>
+   <depend name="include/nme/Assets.h"/>
+  </file>
+  <file name="src/nme/AlphaMode.cpp" >
+   <depend name="include/nme/AlphaMode.h"/>
+  </file>
+  <file name="src/iterMagic/_IteratorRangeXY/IteratorRangeYX_Impl_.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/IntIterStart.h"/>
+   <depend name="include/iterMagic/IntIterYX.h"/>
+   <depend name="include/iterMagic/_IteratorRangeXY/IteratorRangeYX_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/IntIterYX.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/IntIterStart.h"/>
+   <depend name="include/iterMagic/IntIterYX.h"/>
+  </file>
+  <file name="src/iterMagic/_IteratorRangeXY/IteratorRangeXY_Impl_.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/IntIterStart.h"/>
+   <depend name="include/iterMagic/IntIterXY.h"/>
+   <depend name="include/iterMagic/_IteratorRangeXY/IteratorRangeXY_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/IntIterXY.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/IntIterStart.h"/>
+   <depend name="include/iterMagic/IntIterXY.h"/>
+  </file>
+  <file name="src/iterMagic/_IteratorRange/IteratorRange_Impl_.cpp" >
+   <depend name="include/IntIterator.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/iterMagic/IntIterStart.h"/>
+   <depend name="include/iterMagic/_IteratorRange/IteratorRange_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/IntIterStart.cpp" >
+   <depend name="include/iterMagic/IntIterStart.h"/>
+  </file>
+  <file name="src/iterMagic/_Img/ImgMulti_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/iterMagic/_Img/ImgMulti_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/_Img/Img_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/iterMagic/_Img/Img_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/_Img/Picture_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/Pic.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/iterMagic/_Img/Picture_Impl_.h"/>
+  </file>
+  <file name="src/iterMagic/Pic.cpp" >
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/Pic.h"/>
+  </file>
+  <file name="src/iterMagic/StackIntImg.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+  </file>
+  <file name="src/iterMagic/U32ArrImg.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+  </file>
+  <file name="src/iterMagic/BytesImg.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+  </file>
+  <file name="src/iterMagic/VecIntImg.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+  </file>
+  <file name="src/iterMagic/ArrIntImg.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+  </file>
+  <file name="src/iterMagic/Iimg.cpp" >
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+  </file>
+  <file name="src/iterMagic/RawImageData.cpp" >
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+  </file>
+  <file name="src/iterMagic/_Img/ImageType_Impl_.cpp" >
+   <depend name="include/iterMagic/_Img/ImageType_Impl_.h"/>
+  </file>
+  <file name="src/haxe/zip/Uncompress.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/zip/FlushMode.h"/>
+   <depend name="include/haxe/zip/Uncompress.h"/>
+  </file>
+  <file name="src/haxe/zip/FlushMode.cpp" >
+   <depend name="include/haxe/zip/FlushMode.h"/>
+  </file>
+  <file name="src/haxe/zip/Compress.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/zip/Compress.h"/>
+   <depend name="include/haxe/zip/FlushMode.h"/>
+  </file>
+  <file name="src/haxe/xml/Printer.cpp" >
+   <depend name="include/EReg.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/Xml.h"/>
+   <depend name="include/_Xml/XmlType_Impl_.h"/>
+   <depend name="include/haxe/xml/Printer.h"/>
+  </file>
+  <file name="src/haxe/xml/Parser.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/Xml.h"/>
+   <depend name="include/_Xml/XmlType_Impl_.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/xml/Parser.h"/>
+   <depend name="include/haxe/xml/XmlParserException.h"/>
+  </file>
+  <file name="src/haxe/xml/XmlParserException.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/xml/XmlParserException.h"/>
+  </file>
+  <file name="src/haxe/iterators/ArrayIterator.cpp" >
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/io/Error.cpp" >
+   <depend name="include/haxe/io/Error.h"/>
+  </file>
+  <file name="src/haxe/io/Eof.cpp" >
+   <depend name="include/haxe/io/Eof.h"/>
+  </file>
+  <file name="src/haxe/io/Encoding.cpp" >
+   <depend name="include/haxe/io/Encoding.h"/>
+  </file>
+  <file name="src/haxe/io/BytesOutput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/haxe/io/BytesOutput.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+  </file>
+  <file name="src/haxe/io/BytesInput.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesInput.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+  </file>
+  <file name="src/haxe/io/BytesBuffer.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+  </file>
+  <file name="src/haxe/io/ArrayBufferViewImpl.cpp" >
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/haxe/exceptions/NotImplementedException.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/exceptions/NotImplementedException.h"/>
+   <depend name="include/haxe/exceptions/PosException.h"/>
+  </file>
+  <file name="src/haxe/exceptions/PosException.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/exceptions/PosException.h"/>
+  </file>
+  <file name="src/haxe/ds/_GenericStack/GenericStackIterator_Int.cpp" >
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/_GenericStack/GenericStackIterator_Int.h"/>
+  </file>
+  <file name="src/haxe/ds/StringMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/_List/ListNode.cpp" >
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+  </file>
+  <file name="src/haxe/ds/List.cpp" >
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+  </file>
+  <file name="src/haxe/ds/IntMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/GenericStack_Int.cpp" >
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/ds/_GenericStack/GenericStackIterator_Int.h"/>
+  </file>
+  <file name="src/haxe/ds/_GenericStack/GenericStackIterator.cpp" >
+   <depend name="include/haxe/ds/GenericCell.h"/>
+   <depend name="include/haxe/ds/_GenericStack/GenericStackIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/GenericCell.cpp" >
+   <depend name="include/haxe/ds/GenericCell.h"/>
+  </file>
+  <file name="src/haxe/ds/GenericCell_Int.cpp" >
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+  </file>
+  <file name="src/haxe/ValueException.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+  </file>
+  <file name="src/haxe/Timer.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/TimerPollClient.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+  </file>
+  <file name="src/haxe/TimerPollClient.cpp" >
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/TimerPollClient.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+  </file>
+  <file name="src/nme/app/IPollClient.cpp" >
+   <depend name="include/nme/app/IPollClient.h"/>
+  </file>
+  <file name="src/haxe/Resource.cpp" >
+   <depend name="include/haxe/Resource.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/haxe/NativeStackTrace.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/NativeStackTrace.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+  </file>
+  <file name="src/haxe/MainLoop.cpp" >
+   <depend name="include/haxe/MainEvent.h"/>
+   <depend name="include/haxe/MainLoop.h"/>
+   <depend name="include/haxe/Timer.h"/>
+  </file>
+  <file name="src/haxe/MainEvent.cpp" >
+   <depend name="include/haxe/MainEvent.h"/>
+  </file>
+  <file name="src/haxe/Log.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+  </file>
+  <file name="src/haxe/Exception.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/NativeStackTrace.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+  </file>
+  <file name="src/haxe/EntryPoint.cpp" >
+   <depend name="include/haxe/EntryPoint.h"/>
+  </file>
+  <file name="src/sys/thread/_Thread/HaxeThread.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/sys/thread/EventLoop.h"/>
+   <depend name="include/sys/thread/Mutex.h"/>
+   <depend name="include/sys/thread/_Thread/HaxeThread.h"/>
+  </file>
+  <file name="src/sys/thread/EventLoop.cpp" >
+   <depend name="include/Sys.h"/>
+   <depend name="include/haxe/MainLoop.h"/>
+   <depend name="include/sys/thread/EventLoop.h"/>
+   <depend name="include/sys/thread/Lock.h"/>
+   <depend name="include/sys/thread/Mutex.h"/>
+   <depend name="include/sys/thread/_EventLoop/RegularEvent.h"/>
+  </file>
+  <file name="src/sys/thread/Mutex.cpp" >
+   <depend name="include/sys/thread/Mutex.h"/>
+  </file>
+  <file name="src/haxe/_CallStack/CallStack_Impl_.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/NativeStackTrace.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/haxe/_CallStack/CallStack_Impl_.h"/>
+  </file>
+  <file name="src/haxe/StackItem.cpp" >
+   <depend name="include/haxe/StackItem.h"/>
+  </file>
+  <file name="src/format/tools/Inflate.cpp" >
+   <depend name="include/format/tools/Inflate.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/zip/Uncompress.h"/>
+  </file>
+  <file name="src/format/tools/Deflate.cpp" >
+   <depend name="include/format/tools/Deflate.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/zip/Compress.h"/>
+  </file>
+  <file name="src/format/png/Writer.cpp" >
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/format/png/Writer.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesOutput.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+  </file>
+  <file name="src/format/png/Tools.cpp" >
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/format/png/Tools.h"/>
+   <depend name="include/format/tools/Deflate.h"/>
+   <depend name="include/format/tools/Inflate.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+  </file>
+  <file name="src/format/png/Reader.cpp" >
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/format/png/Reader.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesInput.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+  </file>
+  <file name="src/format/png/Chunk.cpp" >
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/format/png/Color.cpp" >
+   <depend name="include/format/png/Color.h"/>
+  </file>
+  <file name="src/cpp/vm/Gc.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/cpp/vm/Gc.h"/>
+  </file>
+  <file name="src/cpp/rtti/FieldNumericIntegerLookup.cpp" >
+   <depend name="include/cpp/rtti/FieldNumericIntegerLookup.h"/>
+  </file>
+  <file name="src/haxe/IMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+  </file>
+  <file name="src/Xml.cpp" >
+   <depend name="include/Xml.h"/>
+   <depend name="include/_Xml/XmlType_Impl_.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+   <depend name="include/haxe/xml/Parser.h"/>
+   <depend name="include/haxe/xml/Printer.h"/>
+  </file>
+  <file name="src/_Xml/XmlType_Impl_.cpp" >
+   <depend name="include/_Xml/XmlType_Impl_.h"/>
+  </file>
+  <file name="src/Type.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Type.h"/>
+  </file>
+  <file name="src/StringTools.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/StringTools.h"/>
+  </file>
+  <file name="src/StringBuf.cpp" >
+   <depend name="include/StringBuf.h"/>
+  </file>
+  <file name="src/Reflect.cpp" >
+   <depend name="include/Reflect.h"/>
+  </file>
+  <file name="src/IntIterator.cpp" >
+   <depend name="include/IntIterator.h"/>
+  </file>
+  <file name="src/EReg.cpp" >
+   <depend name="include/EReg.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+  </file>
+  <file name="src/ApplicationMain.cpp" >
+   <depend name="include/ApplicationDocument.h"/>
+   <depend name="include/ApplicationMain.h"/>
+   <depend name="include/Reflect.h"/>
+   <depend name="include/nme/AssetData.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Loader.h"/>
+   <depend name="include/nme/display/LoaderInfo.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/display/StageAlign.h"/>
+   <depend name="include/nme/display/StageScaleMode.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/pi_xy/application/TestNME.h"/>
+  </file>
+  <file name="src/ApplicationDocument.cpp" >
+   <depend name="include/ApplicationDocument.h"/>
+   <depend name="include/ApplicationMain.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/pi_xy/application/TestNME.h"/>
+  </file>
+  <file name="src/pi_xy/application/TestNME.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/haxe/ds/GenericCell_Int.h"/>
+   <depend name="include/haxe/ds/GenericStack_Int.h"/>
+   <depend name="include/haxe/io/ArrayBufferViewImpl.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/iterMagic/ArrIntImg.h"/>
+   <depend name="include/iterMagic/BytesImg.h"/>
+   <depend name="include/iterMagic/Iimg.h"/>
+   <depend name="include/iterMagic/StackIntImg.h"/>
+   <depend name="include/iterMagic/U32ArrImg.h"/>
+   <depend name="include/iterMagic/VecIntImg.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/Bitmap.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/FPS.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/MovieClip.h"/>
+   <depend name="include/nme/display/PixelSnapping.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/text/TextField.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/pi_xy/algo/HitTri.h"/>
+   <depend name="include/pi_xy/algo/IhitObj.h"/>
+   <depend name="include/pi_xy/algo/TriPoints_.h"/>
+   <depend name="include/pi_xy/application/TestNME.h"/>
+   <depend name="include/pi_xy/formats/NMEbitmapData.h"/>
+   <depend name="include/pi_xy/iter/IntIterStart.h"/>
+  </file>
+  <file name="src/nme/display/Sprite.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/Sprite.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+  </file>
+  <file name="src/nme/display/DisplayObjectContainer.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/errors/ArgumentError.h"/>
+   <depend name="include/nme/errors/Error.h"/>
+   <depend name="include/nme/errors/RangeError.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+  </file>
+  <file name="src/nme/display/InteractiveObject.cpp" >
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/nme/display/DisplayObject.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/cpp/Prime.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/app/IAppEventHandler.h"/>
+   <depend name="include/nme/app/IPollClient.h"/>
+   <depend name="include/nme/display/BlendMode.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/LoaderInfo.h"/>
+   <depend name="include/nme/display/PixelSnapping.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/EventPhase.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/geom/ColorTransform.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Point.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+   <depend name="include/nme/geom/Transform.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/nme/utils/IDataInput.h"/>
+   <depend name="include/nme/utils/IDataOutput.h"/>
+   <depend name="include/nme/utils/IMemoryRange.h"/>
+  </file>
+  <file name="src/Std.cpp" >
+   <depend name="include/Std.h"/>
+  </file>
+  <file name="src/haxe/io/Path.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/io/Path.h"/>
+  </file>
+  <file name="src/sys/FileSystem.cpp" >
+   <depend name="include/haxe/io/Path.h"/>
+   <depend name="include/sys/FileSystem.h"/>
+  </file>
+  <file name="src/sys/io/_Process/Stdout.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/sys/io/_Process/Stdout.h"/>
+  </file>
+  <file name="src/haxe/io/Input.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+   <depend name="include/haxe/exceptions/NotImplementedException.h"/>
+   <depend name="include/haxe/exceptions/PosException.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/BytesBuffer.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+  </file>
+  <file name="src/haxe/io/Bytes.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+  </file>
+  <file name="src/sys/io/_Process/Stdin.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Eof.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/sys/io/_Process/Stdin.h"/>
+  </file>
+  <file name="src/haxe/io/Output.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/exceptions/NotImplementedException.h"/>
+   <depend name="include/haxe/exceptions/PosException.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+  </file>
+  <file name="src/sys/io/Process.cpp" >
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/sys/io/Process.h"/>
+   <depend name="include/sys/io/_Process/Stdin.h"/>
+   <depend name="include/sys/io/_Process/Stdout.h"/>
+  </file>
+  <file name="src/Sys.cpp" >
+   <depend name="include/Sys.h"/>
+  </file>
+  <file name="src/cpp/Lib.cpp" >
+   <depend name="include/cpp/Lib.h"/>
+  </file>
+  <file name="src/nme/Loader.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/Sys.h"/>
+   <depend name="include/cpp/Lib.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/nme/Loader.h"/>
+   <depend name="include/sys/FileSystem.h"/>
+   <depend name="include/sys/io/Process.h"/>
+  </file>
+  <file name="src/cpp/Prime.cpp" >
+   <depend name="include/cpp/Prime.h"/>
+  </file>
+  <file name="src/nme/display/IBitmapDrawable.cpp" >
+   <depend name="include/nme/display/IBitmapDrawable.h"/>
+   <depend name="include/nme/geom/ColorTransform.h"/>
+   <depend name="include/nme/geom/Matrix.h"/>
+   <depend name="include/nme/geom/Rectangle.h"/>
+  </file>
+  <file name="src/nme/events/EventDispatcher.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/EventDispatcher.h"/>
+   <depend name="include/nme/events/EventPhase.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+   <depend name="include/nme/events/IOErrorEvent.h"/>
+   <depend name="include/nme/events/Listener.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+   <depend name="include/nme/utils/WeakRef.h"/>
+  </file>
+  <file name="src/nme/events/IEventDispatcher.cpp" >
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/ApplicationBoot.cpp" >
+   <depend name="include/ApplicationBoot.h"/>
+  </file>
+  <file name="src/__boot__.cpp" >
+   <depend name="include/nme/utils/CompressionAlgorithm.h"/>
+   <depend name="include/nme/text/TextFieldType.h"/>
+   <depend name="include/nme/text/TextFieldAutoSize.h"/>
+   <depend name="include/nme/text/GridFitType.h"/>
+   <depend name="include/nme/text/AntiAliasType.h"/>
+   <depend name="include/nme/net/URLLoaderDataFormat.h"/>
+   <depend name="include/nme/media/SampleRate.h"/>
+   <depend name="include/nme/media/AudioSampleFormat.h"/>
+   <depend name="include/nme/display/TriangleCulling.h"/>
+   <depend name="include/nme/display/StageScaleMode.h"/>
+   <depend name="include/nme/display/StageQuality.h"/>
+   <depend name="include/nme/display/StageDisplayState.h"/>
+   <depend name="include/nme/display/StageAlign.h"/>
+   <depend name="include/nme/display/SpreadMethod.h"/>
+   <depend name="include/nme/display/PixelSnapping.h"/>
+   <depend name="include/nme/display/LineScaleMode.h"/>
+   <depend name="include/nme/display/JointStyle.h"/>
+   <depend name="include/nme/display/InterpolationMethod.h"/>
+   <depend name="include/nme/display/GradientType.h"/>
+   <depend name="include/nme/display/CapsStyle.h"/>
+   <depend name="include/nme/display/BlendMode.h"/>
+   <depend name="include/nme/AssetType.h"/>
+   <depend name="include/nme/AlphaMode.h"/>
+   <depend name="include/iterMagic/RawImageData.h"/>
+   <depend name="include/haxe/zip/FlushMode.h"/>
+   <depend name="include/haxe/io/Error.h"/>
+   <depend name="include/haxe/io/Encoding.h"/>
+   <depend name="include/haxe/StackItem.h"/>
+   <depend name="include/format/png/Chunk.h"/>
+   <depend name="include/format/png/Color.h"/>
+   <depend name="include/pi_xy/triangleGML/triGML/BasicShape.h"/>
+   <depend name="include/pi_xy/formats/NMEbitmapData.h"/>
+   <depend name="include/pi_xy/ImageStruct.h"/>
+   <depend name="include/pi_xy/_Endian/Endian_Fields_.h"/>
+   <depend name="include/nme/utils/UInt8Array.h"/>
+   <depend name="include/nme/utils/Endian.h"/>
+   <depend name="include/nme/utils/ArrayBufferView.h"/>
+   <depend name="include/nme/ui/KeyboardInputDevice.h"/>
+   <depend name="include/nme/ui/Keyboard.h"/>
+   <depend name="include/nme/ui/GamepadButton.h"/>
+   <depend name="include/nme/ui/GamepadAxis.h"/>
+   <depend name="include/nme/ui/GameInputDevice.h"/>
+   <depend name="include/nme/ui/GameInput.h"/>
+   <depend name="include/nme/text/TextFormat.h"/>
+   <depend name="include/nme/text/Font.h"/>
+   <depend name="include/nme/system/SecurityDomain.h"/>
+   <depend name="include/nme/system/ApplicationDomain.h"/>
+   <depend name="include/nme/net/URLRequestMethod.h"/>
+   <depend name="include/nme/net/URLRequest.h"/>
+   <depend name="include/nme/net/NetStream.h"/>
+   <depend name="include/nme/net/NetConnection.h"/>
+   <depend name="include/nme/media/StageVideo.h"/>
+   <depend name="include/nme/media/SoundChannel.h"/>
+   <depend name="include/nme/media/Sound.h"/>
+   <depend name="include/nme/image/PixelFormat.h"/>
+   <depend name="include/nme/events/TouchEvent.h"/>
+   <depend name="include/nme/events/SystemEvent.h"/>
+   <depend name="include/nme/events/StageVideoAvailabilityEvent.h"/>
+   <depend name="include/nme/events/SampleDataEvent.h"/>
+   <depend name="include/nme/events/ProgressEvent.h"/>
+   <depend name="include/nme/events/NetStatusEvent.h"/>
+   <depend name="include/nme/events/MoveEvent.h"/>
+   <depend name="include/nme/events/KeyboardEvent.h"/>
+   <depend name="include/nme/events/JoystickEvent.h"/>
+   <depend name="include/nme/events/IOErrorEvent.h"/>
+   <depend name="include/nme/events/HTTPStatusEvent.h"/>
+   <depend name="include/nme/events/GameInputEvent.h"/>
+   <depend name="include/nme/events/FocusEvent.h"/>
+   <depend name="include/nme/events/EventPhase.h"/>
+   <depend name="include/nme/events/Listener.h"/>
+   <depend name="include/nme/events/ErrorEvent.h"/>
+   <depend name="include/nme/events/TextEvent.h"/>
+   <depend name="include/nme/events/DropEvent.h"/>
+   <depend name="include/nme/events/MouseEvent.h"/>
+   <depend name="include/nme/events/AppLinkEvent.h"/>
+   <depend name="include/nme/events/Event.h"/>
+   <depend name="include/nme/display/Tilesheet.h"/>
+   <depend name="include/nme/display/ManagedStage.h"/>
+   <depend name="include/nme/display/Stage.h"/>
+   <depend name="include/nme/net/URLLoader.h"/>
+   <depend name="include/nme/display/GraphicsPathWinding.h"/>
+   <depend name="include/nme/display/Graphics.h"/>
+   <depend name="include/nme/text/TextField.h"/>
+   <depend name="include/nme/display/BitmapData.h"/>
+   <depend name="include/nme/app/Window.h"/>
+   <depend name="include/nme/app/EventName.h"/>
+   <depend name="include/nme/app/EventId.h"/>
+   <depend name="include/nme/Version.h"/>
+   <depend name="include/nme/NativeResource.h"/>
+   <depend name="include/nme/Lib.h"/>
+   <depend name="include/nme/app/Application.h"/>
+   <depend name="include/nme/Assets.h"/>
+   <depend name="include/nme/utils/ByteArray.h"/>
+   <depend name="include/iterMagic/_Img/ImageType_Impl_.h"/>
+   <depend name="include/haxe/xml/Parser.h"/>
+   <depend name="include/haxe/Timer.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/sys/thread/_Thread/HaxeThread.h"/>
+   <depend name="include/Xml.h"/>
+   <depend name="include/ApplicationMain.h"/>
+   <depend name="include/nme/display/DisplayObjectContainer.h"/>
+   <depend name="include/nme/display/InteractiveObject.h"/>
+   <depend name="include/nme/display/DisplayObject.h"/>
+   <depend name="include/nme/Loader.h"/>
+  </file>
+  <file name="src/__files__.cpp" if='HXCPP_DEBUGGER'>
+  </file>
+   <file name="${HXCPP}/src/hx/NoFiles.cpp" unless="HXCPP_DEBUGGER" />
+  <file name="src/__resources__.cpp" >
+  </file>
+</files>
+<files id="__lib__">
+<compilerflag value="-Iinclude"/>
+  <file name="src/__lib__.cpp" >
+   <depend name="include/ApplicationMain.h"/>
+   <depend name="include/sys/thread/_Thread/Thread_Impl_.h"/>
+  </file>
+</files>
+<files id="__main__">
+<compilerflag value="-Iinclude"/>
+  <file name="src/__main__.cpp" >
+   <depend name="include/ApplicationMain.h"/>
+   <depend name="include/sys/thread/_Thread/Thread_Impl_.h"/>
+  </file>
+</files>
+<files id="__resources__">
+<file name="src/resources/__res_0.cpp" tags="optim-none" />
+</files>
+<files id="__externs__">
+</files>
+<set name="HAXE_OUTPUT" value="ApplicationMain" />
+<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
+<include name="${HXCPP}/src/hx/libs/std/Build.xml"/>
+<include name="${HXCPP}/src/hx/libs/std/Build.xml"/>
+<include name="${HXCPP}/src/hx/libs/std/Build.xml"/>
+
+
+
+<include name="${HXCPP}/src/hx/libs/regexp/Build.xml"/>
+<include name="${HXCPP}/src/hx/libs/std/Build.xml"/>
+<include name="${HXCPP}/src/hx/libs/zlib/Build.xml" />
+<include name="${HXCPP}/src/hx/libs/zlib/Build.xml"/>
+
+   <files id='haxe'>
+      <compilerflag value='-I${haxelib:nme}/include'/>
+      <compilerflag value='-I${haxelib:nme}/../include'/>
+      <compilerflag value='-DHX_UNDEFINE_H'/>
+   </files>
+
+<error value="Hxcpp is out of date - please update" unlessApi="430" />
+</xml>

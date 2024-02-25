@@ -25,7 +25,7 @@ function patternRectangle( thisImage: Pixelimage
             useFore = patternFill[ count ];
             count++;
         }
-        var color = (useFore)?foreColor: backColor;
+        var color = ( useFore )? foreColor: backColor;
         thisImage.setARGB( p++, q, color );
         if( p > maxX ){
             p = xx;

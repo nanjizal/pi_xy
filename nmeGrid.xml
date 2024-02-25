@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <!-- NMML reference: https://gist.github.com/1763850 -->
+        
+    <!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+    <meta 
+        title="Pixelimage example with NME"
+        package="net.nanjizal.pi_xy.pixelimageNMEGridexample"
+        version="0.0.1"
+        company="Nanjizal"
+    />
+
+    <!-- output -->
+    <app
+        main="pi_xy.application.TestNME"
+        path="nmes"
+    />
+
+    <!-- window properties -->
+    <window
+        background="#000000"
+        fps="60" 
+        width="1024"
+        height="768"
+        background="0x181818"
+        orientation="landscape"
+        vsync="false"
+        antialiasing="4"
+    />
+	
+	<set name="SWF_VERSION" value="11.2" />
+	
+	<!-- classpath, haxe libs -->
+	<source path="src" />
+	
+	<haxelib name="nme" />
+    <haxelib name="lime" />
+    <haxelib name="justPath"/>
+	<haxelib name="iterMagic"/>
+    <haxelib name="format"/>
+    
+	<!-- optimize output
+	<haxeflag name="-dce full" /> -->
+	<haxeflag name="-D flatoutput" />
+</project>

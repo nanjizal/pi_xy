@@ -1,5 +1,6 @@
 package pi_xy.imageAbstracts;
 import pi_xy.Pixelimage;
+import iterMagic.Img;
 /**
     Provides methods to deal directly with the raw Pixelimage data
     take care as the internal colour values are not ARGB format
@@ -65,5 +66,14 @@ abstract RawImage( Pixelimage ) from Pixelimage to Pixelimage {
     public inline
     function imgToString(){
         return this.image.toString();
+    }
+    public var rawImageData( get, set ): RawImageData;
+    private inline
+    function get_rawImageData(): RawImageData {
+        return this.image.getRaw();
+    }
+    private inline
+    function set_rawImageData( d: RawImageData ): RawImageData {
+        return this.image.setRaw( d );
     }
 }

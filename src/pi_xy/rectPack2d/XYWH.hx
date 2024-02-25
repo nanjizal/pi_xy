@@ -43,5 +43,13 @@ abstract XYWH( XYWH_ ) to XYWH_ from XYWH_ {
     function toWH():WH {
         var _:WH = ( cast abstract: WH );
         return _;
-    } 
+    }
+    public inline
+    function toString(){
+        var x = this.x;
+        var y = this.y;
+        var w = this.w;
+        var h = this.h;
+        return '{ x: $x, y: $y, w: $w, h: $h }';
+    }
 }

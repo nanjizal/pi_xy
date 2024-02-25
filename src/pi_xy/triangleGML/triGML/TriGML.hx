@@ -73,7 +73,7 @@ abstract class TriGML<DRAWTOOL,IMAGETOOL> {
 enum abstract TriangleGMLname ( String ) to String {
     /* contour */
     var ARROW_SHAPE                 = 'ArrowShape';
-	var CUBIC_CURVE_SHAPE           = 'CubicCurveShape';
+    var CUBIC_CURVE_SHAPE           = 'CubicCurveShape';
     var ELLIPSE_SHAPE               = 'EllipseShape';
     var LINE_GRID_SHAPE             = 'LineGridShape';
     var LINE_SHAPE                  = 'LineShape';

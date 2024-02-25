@@ -102,7 +102,7 @@ class TriangleGML {
 enum abstract TriangleGMLname ( String ) to String {
     /* contour */
     var ARROW_SHAPE                 = 'ArrowShape';
-	var CUBIC_CURVE_SHAPE           = 'CubicCurveShape';
+    var CUBIC_CURVE_SHAPE           = 'CubicCurveShape';
     var LINE_GRID_SHAPE             = 'LineGridShape';
     var LINE_SHAPE                  = 'LineShape';
     var POLY_LINE_SHAPE             = 'PolyLineShape';

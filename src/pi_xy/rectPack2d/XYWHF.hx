@@ -67,4 +67,14 @@ abstract XYWHF( XYWHF_ ) from XYWHF_ to XYWHF_ {
     function fits( r: WH ){
         return toWH().fits( r );
     }
+    public inline
+    function toString(){
+        var id = this.id;
+        var x = this.x;
+        var y = this.y;
+        var w = this.w;
+        var h = this.h;
+        var flipped = this.flipped;
+        return '{ id: $id, x: $x, y: $y, w: $w, h: $h, flipped: $flipped }';
+    }
 }

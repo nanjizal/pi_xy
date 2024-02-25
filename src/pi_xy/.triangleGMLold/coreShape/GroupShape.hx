@@ -12,8 +12,8 @@ typedef T_GroupShape {
 
 abstract A_GroupShape {
     public inline new<S:T_GroupShape>( T_GroupShape: S ){
-		this = p;
-	}
+        this = p;
+    }
     public inline function setProperties( s: GroupShape ){
         if( visiblity != null ) s.setProperties( 'visibility', visibility );
         if( opacity != null ) s.setProperties( 'opacity', opacity );
