@@ -1,3 +1,4 @@
 bin/linux64/
 Export/
 .vscode
+.gitignore
