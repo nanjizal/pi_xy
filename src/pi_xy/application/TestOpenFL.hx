@@ -1,22 +1,22 @@
 package pi_xy.application;
 
-import nme.display.Sprite;
-import nme.events.Event;
-import nme.display.Graphics;
-import nme.display.BitmapData;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.display.Graphics;
+import openfl.display.BitmapData;
 
 import pi_xy.Pixelimage;
 import pi_xy.formats.Format;
 import pi_xy.triangleGML.TriangleGML;
 
-import pi_xy.formats.NMEbitmapData;
+import pi_xy.formats.OpenFLbitmapData;
 
-function main(): Void { nme.Lib.current.addChild( new TestNME() ); }
-class TestNME extends Sprite {
+function main(): Void { openfl.Lib.current.addChild( new TestOpenFL() ); }
+class TestOpenFL extends Sprite {
     public function new(){
         super();
-        trace( ' testing TestNME ' );
-        var current = nme.Lib.current;
+        trace( ' testing Testopenfl ' );
+        var current = openfl.Lib.current;
         var stage = current.stage;
         var viewSprite = new Sprite();
         var g = viewSprite.graphics;
@@ -47,16 +47,16 @@ class TestNME extends Sprite {
         pixelTest.gradientShape.triangle( 100+120, 100+20, 0xccff0000, 300+120, 220+20, 0xcc0000FF, 120+120, 300+20, 0xcc00ff00 );
        
         pixelImage.putPixelImage( pixelTest, 45, 45 );
-        var bitmapDataTest = NMEbitmapData.toNmeBitmapData_( pixelImage );
-        var pixelImageTest = NMEbitmapData.fromNmeBitmapData_( bitmapDataTest );
-        var bitmapData = NMEbitmapData.toNmeBitmapData_( pixelImageTest );
-        var bitmap = new nme.display.Bitmap( bitmapData );
+        var bitmapDataTest = OpenFLbitmapData.toOpenflBitmapData_( pixelImage );
+        var pixelImageTest = OpenFLbitmapData.fromOpenflBitmapData_( bitmapDataTest );
+        var bitmapData = OpenFLbitmapData.toOpenflBitmapData_( pixelImageTest );
+        var bitmap = new openfl.display.Bitmap( bitmapData );
         addChild( bitmap );
         
         current.graphics.beginFill(0xFFFFFFFF, 1. );
         current.graphics.drawRect( 0., 0., 70., 40. );
         current.graphics.endFill();
-        current.addChild( new nme.display.FPS() );
+        current.addChild( new openfl.display.FPS() );
     }
         //var parser = new TriangleGML( pixelImage );
         //parser.addShape( backGround, 10, 10 );
