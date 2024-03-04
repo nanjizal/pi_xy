@@ -1,6 +1,6 @@
 package pi_xy.formats;
 
-import hxd.Pixel;
+import hxd.Pixels;
 import pi_xy.Pixelimage;
 import pi_xy.pixel.Pixel32;
 import haxe.io.UInt8Array;
@@ -25,7 +25,7 @@ function toHeapsPixels( pixelImage: Pixelimage ): hxd.Pixels {
     return pixs;
 }
 inline
-function fromHeapsPixels( pixs: hxd.Pixels ): Pixelimage {
+function fromHeapsPixels( pixs: PixelsARGB ): Pixelimage {
     var lh = pixs.height; 
     var lw = pixs.width;
     var pixelImage = new Pixelimage( lw, lh );
