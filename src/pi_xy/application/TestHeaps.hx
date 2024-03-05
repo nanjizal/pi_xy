@@ -30,9 +30,9 @@ class TestHeaps extends hxd.App {
             pixelTest.gradientShape.triangle( 100, 100, 0xf0ffcf00, 300, 220, 0xf000cfFF, 120, 300, 0xf0cF00FF );
             pixelTest.gradientShape.triangle( 100+120, 100+20, 0xccff0000, 300+120, 220+20, 0xcc0000FF, 120+120, 300+20, 0xcc00ff00 );
             pixelImage.putPixelImage( pixelTest, 45, 45 );
-            var heapsTileTest = HeapsTile.toHeapsTile_( pixelImage );
-            var pixelImageTest = HeapsTile.fromHeapsTile_( heapsTileTest );
-            var bitmapData = NMEbitmapData.toHeapsTile_( pixelImageTest );
+            var heapsTileTest = pi_xy.formats.HeapsTile.toHeapsTile_( pixelImage );
+            var pixelImageTest = pi_xy.formats.HeapsTile.fromHeapsTile_( heapsTileTest );
+            var tile = pi_xy.formats.HeapsTile.toHeapsTile_( pixelImageTest );
             bmp = new h2d.Bitmap( tile, s2d );
         }
         override function update(dt:Float) {
