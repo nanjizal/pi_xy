@@ -52,7 +52,6 @@ function fromOpenflBitmapData( bitmapData: BitmapData ): Pixelimage {
     var pixelImage = new Pixelimage( lw, lh );
     pixelImage.transparent = true;
     var rgba: haxe.io.Bytes = image.getPixels( rect );
-    //var rgba = new haxe.io.Bytes( bd, lw * lh * 4 );
     var p = 0;
     for( y in 0...lh ) {
         for( x in 0...lw ) {

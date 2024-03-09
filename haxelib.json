@@ -8,6 +8,6 @@
     "version"      : "0.0.1-alpha",
     "releasenote"  : "See https://github.com/nanjizal/pi_xy/blob/master/CHANGELOG.md",
     "contributors" : ["Nanjizal"],
-    "classPath"    : "src",
+    "classPath"    : "src/",
     "dependencies" : {}
 }
