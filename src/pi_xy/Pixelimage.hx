@@ -577,7 +577,13 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
     inline function get_png():PNG {
         return ( abstract: PNG );
     }
+    #end
+    #if kha
+    public var khaImage( get, never ): KhaImage;
 
+    inline function get_khaImage():KhaImage {
+        return ( abstract: KhaImage );
+    }
     #end
     /*
         inline

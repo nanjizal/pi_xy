@@ -11,6 +11,14 @@ abstract TransformImage( Pixelimage ) from Pixelimage to Pixelimage {
     public function new( w: Int, h: Int ){
        this = new Pixelimage( w, h );
     }
+    inline public
+    function flipX( inPlace: Bool = true, includeMask: Bool = false ): Pixelimage {
+        return abstract.flippedX( 0, 0, this.width, this.height, this.transparent, inPlace, includeMask );
+    }
+    inline public
+    function flipY( inPlace: Bool = true, includeMask: Bool = false ): Pixelimage {
+        return abstract.flippedY( 0, 0, this.width, this.height, this.transparent, inPlace, includeMask );
+    }
     /**
         creates a new Pixelimage that is flipped horizonally.
         inPlace overwrites current.

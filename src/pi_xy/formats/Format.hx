@@ -25,7 +25,7 @@ function toPNG( pixelImage: Pixelimage, name: String, level = 9 ){
             // AGBR
             var col: Pixel32 = new Pixel32( pixelImage.getARGB( x, y ) );
             var a: Int = col.c0;
-            var row: Int = col.c1;
+            var r: Int = col.c1;
             var g: Int = col.c2;
             var b: Int = col.c3;
             rgba.set(w++,r); // r
