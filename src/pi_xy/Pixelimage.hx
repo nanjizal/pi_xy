@@ -578,6 +578,13 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         return ( abstract: PNG );
     }
     #end
+    #if ( nme || openfl )
+    public var dataBitmap( get, never ): pi_xy.imageAbstracts.DataBitmap;
+    inline function get_dataBitmap():DataBitmap {
+        return ( abstract: DataBitmap );
+    }
+    #end
+
     #if kha
     public var khaImage( get, never ): KhaImage;
 

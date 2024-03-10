@@ -8,7 +8,7 @@ import nme.display.BitmapData;
 import pi_xy.Pixelimage;
 import pi_xy.formats.Format;
 import pi_xy.triangleGML.TriangleGML;
-
+import pi_xy.imageAbstracts.DataBitmap;
 import pi_xy.formats.NMEbitmapData;
 
 function main(): Void { nme.Lib.current.addChild( new TestNME() ); }
@@ -47,9 +47,9 @@ class TestNME extends Sprite {
         pixelTest.gradientShape.triangle( 100+120, 100+20, 0xccff0000, 300+120, 220+20, 0xcc0000FF, 120+120, 300+20, 0xcc00ff00 );
        
         pixelImage.putPixelImage( pixelTest, 45, 45 );
-        var bitmapDataTest = NMEbitmapData.toNmeBitmapData_( pixelImage );
-        var pixelImageTest = NMEbitmapData.fromNmeBitmapData_( bitmapDataTest );
-        var bitmapData = NMEbitmapData.toNmeBitmapData_( pixelImageTest );
+        var bitmapDataTest: BitmapData = pixelImage.dataBitmap;
+        var pixelImageTest = DataBitmap.createPixelImage( bitmapDataTest );
+        var bitmapData: BitmapData = pixelImageTest.dataBitmap;
         var bitmap = new nme.display.Bitmap( bitmapData );
         addChild( bitmap );
         
