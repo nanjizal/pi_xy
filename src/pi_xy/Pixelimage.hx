@@ -584,7 +584,7 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         return ( abstract: DataBitmap );
     }
     #end
-    #if ( lime )
+    #if ( peote_view )
         public var peoteTexture( get, never ): pi_xy.imageAbstracts.PeoteTexture;
         inline function get_peoteTexture():pi_xy.imageAbstracts.PeoteTexture {
             return ( abstract: pi_xy.imageAbstracts.PeoteTexture );

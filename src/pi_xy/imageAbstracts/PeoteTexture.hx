@@ -1,5 +1,5 @@
 package pi_xy.imageAbstracts;
-
+#if ( peote_view )
 import pi_xy.pixel.Pixel32;
 @:forward
 @:transient
@@ -24,3 +24,4 @@ abstract PeoteTexture( Pixelimage ) from Pixelimage to Pixelimage {
         return pi_xy.formats.PeoteTexture.fromPeoteTexture( texture );
     }
 }
+#end
