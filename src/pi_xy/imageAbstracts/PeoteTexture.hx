@@ -13,6 +13,11 @@ abstract PeoteTexture( Pixelimage ) from Pixelimage to Pixelimage {
     function to(): peote.view.Texture {
         return pi_xy.formats.PeoteTexture.toPeoteTexture( this );
     }
+    @:to
+    public inline
+    function toTextureData(): peote.view.TextureData {
+        return pi_xy.formats.PeoteTexture.toPeoteTextureData( this );
+    }
     // unsure when/how/if feasible to grab the texture.
     public static inline
     function createPixelImage( texture: peote.view.Texture ): Pixelimage {
