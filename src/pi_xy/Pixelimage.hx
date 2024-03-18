@@ -584,11 +584,17 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         return ( abstract: DataBitmap );
     }
     #end
-    #if ( peote_view )
-        public var peoteTexture( get, never ): pi_xy.imageAbstracts.PeoteTexture;
-        inline function get_peoteTexture():pi_xy.imageAbstracts.PeoteTexture {
-            return ( abstract: pi_xy.imageAbstracts.PeoteTexture );
-        }
+    #if peote_view
+    public var peoteTexture( get, never ): pi_xy.imageAbstracts.PeoteTexture;
+    inline function get_peoteTexture():pi_xy.imageAbstracts.PeoteTexture {
+        return ( abstract: pi_xy.imageAbstracts.PeoteTexture );
+    }
+    #end
+    #if lime
+    public var imageLime( get, never ): pi_xy.imageAbstracts.ImageLime;
+    inline function get_imageLime():pi_xy.imageAbstracts.ImageLime {
+        return ( abstract: pi_xy.imageAbstracts.ImageLime );
+    }
     #end
     #if kha
     public var khaImage( get, never ): KhaImage;

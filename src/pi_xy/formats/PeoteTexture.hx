@@ -1,6 +1,5 @@
 package pi_xy.formats;
 #if ( peote_view )
-import js.html.TextTrackCue;
 import peote.view.TextureFormat;
 import peote.view.Texture;
 import peote.view.TextureData;
