@@ -1,4 +1,5 @@
 package pi_xy.imageAbstracts;
+import pi_xy.draw.DrawTileHelper;
 import pi_xy.Pixelimage;
 import pi_xy.algo.HitTri;
 import pi_xy.algo.HitQuad;
@@ -225,5 +226,18 @@ abstract TileShape( Pixelimage ) from Pixelimage to Pixelimage {
                  , tileImage
                  , phi
                  , noSides );
+    }
+    /**
+        svg path
+    **/
+    public inline
+    function svgPath( path: String
+                    , strokeWidth: Float, tileImageStroke: Pixelimage
+                    , translateX = 0. , translateY = 0.
+                    , scaleX     = 1. , scaleY     = 1.  ){
+        var drawTileHelper = new DrawTileHelper( this, strokeWidth, tileImageStroke
+                                                 , translateX, translateY
+                                                 , scaleX, scaleY );
+        drawTileHelper.path( path );
     }
 }

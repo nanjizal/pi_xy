@@ -1,4 +1,5 @@
 package pi_xy.imageAbstracts;
+import pi_xy.draw.DrawShapeHelper;
 import pi_xy.Pixelimage;
 import pi_xy.algo.RoundRecPixel;
 import pi_xy.algo.CirclePixel;
@@ -153,4 +154,17 @@ abstract LineShape( Pixelimage ) from Pixelimage to Pixelimage {
         temp = null;
     }
 
+    /**
+        svg path thick line 
+    **/
+    public inline
+    function svgPath( path: String
+                    , strokeWidth: Float, strokeColor: Int
+                    , translateX = 0. , translateY = 0.
+                    , scaleX     = 1. , scaleY     = 1. ){
+        var drawShapeHelper = new DrawShapeHelper( this, strokeWidth, strokeColor
+                                                 , translateX, translateY
+                                                 , scaleX, scaleY );
+        drawShapeHelper.path( path );
+    }
 }

@@ -106,4 +106,8 @@ class DrawTileHelper implements ILinePathContext {
         svgLinePath.lineTo( thruX, thruY );
         svgLinePath.lineTo( nx, ny );
     }
+    public inline
+    function path( str: String ){
+        svgLinePath.parse( str );
+    }
 }

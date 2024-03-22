@@ -1,4 +1,5 @@
 package pi_xy.imageAbstracts;
+import pi_xy.draw.DrawGradThickHelper;
 import pi_xy.Pixelimage;
 import pi_xy.algo.HitTri;
 import pi_xy.algo.HitQuad;
@@ -317,5 +318,22 @@ abstract GradientShape( Pixelimage ) from Pixelimage to Pixelimage {
                           , fat, tall );
         this.putPixelImage( temp, Std.int( x ), Std.int( y ) );
         temp = null;
+    }
+    /**
+        svg path
+    **/
+    public inline
+    function svgPath( path: String
+                    , strokeWidth:       Float
+                    , strokeTopColor:    Int
+                    , strokeBottomColor: Int
+                    , translateX = 0. , translateY = 0.
+                    , scaleX     = 1. , scaleY     = 1. ){
+        var drawGradThickHelper = new DrawGradThickHelper ( this
+                                                          , strokeWidth
+                                                          , strokeTopColor, strokeBottomColor
+                                                          , translateX, translateY
+                                                          , scaleX, scaleY );
+        drawGradThickHelper.path( path );
     }
 }
