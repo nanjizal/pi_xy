@@ -578,6 +578,12 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         return ( abstract: PNG );
     }
     #end
+    #if ansi
+    public var ansi( get, never ): pi_xy.imageAbstracts.AnsiImage;
+    inline function get_ansi():pi_xy.imageAbstracts.AnsiImage {
+        return ( abstract: pi_xy.imageAbstracts.AnsiImage );
+    }
+    #end
     #if ( nme || openfl )
     public var dataBitmap( get, never ): pi_xy.imageAbstracts.DataBitmap;
     inline function get_dataBitmap():DataBitmap {
