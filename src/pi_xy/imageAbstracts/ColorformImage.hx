@@ -79,4 +79,25 @@ abstract ColorformImage( Pixelimage ) from Pixelimage to Pixelimage {
         }
         return out;
     }
+    public inline
+    function sepia(): Pixelimage {
+        var p = 0;
+        var xx = p;
+        var q = 0;
+        var out:Pixelimage = new Pixelimage(this.width, this.height);
+        var here:Pixelimage = this;
+        var wid = this.width -1;
+        var hi  = this.height -1;
+        while (true) {
+            out.setARGB( p, q, pi_xy.pixel.ColorHelp.sepia( ( here.getARGB( p, q ): Int ) ) );
+            p++;
+            if( p > wid ){
+                p = xx;
+                q++;
+            }
+            if( q > hi )
+                break;
+        }
+        return out;
+    }
 }
