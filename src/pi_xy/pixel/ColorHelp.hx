@@ -132,6 +132,8 @@ class ColorHelp {
     public var greenAvg_:( a: Int, b: Int  ) -> Float = greenAvg;
     public var blueAvg_:( a: Int, b: Int  ) -> Float = blueAvg;
     public var argbIntAvg_:( c0: Int, c1: Int ) -> Int = argbIntAvg;
+    public var luminosityGrey_:( color: Int, useAlpha: Bool ) -> Int = luminosityGrey;
+    public var sepia_:( color: Int ) -> Int = sepia;
 }
 // assumes ARGB in and out
 inline
@@ -148,4 +150,18 @@ function luminosityGrey( color: Int, useAlpha: Bool = true ): Int{
         v = Math.round( l*0xFF );
         ( Math.round(c.a*0xFF) << 24 | v << 16 | v << 8 | v );
     }
+}
+inline
+function sepia( color: Int ): Int {
+    var c = hexToARGB( color );
+    var r = clampClosed01(( c.r * .393) + ( c.g *.769) + ( c.b * .189));
+    var g = clampClosed01(( c.r * .349) + ( c.g *.686) + ( c.b * .168));
+    var b = clampClosed01(( c.r * .272) + ( c.g *.534) + ( c.b * .131));
+    return from_argb( c.a, c.r, c.g, c.b );
+}
+inline
+function clampClosed01( v: Float ): Float {
+    return if( v <= 0. ) 0.
+        else if (v >= 1. ) 1.
+        else v;
 }
