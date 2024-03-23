@@ -165,7 +165,7 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         provides a RectangleWindow defining the current image from 0, 0.
         setting it can resize the window, currently x and y are assumed 0.
     **/
-    var rectWindow(get, set):RectangleWindow;
+    public var rectWindow(get, set):RectangleWindow;
 
     inline function get_rectWindow():RectangleWindow {
         return {

@@ -109,4 +109,16 @@ abstract TransformImage( Pixelimage ) from Pixelimage to Pixelimage {
                            , scaleW, scaleH
                            , transparent, includeMask );
     }
+    // probably needs testing and tweaking.
+    inline public
+    function skew( skewX: Float, skewY: Float, inPlace: Bool = false ){
+        return if( inPlace ){
+            this.imageShape.rectangle( this, this.rectWindow, 0, 0, this.width, this.height, skewX, skewH, 1., 1., false );
+            this;
+        } else {
+            var p: Pixelimage = this.raw.clone();
+            p.imageShape.rectangle( this, this.rectWindow, 0, 0, this.width, this.height, skewX, skewH, 1., 1., false );
+            p;
+        }
+    }
 }
