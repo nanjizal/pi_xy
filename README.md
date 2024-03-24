@@ -1,21 +1,21 @@
 # π - x y
 ## pi_xy provides pixel image manipulation on the CPU using Haxe.
-For instance it could be utilise in theory with Kha's [graphics1](https://github.com/Kode/Kha/wiki/kha.graphics1) to make it simple to create images like this with only setPixel api.
 
 ![image](https://user-images.githubusercontent.com/20134338/195204970-fa2f6dee-86cf-48e5-a152-cf35e2b4d1cc.png)
 
-## Aim to fully support all Haxe game engines, assumes Haxe 4.3.4+
-- OpenFL ( Linux c++ and html5 )
+## The library aims to support Haxe game engines and standalone js
+### assumes Haxe 4.3.4+
+- [OpenFL](https://www.openfl.org/) see [ OpenflTest > ](https://github.com/nanjizal/pi_xyOpenflTest)
+- [lime](https://lime.openfl.org/) see [ LimeTest > ](https://github.com/nanjizal/pi_xyLimeTest)
+- [peote-view](https://github.com/maitag/peote-view) see [ PeoteTest > ](https://github.com/nanjizal/pi_xyPeoteTest)
 - NME ( Linux c++ )
 - Heaps ( web )
 - Ceramic ( web )
 - Kha ( web )
 - format PNG
 - Javascript Canvas 
-- peote-view
 ### TODO or check engines and/or platforms.
 - JVM or other non c++/js solutions
-- Lime
 - Flash
 - Flixel
   
