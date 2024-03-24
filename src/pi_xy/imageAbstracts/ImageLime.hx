@@ -1,8 +1,9 @@
 package pi_xy.imageAbstracts;
+#if ( lime )
 import lime.graphics.Image;
 import lime.graphics.ImageBuffer;
 import pi_xy.Pixelimage;
-#if ( lime )
+
 @:forward
 @:transient
 abstract ImageLime( Pixelimage ) from Pixelimage to Pixelimage {

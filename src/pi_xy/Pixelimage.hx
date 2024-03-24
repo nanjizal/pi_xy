@@ -609,6 +609,13 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
         return ( abstract: KhaImage );
     }
     #end
+    #if heaps
+    public var heapsTile( get, never ): pi_xy.imageAbstracts.HeapsTile;
+
+    inline function get_heapsTile():pi_xy.imageAbstracts.HeapsTile {
+        return ( abstract: pi_xy.imageAbstracts.HeapsTile );
+    }
+    #end
     /*
         inline
         public function fromBytes( bytes: haxe.io.Bytes, pos ){
