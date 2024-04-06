@@ -1,5 +1,5 @@
 package pi_xy.formats;
-
+#if kha
 import kha.Image;
 import kha.Color;
 import kha.graphics1.Graphics;
@@ -87,6 +87,23 @@ function fromKhaImage( khaImage: kha.Image, canvas: Null<kha.Image> = null, clea
     var kPixels = canvas.getPixels();
     return fromKPixels( kPixels, canvas.width, canvas.height );
 }
+inline
+function toG1( x:Int, y: Int, pixelImage: Pixelimage, frameBuffer: kha.FrameBuffer ){
+    var g1 = frameBuffer.g1;
+    g1.start();
+    var xx = 0;
+    var maxX = x + p.width;
+    var maxY = y + p.height;
+    while( true ){
+        g1.setPixel(x, y, p.image[ position( x++, y ) ] );
+        if( x > maxX ){
+            x = xx;
+            y++;
+        } 
+        if( y > maxY ) break;
+    }
+    g1.end();
+}
 
 class KhaPixels {
     @:keep
@@ -97,7 +114,9 @@ class KhaPixels {
     public static var toKPixels_ = toKPixels;
     @:keep
     public static var fromKPixels_ = fromKPixels;
+    @:keep
+    public static var toG1_ = toG1;
     public function new(){}
 }
 
-//#end
+#end

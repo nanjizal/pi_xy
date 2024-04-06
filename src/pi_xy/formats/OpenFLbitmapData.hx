@@ -1,5 +1,5 @@
 package pi_xy.formats;
-
+#if openfl
 //#if !'doc-gen'
 import haxe.io.BytesData;
 import haxe.io.BytesBuffer;
@@ -9,7 +9,7 @@ import pi_xy.pixel.Pixel32;
 import haxe.io.UInt8Array;
 import iterMagic.Img;
 
-// module NMEbitmapData
+// module OpenFLbitmapData
 class OpenFLbitmapData {
     @:keep
     public static var toOpenflBitmapData_ = toOpenflBitmapData;
@@ -65,4 +65,4 @@ function fromOpenflBitmapData( bitmapData: BitmapData ): Pixelimage {
     }
     return pixelImage;
 }
-//#end
+#end

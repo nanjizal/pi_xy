@@ -1,5 +1,6 @@
 package pi_xy.imageAbstracts;
 import pi_xy.pixel.Pixel32;
+#if kha
 @:forward
 @:transient
 abstract KhaImage( Pixelimage ) from Pixelimage to Pixelimage {
@@ -16,4 +17,9 @@ abstract KhaImage( Pixelimage ) from Pixelimage to Pixelimage {
     function createPixelImage( khaImage: kha.Image ): Pixelimage {
         return pi_xy.formats.KhaPixels.fromKhaImage( khaImage );
     }
+    public inline
+    function drawG1_Image( x: Int, y: Int, frameBuffer: kha.FrameBuffer ){
+        pi_xy.formats.KhaPixels.toG1( x, y, this, frameBuffer );
+    }
 }
+#end

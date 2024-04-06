@@ -5,7 +5,7 @@ import pi_xy.Pixelimage;
 
 @:forward
 @:transient
-abstract ImageLime( Pixelimage ) from Pixelimage to Pixelimage {
+abstract HeapsTile( Pixelimage ) from Pixelimage to Pixelimage {
     inline
     public function new( w: Int, h: Int ){
        this = new Pixelimage( w, h );
@@ -13,7 +13,7 @@ abstract ImageLime( Pixelimage ) from Pixelimage to Pixelimage {
     @:to
     public inline
     function to(): h2d.Tile {
-        return pi_xy.formats.HeapsTile.toLimeImage( this );
+        return pi_xy.formats.HeapsTile.toHeapsTile( this );
     }
     @:to
     public inline

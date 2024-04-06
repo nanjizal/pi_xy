@@ -28,5 +28,11 @@ abstract DataBitmap( Pixelimage ) from Pixelimage to Pixelimage {
             return pi_xy.formats.NMEbitmapData.fromNmeBitmapData_( bm );
         #end
     }
+    #if flixel
+    public inline
+    function toFlxGraphics( pixelimage: Pixelimage, Unique:Bool = false, ?Key:String, Cache:Bool = true ){
+        FlxGraphic.fromBitmapData( abstract.to(), Unique, Key, Cache );
+    }
+    #end
     #end
 }
