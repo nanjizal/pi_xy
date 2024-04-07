@@ -42,6 +42,7 @@ class KhaTest {
         var pImage = KhaImage.createPixelImage( image );
         pImage.transform.flipY();
         image = pImage.khaImage;
+
     }
 
     public inline function update(): Void {
@@ -50,10 +51,19 @@ class KhaTest {
 
     public inline function render( framebuffer: Framebuffer ): Void {
         var g2 = framebuffer.g2;
+        var g1 = framebuffer.g1;
+        trace( framebuffer.width );
+        trace( framebuffer.height );
         g2.begin();
         g2.clear();
-        g2.drawImage( image, 0, 0 );
+        g2.fillRect(10, 10, 50, 50);
         g2.end();
+        /*g1.begin();
+        g1.setPixel(100, 100, kha.Color.Green);
+        g1.end();*/
+        //g2.drawImage( image, 0, 0 );
+        //g2.end();
+        pixelImage.khaImage.drawG1_Image(0,0,framebuffer);
     }
 }
 

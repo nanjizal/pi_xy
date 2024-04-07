@@ -7,11 +7,10 @@ import pi_xy.Pixelimage;
 import pi_xy.pixel.Pixel32;
 import haxe.io.UInt8Array;
 import iterMagic.Img;
+import pi_xy.pixel.ColorHelp;
 
 typedef KPixels = haxe.io.Bytes;
 // module KhaImage
-
-// untested!!
 //@:dox(hide)
 inline
 function toKPixels( pixelImage: Pixelimage, ?kPixels: Null<KPixels> ): KPixels {
@@ -88,14 +87,14 @@ function fromKhaImage( khaImage: kha.Image, canvas: Null<kha.Image> = null, clea
     return fromKPixels( kPixels, canvas.width, canvas.height );
 }
 inline
-function toG1( x:Int, y: Int, pixelImage: Pixelimage, frameBuffer: kha.FrameBuffer ){
+function toG1( x:Int, y: Int, pixelImage: Pixelimage, frameBuffer: kha.Framebuffer ){
     var g1 = frameBuffer.g1;
-    g1.start();
+    g1.begin();
     var xx = 0;
-    var maxX = x + p.width;
-    var maxY = y + p.height;
+    var maxX = Math.min( x + pixelImage.width, frameBuffer.width - 1 );
+    var maxY = Math.min( y + pixelImage.height, frameBuffer.height - 1 );
     while( true ){
-        g1.setPixel(x, y, p.image[ position( x++, y ) ] );
+        g1.setPixel(x, y, (( pixelImage.image[ pixelImage.position( x++, y ) ]: Pixel32).transferColor(): Int) );
         if( x > maxX ){
             x = xx;
             y++;

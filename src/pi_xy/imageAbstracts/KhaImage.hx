@@ -18,7 +18,7 @@ abstract KhaImage( Pixelimage ) from Pixelimage to Pixelimage {
         return pi_xy.formats.KhaPixels.fromKhaImage( khaImage );
     }
     public inline
-    function drawG1_Image( x: Int, y: Int, frameBuffer: kha.FrameBuffer ){
+    function drawG1_Image( x: Int, y: Int, frameBuffer: kha.Framebuffer ){
         pi_xy.formats.KhaPixels.toG1( x, y, this, frameBuffer );
     }
 }
