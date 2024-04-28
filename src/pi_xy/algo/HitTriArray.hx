@@ -37,10 +37,14 @@ class HitTriArray implements IhitObj {
         yRange = boundIteratorX( pyMin, pyMax );
         boundsCalculated = true;
     }
+    inline
+    public function rectBoundsHit( x: Float, y: Float ): Bool {
+        if( !boundsCalculated ) calculateBounds();
+        return ( xRange.containsF( x ) && yRange.containsF( y ) );
+    }
     inline 
     public function hit( x: Float, y: Float ): Bool {
-        if( !boundsCalculated ) calculateBounds();
-        return if( xRange.containsF( x ) && yRange.containsF( y ) ){
+        return if( rectBoundsHit( x, y ) ){
             var out = false;
             for( tri in triArr ){
                 if( tri.hit( x, y ) ){

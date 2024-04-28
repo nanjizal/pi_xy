@@ -41,10 +41,13 @@ class HitTri extends TriPoints_ implements IhitObj {
         xIter3 = boundIterator3( ax, bx, cx );
         yIter3 = boundIterator3( ay, by, cy );
     }
-
+    inline 
+    public function rectBoundsHit( x: Float, y: Float ): Bool {
+        return xIter3.containsF( x ) && yIter3.containsF( y );
+    }
     inline 
     public function hit( x: Float, y: Float ): Bool {
-        return if( xIter3.containsF( x ) && yIter3.containsF( y ) ){
+        return if( rectBoundsHit( x, y ) ){
             var s = s0 + sx*x + sy*y;
             var t = t0 + tx*x + ty*y;
             if( s <= 0 || t <= 0 ){

@@ -27,7 +27,7 @@ class LineShape extends LineShape_<Pixelimage,Pixelimage>{
         if( strokeWidth < 1. ){
             var alpha = getAlpha( strokeColor ) * 0.75;
             xWuLine( pixelImage, px, py, qx, qy, strokeColor, alpha );
-            xWuLine( pixelImage, px, px, qx, qy, strokeColor, alpha );
+            xWuLine( pixelImage, px, py, qx, qy, strokeColor, alpha );
         } else {
             if( edgeSoft == 0. ){
                 pixelImage.fillShape.line( px, py, qx, qy, strokeWidth, strokeColor );

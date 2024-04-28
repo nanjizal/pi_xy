@@ -1,6 +1,7 @@
 package pi_xy.algo;
 
 interface IhitObj {
+    public function rectBoundsHit( x: Float, y: Float ): Bool;
     public function hit( x: Float, y: Float ): Bool;
     public var undoImage: Null<Pixelimage>;
     public var undoX: Int;

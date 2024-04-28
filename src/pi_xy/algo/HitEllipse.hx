@@ -11,6 +11,10 @@ class HitEllipse implements IhitObj {
     var x_phi_ry: Float;
     var y_phi_rx: Float;
     var y_phi_ry: Float;
+    var minX: Float;
+    var maxX: Float;
+    var minY: Float;
+    var maxY: Float;
     public var undoImage: Null<Pixelimage> = null;
     public var undoX: Int;
     public var undoY: Int;
@@ -31,6 +35,18 @@ class HitEllipse implements IhitObj {
             y_phi_rx = rx*sphi;
             y_phi_ry = ry*cphi;
         }
+        setMinMax();
+    }
+    inline
+    function setMinMax(){
+        minX = cx - rx;
+        maxX = cx + rx;
+        minY = cy - ry;
+        maxY = cy + ry;
+    }
+    inline
+    public function rectBoundsHit( x: Float, y: Float ): Bool {
+        return( x > minX && x < maxX && y > minY && y < maxY );
     }
     inline
     public function hit( x: Float, y: Float ){

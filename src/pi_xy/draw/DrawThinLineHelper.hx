@@ -1,41 +1,38 @@
 package pi_xy.draw;
 
 
+import pi_xy.algo.HitObjArray;
 import pi_xy.Pixelimage;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
-import pi_xy.algo.HitQuad;
-import pi_xy.algo.HitObjArray;
+import pi_xy.algo.HitThinLine;
 import pi_xy.algo.IhitObj;
 
 @:structInit
-class DrawShapeHelper implements ILinePathContext {
+class DrawThinLineHelper implements ILinePathContext {
     var svgLinePath: SvgLinePath;
     var x0: Float = 0.;
     var y0: Float = 0.;
     var toggleDraw = true;
-    var strokeWidth: Float;
     var strokeColor: Int;
     var translateX: Float;
     var translateY: Float;
     var scaleX: Float;
     var scaleY: Float;
     var pixelImage: Pixelimage;
-    var info: HitQuad;
-    var oldInfo: HitQuad;
+    var info: HitThinLine;
+    var oldInfo: HitThinLine;
     var hitsAllowed: Bool;
     var hitsArr: HitObjArray;
     public function new( pixelImage: Pixelimage
-                        , strokeWidth: Float
                         , strokeColor: Int
                         , translateX = 0.
                         , translateY = 0.
                         , scaleX = 1.
-                        , scaleY = 1.  
-                        , hitsAllowed = false ){
+                        , scaleY = 1.
+                        , hitsAllowed = false  ){
         this.pixelImage = pixelImage;
-        this.strokeWidth = strokeWidth;
         this.strokeColor = strokeColor;
         this.translateX = translateX;
         this.translateY = translateY;
@@ -49,15 +46,16 @@ class DrawShapeHelper implements ILinePathContext {
     function lineSegmentTo( x2: Float, y2: Float ){
         if( toggleDraw ){
             oldInfo = info;
-            info = pixelImage.fillShape.line( x0*scaleX + translateX, y0*scaleY + translateY
-                                      , x2*scaleX + translateX, y2*scaleY + translateY 
-                                      , strokeWidth, strokeColor, true );
+            info = pixelImage.lineShape.thinLine( 
+                  x0*scaleX + translateX, y0*scaleY + translateY
+                , x2*scaleX + translateX, y2*scaleY + translateY 
+                , strokeColor );
+            
             if( info != null && oldInfo != null ){
-                final temp = pixelImage.fillShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
-                                   , info.ax*scaleX + translateX, info.ay*scaleY + translateY
-                                   , info.dx*scaleX + translateX, info.dy*scaleY + translateY
-                                   , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY
-                                   , strokeColor, true );
+                final temp = pixelImage.lineShape.thinLine( 
+                      oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
+                    , info.ax*scaleX + translateX,    info.ay*scaleY + translateY
+                    , strokeColor );
                 if( hitsAllowed ) hitsArr.push( temp );
             }
             if( hitsAllowed ) hitsArr.push( info );
@@ -71,15 +69,15 @@ class DrawShapeHelper implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         oldInfo = info;
-        info = pixelImage.fillShape.line( x0*scaleX + translateX, y0*scaleY + translateY
-                     , x2*scaleX + translateX, y2*scaleY + translateY 
-                     , strokeWidth, strokeColor, true );
+        info = pixelImage.lineShape.thinLine( 
+              x0*scaleX + translateX, y0*scaleY + translateY
+            , x2*scaleX + translateX, y2*scaleY + translateY 
+            , strokeColor );
         if( info != null && oldInfo != null ){
-            final temp = pixelImage.fillShape.quad( oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
-                                , info.ax*scaleX + translateX, info.ay*scaleY + translateY
-                                , info.dx*scaleX + translateX, info.dy*scaleY + translateY
-                                , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY
-                                , strokeColor, true );
+            final temp = pixelImage.lineShape.thinLine( 
+                  oldInfo.bx*scaleX + translateX, oldInfo.by*scaleY + translateY
+                , info.ax*scaleX + translateX,    info.ay*scaleY + translateY
+                , strokeColor );
             if( hitsAllowed ) hitsArr.push( temp );
         }
         if( hitsAllowed ) hitsArr.push( info );
