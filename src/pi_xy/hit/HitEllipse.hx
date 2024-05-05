@@ -1,4 +1,4 @@
-package pi_xy.algo;
+package pi_xy.hit;
 // untested..
 @:structInit
 class HitEllipse implements IhitObj {

@@ -5,6 +5,7 @@ import pi_xy.pixel.Pixel32;
 import pi_xy.algo.GeomPix;
 import pi_xy.algo.TriPixel;
 import pi_xy.algo.LinePixel;
+import pi_xy.hit.HitTriArray;
 import pi_xy.pixel.TwoGrad;
 
 inline 

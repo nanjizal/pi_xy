@@ -1,9 +1,11 @@
-package pi_xy.algo;
+package pi_xy.hit;
 
 import pi_xy.iter.BoundIterator;
 import pi_xy.iter.IteratorRange;
 import pi_xy.algo.PentagonSampler;
 import pi_xy.algo.Barycentric;
+import pi_xy.hit.*;
+import pi_xy.algo.*;
 
 @:structInit
 class SampleData {

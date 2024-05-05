@@ -5,7 +5,7 @@ import pi_xy.Pixelimage;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
-import pi_xy.algo.HitQuad;
+import pi_xy.hit.HitQuad;
 
 @:structInit
 class DrawGradThickHelper implements ILinePathContext {

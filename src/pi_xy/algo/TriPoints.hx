@@ -1,6 +1,6 @@
 package pi_xy.algo;
 import pi_xy.algo.GeomPix;
-import pi_xy.algo.HitTri;
+import pi_xy.hit.HitTri;
 
 @:structInit
 class TriPoints_{

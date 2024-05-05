@@ -1,4 +1,4 @@
-package pi_xy.algo;
+package pi_xy.hit;
 
 interface IhitObj {
     public function rectBoundsHit( x: Float, y: Float ): Bool;

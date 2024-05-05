@@ -42076,7 +42076,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, reverseFlare : false, flare : false }</e></m></meta>
 		</fillLineArrow>
@@ -42093,7 +42093,7 @@
 				<x path="Bool"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 		</fillSoftLineArrow>
@@ -42110,7 +42110,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, reverseFlare : false, flare : false }</e></m></meta>
 		</gradThickLineArrow>
@@ -42124,7 +42124,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillLineArrowBoth>
@@ -42139,7 +42139,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, soft : 40. }</e></m></meta>
 		</fillSoftLineArrowBoth>
@@ -42154,7 +42154,7 @@
 				<x path="Int"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</gradThickLineArrowBoth>
@@ -42172,7 +42172,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, reverseFlare : false, flare : false }</e></m></meta>
 		</fillLineFixedArrow>
@@ -42191,7 +42191,7 @@
 				<x path="Bool"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 		</fillSoftLineFixedArrow>
@@ -42210,7 +42210,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, reverseFlare : false, flare : false }</e></m></meta>
 		</gradThickLineFixedArrow>
@@ -42226,7 +42226,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillLineFixedArrowBoth>
@@ -42243,7 +42243,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, soft : 40. }</e></m></meta>
 		</fillSoftLineFixedArrowBoth>
@@ -42260,7 +42260,7 @@
 				<x path="Int"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</gradThickLineFixedArrowBoth>
@@ -42688,7 +42688,7 @@
 		<undoX public="1"><x path="Int"/></undoX>
 		<undoY public="1"><x path="Int"/></undoY>
 	</class>
-	<class path="pi_xy.algo.HitEllipse" params="" file="src/pi_xy/algo/HitEllipse.hx">
+	<class path="pi_xy.hit.HitEllipse" params="" file="src/pi_xy/algo/HitEllipse.hx">
 		<implements path="pi_xy.algo.IhitObj"/>
 		<cx public="1"><x path="Float"/></cx>
 		<cy public="1"><x path="Float"/></cy>
@@ -42751,11 +42751,11 @@
 			<m n=":structInit"/>
 		</meta>
 	</class>
-	<class path="pi_xy.algo.HitQuad" params="" file="src/pi_xy/algo/HitQuad.hx">
+	<class path="pi_xy.hit.HitQuad" params="" file="src/pi_xy/algo/HitQuad.hx">
 		<extends path="pi_xy.algo.QuadPoints_"/>
 		<implements path="pi_xy.algo.IhitObj"/>
-		<triABD public="1"><c path="pi_xy.algo.HitTri"/></triABD>
-		<triBCD public="1"><c path="pi_xy.algo.HitTri"/></triBCD>
+		<triABD public="1"><c path="pi_xy.hit.HitTri"/></triABD>
+		<triBCD public="1"><c path="pi_xy.hit.HitTri"/></triBCD>
 		<xIter4 public="1"><x path="pi_xy.iter.IteratorRange"/></xIter4>
 		<yIter4 public="1"><x path="pi_xy.iter.IteratorRange"/></yIter4>
 		<undoImage public="1" expr="null">
@@ -42771,8 +42771,8 @@
 	<x path="Bool"/>
 </f></hit>
 		<pushTriangles public="1" get="inline" set="null" line="50"><f a="arrTri">
-	<c path="Array"><c path="pi_xy.algo.HitTri"/></c>
-	<c path="Array"><c path="pi_xy.algo.HitTri"/></c>
+	<c path="Array"><c path="pi_xy.hit.HitTri"/></c>
+	<c path="Array"><c path="pi_xy.hit.HitTri"/></c>
 </f></pushTriangles>
 		<new public="1" get="inline" set="null" line="17">
 			<f a="ax:ay:bx:by:cx:cy:dx:dy:?preCalculated" v="::::::::true">
@@ -42812,7 +42812,7 @@
 </f></new>
 		<meta><m n=":structInit"/></meta>
 	</class>
-	<class path="pi_xy.algo.HitTri" params="" file="src/pi_xy/algo/HitTri.hx">
+	<class path="pi_xy.hit.HitTri" params="" file="src/pi_xy/algo/HitTri.hx">
 		<extends path="pi_xy.algo.TriPoints_"/>
 		<implements path="pi_xy.algo.IhitObj"/>
 		<preCalculated public="1"><x path="Bool"/></preCalculated>
@@ -42855,9 +42855,9 @@
 			<m n=":structInit"/>
 		</meta>
 	</class>
-	<class path="pi_xy.algo.HitTriArray" params="" file="src/pi_xy/algo/HitTriArray.hx">
+	<class path="pi_xy.hit.HitTriArray" params="" file="src/pi_xy/algo/HitTriArray.hx">
 		<implements path="pi_xy.algo.IhitObj"/>
-		<triArr public="1"><c path="Array"><c path="pi_xy.algo.HitTri"/></c></triArr>
+		<triArr public="1"><c path="Array"><c path="pi_xy.hit.HitTri"/></c></triArr>
 		<xRange><x path="pi_xy.iter.IteratorRange"/></xRange>
 		<yRange><x path="pi_xy.iter.IteratorRange"/></yRange>
 		<undoImage public="1" expr="null">
@@ -42877,7 +42877,7 @@
 	<x path="Bool"/>
 </f></hit>
 		<new public="1" get="inline" set="null" line="16"><f a="triArr">
-	<c path="Array"><c path="pi_xy.algo.HitTri"/></c>
+	<c path="Array"><c path="pi_xy.hit.HitTri"/></c>
 	<x path="Void"/>
 </f></new>
 		<meta>
@@ -42885,7 +42885,7 @@
 			<m n=":structInit"/>
 		</meta>
 	</class>
-	<class path="pi_xy.algo.SampleData" params="" file="src/pi_xy/algo/HitTriScalar.hx" module="pi_xy.algo.HitTriScalar">
+	<class path="pi_xy.algo.SampleData" params="" file="src/pi_xy/algo/HitTriScalar.hx" module="pi_xy.hit.HitTriScalar">
 		<fractionTotal public="1"><x path="Float"/></fractionTotal>
 		<averageX public="1"><x path="Float"/></averageX>
 		<averageY public="1"><x path="Float"/></averageY>
@@ -42901,158 +42901,158 @@
 			<m n=":structInit"/>
 		</meta>
 	</class>
-	<abstract path="pi_xy.algo.HitTriScalar" params="" file="src/pi_xy/algo/HitTriScalar.hx">
-		<from><icast><c path="pi_xy.algo.HitTri"/></icast></from>
-		<this><c path="pi_xy.algo.HitTri"/></this>
+	<abstract path="pi_xy.hit.HitTriScalar" params="" file="src/pi_xy/algo/HitTriScalar.hx">
+		<from><icast><c path="pi_xy.hit.HitTri"/></icast></from>
+		<this><c path="pi_xy.hit.HitTri"/></this>
 		<meta>
 			<m n=":transient"/>
 			<m n=":forward"/>
 		</meta>
-		<impl><class path="pi_xy.algo._HitTriScalar.HitTriScalar_Impl_" params="" file="src/pi_xy/algo/HitTriScalar.hx" private="1" module="pi_xy.algo.HitTriScalar" final="1">
+		<impl><class path="pi_xy.algo._HitTriScalar.HitTriScalar_Impl_" params="" file="src/pi_xy/algo/HitTriScalar.hx" private="1" module="pi_xy.hit.HitTriScalar" final="1">
 	<centroidX public="1" get="accessor" set="null" static="1"><x path="Float"/></centroidX>
 	<get_centroidX get="inline" set="null" line="27" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></get_centroidX>
 	<centroidY public="1" get="accessor" set="null" static="1"><x path="Float"/></centroidY>
 	<get_centroidY get="inline" set="null" line="31" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></get_centroidY>
 	<medianABx public="1" set="method" line="34" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianABx>
 	<medianBCx public="1" set="method" line="37" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianBCx>
 	<medianCAx public="1" set="method" line="40" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianCAx>
 	<medianABy public="1" set="method" line="43" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianABy>
 	<medianBCy public="1" set="method" line="46" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianBCy>
 	<medianCAy public="1" set="method" line="49" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianCAy>
 	<scaled public="1" get="inline" set="null" line="53" static="1"><f a="this:scaleA:scaleB:scaleC">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
-	<x path="pi_xy.algo.HitTriScalar"/>
+	<x path="pi_xy.hit.HitTriScalar"/>
 </f></scaled>
 	<scalePoint get="inline" set="null" line="98" static="1"><f a="this:point:scale:centre">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 </f></scalePoint>
 	<triangleSample public="1" get="inline" set="null" line="105" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></triangleSample>
 	<squareSample public="1" get="inline" set="null" line="148" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></squareSample>
 	<pentagonSample public="1" get="inline" set="null" line="198" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></pentagonSample>
 	<barycentric public="1" get="accessor" set="null" static="1"><c path="pi_xy.algo.Barycentric"/></barycentric>
 	<get_barycentric get="inline" set="null" line="257" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<c path="pi_xy.algo.Barycentric"/>
 </f></get_barycentric>
 	<meta><m n=":directlyUsed"/></meta>
 </class></impl>
 	</abstract>
-	<class path="pi_xy.algo._HitTriScalar.HitTriScalar_Impl_" params="" file="src/pi_xy/algo/HitTriScalar.hx" private="1" module="pi_xy.algo.HitTriScalar" final="1">
+	<class path="pi_xy.algo._HitTriScalar.HitTriScalar_Impl_" params="" file="src/pi_xy/algo/HitTriScalar.hx" private="1" module="pi_xy.hit.HitTriScalar" final="1">
 		<centroidX public="1" get="accessor" set="null" static="1"><x path="Float"/></centroidX>
 		<get_centroidX get="inline" set="null" line="27" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></get_centroidX>
 		<centroidY public="1" get="accessor" set="null" static="1"><x path="Float"/></centroidY>
 		<get_centroidY get="inline" set="null" line="31" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></get_centroidY>
 		<medianABx public="1" set="method" line="34" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianABx>
 		<medianBCx public="1" set="method" line="37" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianBCx>
 		<medianCAx public="1" set="method" line="40" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianCAx>
 		<medianABy public="1" set="method" line="43" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianABy>
 		<medianBCy public="1" set="method" line="46" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianBCy>
 		<medianCAy public="1" set="method" line="49" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 </f></medianCAy>
 		<scaled public="1" get="inline" set="null" line="53" static="1"><f a="this:scaleA:scaleB:scaleC">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
-	<x path="pi_xy.algo.HitTriScalar"/>
+	<x path="pi_xy.hit.HitTriScalar"/>
 </f></scaled>
 		<scalePoint get="inline" set="null" line="98" static="1"><f a="this:point:scale:centre">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<x path="Float"/>
 </f></scalePoint>
 		<triangleSample public="1" get="inline" set="null" line="105" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></triangleSample>
 		<squareSample public="1" get="inline" set="null" line="148" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></squareSample>
 		<pentagonSample public="1" get="inline" set="null" line="198" static="1"><f a="this:x:y">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<x path="Float"/>
 	<x path="Float"/>
 	<c path="pi_xy.algo.SampleData"/>
 </f></pentagonSample>
 		<barycentric public="1" get="accessor" set="null" static="1"><c path="pi_xy.algo.Barycentric"/></barycentric>
 		<get_barycentric get="inline" set="null" line="257" static="1"><f a="this">
-	<c path="pi_xy.algo.HitTri"/>
+	<c path="pi_xy.hit.HitTri"/>
 	<c path="pi_xy.algo.Barycentric"/>
 </f></get_barycentric>
 		<meta><m n=":directlyUsed"/></meta>
@@ -43069,7 +43069,7 @@
 				<x path="Int"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>rotateLine</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateLine</font> module level field
@@ -43086,7 +43086,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>rotateTileLine</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateTileLine</font> module level field
@@ -43106,7 +43106,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>rotateGradLine</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
@@ -43129,7 +43129,7 @@
 				<x path="Int"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 		</rotateLine>
@@ -43149,7 +43149,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40. }</e></m></meta>
 		</rotateSoftLine>
@@ -43169,7 +43169,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40. }</e></m></meta>
 		</rotateSoftLineLuxury>
@@ -43189,7 +43189,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false, softLeft : true, softBottom : true, softRight : true, softTop : true, softC : 10. }</e></m></meta>
 		</rotateSoftLinePartial>
@@ -43204,7 +43204,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</rotateLineFlare>
@@ -43224,7 +43224,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softLeft : true, softBottom : true, softRight : true, softTop : true, softC : 10. }</e></m></meta>
 		</rotateSoftLineFlare>
@@ -43244,7 +43244,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softLeft : true, softBottom : true, softRight : true, softTop : true, softC : 10. }</e></m></meta>
 		</rotateSoftLineFlarePartial>
@@ -43259,7 +43259,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 		</rotateTileLine>
@@ -43274,7 +43274,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</rotateTileLineFlare>
@@ -43292,7 +43292,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 		</rotateGradLine>
@@ -43310,7 +43310,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</rotateGradLineFlare>
@@ -43484,7 +43484,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>fillQuadrilateral</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
@@ -43503,7 +43503,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>tileQuadrilateral</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
@@ -43525,7 +43525,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>fillGradQuadrilateral</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">rotateGradLine</font> module level field
@@ -43550,7 +43550,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillQuadrilateral>
@@ -43572,7 +43572,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</fillSoftQuadrilateral>
@@ -43594,7 +43594,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</fillSoftQuadrilateralFudge>
@@ -43616,7 +43616,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</fillSoftQuadrilateralQuarter>
@@ -43633,7 +43633,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileQuadrilateral>
@@ -43653,7 +43653,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillGradQuadrilateral>
@@ -43671,7 +43671,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</imgQuadrilateralFudge>
@@ -43697,7 +43697,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, dv : 1., du : 0., cv : 1., cu : 1., bv : 0., bu : 1., av : 0., au : 0. }</e></m></meta>
 		</imgQuadrilateral>
@@ -43721,7 +43721,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</imageNineSlice>
@@ -43804,7 +43804,7 @@
 		<f a="this:?preCalculated" v=":true">
 			<c path="pi_xy.algo.QuadPoints_"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ preCalculated : true }</e></m></meta>
 	</getHit>
@@ -43843,7 +43843,7 @@
 			<f a="this:?preCalculated" v=":true">
 				<c path="pi_xy.algo.QuadPoints_"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ preCalculated : true }</e></m></meta>
 		</getHit>
@@ -43899,7 +43899,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softC : 10 }</e></m></meta>
 		</softFillQuintilateral>
@@ -43921,7 +43921,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softLeft : true, softBottom : true, softRight : true, softTop : true, softC : 10 }</e></m></meta>
 		</softFillQuintilateralPartial>
@@ -44133,7 +44133,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>fillTriUnsafe</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">fillTriUnsafe</font> module level field
@@ -44151,7 +44151,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>tileTriUnsafe</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">tileTriUnsafe</font> module level field
@@ -44171,7 +44171,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>fillGradTriangle</e></m></meta>
 			<haxe_doc><![CDATA[<font color="LightPink" font-weight:"Bold">fillGradTriangle</font> module level field
@@ -44195,7 +44195,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 			<haxe_doc>provides a filled triangle give a,b,c coordinates
@@ -44213,7 +44213,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillTriUnsafe>
@@ -44228,7 +44228,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</fillTriangle2>
@@ -44244,7 +44244,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillTriUnsafe2>
@@ -44259,7 +44259,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</tileTriangle>
@@ -44275,7 +44275,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</tileTriUnsafe>
@@ -44293,7 +44293,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillGradTriangle>
@@ -44310,7 +44310,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</topRightImgTriFudge>
@@ -44327,7 +44327,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</bottomLeftImgTriFudge>
@@ -44350,7 +44350,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 			<haxe_doc>This is the first attempt at UV mapping it does not swap A B and so does not work properly, but can be used with fudged triangles above.
@@ -44369,7 +44369,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</topLeftImgTri>
@@ -44386,7 +44386,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</bottomRightImgTri>
@@ -44409,7 +44409,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</uvTriangle>
@@ -44433,7 +44433,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</uvTriangleSoft3>
@@ -44449,7 +44449,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softC : 10 }</e></m></meta>
 		</fillTriTwoSoft>
@@ -44466,7 +44466,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false, softC : 10 }</e></m></meta>
 		</fillTriSoftC>
@@ -44486,7 +44486,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false, softCA : true, softBC : true, softAB : true, soft3 : 40 }</e></m></meta>
 		</fillTriSoft3>
@@ -44506,7 +44506,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false, softCA : true, softBC : true, softAB : true, soft3 : 40 }</e></m></meta>
 		</fillQuarterSoft>
@@ -44522,7 +44522,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</fillTriExtra0>
@@ -44538,7 +44538,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillTriExtra1>
@@ -44565,7 +44565,7 @@
 				<x path="Float"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</uvTriangleTexture3>
@@ -44584,7 +44584,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillTriUnsafe5>
@@ -44600,7 +44600,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		</fillTriUnsafe6>
@@ -44619,7 +44619,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</quadPentagonBarycentric>
@@ -44635,7 +44635,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</triPentagonBarycentricBottom>
@@ -44651,7 +44651,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</triPentagonBarycentricTop>
@@ -44670,7 +44670,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false, softCA : true, softBC : true, softAB : true }</e></m></meta>
 		</triPentagonBarycentic>
@@ -44689,7 +44689,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</lineXYGradPentBary>
@@ -44706,7 +44706,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</lineGradPentBary>
@@ -44719,7 +44719,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</quadGradPentBary>
@@ -44737,7 +44737,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</triGradPentBaryBottom>
@@ -44755,7 +44755,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false }</e></m></meta>
 		</triGradPentBaryTop>
@@ -44776,7 +44776,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : true, hasHit : false, softCA : true, softBC : true, softAB : true }</e></m></meta>
 		</triGradPentBary>
@@ -44808,7 +44808,7 @@
 		<f a="this:?preCalculated" v=":true">
 			<c path="pi_xy.algo.TriPoints_"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitTri"/>
+			<c path="pi_xy.hit.HitTri"/>
 		</f>
 		<meta><m n=":value"><e>{ preCalculated : true }</e></m></meta>
 	</getHit>
@@ -44833,7 +44833,7 @@
 			<f a="this:?preCalculated" v=":true">
 				<c path="pi_xy.algo.TriPoints_"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitTri"/>
+				<c path="pi_xy.hit.HitTri"/>
 			</f>
 			<meta><m n=":value"><e>{ preCalculated : true }</e></m></meta>
 		</getHit>
@@ -45009,8 +45009,8 @@
 		<scaleX><x path="Float"/></scaleX>
 		<scaleY><x path="Float"/></scaleY>
 		<pixelImage><x path="pi_xy.Pixelimage"/></pixelImage>
-		<info><c path="pi_xy.algo.HitQuad"/></info>
-		<oldInfo><c path="pi_xy.algo.HitQuad"/></oldInfo>
+		<info><c path="pi_xy.hit.HitQuad"/></info>
+		<oldInfo><c path="pi_xy.hit.HitQuad"/></oldInfo>
 		<lineSegmentTo public="1" set="method" line="45"><f a="x2:y2">
 	<x path="Float"/>
 	<x path="Float"/>
@@ -45101,8 +45101,8 @@
 		<scaleX><x path="Float"/></scaleX>
 		<scaleY><x path="Float"/></scaleY>
 		<pixelImage><x path="pi_xy.Pixelimage"/></pixelImage>
-		<info><c path="pi_xy.algo.HitQuad"/></info>
-		<oldInfo><c path="pi_xy.algo.HitQuad"/></oldInfo>
+		<info><c path="pi_xy.hit.HitQuad"/></info>
+		<oldInfo><c path="pi_xy.hit.HitQuad"/></oldInfo>
 		<lineSegmentTo public="1" set="method" line="42"><f a="x2:y2">
 	<x path="Float"/>
 	<x path="Float"/>
@@ -45192,8 +45192,8 @@
 		<scaleX><x path="Float"/></scaleX>
 		<scaleY><x path="Float"/></scaleY>
 		<pixelImage><x path="pi_xy.Pixelimage"/></pixelImage>
-		<info><c path="pi_xy.algo.HitQuad"/></info>
-		<oldInfo><c path="pi_xy.algo.HitQuad"/></oldInfo>
+		<info><c path="pi_xy.hit.HitQuad"/></info>
+		<oldInfo><c path="pi_xy.hit.HitQuad"/></oldInfo>
 		<lineSegmentTo public="1" set="method" line="41"><f a="x2:y2">
 	<x path="Float"/>
 	<x path="Float"/>
@@ -46838,7 +46838,7 @@
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 		<haxe_doc>provides a filled triangle give a,b,c coordinates
@@ -46857,7 +46857,7 @@
 			<x path="Float"/>
 			<x path="Int"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		<haxe_doc>uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise</haxe_doc>
@@ -46873,7 +46873,7 @@
 			<x path="Int"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ debugCorners : false, hasHit : true }</e></m></meta>
 		<haxe_doc>provides a thick line using two triangles vector p, q
@@ -47191,7 +47191,7 @@
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
 			<x path="Float"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</pie>
@@ -47206,7 +47206,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepTri>
@@ -47245,7 +47245,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
@@ -47260,7 +47260,7 @@
 			<x path="Float"/>
 			<x path="Int"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</arrowBoth>
@@ -47278,7 +47278,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</fixArrow>
@@ -47294,7 +47294,7 @@
 			<x path="Float"/>
 			<x path="Int"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</fixArrowBoth>
@@ -47351,7 +47351,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasUndo : false, hasHit : false }</e></m></meta>
 			<haxe_doc>provides a filled triangle give a,b,c coordinates
@@ -47370,7 +47370,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 			<haxe_doc>uses two triangles to create a filled quad using four coordinates a,b,c,d arranged clockwise</haxe_doc>
@@ -47386,7 +47386,7 @@
 				<x path="Int"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : true }</e></m></meta>
 			<haxe_doc>provides a thick line using two triangles vector p, q
@@ -47704,7 +47704,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Float"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</pie>
@@ -47719,7 +47719,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepTri>
@@ -47758,7 +47758,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 			<haxe_doc>provides a thick arrow using two triangles vector p, q</haxe_doc>
@@ -47773,7 +47773,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</arrowBoth>
@@ -47791,7 +47791,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</fixArrow>
@@ -47807,7 +47807,7 @@
 				<x path="Float"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</fixArrowBoth>
@@ -47857,7 +47857,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		<haxe_doc>creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
@@ -47903,7 +47903,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		<haxe_doc>uses two triangle to form a quad with clockwise coordinates a,b,c,d
@@ -47926,7 +47926,7 @@
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 		<haxe_doc>provides a thick line using two gradient triangle vector p,q
@@ -47987,7 +47987,7 @@
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepTri>
@@ -48004,7 +48004,7 @@
 			<x path="pi_xy.pixel.Pixel32"/>
 			<x path="Bool"/>
 			<x path="Float"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</pie>
@@ -48038,7 +48038,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</thickArrow>
@@ -48053,7 +48053,7 @@
 			<x path="Int"/>
 			<x path="Int"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</thickArrowBoth>
@@ -48072,7 +48072,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 	</thickFixArrow>
@@ -48089,7 +48089,7 @@
 			<x path="Int"/>
 			<x path="Int"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</thickFixArrowBoth>
@@ -48160,7 +48160,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 			<haxe_doc>creates a filled gradient triangle in OpenGL 3 color style for coordinates a,b,c
@@ -48206,7 +48206,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 			<haxe_doc>uses two triangle to form a quad with clockwise coordinates a,b,c,d
@@ -48229,7 +48229,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 			<haxe_doc>provides a thick line using two gradient triangle vector p,q
@@ -48290,7 +48290,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepTri>
@@ -48307,7 +48307,7 @@
 				<x path="pi_xy.pixel.Pixel32"/>
 				<x path="Bool"/>
 				<x path="Float"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</pie>
@@ -48341,7 +48341,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</thickArrow>
@@ -48356,7 +48356,7 @@
 				<x path="Int"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</thickArrowBoth>
@@ -48375,7 +48375,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, reverseFlare : false, flare : false }</e></m></meta>
 		</thickFixArrow>
@@ -48392,7 +48392,7 @@
 				<x path="Int"/>
 				<x path="Int"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</thickFixArrowBoth>
@@ -48472,7 +48472,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</triangle>
@@ -48490,7 +48490,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 	</quad>
@@ -48503,7 +48503,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, hi : 0., wid : 0., y : 0., x : 0. }</e></m></meta>
 		<haxe_doc>just a simple image ( automatically scaled )</haxe_doc>
@@ -48525,7 +48525,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, scaleY : 1., scaleX : 1., skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 	</rectangle>
@@ -48549,7 +48549,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</nineSlice>
@@ -48567,7 +48567,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		<haxe_doc>works with image Fudge of UV values, deprediated unless turns out useful in edge cases.</haxe_doc>
@@ -48587,7 +48587,7 @@
 			<x path="Float"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 	</rectFudge>
@@ -48620,7 +48620,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</triangle>
@@ -48638,7 +48638,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 		</quad>
@@ -48651,7 +48651,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, hi : 0., wid : 0., y : 0., x : 0. }</e></m></meta>
 			<haxe_doc>just a simple image ( automatically scaled )</haxe_doc>
@@ -48673,7 +48673,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, scaleY : 1., scaleX : 1., skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 		</rectangle>
@@ -48697,7 +48697,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</nineSlice>
@@ -48715,7 +48715,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true }</e></m></meta>
 			<haxe_doc>works with image Fudge of UV values, deprediated unless turns out useful in edge cases.</haxe_doc>
@@ -48735,7 +48735,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, skewY : 0., skewX : 0., centreY : 0., centreX : 0., theta : 0. }</e></m></meta>
 		</rectFudge>
@@ -49398,7 +49398,7 @@
 			<x path="Int"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</quint>
@@ -49420,7 +49420,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 	</quad>
@@ -49442,7 +49442,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 	</quadFudge>
@@ -49464,7 +49464,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 	</quadQuarter>
@@ -49484,7 +49484,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ debugCorners : false, hasHit : true, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 	</line>
@@ -49504,7 +49504,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ debugCorners : false, hasHit : true, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 	</lineLuxury>
@@ -49523,7 +49523,7 @@
 			<x path="Bool"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitTri"/>
+			<c path="pi_xy.hit.HitTri"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false, softCA : true, softBC : true, softAB : true }</e></m></meta>
 	</triangle>
@@ -49540,7 +49540,7 @@
 			<x path="Bool"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 	</arrow>
@@ -49555,7 +49555,7 @@
 			<x path="Int"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, soft : 40. }</e></m></meta>
 	</arrowBoth>
@@ -49574,7 +49574,7 @@
 			<x path="Bool"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 	</fixArrow>
@@ -49591,7 +49591,7 @@
 			<x path="Int"/>
 			<x path="Float"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : true, soft : 40. }</e></m></meta>
 	</fixArrowBoth>
@@ -49652,7 +49652,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</quint>
@@ -49674,7 +49674,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</quad>
@@ -49696,7 +49696,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</quadFudge>
@@ -49718,7 +49718,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</quadQuarter>
@@ -49738,7 +49738,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : true, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</line>
@@ -49758,7 +49758,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : true, softDA : true, softCD : true, softBC : true, softAB : true, soft : 40 }</e></m></meta>
 		</lineLuxury>
@@ -49777,7 +49777,7 @@
 				<x path="Bool"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitTri"/>
+				<c path="pi_xy.hit.HitTri"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false, softCA : true, softBC : true, softAB : true }</e></m></meta>
 		</triangle>
@@ -49794,7 +49794,7 @@
 				<x path="Bool"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 		</arrow>
@@ -49809,7 +49809,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, soft : 40. }</e></m></meta>
 		</arrowBoth>
@@ -49828,7 +49828,7 @@
 				<x path="Bool"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, soft : 40., reverseFlare : false, flare : false }</e></m></meta>
 		</fixArrow>
@@ -49845,7 +49845,7 @@
 				<x path="Int"/>
 				<x path="Float"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : true, soft : 40. }</e></m></meta>
 		</fixArrowBoth>
@@ -49907,7 +49907,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</triangle>
@@ -49924,7 +49924,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</quad>
@@ -49937,7 +49937,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitQuad"/>
+			<c path="pi_xy.hit.HitQuad"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</rectangle>
@@ -49952,7 +49952,7 @@
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
 			<x path="Bool"/>
-			<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 		</f>
 		<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 		<haxe_doc>tiles a thick line using two triangles vector p, q
@@ -50058,7 +50058,7 @@
 			<x path="Float"/>
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
-			<c path="pi_xy.algo.HitTri"/>
+			<c path="pi_xy.hit.HitTri"/>
 		</f>
 		<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 	</sweepTri>
@@ -50074,7 +50074,7 @@
 			<x path="pi_xy.Pixelimage"/>
 			<x path="Bool"/>
 			<x path="Float"/>
-			<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+			<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 		</f>
 		<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 	</pie>
@@ -50115,7 +50115,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitTri"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTri"/></x>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</triangle>
@@ -50132,7 +50132,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</quad>
@@ -50145,7 +50145,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitQuad"/>
+				<c path="pi_xy.hit.HitQuad"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</rectangle>
@@ -50160,7 +50160,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Bool"/>
-				<x path="Null"><c path="pi_xy.algo.HitQuad"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitQuad"/></x>
 			</f>
 			<meta><m n=":value"><e>{ debugCorners : false, hasHit : false }</e></m></meta>
 			<haxe_doc>tiles a thick line using two triangles vector p, q
@@ -50266,7 +50266,7 @@
 				<x path="Float"/>
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
-				<c path="pi_xy.algo.HitTri"/>
+				<c path="pi_xy.hit.HitTri"/>
 			</f>
 			<meta><m n=":value"><e>{ hasHit : false }</e></m></meta>
 		</sweepTri>
@@ -50282,7 +50282,7 @@
 				<x path="pi_xy.Pixelimage"/>
 				<x path="Bool"/>
 				<x path="Float"/>
-				<x path="Null"><c path="pi_xy.algo.HitTriArray"/></x>
+				<x path="Null"><c path="pi_xy.hit.HitTriArray"/></x>
 			</f>
 			<meta><m n=":value"><e>{ targetError : 1.05, hasHit : false }</e></m></meta>
 		</pie>

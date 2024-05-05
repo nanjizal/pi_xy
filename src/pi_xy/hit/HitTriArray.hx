@@ -1,8 +1,8 @@
-package pi_xy.algo;
+package pi_xy.hit;
 
 import pi_xy.iter.BoundIterator;
 import pi_xy.iter.IteratorRange;
-import pi_xy.algo.HitTri;
+import pi_xy.hit.HitTri;
 
 @:structInit
 class HitTriArray implements IhitObj {

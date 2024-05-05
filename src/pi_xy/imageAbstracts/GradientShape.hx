@@ -1,9 +1,9 @@
 package pi_xy.imageAbstracts;
 import pi_xy.draw.DrawGradThickHelper;
 import pi_xy.Pixelimage;
-import pi_xy.algo.HitTri;
-import pi_xy.algo.HitQuad;
-import pi_xy.algo.HitTriArray;
+import pi_xy.hit.HitTri;
+import pi_xy.hit.HitQuad;
+import pi_xy.hit.HitTriArray;
 import pi_xy.algo.GeomPix;
 import pi_xy.pixel.Pixel32;
 import pi_xy.algo.PolyPixel;

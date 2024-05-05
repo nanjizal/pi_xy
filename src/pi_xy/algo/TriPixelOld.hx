@@ -4,7 +4,7 @@ import pi_xy.iter.IteratorRange;
 import pi_xy.algo.GeomPix;
 import pi_xy.pixel.Pixel32;
 import pi_xy.pixel.PixelChannel;
-import pi_xy.algo.HitTri;
+import pi_xy.hit.HitTri;
 
     //inline 
     function fillTriUnsafe5( pixelImage: Pixelimage

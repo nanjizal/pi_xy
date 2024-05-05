@@ -1,4 +1,4 @@
-package pi_xy.algo;
+package pi_xy.hit;
 
 import pi_xy.iter.BoundIterator;
 import pi_xy.iter.IteratorRange;

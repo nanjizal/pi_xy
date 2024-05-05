@@ -5,6 +5,7 @@ import pi_xy.pixel.Pixel32;
 import pi_xy.algo.GeomPix;
 import pi_xy.algo.QuadPixel;
 import pi_xy.algo.QuintPixel;
+import pi_xy.hit.HitQuad;
 
 inline
 function rotateLine( pixelImage: Pixelimage

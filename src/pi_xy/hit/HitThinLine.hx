@@ -1,6 +1,6 @@
-package pi_xy.algo;
+package pi_xy.hit;
 
-import pi_xy.algo.IhitObj;
+import pi_xy.hit.IhitObj;
 
 @:structInit
 class HitThinLine implements IhitObj {

@@ -8,7 +8,7 @@ import pi_xy.Pixelimage;
 import pi_xy.algo.RoundRecPixel;
 import pi_xy.algo.CirclePixel;
 import pi_xy.algo.PolyPixel;
-import pi_xy.algo.HitThinLine;
+import pi_xy.hit.HitThinLine;
 
 @:transient
 abstract LineShape( Pixelimage ) from Pixelimage to Pixelimage {
@@ -24,7 +24,7 @@ abstract LineShape( Pixelimage ) from Pixelimage to Pixelimage {
                      , color: Int ): HitThinLine {
         var alpha = getAlpha( color ) * 0.5;
         Xiolin_Wu_Line.xWuLineNoEnd_( this, ax, ay, bx, by, color, alpha );
-        return new pi_xy.algo.HitThinLine( ax, ay, bx, by );
+        return new pi_xy.hit.HitThinLine( ax, ay, bx, by );
     }
     public inline
     function roundRectangle( x: Float, y: Float

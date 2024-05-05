@@ -1455,7 +1455,7 @@ var pi_$xy_algo_HitQuad = function(ax,ay,bx,by,cx,cy,dx,dy,preCalculated) {
 		this.yIter4 = new pi_$xy_iter_IntIterStart(ii_min,ii_max);
 	}
 };
-pi_$xy_algo_HitQuad.__name__ = "pi_xy.algo.HitQuad";
+pi_$xy_algo_HitQuad.__name__ = "pi_xy.hit.HitQuad";
 pi_$xy_algo_HitQuad.__interfaces__ = [pi_$xy_algo_IhitObj];
 pi_$xy_algo_HitQuad.__super__ = pi_$xy_algo_QuadPoints_$;
 pi_$xy_algo_HitQuad.prototype = $extend(pi_$xy_algo_QuadPoints_$.prototype,{
@@ -1547,7 +1547,7 @@ var pi_$xy_algo_HitTri = function(ax,ay,bx,by,cx,cy,preCalculated) {
 		this.yIter3 = tmp;
 	}
 };
-pi_$xy_algo_HitTri.__name__ = "pi_xy.algo.HitTri";
+pi_$xy_algo_HitTri.__name__ = "pi_xy.hit.HitTri";
 pi_$xy_algo_HitTri.__interfaces__ = [pi_$xy_algo_IhitObj];
 pi_$xy_algo_HitTri.__super__ = pi_$xy_algo_TriPoints_$;
 pi_$xy_algo_HitTri.prototype = $extend(pi_$xy_algo_TriPoints_$.prototype,{
@@ -1556,7 +1556,7 @@ pi_$xy_algo_HitTri.prototype = $extend(pi_$xy_algo_TriPoints_$.prototype,{
 var pi_$xy_algo_HitTriArray = function(triArr) {
 	this.triArr = triArr;
 };
-pi_$xy_algo_HitTriArray.__name__ = "pi_xy.algo.HitTriArray";
+pi_$xy_algo_HitTriArray.__name__ = "pi_xy.hit.HitTriArray";
 pi_$xy_algo_HitTriArray.__interfaces__ = [pi_$xy_algo_IhitObj];
 pi_$xy_algo_HitTriArray.prototype = {
 	__class__: pi_$xy_algo_HitTriArray

@@ -4,7 +4,8 @@ import pi_xy.iter.IteratorRange;
 import pi_xy.algo.GeomPix;
 import pi_xy.pixel.Pixel32;
 import pi_xy.pixel.PixelChannel;
-import pi_xy.algo.HitTri;
+import pi_xy.hit.HitTri;
+import pi_xy.hit.HitQuad;
 import pi_xy.algo.PentagonSampler;
 
 inline

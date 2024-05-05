@@ -5,9 +5,9 @@ import pi_xy.Pixelimage;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
-import pi_xy.algo.HitQuad;
-import pi_xy.algo.HitObjArray;
-import pi_xy.algo.IhitObj;
+import pi_xy.hit.HitQuad;
+import pi_xy.hit.HitObjArray;
+import pi_xy.hit.IhitObj;
 
 @:structInit
 class DrawShapeHelper implements ILinePathContext {
