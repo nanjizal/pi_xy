@@ -47,13 +47,13 @@ abstract class EllipsePattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL
     public override function setParameter( name: String, value: String ){
         switch( name ){
             case 'left':
-                left = Std.parseFloat( value );
+                left = value;
             case 'top':
-                top = Std.parseFloat( value );
+                top = value;
             case 'width':
-                width = Std.parseFloat( value );
+                width = value;
             case 'height':
-                height = Std.parseFloat( value );
+                height = value;
             case _:
                 super.setParameter( name, value );
         }

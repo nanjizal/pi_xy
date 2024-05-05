@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.BasicGradient;
-
+import iterMagic.ParameterString;
 
 abstract class TriangleGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var aX:      Float;
@@ -29,26 +29,26 @@ abstract class TriangleGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWT
         this.cX = cX;
         this.cY = cY;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'aX':
-                aX = Std.parseFloat( value );
+                aX = value;
             case 'aY':
-                aY = Std.parseFloat( value );
+                aY = value;
             case 'bX':
-                bX = Std.parseFloat( value );
+                bX = value;
             case 'bY':
-                bY = Std.parseFloat( value );
+                bY = value;
             case 'cX':
-                cX = Std.parseFloat( value );
+                cX = value;
             case 'cY':
-                cY = Std.parseFloat( value );
+                cY = value;
             case 'colorA':
-                cornerColors[0] = Std.parseInt( value );
+                cornerColors[0] = value;
             case 'colorB':
-                cornerColors[1] = Std.parseInt( value );
+                cornerColors[1] = value;
             case 'colorC':
-                cornerColors[2] = Std.parseInt( value );
+                cornerColors[2] = value;
             case _:
                 super.setParameter( name, value );
         }

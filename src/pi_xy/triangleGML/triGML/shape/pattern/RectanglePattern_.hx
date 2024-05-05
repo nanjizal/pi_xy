@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.pattern;
 import pi_xy.triangleGML.triGML.PatternShape;
-
+import iterMagic.ParameterString;
 
 abstract class RectanglePattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,IMAGETOOL> {
     public var left:    Float;
@@ -47,18 +47,18 @@ abstract class RectanglePattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTO
         this.height = height;
         this.rounded = rounded; 
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'left':
-                left = Std.parseFloat( value );
+                left = value;
             case 'top':
-                top = Std.parseFloat( value );
+                top = value;
             case 'width':
-                width = Std.parseFloat( value );
+                width = value;
             case 'height':
-                height = Std.parseFloat( value );
-            case 'rounded':
-                rounded =  ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;    
+                height = value;
+            case 'rounded': 
+                rounded = value;    
             case _:
                 super.setParameter( name, value );
         }

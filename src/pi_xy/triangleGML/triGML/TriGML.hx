@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.*;
-
+import iterMagic.ParameterString;
 
 abstract class TriGML<DRAWTOOL,IMAGETOOL> {
     var drawTool: DRAWTOOL;
@@ -63,6 +63,7 @@ abstract class TriGML<DRAWTOOL,IMAGETOOL> {
             // use image resource
             shape.setImage( att, imageResource.get( value.toLowerCase() ) );
         } else {
+            var parameter: ParameterString = value;
             shape.setParameter( att, value );
         }
     }

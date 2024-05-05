@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.FillForm;
-
+import iterMagic.ParameterString;
 
 abstract class ArrowThickGradient_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var x1: Float;
@@ -45,30 +45,30 @@ abstract class ArrowThickGradient_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL
         this.strokeTopColor = strokeTopColor;
         this.strokeBottomColor = strokeBottomColor;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'both':
-                both = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+                both = value;
             case 'flare':
-                flare = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+                flare = value;
             case 'reverseFlare':
-                reverseFlare = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;    
+                reverseFlare = value;    
             case 'x1':
-                x1 = Std.parseFloat( value );
+                x1 = value;
             case 'y1':
-                y1 = Std.parseFloat( value );
+                y1 = value;
             case 'x2':
-                x2 = Std.parseFloat( value );
+                x2 = value;
             case 'y2':
-                y2 = Std.parseFloat( value );
+                y2 = value;
             case 'arrowWidth':
-                arrowWidth = Std.parseFloat( value );
+                arrowWidth = value;
             case 'arrowHeight':
-                arrowHeight = Std.parseFloat( value );
+                arrowHeight = value;
             case 'strokeTopColor':
-                strokeTopColor = Std.parseInt( value );
+                strokeTopColor = value;
             case 'strokeBottomColor':
-                strokeBottomColor = Std.parseInt( value );    
+                strokeBottomColor = value;    
             case _:
                 super.setParameter( name, value );
         }

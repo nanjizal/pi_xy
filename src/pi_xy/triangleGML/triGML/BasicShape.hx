@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML;
 import pi_xy.triangleGML.triGML.GroupShape;
 import pi_xy.triangleGML.triGML.DashGap;
-
+import iterMagic.ParameterString;
 
 abstract class BasicShape<DRAWTOOL,IMAGETOOL> extends GroupShape<DRAWTOOL,IMAGETOOL>{
     public static var dashLength: Float = 2.;
@@ -30,12 +30,12 @@ abstract class BasicShape<DRAWTOOL,IMAGETOOL> extends GroupShape<DRAWTOOL,IMAGET
         this.strokeDashGapArray = strokeDashGapArray;
     }
 
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'strokeColor':
-                strokeColor = Std.parseInt( value );
+                strokeColor = value;
             case 'strokeWidth':
-                strokeWidth = Std.parseFloat( value );
+                strokeWidth = value;
             case 'strokeDashGapArray':
                 strokeDashGapArray = null; // not implemented
             case _:

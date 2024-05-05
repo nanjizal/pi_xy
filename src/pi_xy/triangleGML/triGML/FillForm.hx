@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.BasicShape;
-
+import iterMagic.ParameterString;
 
 abstract class FillForm<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var fill: Int;
@@ -17,10 +17,10 @@ abstract class FillForm<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOO
         super( opacity, visibility, strokeColor, strokeWidth, strokeDashGapArray );
         this.fill = fill;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'fill':
-                fill = Std.parseInt( value );
+                fill = value;
             case _:
                 super.setParameter( name, value );
         }

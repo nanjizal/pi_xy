@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.picture;
 import pi_xy.triangleGML.triGML.FillForm;
-
+import iterMagic.ParameterString;
 
 abstract class RectanglePicture_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,IMAGETOOL> {
     public var left:    Float;
@@ -45,26 +45,26 @@ abstract class RectanglePicture_<DRAWTOOL,IMAGETOOL> extends FillForm<DRAWTOOL,I
         this.pictureHeight = pictureHeight;
         this.rounded = rounded; 
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'left':
-                left = Std.parseFloat( value );
+                left = value;
             case 'top':
-                top = Std.parseFloat( value );
+                top = value;
             case 'width':
-                width = Std.parseFloat( value );
+                width = value;
             case 'height':
-                height = Std.parseFloat( value );
+                height = value;
             case 'pictureX':
-                pictureX = Std.parseFloat( value );
+                pictureX = value;
             case 'pictureY':
-                pictureY = Std.parseFloat( value );
+                pictureY = value;
             case 'pictureWidth':
-                pictureWidth = Std.parseFloat( value );
+                pictureWidth = value;
             case 'pictureHeight':
-                pictureHeight = Std.parseFloat( value ); 
+                pictureHeight = value; 
             case 'rounded':
-                rounded =  ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+                rounded =  value;
             case _:
                 super.setParameter( name, value );
         }

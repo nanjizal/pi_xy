@@ -1,5 +1,6 @@
 package pi_xy.triangleGML.triGML;
 import pi_xy.triangleGML.triGML.BasicShape;
+import iterMagic.ParameterString;
 
 //@:structInit
 abstract class PatternShape<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
@@ -73,7 +74,7 @@ abstract class PatternShape<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAG
         this.fillPatternAcross = fillPatternAcross;
         this.fillPatternScale = fillPatternScale;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'strokeColor0':
                 strokeColor0 = Std.parseInt( value );

@@ -1,7 +1,7 @@
 package pi_xy.triangleGML.triGML;
 
 import pi_xy.triangleGML.triGML.hitTest.IhitObj;
-
+import iterMagic.ParameterString;
 
 abstract class GroupShape<DRAWTOOL,IMAGETOOL> implements ShapeInterface<DRAWTOOL,IMAGETOOL> {
     var isDirty = true; // TODO: <-- potentially remove
@@ -25,35 +25,34 @@ abstract class GroupShape<DRAWTOOL,IMAGETOOL> implements ShapeInterface<DRAWTOOL
         this.visibility = visibility;
         this.opacity = opacity;
     }
-    public function setParameter( name: String, value: String ){
+    public function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'visibility':
-                visibility = ( value.toLowerCase() == 'true' )? true: false;
+                visibility = value;
             case 'opacity':
-                opacity = Std.parseFloat( value );
+                opacity = value;
             case 'rotation':
-                var degree = Std.parseFloat( value );
-                rotation = ( degree == 0 )?0: Math.PI*degree/180;
+                rotation = value.toRadian();
             case 'theta':
-                rotation = Std.parseFloat( value );
+                rotation = value;
             case 'transformCentreX':
-                transformCentreX = Std.parseFloat( value );
+                transformCentreX = value;
             case 'transformCentreY':
-                transformCentreY = Std.parseFloat( value );
+                transformCentreY = value;
             case 'skewX':
-                skewX = Std.parseFloat( value );
+                skewX = value;
             case 'skewY':
-                skewY = Std.parseFloat( value );
+                skewY = value;
             case 'scaleX':
-                scaleX = Std.parseFloat( value );
+                scaleX = value;
             case 'scaleY':
-                scaleY = Std.parseFloat( value );
+                scaleY = value;
             case 'scale':
-                scaleX = scaleY = Std.parseFloat( value );
+                scaleX = scaleY = value;
             case 'edgeSoft':
-                edgeSoft = Std.parseFloat( value );   
+                edgeSoft = value;   
             case 'externalSoft':
-                externalSoft = ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+                externalSoft = value;
             case _:
                 trace( 'property not found ' + name );
         }

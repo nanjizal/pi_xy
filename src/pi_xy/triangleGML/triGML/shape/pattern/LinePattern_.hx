@@ -40,13 +40,13 @@ abstract class LinePattern_<DRAWTOOL,IMAGETOOL> extends PatternStroke<DRAWTOOL,I
     public override function setParameter( name: String, value: String ){
         switch( name ){
             case 'x1':
-                x1 = Std.parseFloat( value );
+                x1 = value;
             case 'y1':
-                y1 = Std.parseFloat( value );
+                y1 = value;
             case 'x2':
-                x2 = Std.parseFloat( value );
+                x2 = value;
             case 'y2':
-                y2 = Std.parseFloat( value );
+                y2 = value;
             case _:
                 super.setParameter( name, value );
         }

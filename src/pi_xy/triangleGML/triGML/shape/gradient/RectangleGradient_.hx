@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.FillForm;
-
+import iterMagic.ParameterString;
 
 abstract class RectangleGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var left:     Float;
@@ -27,38 +27,38 @@ abstract class RectangleGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAW
         this.height = height;
         this.rounded = rounded; 
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'left':
-                left = Std.parseFloat( value );
+                left = value;
             case 'top':
-                top = Std.parseFloat( value );
+                top = value;
             case 'width':
-                width = Std.parseFloat( value );
+                width = value;
             case 'height':
-                height = Std.parseFloat( value );
+                height = value;
             case 'rounded':
-                rounded =  ( StringTools.trim( value ).toLowerCase() == 'true' )? true: false;
+                rounded = value;
             case 'colorA':
-                cornerColors[0] = Std.parseInt( value );
+                cornerColors[0] = value;
             case 'colorB':
-                cornerColors[1] = Std.parseInt( value );
+                cornerColors[1] = value;
             case 'colorC':
-                cornerColors[2] = Std.parseInt( value );
+                cornerColors[2] = value;
             case 'colorD':
-                cornerColors[3] = Std.parseInt( value );
+                cornerColors[3] = value;
             case 'colorFirst':
-                cornerColors[0] = Std.parseInt( value );
-                cornerColors[4] = Std.parseInt( value );
+                cornerColors[0] = value;
+                cornerColors[4] = value;
             case 'colorSecond':
-                cornerColors[2] = Std.parseInt( value );
-                cornerColors[3] = Std.parseInt( value );
+                cornerColors[2] = value;
+                cornerColors[3] = value;
             case 'colorTop':
-                cornerColors[0] = Std.parseInt( value );
-                cornerColors[2] = Std.parseInt( value );
+                cornerColors[0] = value;
+                cornerColors[2] = value;
             case 'colorBottom':
-                cornerColors[4] = Std.parseInt( value );
-                cornerColors[3] = Std.parseInt( value );
+                cornerColors[4] = value;
+                cornerColors[3] = value;
             case _:
                 super.setParameter( name, value );
         }

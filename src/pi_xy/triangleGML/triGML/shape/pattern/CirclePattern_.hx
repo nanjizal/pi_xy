@@ -44,11 +44,11 @@ abstract class CirclePattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,
     public override function setParameter( name: String, value: String ){
         switch( name ){
             case 'left':
-                left     = Std.parseFloat( value );
+                left     = value;
             case 'top':
-                top      = Std.parseFloat( value );
+                top      = value;
             case 'diameter':
-                diameter = Std.parseFloat( value );
+                diameter = value;
             case _:
                 super.setParameter( name, value );
         }

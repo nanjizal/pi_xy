@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.pattern;
 import pi_xy.triangleGML.triGML.PatternShape;
-
+import iterMagic.ParameterString;
 
 abstract class PathElementPattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAWTOOL,IMAGETOOL> {
     public var pathData: String;
@@ -45,18 +45,18 @@ abstract class PathElementPattern_<DRAWTOOL,IMAGETOOL> extends PatternShape<DRAW
         this.scaleX     = scaleX;
         this.scaleY     = scaleY;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'pathData':
-                pathData =value;
+                pathData = value;
             case 'translateX':
-                translateX = Std.parseFloat( value );
+                translateX = value;
             case 'translateY':
-                translateY = Std.parseFloat( value );
+                translateY = value;
             case 'scaleX':
-                scaleX = Std.parseFloat( value );
+                scaleX = value;
             case 'scaleY':
-                scaleY = Std.parseFloat( value );
+                scaleY = value;
             case _:
                 super.setParameter( name, value );
         }

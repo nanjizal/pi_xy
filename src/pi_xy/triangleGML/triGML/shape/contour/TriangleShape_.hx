@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.contour;
 import pi_xy.triangleGML.triGML.BasicShape;
-
+import iterMagic.ParameterString;
 
 abstract class Triangle_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETOOL> {
     public var aX:      Float;
@@ -28,20 +28,20 @@ abstract class Triangle_<DRAWTOOL,IMAGETOOL> extends BasicShape<DRAWTOOL,IMAGETO
         this.cX = cX;
         this.cY = cY;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'aX':
-                aX = Std.parseFloat( value );
+                aX = value;
             case 'aY':
-                aY = Std.parseFloat( value );
+                aY = value;
             case 'bX':
-                bX = Std.parseFloat( value );
+                bX = value;
             case 'bY':
-                bY = Std.parseFloat( value );
+                bY = value;
             case 'cX':
-                cX = Std.parseFloat( value );
+                cX = value;
             case 'cY':
-                cY = Std.parseFloat( value );                         
+                cY = value;                         
             case _:
                 super.setParameter( name, value );
         }

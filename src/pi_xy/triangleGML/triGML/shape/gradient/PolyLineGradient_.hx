@@ -1,5 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.BasicGradient;
+import iterMagic.ParameterString;
 
 enum abstract ColorDirection( String ){
     var widthways = 'widthways';
@@ -23,18 +24,16 @@ abstract class PolyLineGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWT
         this.colorDirection = colorDirection;
         this.points = points;
     }
-    public override function setParameter( name: String, value: String ): Void {
+    public override function setParameter( name: String, value: ParameterString ): Void {
         switch( name ){
             case 'strokeWidth':
-                strokeWidth = Std.parseFloat( value );
+                strokeWidth = value;
             case 'points':
-                value = value.split('[')[1].split(']')[0];
-                points = [ for( n in value.split(',') ) Std.parseFloat( n )  ];
+                points = value;
             case 'colorDirection':
                 colorDirection = ( value == 'widthways' )? widthways: longways;
             case 'colors':
-                value = value.split('[')[1].split(']')[0];
-                cornerColors = [ for( n in value.split(',') ) Std.parseInt( n )  ];
+                cornerColors = value;
             case _:
                 super.setParameter( name, value );
         }

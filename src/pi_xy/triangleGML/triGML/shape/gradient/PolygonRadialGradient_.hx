@@ -1,6 +1,6 @@
 package pi_xy.triangleGML.triGML.shape.gradient;
 import pi_xy.triangleGML.triGML.BasicGradient;
-
+import iterMagic.ParameterString;
 
 abstract class PolygonRadialGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<DRAWTOOL,IMAGETOOL> {
     public var points:Null<Array<Float>>;
@@ -22,19 +22,18 @@ abstract class PolygonRadialGradient_<DRAWTOOL,IMAGETOOL> extends BasicGradient<
         this.gradientCentreY = gradientCentreX;
         this.gradientCentreY = gradientCentreY;
     }
-    public override function setParameter( name: String, value: String ){
+    public override function setParameter( name: String, value: ParameterString ){
         switch( name ){
             case 'points':
-                value = value.split('[')[1].split(']')[0];
-                points = [ for( n in value.split(',') ) Std.parseFloat( n )  ]; 
+                points = value]; 
             case 'gradientCentreX':
-                gradientCentreX = Std.parseFloat( value );
+                gradientCentreX = value;
             case 'gradientCentreY':
-                gradientCentreY = Std.parseFloat( value );
+                gradientCentreY = value;
             case 'colorIn':
-                cornerColors[0] = Std.parseInt( value );
+                cornerColors[0] = value;
             case 'colorOut':
-                cornerColors[1] = Std.parseInt( value );  
+                cornerColors[1] = value;  
             case _:
                 super.setParameter( name, value );
         }
