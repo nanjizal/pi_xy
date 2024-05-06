@@ -7,14 +7,23 @@ import haxe.io.UInt8Array;
 import iterMagic.Img;
 
 // module HeapsPixel
-class HeapsPixels {
-    @:keep
-    public static var toHeapsPixels_ = toHeapsPixels;
-    @:keep
-    public static var fromHeapsPixels_ = fromHeapsPixels;
-    public function new(){}
+abstract HeapsPixels( hxd.Pixels ) from hxd.Pixels to hxd.Pixels {
+    public inline
+    function new( p: hxd.Pixels ){
+        this = p;
+    }
+    @:from
+    public static inline 
+    function fromPixelimage( pixelImage: Pixelimage ): HeapsPixels {
+        return new HeapsPixels( toHeapsPixels( pixelImage ) );
+    }
+    @:to
+    public inline
+    function toPixelimage(): Pixelimage {
+        var p: PixelsARGB = this;
+        return fromHeapsPixels( p );
+    } 
 }
-// untested!!
 //@:dox(hide)
 inline
 function toHeapsPixels( pixelImage: Pixelimage ): hxd.Pixels {

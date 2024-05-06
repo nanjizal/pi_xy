@@ -108,7 +108,7 @@ class PeoteTest{
         }
         pixelTest.gradientShape.triangle( 100, 100, 0xf0ffcf00, 300, 220, 0xf000cfFF, 120, 300, 0xf0cF00FF );
         pixelTest.gradientShape.triangle( 100+120, 100+20, 0xccff0000, 300+120, 220+20, 0xcc0000FF, 120+120, 300+20, 0xcc00ff00 );
-        pixelTest.lineShape.svgPath( kiwi_d, 20.0, 0xFFFF0000, 0., 0., 1., 1. );
+        pixelTest.lineShape.svgPath( kiwi_d, .7, 0xF0cccccc, 0., 0., 1., 1. );
         pixelImage.putPixelImage( pixelTest, 45, 45 );
         return pixelImage;
     }

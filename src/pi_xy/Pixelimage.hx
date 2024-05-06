@@ -610,10 +610,10 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
     }
     #end
     #if heaps
-    public var heapsTile( get, never ): pi_xy.imageAbstracts.HeapsTile;
+    public var heapsTileConvert( get, never ): pi_xy.imageAbstracts.HeapsTileConvert;
 
-    inline function get_heapsTile():pi_xy.imageAbstracts.HeapsTile {
-        return ( abstract: pi_xy.imageAbstracts.HeapsTile );
+    inline function get_heapsTileConvert():pi_xy.imageAbstracts.HeapsTileConvert {
+        return ( abstract: pi_xy.imageAbstracts.HeapsTileConvert );
     }
     #end
     /*

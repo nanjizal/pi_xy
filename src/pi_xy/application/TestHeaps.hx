@@ -1,5 +1,10 @@
 package pi_xy.application;
 import h2d.Graphics;
+import h2d.Tile;
+import pi_xy.Pixelimage;
+import pi_xy.formats.HeapsPixels;
+import pi_xy.formats.HeapsTile;
+import pi_xy.imageAbstracts.HeapsTileConvert;
 import hxd.Key in K;
 
 class TestHeaps extends hxd.App {
@@ -30,9 +35,9 @@ class TestHeaps extends hxd.App {
             pixelTest.gradientShape.triangle( 100, 100, 0xf0ffcf00, 300, 220, 0xf000cfFF, 120, 300, 0xf0cF00FF );
             pixelTest.gradientShape.triangle( 100+120, 100+20, 0xccff0000, 300+120, 220+20, 0xcc0000FF, 120+120, 300+20, 0xcc00ff00 );
             pixelImage.putPixelImage( pixelTest, 45, 45 );
-            var heapsTileTest = pi_xy.formats.HeapsTile.toHeapsTile_( pixelImage );
-            var pixelImageTest = pi_xy.formats.HeapsTile.fromHeapsTile_( heapsTileTest );
-            var tile = pi_xy.formats.HeapsTile.toHeapsTile_( pixelImageTest );
+            var heapsTileTest: h2d.Tile = pixelImage.heapsTileConvert;
+            var pixelImageTest = new HeapsTile( heapsTileTest ).toPixelimage();
+            var tile: h2d.Tile = pixelImageTest.heapsTileConvert;
             bmp = new h2d.Bitmap( tile, s2d );
         }
         override function update(dt:Float) {
