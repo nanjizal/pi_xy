@@ -1,6 +1,7 @@
 package pi_xy.imageAbstracts;
 import pi_xy.pixel.Pixel32;
-typedef FlashBitmapData = flash.display.BitmapData;
+// DO NOT USE yet..
+typedef FlashBitmapData = #if openfl openfl.display.BitmapData; #else nme.display.BitmapData; #end
 
 @:forward
 @:transient
@@ -28,11 +29,5 @@ abstract DataBitmap( Pixelimage ) from Pixelimage to Pixelimage {
             return pi_xy.formats.NMEbitmapData.fromNmeBitmapData_( bm );
         #end
     }
-    #if flixel
-    public inline
-    function toFlxGraphics( pixelimage: Pixelimage, Unique:Bool = false, ?Key:String, Cache:Bool = true ){
-        FlxGraphic.fromBitmapData( abstract.to(), Unique, Key, Cache );
-    }
-    #end
     #end
 }

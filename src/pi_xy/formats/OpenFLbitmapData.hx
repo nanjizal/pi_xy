@@ -8,6 +8,7 @@ import pi_xy.Pixelimage;
 import pi_xy.pixel.Pixel32;
 import haxe.io.UInt8Array;
 import iterMagic.Img;
+import pi_xy.formats.LimeImage;
 
 // module OpenFLbitmapData
 class OpenFLbitmapData {
@@ -18,6 +19,12 @@ class OpenFLbitmapData {
     public function new(){}
 }
 //@:dox(hide)
+#if lime
+inline
+function toBitmapDataViaImageBuffer( pixelImage: pi_xy.Pixelimage ): BitmapData {
+    return BitmapData.fromImage( toLimeImage( pixelImage ) );
+}
+#end
 inline
 function toOpenflBitmapData( pixelImage: Pixelimage ): BitmapData {
     var lh = pixelImage.height; 
