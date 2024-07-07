@@ -1,6 +1,6 @@
 package pi_xy.draw;
 
-
+import pi_xy.draw.DrawAbstractHelper;
 import pi_xy.Pixelimage;
 import justPath.SvgLinePath;
 import justPath.ILinePathContext;
@@ -8,19 +8,10 @@ import justPath.LinePathContextTrace;
 import pi_xy.hit.HitQuad;
 
 @:structInit
-class DrawGradThickHelper implements ILinePathContext {
-    var svgLinePath: SvgLinePath;
-    var x0: Float = 0.;
-    var y0: Float = 0.;
-    var toggleDraw = true;
+class DrawGradThickHelper extends DrawAbstractHelper {
     var strokeWidth: Float;
     public var strokeTopColor: Int;
     public var strokeBottomColor: Int;
-    var translateX: Float;
-    var translateY: Float;
-    var scaleX: Float;
-    var scaleY: Float;
-    var pixelImage: Pixelimage;
     var info: HitQuad;
     var oldInfo: HitQuad;
     public function new(  pixelImage:        Pixelimage
@@ -30,20 +21,18 @@ class DrawGradThickHelper implements ILinePathContext {
                         , translateX = 0.
                         , translateY = 0.
                         , scaleX = 1.
-                        , scaleY = 1.  ){
-        this.pixelImage = pixelImage;
+                        , scaleY = 1.
+                        , hitsAllowed = false  ){
+        super( pixelImage, translateX, translateY, scaleX, scaleY, hitsAllowed );
         this.strokeTopColor = strokeTopColor;
         this.strokeBottomColor = strokeBottomColor;
         this.strokeWidth = strokeWidth;
-        this.translateX = translateX;
-        this.translateY = translateY;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
         svgLinePath = new SvgLinePath( this );
     }
     public
     function lineSegmentTo( x2: Float, y2: Float ){
         oldInfo = info;
+
         info = pixelImage.gradientShape.line( x0*scaleX + translateX, y0*scaleY + translateY
                  , x2*scaleX + translateX, y2*scaleY + translateY 
                  , strokeWidth
@@ -54,6 +43,7 @@ class DrawGradThickHelper implements ILinePathContext {
                             , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                             , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
         }
+        
         toggleDraw = !toggleDraw;
         x0 = x2;
         y0 = y2;
@@ -61,6 +51,7 @@ class DrawGradThickHelper implements ILinePathContext {
     public
     function lineTo( x2: Float, y2: Float ){
         oldInfo = info;
+        
         info = pixelImage.gradientShape.line( x0*scaleX + translateX, y0*scaleY + translateY
             , x2*scaleX + translateX, y2*scaleY + translateY 
             , strokeWidth
@@ -71,48 +62,14 @@ class DrawGradThickHelper implements ILinePathContext {
                 , info.dx*scaleX + translateX, info.dy*scaleY + translateY, strokeBottomColor
                 , oldInfo.cx*scaleX + translateX, oldInfo.cy*scaleY + translateY, strokeBottomColor, true );
         }
+        
         x0 = x2;
         y0 = y2;
         toggleDraw = true;
     }
     public
-    function moveTo( x1: Float, y1: Float ){
-        x0 = x1;
-        y0 = y1;
+    override function moveTo( x1: Float, y1: Float ){
+        super.moveTo( x1, y1 );
         info = null;
-        toggleDraw = true;
-    }
-    public
-    function quadTo( x2: Float, y2: Float, x3: Float, y3: Float ){
-        svgLinePath.quadTo( x2, y2, x3, y3 );
-    }
-    public
-    function curveTo( x2: Float, y2: Float, x3: Float, y3: Float, x4: Float, y4: Float ){
-        svgLinePath.curveTo( x2, y2, x3, y3, x4, y4 );
-    }
-    public
-    function quadThru( x2: Float, y2: Float, x3: Float, y3: Float ){
-        svgLinePath.quadThru( x2, y2, x3, y3 );
-    }
-    public inline
-    function archBezier( distance: Float, distance2: Float, radius: Float, rotation: Float ){            
-        var nx = x0 + distance*Math.cos( rotation );
-        var ny = y0 + distance*Math.sin( rotation );
-        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
-        svgLinePath.quadThru( thruX, thruY, nx, ny );
-    }
-    public inline
-    function triangleArch(  distance: Float, distance2: Float, radius: Float, rotation: Float ){
-        var nx = x0 + distance*Math.cos( rotation );
-        var ny = y0 + distance*Math.sin( rotation );
-        var thruX = x0 + distance2*Math.cos( rotation ) - radius*Math.cos( rotation + Math.PI/2 );
-        var thruY = y0 + distance2*Math.sin( rotation ) - radius*Math.sin( rotation + Math.PI/2 );
-        svgLinePath.lineTo( thruX, thruY );
-        svgLinePath.lineTo( nx, ny );
-    }
-    public inline
-    function path( str: String ){
-        svgLinePath.parse( str );
     }
 }
