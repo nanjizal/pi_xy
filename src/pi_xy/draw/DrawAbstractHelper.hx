@@ -1,6 +1,10 @@
 package pi_xy.draw;
 
 import justPath.SvgLinePath;
+import justPath.GraphicsPath;
+import justPath.PathCommand;
+import justPath.IPathContext;
+import haxe.ds.Vector;
 import justPath.ILinePathContext;
 import justPath.LinePathContextTrace;
 import pi_xy.Pixelimage;
@@ -77,6 +81,15 @@ abstract class DrawAbstractHelper implements ILinePathContext {
     public inline
     function path( str: String ){
         svgLinePath.parse( str );
+    }
+    public inline 
+    function drawPath( commands: Vector<PathCommand>, data: Vector<Float> ){
+        var graphicPath = new GraphicsPath( commands, data );
+        drawGraphicsPath( graphicPath );
+    }
+    public inline
+    function drawGraphicsPath( graphicsPath: GraphicsPath ){
+        graphicsPath.parse( this );
     }
     //function lineDraw( ax: Float, ay: Float, bx: Float, by: Float ): HitQuad;
 }
