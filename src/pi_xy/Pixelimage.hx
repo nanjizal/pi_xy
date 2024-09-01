@@ -577,6 +577,17 @@ abstract Pixelimage(ImageStruct) from ImageStruct to ImageStruct {
     inline function get_png():PNG {
         return ( abstract: PNG );
     }
+    public var bmp( get, never ): BMP;
+
+    inline function get_bmp(): BMP {
+        return ( abstract: BMP );
+    }
+
+    public var gif( get, never ): GIF;
+
+    inline function get_gif(): GIF {
+        return ( abstract: GIF );
+    }
     #end
     #if ansi
     public var ansi( get, never ): pi_xy.imageAbstracts.AnsiImage;

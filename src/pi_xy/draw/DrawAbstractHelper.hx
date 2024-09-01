@@ -15,7 +15,7 @@ import pi_xy.hit.HitQuad;
 import pi_xy.hit.HitObjArray;
 import pi_xy.hit.IhitObj;
 
-abstract class DrawAbstractHelper implements ILinePathContext {
+abstract class DrawAbstractHelper implements ILinePathContext implements IPathContext {
     var svgLinePath: SvgLinePath;
     var x0: Float = 0.;
     var y0: Float = 0.;
